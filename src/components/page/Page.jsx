@@ -8,12 +8,12 @@ import styles from './Page.module.css';
  * @param {string} [props.className] - Optional additional CSS class name
  * @returns {JSX.Element} - Rendered Page component
  */
-function Page({ children, className }) {
-  return (
-    <div className={`${styles.page} ${className || ''}`}>
-      {children}
-    </div>
-  );
+function Page({children, className}) {
+    return (
+        <div className={`${styles.page} ${className || ''}`}>
+            {children}
+        </div>
+    );
 }
 
 export default Page;

@@ -1,6 +1,7 @@
 # Responsive Design Implementation
 
-This document explains the responsive design implementation for the project, including breakpoints, container classes, and responsive hooks.
+This document explains the responsive design implementation for the project, including breakpoints, container classes,
+and responsive hooks.
 
 ## Breakpoints
 
@@ -13,19 +14,20 @@ The project uses the following breakpoints:
 
 ## ResponsiveContainer Component
 
-The `ResponsiveContainer` component provides consistent padding and width constraints across different screen sizes. It's used as a wrapper for content in various components like `Layout`.
+The `ResponsiveContainer` component provides consistent padding and width constraints across different screen sizes.
+It's used as a wrapper for content in various components like `Layout`.
 
 ### Usage
 
 ```jsx
-import { ResponsiveContainer } from '../container/ResponsiveContainer';
+import {ResponsiveContainer} from '../container/ResponsiveContainer';
 
 const MyComponent = () => {
-  return (
-    <ResponsiveContainer>
-      {/* Your content here */}
-    </ResponsiveContainer>
-  );
+    return (
+        <ResponsiveContainer>
+            {/* Your content here */}
+        </ResponsiveContainer>
+    );
 };
 ```
 
@@ -40,27 +42,28 @@ The container has the following properties at different breakpoints:
 
 ## useBreakpoint Hook
 
-The `useBreakpoint` hook allows components to respond to different screen sizes by providing the current breakpoint and window width.
+The `useBreakpoint` hook allows components to respond to different screen sizes by providing the current breakpoint and
+window width.
 
 ### Usage
 
 ```jsx
-import { useBreakpoint } from '../../hooks/useBreakpoint';
+import {useBreakpoint} from '../../hooks/useBreakpoint';
 
 const MyComponent = () => {
-  const { breakpoint, windowWidth } = useBreakpoint();
+    const {breakpoint, windowWidth} = useBreakpoint();
 
-  return (
-    <div>
-      <p>Current breakpoint: {breakpoint}</p>
-      <p>Window width: {windowWidth}px</p>
+    return (
+        <div>
+            <p>Current breakpoint: {breakpoint}</p>
+            <p>Window width: {windowWidth}px</p>
 
-      {/* Conditional rendering based on breakpoint */}
-      {breakpoint === 'mobile' && <MobileContent />}
-      {breakpoint === 'tablet' && <TabletContent />}
-      {breakpoint === 'desktop' && <DesktopContent />}
-    </div>
-  );
+            {/* Conditional rendering based on breakpoint */}
+            {breakpoint === 'mobile' && <MobileContent/>}
+            {breakpoint === 'tablet' && <TabletContent/>}
+            {breakpoint === 'desktop' && <DesktopContent/>}
+        </div>
+    );
 };
 ```
 
@@ -73,8 +76,10 @@ const MyComponent = () => {
 
 ## Example Component
 
-The `ResponsiveExample` component demonstrates how to use the `useBreakpoint` hook for conditional rendering based on the current breakpoint. It's included in the HomePage for demonstration purposes.
+The `ResponsiveExample` component demonstrates how to use the `useBreakpoint` hook for conditional rendering based on
+the current breakpoint. It's included in the HomePage for demonstration purposes.
 
 ## Implementation in Layout
 
-The `Layout` component uses the `ResponsiveContainer` component to ensure consistent padding and width constraints across different screen sizes.
+The `Layout` component uses the `ResponsiveContainer` component to ensure consistent padding and width constraints
+across different screen sizes.

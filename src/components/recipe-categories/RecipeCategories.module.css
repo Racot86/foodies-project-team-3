@@ -1,0 +1,4 @@
+.categoriesGrid {
+    display: flex;
+    flex-wrap: wrap;
+}

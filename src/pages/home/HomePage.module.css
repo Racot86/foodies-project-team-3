@@ -1,3 +1,32 @@
 .homePage {
-  background-color: #e6ffe6; /* Light green background */
+    background-color: #e6ffe6; /* Light green background */
+}
+
+.categoriesLink {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.viewCategoriesButton {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #ff6b6b;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.viewCategoriesButton:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.viewCategoriesButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
