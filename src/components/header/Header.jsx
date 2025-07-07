@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from './Header.module.css';
 
 export const Header = () => {
   return (
-    <header>
-      <nav>
+    <header className={styles.header}>
+      <nav className={styles.nav}>
         <ul>
           <li>
             <Link to="/">Main Page</Link>

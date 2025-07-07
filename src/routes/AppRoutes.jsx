@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from '@pages/HomePage';
-import AddRecipePage from '@pages/AddRecipePage';
+import HomePage from '@pages/home/HomePage';
+import AddRecipePage from '@pages/add-recipe/AddRecipePage';
 import { Layout } from '@components/layout/Layout';
 
 export const AppRoutes = () => {
