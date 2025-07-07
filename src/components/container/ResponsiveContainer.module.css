@@ -1,0 +1,38 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+/* Mobile - up to 375px (gummy stretching) */
+@media screen and (max-width: 374px) {
+    .container {
+        max-width: 100%;
+
+    }
+}
+
+/* Mobile - 375px */
+@media screen and (min-width: 375px) {
+    .container {
+        max-width: 375px;
+
+    }
+}
+
+/* Tablet - 768px */
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 768px;
+        padding: 16px;
+    }
+}
+
+/* Desktop - 1440px */
+@media screen and (min-width: 1440px) {
+    .container {
+        max-width: 1480px;
+        padding: 20px;
+    }
+}
