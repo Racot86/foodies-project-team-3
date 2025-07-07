@@ -6,6 +6,22 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
   globalIgnores(['dist']),
+  // Configuration for Node.js files (like vite.config.js)
+  {
+    files: ['*.config.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.node,
+        ...globals.browser
+      },
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+  },
+  // Configuration for application code
   {
     files: ['**/*.{js,jsx}'],
     extends: [
