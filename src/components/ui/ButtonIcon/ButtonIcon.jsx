@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { FiLoader } from "react-icons/fi";
 import css from "./ButtonIcon.module.css";
 
 /**
@@ -35,10 +36,11 @@ const ButtonIcon = ({
   children,
   className,
   disabled = false,
+  loading = false,
   variant = VARIANTS.DEFAULT,
 }) => {
   const clickHandler = (event) => {
-    if (onClick && !disabled) {
+    if (onClick && !disabled && !loading) {
       event.preventDefault();
       onClick(event);
     }
@@ -51,9 +53,9 @@ const ButtonIcon = ({
       className={classNames}
       type="button"
       onClick={clickHandler}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
-      {children}
+      {loading ? <FiLoader className={css.iconLoading} /> : children}
     </button>
   );
 };

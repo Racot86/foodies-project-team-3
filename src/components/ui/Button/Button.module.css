@@ -1,28 +1,41 @@
 /* Button Component Styles */
 .button {
   outline: none;
-  padding: 16px 32px;
+  padding: var(--spacing-md) var(--spacing-xl);
   height: 56px;
   min-width: 156px;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   border-radius: 30px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   text-align: center;
   text-transform: uppercase;
   font-family: inherit;
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-medium);
+  font-size: var(--font-md);
   background-color: transparent;
   border: 1px solid transparent;
-  color: var(--color-text-primary);
+  color: var(--color-text);
 }
 
 .iconLoading {
   animation: rotate var(--transition-slow) infinite;
+}
+
+/* Icon styling inside buttons */
+.button svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* When button contains both icon and text */
+.button svg + * {
+  margin-left: var(--spacing-xs);
 }
 
 .button:disabled {
@@ -32,63 +45,66 @@
   box-shadow: none !important;
 }
 
+/* Primary variant */
 .button.primary {
-  background-color: var(--color-text-primary);
-  color: var(--color-white);
-  border: 1px solid var(--color-text-primary);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-border);
 }
 
 .button.primary:disabled,
 .button.primary:disabled:hover {
-  background-color: var(--color-light-gray);
+  background-color: var(--color-tertiary);
   color: var(--color-white);
-  border: 1px solid var(--color-light-gray);
+  border-color: var(--color-tertiary);
 }
 
-.button.primary:hover,
+.button.primary:hover:not(:disabled),
 .button.primary:focus-visible {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-bg);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
+/* Secondary variant */
 .button.secondary {
-  background-color: var(--color-white);
-  color: var(--color-primary);
-  border: 1px solid var(--color-text-primary);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border-color: var(--btn-secondary-border);
 }
 
 .button.secondary:disabled,
 .button.secondary:disabled:hover {
-  background-color: var(--color-bg-secondary);
-  color: var(--color-light-gray);
-  border: 1px solid var(--color-light-gray);
+  background-color: var(--color-background);
+  color: var(--color-tertiary);
+  border-color: var(--color-tertiary);
 }
 
-.button.secondary:hover,
+.button.secondary:hover:not(:disabled),
 .button.secondary:focus-visible {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  border-color: var(--color-primary);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
+  border-color: var(--btn-secondary-hover-bg);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
+/* Secondary Reversed variant */
 .button.secondary-reversed {
   background-color: var(--color-primary);
   color: var(--color-white);
-  border: 1px solid var(--color-white);
+  border-color: var(--color-white);
 }
 
 .button.secondary-reversed:disabled,
 .button.secondary-reversed:disabled:hover {
   background-color: var(--color-primary);
-  color: var(--color-light-gray);
-  border: 1px solid var(--color-light-gray);
+  color: var(--color-tertiary);
+  border-color: var(--color-tertiary);
 }
 
-.button.secondary-reversed:hover,
+.button.secondary-reversed:hover:not(:disabled),
 .button.secondary-reversed:focus-visible {
   background-color: var(--color-white);
   color: var(--color-primary);
@@ -97,13 +113,13 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Active states with ripple effect */
+/* Active states */
 .button:active:not(:disabled) {
   transform: translateY(0);
   box-shadow: var(--shadow-sm);
 }
 
-/* Focus states */
+/* Focus styles */
 .button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
@@ -121,9 +137,10 @@
 /* Responsive adjustments */
 @media (max-width: 767px) {
   .button {
-    padding: 12px 24px;
+    padding: var(--spacing-sm) var(--spacing-lg);
     height: 48px;
     min-width: 120px;
+    font-size: var(--font-sm);
   }
 }
 
@@ -133,8 +150,7 @@
     transition: none;
   }
 
-  .button:hover,
-  .button:focus-visible {
+  .button:hover:not(:disabled) {
     transform: none;
   }
 

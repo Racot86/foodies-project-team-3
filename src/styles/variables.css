@@ -1,86 +1,83 @@
-/* Design System Variables */
+/* src/styles/variables.css */
+
 :root {
-  /* Colors */
-  --color-primary: #050505;
-  --color-secondary: #1a1a1a;
-  --color-light-gray: #bfbebe;
-  --color-white: #ffffff;
-  --color-black: #050505;
-  --color-dark-gray: #1a1a1a;
+  /* === COLORS === */
+  --color-primary: #050505; /* Основний чорний */
+  --color-secondary: #1a1a1a; /* Темно-сірий */
+  --color-tertiary: #bfbebe; /* Світло-сірий */
+  --color-white: #ffffff; /* Білий */
 
-  /* Additional semantic colors */
-  --color-text-primary: #050505;
-  --color-text-secondary: #1a1a1a;
-  --color-text-light: #bfbebe;
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f5f5f5;
-  --color-border: #bfbebe;
-  --color-border-hover: #1a1a1a;
+  /* === SEMANTIC COLORS === */
+  --color-background: var(--color-white);
+  --color-background-dark: var(--color-primary);
+  --color-text: var(--color-primary);
+  --color-text-secondary: var(--color-secondary);
+  --color-text-muted: var(--color-tertiary);
+  --color-text-inverse: var(--color-white);
 
-  /* Border radius */
+  /* === BUTTON COLORS === */
+  --btn-primary-bg: var(--color-primary);
+  --btn-primary-text: var(--color-white);
+  --btn-primary-border: var(--color-primary);
+  --btn-primary-hover-bg: var(--color-secondary);
+
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: var(--color-primary);
+  --btn-secondary-border: var(--color-tertiary);
+  --btn-secondary-hover-bg: var(--color-primary);
+  --btn-secondary-hover-text: var(--color-white);
+
+  /* === SPACING === */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* === FONT SIZES === */
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 20px;
+  --font-2xl: 24px;
+  --font-3xl: 32px;
+  --font-4xl: 48px;
+
+  /* === FONT WEIGHTS === */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* === BORDER RADIUS === */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Font sizes */
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-md: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
-  --font-size-2xl: 24px;
-  --font-size-3xl: 32px;
-  --font-size-4xl: 48px;
-
-  /* Font weights */
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
+  /* === SHADOWS === */
   /* Line heights */
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  /* === TRANSITIONS === */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
 
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
-
-  /* Z-index */
-  --z-dropdown: 1000;
-  --z-modal: 1050;
-  --z-tooltip: 1100;
-
-  /* Breakpoints (for reference in JS) */
-  --breakpoint-mobile: 375px;
-  --breakpoint-tablet: 768px;
-  --breakpoint-desktop: 1440px;
-
-  /* Container max-widths */
+  /* === BREAKPOINTS (for reference) === */
+  /* mobile-small: up to 374px */
+  /* mobile: 375px - 767px */
+  /* tablet: 768px - 1439px */
+  /* desktop: 1440px+ */
   --container-mobile: 375px;
   --container-tablet: 768px;
   --container-desktop: 1440px;
-
-  /* Grid */
-  --grid-columns: 12;
-  --grid-gap: var(--spacing-md);
-}
-
-/* Dark mode variables (для майбутнього використання) */
-[data-theme="dark"] {
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #bfbebe;
-  --color-bg-primary: #1a1a1a;
-  --color-bg-secondary: #050505;
 }
