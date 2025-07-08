@@ -1,0 +1,67 @@
+/* ButtonIcon Component Styles */
+.button {
+  outline: none;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-lg);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.button:disabled,
+.button:disabled:hover {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-light-gray);
+  border: 1px solid var(--color-light-gray);
+}
+
+.button:hover,
+.button:focus-visible {
+  background-color: var(--color-text-primary);
+  color: var(--color-white);
+  border-color: var(--color-text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Variants */
+.button.primary {
+  background-color: var(--color-text-primary);
+  color: var(--color-white);
+  border: 1px solid var(--color-text-primary);
+}
+
+.button.primary:disabled,
+.button.primary:disabled:hover {
+  background-color: var(--color-light-gray);
+  color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+}
+
+.button.primary:hover,
+.button.primary:focus-visible {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Active states */
+.button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}

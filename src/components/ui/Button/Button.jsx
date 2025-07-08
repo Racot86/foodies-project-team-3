@@ -4,6 +4,43 @@ import { FiLoader } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import css from "./Button.module.css";
 
+/**
+ * Universal Button component for Foodies design system
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.onClick - Click handler function
+ * @param {React.ReactNode} props.children - Button content
+ * @param {string} props.href - External link URL (creates <a> tag)
+ * @param {string} props.to - Internal route path (creates React Router Link)
+ * @param {string} props.variant - Button variant (primary, secondary, secondary-reversed)
+ * @param {string} props.className - Additional CSS classes for customization
+ * @param {boolean} props.isLoading - Shows loading spinner when true
+ * @param {string} props.type - Button type (button, submit, reset)
+ * @param {boolean} props.disabled - Disables button when true
+ *
+ * @example
+ * // Basic usage
+ * <Button variant={Button.variants.PRIMARY} onClick={handleClick}>
+ *   Click me
+ * </Button>
+ *
+ * @example
+ * // Submit button
+ * <Button variant={Button.variants.PRIMARY} type="submit">
+ *   Submit Form
+ * </Button>
+ *
+ * @example
+ * // Custom width
+ * <Button
+ *   variant={Button.variants.SECONDARY}
+ *   className="full-width"
+ *   style={{ minWidth: "200px" }}
+ * >
+ *   Custom Width
+ * </Button>
+ */
+
 const VARIANTS = {
   PRIMARY: "primary",
   SECONDARY: "secondary",

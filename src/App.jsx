@@ -1,7 +1,15 @@
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { AppRoutes } from "@routes/AppRoutes";
-import { Button } from "@components/ui";
+import { Button, ButtonIcon } from "@components/ui";
+import {
+  FiHeart,
+  FiTrash,
+  FiEdit,
+  FiEye,
+  FiEyeOff,
+  FiPlus,
+} from "react-icons/fi";
 
 export const App = () => {
   const handleClick = () => console.log("Button clicked!");
@@ -97,6 +105,54 @@ export const App = () => {
           </Button>
           <Button variant={Button.variants.SECONDARY} to="/">
             Internal Link
+          </Button>
+        </div>
+
+        <h2>Icon Buttons</h2>
+        <div
+          style={{
+            display: "flex",
+            gap: "16px",
+            marginBottom: "16px",
+            alignItems: "center",
+          }}
+        >
+          <ButtonIcon onClick={handleClick}>
+            <FiHeart />
+          </ButtonIcon>
+          <ButtonIcon
+            variant={ButtonIcon.variants.PRIMARY}
+            onClick={handleClick}
+          >
+            <FiTrash />
+          </ButtonIcon>
+          <ButtonIcon disabled onClick={handleClick}>
+            <FiEdit />
+          </ButtonIcon>
+          <ButtonIcon
+            variant={ButtonIcon.variants.PRIMARY}
+            disabled
+            onClick={handleClick}
+          >
+            <FiEye />
+          </ButtonIcon>
+          <ButtonIcon onClick={handleClick}>
+            <FiPlus />
+          </ButtonIcon>
+          <ButtonIcon
+            loading={true}
+            variant={ButtonIcon.variants.PRIMARY}
+            onClick={handleClick}
+          >
+            <FiPlus />
+          </ButtonIcon>
+        </div>
+
+        <h2>Buttons with Icons</h2>
+        <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
+          <Button variant={Button.variants.SECONDARY} onClick={handleClick}>
+            Add Ingredient
+            <FiPlus size="22px" />
           </Button>
         </div>
       </div>
