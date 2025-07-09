@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { AppRoutes } from "@routes/AppRoutes";
-import { Button, ButtonIcon, Input, Text, Heading } from "@components/ui";
+import { Button, ButtonIcon, Text, Heading, FieldInput } from "@components/ui";
 import {
   FiHeart,
   FiTrash,
@@ -156,10 +156,10 @@ export const App = () => {
           </Button>
         </div>
 
-        <h2>Input Components</h2>
+        <h2>Field Input Components</h2>
         <div style={{ marginBottom: "24px", maxWidth: "400px" }}>
           <div style={{ marginBottom: "16px" }}>
-            <Input
+            <FieldInput
               label="Basic Input"
               placeholder="Enter your text here..."
               helperText="This is a helper text"
@@ -167,7 +167,7 @@ export const App = () => {
           </div>
 
           <div style={{ marginBottom: "16px" }}>
-            <Input
+            <FieldInput
               label="Required Input"
               placeholder="Required field"
               required
@@ -176,26 +176,27 @@ export const App = () => {
           </div>
 
           <div style={{ marginBottom: "16px" }}>
-            <Input
+            <FieldInput
               label="Input with Error"
               placeholder="Enter valid email"
               error="Please enter a valid email address"
-              defaultValue="invalid-email"
+              value="invalid-email"
             />
           </div>
 
           <div style={{ marginBottom: "16px" }}>
-            <Input
+            <FieldInput
               label="Disabled Input"
               placeholder="This input is disabled"
               disabled
-              defaultValue="Disabled value"
+              value="Disabled value"
               helperText="This input cannot be edited"
             />
           </div>
 
           <div style={{ marginBottom: "16px" }}>
-            <Input
+            <FieldInput
+              style="rounded"
               label="Password Input"
               type="password"
               placeholder="Enter your password"
@@ -204,11 +205,30 @@ export const App = () => {
           </div>
 
           <div style={{ marginBottom: "16px" }}>
-            <Input
+            <FieldInput
+              style="rounded"
               label="Email Input"
               type="email"
               placeholder="user@example.com"
               helperText="We'll never share your email"
+            />
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <FieldInput
+              label="Password with Toggle Icon"
+              type="password"
+              placeholder="Enter your password"
+              helperText="Click the eye icon to toggle visibility"
+            />
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <FieldInput
+              label="Input with Character Count"
+              placeholder="Type something..."
+              maxLength="50"
+              helperText="Maximum 50 characters allowed"
             />
           </div>
         </div>

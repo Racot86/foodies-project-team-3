@@ -61,9 +61,9 @@
 
 .primary:disabled,
 .primary:disabled:hover {
-  background-color: var(--color-tertiary);
+  background-color: var(--color-secondary);
   color: var(--color-white);
-  border-color: var(--color-tertiary);
+  border-color: var(--color-secondary);
 }
 
 .primary:hover:not(:disabled),
@@ -84,8 +84,8 @@
 .secondary:disabled,
 .secondary:disabled:hover {
   background-color: var(--color-background);
-  color: var(--color-tertiary);
-  border-color: var(--color-tertiary);
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
 }
 
 .secondary:hover:not(:disabled),
@@ -107,15 +107,15 @@
 .secondary-reversed:disabled,
 .secondary-reversed:disabled:hover {
   background-color: var(--color-primary);
-  color: var(--color-tertiary);
-  border-color: var(--color-tertiary);
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
 }
 
 .secondary-reversed:hover:not(:disabled),
 .secondary-reversed:focus-visible {
   background-color: var(--color-white);
   color: var(--color-primary);
-  border-color: var(--color-white);
+  border-color: var(--color-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }

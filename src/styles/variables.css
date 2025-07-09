@@ -3,8 +3,7 @@
 :root {
   /* === COLORS === */
   --color-primary: #050505; /* Основний чорний */
-  --color-secondary: #1a1a1a; /* Темно-сірий */
-  --color-tertiary: #bfbebe; /* Світло-сірий */
+  --color-secondary: #bfbebe; /* Темно-сірий */
   --color-white: #ffffff; /* Білий */
   --color-success: #22c55e; /* Зелений */
   --color-warning: #f59e0b; /* Жовтий */
@@ -16,7 +15,7 @@
   --color-text: var(--color-primary); /* Основний колір тексту - чорний */
   --color-text-primary: var(--color-primary); /* #050505 - чорний */
   --color-text-secondary: var(--color-secondary); /* #1a1a1a - темно-сірий */
-  --color-text-muted: var(--color-tertiary); /* #bfbebe - світло-сірий */
+  --color-text-muted: var(--color-secondary); /* #bfbebe - світло-сірий */
   --color-text-inverse: var(--color-white);
 
   /* === BUTTON COLORS === */
@@ -27,7 +26,7 @@
 
   --btn-secondary-bg: transparent;
   --btn-secondary-text: var(--color-primary);
-  --btn-secondary-border: var(--color-tertiary);
+  --btn-secondary-border: var(--color-secondary);
   --btn-secondary-hover-bg: var(--color-primary);
   --btn-secondary-hover-text: var(--color-white);
 
@@ -90,6 +89,7 @@
   --border-radius-md: 8px;
   --border-radius-lg: 12px;
   --border-radius-xl: 16px;
+  --border-radius-xxl: 30px;
   --border-radius-full: 9999px;
 
   /* Legacy radius */
