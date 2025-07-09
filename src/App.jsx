@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { AppRoutes } from "@routes/AppRoutes";
-import { Button, ButtonIcon } from "@components/ui";
+import { Button, ButtonIcon, Input, Text, Heading } from "@components/ui";
 import {
   FiHeart,
   FiTrash,
@@ -154,6 +154,145 @@ export const App = () => {
             Add Ingredient
             <FiPlus size="22px" />
           </Button>
+        </div>
+
+        <h2>Input Components</h2>
+        <div style={{ marginBottom: "24px", maxWidth: "400px" }}>
+          <div style={{ marginBottom: "16px" }}>
+            <Input
+              label="Basic Input"
+              placeholder="Enter your text here..."
+              helperText="This is a helper text"
+            />
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <Input
+              label="Required Input"
+              placeholder="Required field"
+              required
+              helperText="This field is required"
+            />
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <Input
+              label="Input with Error"
+              placeholder="Enter valid email"
+              error="Please enter a valid email address"
+              defaultValue="invalid-email"
+            />
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <Input
+              label="Disabled Input"
+              placeholder="This input is disabled"
+              disabled
+              defaultValue="Disabled value"
+              helperText="This input cannot be edited"
+            />
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <Input
+              label="Password Input"
+              type="password"
+              placeholder="Enter your password"
+              helperText="Must be at least 8 characters"
+            />
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <Input
+              label="Email Input"
+              type="email"
+              placeholder="user@example.com"
+              helperText="We'll never share your email"
+            />
+          </div>
+        </div>
+
+        <h2>Typography - Headings</h2>
+        <div style={{ marginBottom: "24px" }}>
+          <Heading level={1} size="2xl" color="primary">
+            Main Page Title (H1)
+          </Heading>
+          <Heading level={2} size="lg">
+            Section Heading (H2)
+          </Heading>
+          <Heading level={3} size="md" color="muted">
+            Subsection (H3)
+          </Heading>
+          <Heading level={4} size="sm" weight="semibold">
+            Card Title (H4)
+          </Heading>
+        </div>
+
+        <h2>Typography - Text</h2>
+        <div style={{ marginBottom: "24px" }}>
+          <Text variant="body" size="lg" color="primary">
+            Large body text for important content
+          </Text>
+          <Text variant="body" size="md">
+            Regular body text for normal content
+          </Text>
+          <Text variant="body" size="sm" color="muted">
+            Small body text for secondary information
+          </Text>
+          <Text variant="caption" size="xs" color="muted">
+            Caption text for labels and hints
+          </Text>
+          <Text variant="label" size="sm" weight="semibold" color="primary">
+            Form Label Text
+          </Text>
+        </div>
+
+        <h2>Text Colors</h2>
+        <div style={{ marginBottom: "24px" }}>
+          <Text weight="semibold">Default text color (чорний #050505)</Text>
+          <Text color="primary" weight="semibold">
+            Primary text color (чорний #050505)
+          </Text>
+          <Text color="muted">Muted text color (світло-сірий #bfbebe)</Text>
+          <Text color="success" weight="medium">
+            Success message (зелений)
+          </Text>
+          <Text color="warning" weight="medium">
+            Warning message (жовтий)
+          </Text>
+          <Text color="error" weight="medium">
+            Error message (червоний)
+          </Text>
+        </div>
+
+        <h2>Color Comparison</h2>
+        <div
+          style={{
+            marginBottom: "24px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+          }}
+        >
+          <div style={{ display: "flex", gap: "16px" }}>
+            <Text size="lg">Default</Text>
+            <Text color="primary" size="lg">
+              Primary
+            </Text>
+            <Text color="muted" size="lg">
+              Muted
+            </Text>
+          </div>
+          <div style={{ display: "flex", gap: "16px" }}>
+            <Text weight="bold">Default Bold</Text>
+            <Text color="primary" weight="bold">
+              Primary Bold
+            </Text>
+            <Text color="muted" weight="bold">
+              Muted Bold
+            </Text>
+          </div>
         </div>
       </div>
       <AppRoutes />

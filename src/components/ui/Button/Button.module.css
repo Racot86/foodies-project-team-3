@@ -5,7 +5,7 @@
   height: 56px;
   min-width: 156px;
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: all var(--transition-fast);
   border-radius: 30px;
   text-decoration: none;
   display: inline-flex;
@@ -19,7 +19,7 @@
   font-size: var(--font-md);
   background-color: transparent;
   border: 1px solid transparent;
-  color: var(--color-text);
+  color: var(--color-text-primary);
 }
 
 .iconLoading {
@@ -41,26 +41,33 @@
 .button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
-  transform: none !important;
-  box-shadow: none !important;
+}
+
+/* Ensure disabled state overrides all interactions */
+.button:disabled,
+.primary:disabled,
+.secondary:disabled,
+.secondary-reversed:disabled {
+  transform: none;
+  box-shadow: none;
 }
 
 /* Primary variant */
-.button.primary {
+.primary {
   background-color: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border-color: var(--btn-primary-border);
 }
 
-.button.primary:disabled,
-.button.primary:disabled:hover {
+.primary:disabled,
+.primary:disabled:hover {
   background-color: var(--color-tertiary);
   color: var(--color-white);
   border-color: var(--color-tertiary);
 }
 
-.button.primary:hover:not(:disabled),
-.button.primary:focus-visible {
+.primary:hover:not(:disabled),
+.primary:focus-visible {
   background-color: var(--btn-primary-hover-bg);
   border-color: var(--btn-primary-hover-bg);
   transform: translateY(-2px);
@@ -68,21 +75,21 @@
 }
 
 /* Secondary variant */
-.button.secondary {
+.secondary {
   background-color: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
   border-color: var(--btn-secondary-border);
 }
 
-.button.secondary:disabled,
-.button.secondary:disabled:hover {
+.secondary:disabled,
+.secondary:disabled:hover {
   background-color: var(--color-background);
   color: var(--color-tertiary);
   border-color: var(--color-tertiary);
 }
 
-.button.secondary:hover:not(:disabled),
-.button.secondary:focus-visible {
+.secondary:hover:not(:disabled),
+.secondary:focus-visible {
   background-color: var(--btn-secondary-hover-bg);
   color: var(--btn-secondary-hover-text);
   border-color: var(--btn-secondary-hover-bg);
@@ -91,21 +98,21 @@
 }
 
 /* Secondary Reversed variant */
-.button.secondary-reversed {
+.secondary-reversed {
   background-color: var(--color-primary);
   color: var(--color-white);
   border-color: var(--color-white);
 }
 
-.button.secondary-reversed:disabled,
-.button.secondary-reversed:disabled:hover {
+.secondary-reversed:disabled,
+.secondary-reversed:disabled:hover {
   background-color: var(--color-primary);
   color: var(--color-tertiary);
   border-color: var(--color-tertiary);
 }
 
-.button.secondary-reversed:hover:not(:disabled),
-.button.secondary-reversed:focus-visible {
+.secondary-reversed:hover:not(:disabled),
+.secondary-reversed:focus-visible {
   background-color: var(--color-white);
   color: var(--color-primary);
   border-color: var(--color-white);
@@ -113,8 +120,15 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Active states */
+/* Active states - higher specificity for variants */
 .button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.primary:active:not(:disabled),
+.secondary:active:not(:disabled),
+.secondary-reversed:active:not(:disabled) {
   transform: translateY(0);
   box-shadow: var(--shadow-sm);
 }
@@ -123,6 +137,19 @@
 .button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+/* Enhanced focus for variants */
+.primary:focus-visible {
+  outline-color: var(--color-primary);
+}
+
+.secondary:focus-visible {
+  outline-color: var(--color-primary);
+}
+
+.secondary-reversed:focus-visible {
+  outline-color: var(--color-white);
 }
 
 @keyframes rotate {
