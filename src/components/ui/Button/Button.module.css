@@ -68,9 +68,9 @@
 
 .primary:hover:not(:disabled),
 .primary:focus-visible {
-  background-color: var(--btn-primary-hover-bg);
   border-color: var(--btn-primary-hover-bg);
   transform: translateY(-2px);
+  color: var(--color-white);
   box-shadow: var(--shadow-lg);
 }
 
