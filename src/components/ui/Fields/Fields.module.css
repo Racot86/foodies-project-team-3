@@ -11,6 +11,9 @@
   text-transform: uppercase;
   font-size: var(--font-md);
 }
+.field.rounded:not(:last-child) {
+  margin-bottom: 14px;
+}
 
 .field input,
 .field textarea {
@@ -79,7 +82,7 @@
 }
 
 .inputWrapper.withExtra .extra {
-  right: var(--spacing-sm);
+  right: var(--spacing-md);
   font-size: var(--font-xl);
 }
 
