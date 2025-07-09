@@ -101,7 +101,7 @@ export const FieldInput = ({
     if (maxLength) {
       return (
         <span className={css.count}>
-          {count} / {defaultMaxLength}
+          <span className={css.count_active}>{count}</span> / {defaultMaxLength}
         </span>
       );
     }

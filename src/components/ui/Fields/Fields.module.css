@@ -99,6 +99,14 @@
   cursor: pointer;
 }
 
+.count {
+  font-size: var(--font-sm);
+  color: var(--color-secondary);
+}
+.count_active {
+  color: var(--color-primary);
+}
+
 .field input:focus,
 .field input:hover,
 .field textarea:focus,
