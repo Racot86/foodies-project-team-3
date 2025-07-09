@@ -1,4 +1,3 @@
-// src/components/ui/FieldInput/FieldInput.jsx
 import clsx from "clsx";
 import { useId, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -22,7 +21,6 @@ export const FieldInput = ({
   helperText,
   disabled = false,
 }) => {
-  const [count, setCount] = useState(0);
   const [defaultType, setDefaultType] = useState(type);
   const fieldId = useId();
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
@@ -44,20 +42,8 @@ export const FieldInput = ({
   // Визначаємо фінальну помилку
   const inputError = error || (formikTouched && formikError);
 
-  // Ініціалізуємо лічильник символів
-  useState(() => {
-    if (maxLength && inputValue) {
-      setCount(inputValue.length);
-    }
-  }, []);
-
   const handleOnChange = (event) => {
     const { value } = event.target;
-
-    // Оновлюємо лічильник символів
-    if (maxLength) {
-      setCount(value.length);
-    }
 
     // Оновлюємо Formik значення
     if (name && formikSetFieldValue) {
@@ -89,7 +75,6 @@ export const FieldInput = ({
       type: defaultType,
       onChange: handleOnChange,
       onBlur: handleOnBlur,
-      autoComplete: getAutoComplete(type),
     };
 
     // Якщо є Formik context і name, додаємо required з валідації
@@ -127,22 +112,6 @@ export const FieldInput = ({
         </button>
       );
     }
-
-    if (maxLength) {
-      return (
-        <span className={css.count}>
-          <span
-            className={clsx(
-              css.count_active,
-              count > defaultMaxLength && css.count_error
-            )}
-          >
-            {count}
-          </span>{" "}
-          / {defaultMaxLength}
-        </span>
-      );
-    }
   };
 
   return (
@@ -175,16 +144,4 @@ export const FieldInput = ({
       )}
     </div>
   );
-};
-
-// Utility function for autocomplete
-const getAutoComplete = (type) => {
-  const autoCompleteMap = {
-    email: "email",
-    password: "current-password",
-    text: "on",
-    tel: "tel",
-    url: "url",
-  };
-  return autoCompleteMap[type] || "on";
 };

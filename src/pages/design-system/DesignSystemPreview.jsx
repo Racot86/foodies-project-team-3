@@ -5,6 +5,7 @@ import {
   Heading,
   FieldInput,
   FieldCount,
+  FieldTextarea,
 } from "@components/ui";
 import {
   FiHeart,
@@ -175,10 +176,14 @@ const AddRecipeForm = () => {
             >
               Recipe Preparation
             </Heading>
-            <FieldInput
+            <FieldTextarea
               name="preparation"
-              placeholder="Enter recipe"
-              maxLength="200"
+              label="Опис"
+              placeholder="Enter your recipe preparation"
+              maxLength={500}
+              value={formik.values.preparation}
+              expandAt={60}
+              required
             />
           </div>
 
