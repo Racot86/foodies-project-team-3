@@ -75,7 +75,8 @@
 }
 
 .step {
-  min-width: var(--spacing-2xl);
+  min-width: 58px;
+  text-align: center;
   font-size: var(--font-md);
   color: var(--color-secondary);
 }
