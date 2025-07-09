@@ -1,4 +1,11 @@
-import { Button, ButtonIcon, Text, Heading, FieldInput } from "@components/ui";
+import {
+  Button,
+  ButtonIcon,
+  Text,
+  Heading,
+  FieldInput,
+  FieldCount,
+} from "@components/ui";
 import {
   FiHeart,
   FiTrash,
@@ -152,6 +159,15 @@ const DesignSystemPreview = () => {
           <FiPlus size="22px" />
         </Button>
       </div>
+
+      <FieldCount
+        label="Count Field"
+        name="count"
+        strong
+        onChange={(value) => console.log("Count changed:", value)}
+        error="This field is required"
+        value={0}
+      />
 
       <h2>Field Input Components</h2>
       <div style={{ marginBottom: "24px", maxWidth: "400px" }}>
