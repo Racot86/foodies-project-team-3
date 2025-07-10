@@ -52,11 +52,6 @@
   border-color: transparent;
 }
 
-.field textarea {
-  overflow: hidden;
-  resize: none;
-}
-
 .inputWrapper,
 .textAreaWrapper {
   width: 100%;
@@ -148,16 +143,22 @@
   border-color: var(--color-error);
 }
 
+@media screen and (min-width: 375px) and (max-width: 768px) {
+  .extra {
+    position: unset;
+  }
+  .field input,
+  .field textarea {
+    overflow: visible;
+  }
+}
+
 /* tablet */
-@media only screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .field label {
     font-size: var(--font-xl);
   }
   .field.strong input {
     font-size: var(--font-2xl);
   }
-}
-
-/* desktop */
-@media only screen and (min-width: 1440px) {
 }
