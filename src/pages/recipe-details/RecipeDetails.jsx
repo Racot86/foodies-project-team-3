@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './RecipeDetails.module.css';
+import { BreadCrumbs } from '@components/ui';
 
 export const RecipeDetails = () => {
     const { recipeId } = useParams();
@@ -26,6 +27,7 @@ export const RecipeDetails = () => {
 
     return (
         <div className={styles.recipeDetail}>
+            <BreadCrumbs items={[{ label: recipe.title }]} />
             <div className={styles.backLinkContainer}>
                 <Link to={`/category/${recipe.categoryId}`} className={styles.backLink}>
                     &larr; Back to Category

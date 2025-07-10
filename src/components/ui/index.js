@@ -6,4 +6,4 @@ export { Heading } from "./Heading";
 export { FieldInput, ErrorField, FieldCount, FieldTextarea } from "./Fields";
 export { SocialLink } from "./SocialLink";
 export { SignToggle } from "./SignToggle/SignToggle";
-
+export { BreadCrumbs } from "./BreadCrumbs/BreadCrumbs";
