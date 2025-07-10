@@ -16,11 +16,6 @@ export const RecipeCategories = () => {
   return (
     <div>
       <h2>Recipe Categories</h2>
-      <div style={{ marginBottom: "20px" }}>
-        <Button variant={Button.variants.PRIMARY} to="/design-system">
-          View Design System
-        </Button>
-      </div>
       <div className={styles.categoriesGrid}>
         {categories.map((category) => (
           <div key={category.id}>
