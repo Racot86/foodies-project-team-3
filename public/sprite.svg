@@ -79,3 +79,7 @@
     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="230.4" d="m192 224 576 576 576-576"/>
 </symbol>
 </svg>
+
+<symbol id="logo" viewBox="0 0 83 28">
+  <path d="M2.4 23V3.544h.096V10.832H3.432L4 11.768V10.016C2.4 8.432 2.888 7.24 3.624 6.44C4.456 5.64 5.696 5.24 7.344 5.24C7.712 5.24 8.104 5.264 8.52 5.312C8.952 5.36 9.328 5.456 9.64..." fill="white"/>
+</symbol>
