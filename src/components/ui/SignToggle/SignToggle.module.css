@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.toggleWrapper {
+  position: relative;
+  display: flex;
+  background: #fff;
+  border-radius: 30px;
+}
+
+.left {
+  transform: translateX(0%);
+}
+
+.right {
+  transform: translateX(100%);
+}
+
+.button {
+  font-family: Mulish;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+  flex: 1;
+  z-index: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--Main, #050505);
+  transition: color 0.3s ease;
+  padding: 10px 16px;
+  min-width: 80px;
+  min-height: 38px;
+}
+
+.activeText {
+  color: #fff;
+}
+
+.toggleBackground {
+  position: absolute;
+  background-color: #111;
+  transition: transform 0.3s ease;
+  z-index: 0;
+  padding: 10px 16px;
+  border-radius: 30px;
+  border: 1px solid var(--Gray, #bfbebe);
+  background: #1a1a1a;
+  min-width: 80px;
+  min-height: 38px;
+}
+@media (min-width: 768px) {
+  .toggleBackground,
+  .button {
+    padding: 14px 28px;
+    min-width: 104px;
+    min-height: 46px;
+  }
+}

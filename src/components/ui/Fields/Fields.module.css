@@ -18,11 +18,14 @@
 .field input,
 .field textarea {
   width: 100%;
-  height: 56px;
+  min-height: 56px;
   border: none;
   border-bottom: 1px solid var(--color-secondary);
   padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) 0;
   outline: none;
+  height: auto;
+  overflow: hidden;
+  resize: none;
 }
 
 .field.rounded input,
@@ -75,7 +78,8 @@
 }
 
 .step {
-  min-width: var(--spacing-2xl);
+  min-width: 58px;
+  text-align: center;
   font-size: var(--font-md);
   color: var(--color-secondary);
 }
@@ -87,7 +91,7 @@
 }
 
 .inputWrapper.withExtra input {
-  padding-right: 60px;
+  padding-right: 75px;
 }
 
 .inputWrapper.withExtra .extra {
@@ -97,6 +101,7 @@
 
 .textAreaWrapper.withExtra textarea {
   padding-right: 80px;
+  padding-bottom: 40px; /* Extra space for character count */
 }
 
 .showPassword {
@@ -109,6 +114,7 @@
 }
 
 .count {
+  display: flex;
   font-size: var(--font-sm);
   color: var(--color-secondary);
 }
