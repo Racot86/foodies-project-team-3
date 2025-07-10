@@ -5,7 +5,7 @@ import AddRecipePage from "@pages/add-recipe/AddRecipePage";
 import DesignSystemPreview from "@pages/design-system/DesignSystemPreview";
 import { Layout } from "@components/layout/Layout";
 import RecipeCategories from "@components/recipe-categories/RecipeCategories";
-import RecipeCategoryDetails from "@components/recipe-categories/RecipeCategoryDetails.jsx";
+import CategoryRecepies from "@components/recipe-categories/CategoryRecepies.jsx";
 
 export const AppRoutes = () => {
   return (
@@ -15,7 +15,7 @@ export const AppRoutes = () => {
           <Route index element={<RecipeCategories />} />
           <Route
             path="category/:categoryId"
-            element={<RecipeCategoryDetails />}
+            element={<CategoryRecepies />}
           />
         </Route>
         <Route path="/add-recipe" element={<AddRecipePage />} />
