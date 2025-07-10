@@ -4,7 +4,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import css from "../Fields.module.css";
 import { ButtonIcon } from "../../ButtonIcon/ButtonIcon";
 import { ErrorField } from "../ErrorField/ErrorField";
-import { useFormContext } from "react-hook-form";
+import { useFormikContext } from "formik";
 
 export const FieldCount = ({
   label,
@@ -17,8 +17,12 @@ export const FieldCount = ({
   className = "",
 }) => {
   const [count, setCount] = useState(value);
-  const formContext = useFormContext();
-  const getValues = formContext?.getValues;
+  const formikContext = useFormikContext();
+
+  // Отримуємо values з Formik замість react-hook-form
+  const getValues = useMemo(() => {
+    return formikContext?.values ? () => formikContext.values : null;
+  }, [formikContext?.values]);
 
   const fieldId = useId();
   const values = useMemo(() => {
@@ -30,6 +34,11 @@ export const FieldCount = ({
     if (currentValue >= 0) {
       onChange(currentValue);
       setCount(currentValue);
+
+      // Оновлюємо Formik значення якщо є name
+      if (name && formikContext?.setFieldValue) {
+        formikContext.setFieldValue(name, currentValue);
+      }
     }
   };
 

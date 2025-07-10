@@ -6,6 +6,7 @@ import {
   FieldInput,
   FieldCount,
   SignToggle,
+  FieldTextarea,
 } from "@components/ui";
 import {
   FiHeart,
@@ -19,13 +20,203 @@ import {
   FiTwitter,
   FiYoutube,
 } from "react-icons/fi";
+import { useFormik, FormikProvider } from "formik";
+import * as Yup from "yup";
+
+const SignInForm = () => {
+  const formik = useFormik({
+    initialValues: { email: "", password: "" },
+    validationSchema: Yup.object({
+      email: Yup.string().email().required(),
+      password: Yup.string().min(6).required(),
+    }),
+    onSubmit: (values) => console.log(values),
+  });
+
+  return (
+    <div
+      style={{
+        maxWidth: "400px",
+        margin: "20px 0",
+        padding: "24px",
+        border: "1px solid #e0e0e0",
+        borderRadius: "8px",
+        backgroundColor: "#fff",
+      }}
+    >
+      <Heading level={3} style={{ marginBottom: "16px" }}>
+        Example of Using Inputs in Sign In Form
+      </Heading>
+      <FormikProvider value={formik}>
+        <form
+          onSubmit={formik.handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "16px" }}
+        >
+          <FieldInput
+            style="rounded"
+            name="email"
+            type="email"
+            placeholder="Email*"
+          />
+          <FieldInput
+            style="rounded"
+            name="password"
+            type="password"
+            placeholder="Password"
+          />
+          <Button variant={Button.variants.PRIMARY} type="submit">
+            SIGN IN
+          </Button>
+        </form>
+      </FormikProvider>
+    </div>
+  );
+};
+
+const AddRecipeForm = () => {
+  const formik = useFormik({
+    initialValues: {
+      ingredient: "",
+      quantity: "",
+      cookingTime: 20,
+      preparation: "",
+    },
+    validationSchema: Yup.object({
+      ingredient: Yup.string().required("Ingredient is required"),
+      quantity: Yup.string().required("Quantity is required"),
+      cookingTime: Yup.number().min(1).required("Cooking time is required"),
+      preparation: Yup.string()
+        .max(200)
+        .required("Recipe preparation is required"),
+    }),
+    onSubmit: (values) => console.log("Recipe submitted:", values),
+  });
+
+  const addIngredient = () => {
+    console.log(
+      "Add ingredient:",
+      formik.values.ingredient,
+      formik.values.quantity
+    );
+  };
+
+  return (
+    <div
+      style={{
+        maxWidth: "600px",
+        margin: "20px 0",
+        padding: "24px",
+        border: "1px solid #e0e0e0",
+        borderRadius: "8px",
+        backgroundColor: "#fff",
+      }}
+    >
+      <Heading level={3} style={{ marginBottom: "24px" }}>
+        Add Recipe Form Example
+      </Heading>
+      <FormikProvider value={formik}>
+        <form
+          onSubmit={formik.handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+        >
+          {/* Ingredients Section */}
+          <div>
+            <Heading
+              level={4}
+              style={{
+                marginBottom: "16px",
+                textTransform: "uppercase",
+                fontSize: "16px",
+              }}
+            >
+              Ingredients
+            </Heading>
+            <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
+              <div style={{ flex: 1 }}>
+                <FieldInput
+                  name="ingredient"
+                  placeholder="Add the ingredient"
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <FieldInput name="quantity" placeholder="Enter quantity" />
+              </div>
+            </div>
+            <Button
+              variant={Button.variants.SECONDARY}
+              onClick={addIngredient}
+              type="button"
+              style={{ alignSelf: "flex-start" }}
+            >
+              ADD INGREDIENT
+              <FiPlus />
+            </Button>
+          </div>
+
+          {/* Cooking Time Section */}
+          <div>
+            <FieldCount
+              label="Cooking Time"
+              name="cookingTime"
+              strong
+              onChange={(value) => formik.setFieldValue("cookingTime", value)}
+              value={formik.values.cookingTime}
+              step={10}
+            />
+          </div>
+
+          {/* Recipe Preparation Section */}
+          <div>
+            <Heading
+              level={4}
+              style={{
+                marginBottom: "16px",
+                textTransform: "uppercase",
+                fontSize: "16px",
+              }}
+            >
+              Recipe Preparation
+            </Heading>
+            <FieldTextarea
+              name="preparation"
+              label="Опис"
+              placeholder="Enter your recipe preparation"
+              maxLength={500}
+              value={formik.values.preparation}
+              expandAt={60}
+              required
+            />
+          </div>
+
+          {/* Action Buttons */}
+          <div
+            style={{
+              display: "flex",
+              gap: "16px",
+              justifyContent: "flex-start",
+            }}
+          >
+            <ButtonIcon onClick={() => console.log("Delete recipe")}>
+              <FiTrash />
+            </ButtonIcon>
+            <Button variant={Button.variants.PRIMARY} type="submit">
+              PUBLISH
+            </Button>
+          </div>
+        </form>
+      </FormikProvider>
+    </div>
+  );
+};
 
 const DesignSystemPreview = () => {
   const handleClick = () => console.log("Button clicked!");
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Design System Test</h1>
+      <Heading level={1} style={{ marginBottom: "32px" }}>
+        Design System Test
+      </Heading>
 
       <h2>Primary Buttons</h2>
       <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
@@ -154,98 +345,20 @@ const DesignSystemPreview = () => {
       </div>
 
       <h2>Buttons with Icons</h2>
-      <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
+      <div style={{ display: "flex", gap: "16px", marginBottom: "32px" }}>
         <Button variant={Button.variants.SECONDARY} onClick={handleClick}>
           Add Ingredient
           <FiPlus size="22px" />
         </Button>
       </div>
 
-      <FieldCount
-        label="Count Field"
-        name="count"
-        strong
-        onChange={(value) => console.log("Count changed:", value)}
-        error="This field is required"
-        value={0}
-      />
+      {/* Form Examples */}
+      <Heading level={2} style={{ marginBottom: "16px" }}>
+        Form Examples
+      </Heading>
 
-      <h2>Field Input Components</h2>
-      <div style={{ marginBottom: "24px", maxWidth: "400px" }}>
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            label="Basic Input"
-            placeholder="Enter your text here..."
-            helperText="This is a helper text"
-          />
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            label="Required Input"
-            placeholder="Required field"
-            required
-            helperText="This field is required"
-          />
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            label="Input with Error"
-            placeholder="Enter valid email"
-            error="Please enter a valid email address"
-            value="invalid-email"
-          />
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            label="Disabled Input"
-            placeholder="This input is disabled"
-            disabled
-            value="Disabled value"
-            helperText="This input cannot be edited"
-          />
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            style="rounded"
-            label="Password Input"
-            type="password"
-            placeholder="Enter your password"
-            helperText="Must be at least 8 characters"
-          />
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            style="rounded"
-            label="Email Input"
-            type="email"
-            placeholder="user@example.com"
-            helperText="We'll never share your email"
-          />
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            label="Password with Toggle Icon"
-            type="password"
-            placeholder="Enter your password"
-            helperText="Click the eye icon to toggle visibility"
-          />
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <FieldInput
-            label="Input with Character Count"
-            placeholder="Type something..."
-            maxLength="50"
-            helperText="Maximum 50 characters allowed"
-          />
-        </div>
-      </div>
+      <SignInForm />
+      <AddRecipeForm />
 
       <h2>Typography - Headings</h2>
       <div style={{ marginBottom: "24px" }}>
