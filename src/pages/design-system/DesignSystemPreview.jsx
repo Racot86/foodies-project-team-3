@@ -5,6 +5,7 @@ import {
   Heading,
   FieldInput,
   FieldCount,
+  SignToggle,
 } from "@components/ui";
 import {
   FiHeart,
@@ -325,6 +326,16 @@ const DesignSystemPreview = () => {
           <Text color="muted" weight="bold">
             Muted Bold
           </Text>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "16px",
+            marginBottom: "32px",
+            marginTop: "32px",
+          }}
+        >
+          <SignToggle />
         </div>
       </div>
     </div>

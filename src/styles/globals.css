@@ -1,5 +1,6 @@
 /* Global Styles */
 @import "./variables.css";
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap");
 
 /* Reset and base styles */
 * {
