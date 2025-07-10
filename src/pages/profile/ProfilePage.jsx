@@ -1,7 +1,8 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import styles from './ProfilePage.module.css';
 import Page from '../../components/page/Page';
-import { BreadCrumbs } from '@components/ui';
+import { BreadCrumbs, Tabs } from '@components/ui';
 
 function ProfilePage() {
     return (
@@ -28,6 +29,13 @@ function ProfilePage() {
                         <li>Favorite recipes: 12</li>
                         <li>Comments: 8</li>
                     </ul>
+                </div>
+            </div>
+
+            <div className={styles.tabsSection}>
+                <Tabs />
+                <div className={styles.tabContent}>
+                    <Outlet />
                 </div>
             </div>
         </Page>

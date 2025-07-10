@@ -77,6 +77,18 @@
     border-bottom: none;
 }
 
+.tabsSection {
+    margin-top: 2rem;
+}
+
+.tabContent {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 @media (min-width: 768px) {
     .profileContent {
         flex-direction: row;
