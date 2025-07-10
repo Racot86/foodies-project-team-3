@@ -144,11 +144,10 @@
 }
 
 @media screen and (min-width: 375px) and (max-width: 768px) {
-  .extra {
+  .fieldTextarea .extra {
     position: unset;
   }
-  .field input,
-  .field textarea {
+  .fieldTextarea textarea {
     overflow: visible;
   }
 }
