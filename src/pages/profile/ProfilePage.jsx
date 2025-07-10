@@ -2,12 +2,11 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './ProfilePage.module.css';
 import Page from '../../components/page/Page';
-import { BreadCrumbs, Tabs } from '@components/ui';
+import { Tabs } from '@components/ui';
 
 function ProfilePage() {
     return (
         <Page className={styles.profilePage}>
-            <BreadCrumbs items={[{ label: 'Profile' }]} />
             <h1>My Profile</h1>
             <div className={styles.profileContent}>
                 <div className={styles.profileInfo}>

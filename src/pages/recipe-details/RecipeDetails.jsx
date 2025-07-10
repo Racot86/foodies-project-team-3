@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './RecipeDetails.module.css';
-import { BreadCrumbs } from '@components/ui';
+import { useDispatch } from 'react-redux';
+import { setRecipeName, clearRecipeName } from '@/redux/slices/breadcrumbsSlice.js';
 
 export const RecipeDetails = () => {
     const { recipeId } = useParams();
+    const dispatch = useDispatch();
 
     // Example recipes data - in a real app, this would come from an API
     const recipes = [
@@ -21,13 +23,24 @@ export const RecipeDetails = () => {
 
     const recipe = recipes.find(r => r.id === recipeId);
 
+    // Update Redux store with recipe name when component mounts or recipe changes
+    useEffect(() => {
+        if (recipe) {
+            dispatch(setRecipeName(recipe.title));
+        }
+
+        // Clear recipe name when component unmounts
+        return () => {
+            dispatch(clearRecipeName());
+        };
+    }, [dispatch, recipe, recipeId]);
+
     if (!recipe) {
         return <div className={styles.notFound}>Recipe not found</div>;
     }
 
     return (
         <div className={styles.recipeDetail}>
-            <BreadCrumbs items={[{ label: recipe.title }]} />
             <div className={styles.backLinkContainer}>
                 <Link to={`/category/${recipe.categoryId}`} className={styles.backLink}>
                     &larr; Back to Category
