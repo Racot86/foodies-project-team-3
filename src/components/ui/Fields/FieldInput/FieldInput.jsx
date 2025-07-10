@@ -3,11 +3,11 @@ import { useId, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
+import { useFormikContext } from "formik";
 
 export const FieldInput = ({
   name,
   label,
-  register,
   required,
   placeholder,
   maxLength,
@@ -21,16 +21,46 @@ export const FieldInput = ({
   helperText,
   disabled = false,
 }) => {
-  const [count, setCount] = useState(0);
   const [defaultType, setDefaultType] = useState(type);
   const fieldId = useId();
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
   const withExtra = type === "password" || !!maxLength;
 
+  // Отримуємо Formik context
+  const formikContext = useFormikContext();
+
+  // Визначаємо значення та методи з Formik
+  const formikValue = formikContext?.values?.[name];
+  const formikSetFieldValue = formikContext?.setFieldValue;
+  const formikSetFieldTouched = formikContext?.setFieldTouched;
+  const formikTouched = formikContext?.touched?.[name];
+  const formikError = formikContext?.errors?.[name];
+
+  // Визначаємо фінальне значення
+  const inputValue = value !== undefined ? value : formikValue || "";
+
+  // Визначаємо фінальну помилку
+  const inputError = error || (formikTouched && formikError);
+
   const handleOnChange = (event) => {
     const { value } = event.target;
-    maxLength && setCount(value.length);
-    onChange && onChange(value);
+
+    // Оновлюємо Formik значення
+    if (name && formikSetFieldValue) {
+      formikSetFieldValue(name, value);
+    }
+
+    // Викликаємо кастомний onChange якщо є
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
+  const handleOnBlur = () => {
+    // Позначаємо поле як touched в Formik
+    if (name && formikSetFieldTouched) {
+      formikSetFieldTouched(name, true);
+    }
   };
 
   const renderInput = () => {
@@ -38,38 +68,22 @@ export const FieldInput = ({
       placeholder,
       maxLength: defaultMaxLength,
       disabled,
-      "aria-invalid": error ? "true" : "false",
-      "aria-describedby": error ? `${fieldId}-error` : undefined,
+      "aria-invalid": inputError ? "true" : "false",
+      "aria-describedby": inputError ? `${fieldId}-error` : undefined,
       id: fieldId,
+      value: inputValue,
+      type: defaultType,
+      onChange: handleOnChange,
+      onBlur: handleOnBlur,
     };
 
-    if (register) {
-      const { onChange: regOnChange, ...field } = register(name, {
-        required,
-      });
-
-      return (
-        <input
-          value={value}
-          type={defaultType}
-          {...field}
-          onChange={(e) => {
-            regOnChange(e);
-            handleOnChange(e);
-          }}
-          {...defaultProps}
-        />
-      );
+    // Якщо є Formik context і name, додаємо required з валідації
+    if (formikContext && name) {
+      const fieldMeta = formikContext.getFieldMeta?.(name);
+      defaultProps.required = required || fieldMeta?.required;
     }
 
-    return (
-      <input
-        value={value}
-        type={defaultType}
-        onChange={handleOnChange}
-        {...defaultProps}
-      />
-    );
+    return <input {...defaultProps} />;
   };
 
   const isPassword = (type) => type === "password";
@@ -92,17 +106,10 @@ export const FieldInput = ({
           aria-label={
             isPassword(defaultType) ? "Show password" : "Hide password"
           }
+          tabIndex={disabled ? -1 : 0}
         >
           {isPassword(defaultType) ? <FiEye /> : <FiEyeOff />}
         </button>
-      );
-    }
-
-    if (maxLength) {
-      return (
-        <span className={css.count}>
-          <span className={css.count_active}>{count}</span> / {defaultMaxLength}
-        </span>
       );
     }
   };
@@ -114,8 +121,9 @@ export const FieldInput = ({
         style && css[style],
         className,
         strong && css.strong,
-        error && css.error,
-        withExtra && css.withExtra
+        inputError && css.error,
+        withExtra && css.withExtra,
+        disabled && css.disabled
       )}
     >
       {label && (
@@ -128,8 +136,12 @@ export const FieldInput = ({
         {renderInput()}
         {withExtra && <div className={css.extra}>{renderExtra()}</div>}
       </div>
-      {helperText && !error && <p className={css.helperText}>{helperText}</p>}
-      {error && <ErrorField id={`${fieldId}-error`}>{error}</ErrorField>}
+      {helperText && !inputError && (
+        <p className={css.helperText}>{helperText}</p>
+      )}
+      {inputError && (
+        <ErrorField id={`${fieldId}-error`}>{inputError}</ErrorField>
+      )}
     </div>
   );
 };
