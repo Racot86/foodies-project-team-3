@@ -10,7 +10,7 @@ export const FieldSelect = ({
   error,
   options = [],
   required,
-  placeholder = "Выберите значение",
+  placeholder,
   onChange,
   value,
   className,

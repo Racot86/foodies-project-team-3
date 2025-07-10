@@ -152,14 +152,14 @@
   display: inline-block;
   border: 1px solid var(--color-secondary);
   border-radius: 30px;
-  padding: 16px 18px;
+  padding: 14px;
   width: 100%;
-  height: 56px;
+  height: 48px;
   cursor: pointer;
   font-family: "Mulish Bold", Arial, sans-serif;
   font-weight: var(--font-medium);
-  font-size: var(--font-md);
-  line-height: 1.5;
+  font-size: var(--font-sm);
+  line-height: 1.43;
   letter-spacing: -0.02em;
   color: var(--color-secondary);
   background: var(--color-white);
@@ -195,14 +195,14 @@
 .optionsList {
   font-family: "Mulish Bold", Arial, sans-serif;
   font-weight: var(--font-medium);
-  font-size: var(--font-md);
+  font-size: var(--font-sm);
   list-style: none;
   border: 1px solid var(--color-secondary);
   border-radius: 15px;
   overflow-y: auto;
   background: var(--color-white);
   width: 90%;
-  left: 50%; /* або інша позиція по горизонталі */
+  left: 50%;
   transform: translateX(-50%);
   position: absolute;
   z-index: 10;
@@ -210,7 +210,8 @@
   flex-direction: column;
   gap: 6px;
   padding: 16px 18px;
-  margin-top: 90px;
+  margin-top: 50px;
+  max-width: 340px;
 }
 
 .option {
@@ -240,7 +241,6 @@
   background-color: var(--color-secondary-light);
 }
 
-/* Для disabled состояния */
 .disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -256,11 +256,20 @@
   }
   .optionsList {
     width: 315px;
+    font-size: var(--font-md);
     left: unset;
     transform: unset;
+    max-width: unset;
+    margin-top: 60px;
   }
   .selectWrapper {
     width: 315px;
+  }
+  .selectWrapper {
+    padding: 16px 18px;
+    height: 56px;
+    font-size: var(--font-md);
+    line-height: 1.5;
   }
 }
 
