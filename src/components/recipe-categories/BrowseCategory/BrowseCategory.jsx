@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
-import styles from './CategoryRecepies.module.css';
+import styles from './BrowseCategory.module.css';
 
-export const CategoryRecepies = () => {
+export const BrowseCategory = () => {
     const {categoryId} = useParams();
 
     // Example categories data - in a real app, this would come from an API
@@ -47,7 +47,7 @@ export const CategoryRecepies = () => {
             <div className={styles.recipesList}>
                 {categoryRecipes.length > 0 ? (
                     categoryRecipes.map(recipe => (
-                        <div key={recipe.id} className={styles.recipeCard}>
+                        <Link to={`/recipe-details/${recipe.id}`} key={recipe.id} className={styles.recipeCard}>
                             <div className={styles.recipeImage}>
                                 {/* Placeholder for recipe image */}
                                 <div className={styles.imagePlaceholder}>{recipe.title[0]}</div>
@@ -56,7 +56,7 @@ export const CategoryRecepies = () => {
                                 <h3>{recipe.title}</h3>
                                 <p>Preparation time: {recipe.time}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))
                 ) : (
                     <p>No recipes found in this category.</p>
@@ -66,4 +66,4 @@ export const CategoryRecepies = () => {
     );
 };
 
-export default CategoryRecepies;
+export default BrowseCategory;

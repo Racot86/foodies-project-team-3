@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./RecipeCategories.module.css";
-import { Button } from "@components/ui";
+import { Button } from "@components/ui/index.js";
 
 export const RecipeCategories = () => {
   // Example categories - in a real app, these would likely come from an API
