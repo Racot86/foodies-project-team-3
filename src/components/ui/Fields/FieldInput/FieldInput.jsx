@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useId, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import css from "../Fields.module.css";
-import { ErrorField } from "../ErrorField/ErrorField";
+import { ErrorField } from "@components/ui/index.js";
 import { useFormikContext } from "formik";
 
 export const FieldInput = ({

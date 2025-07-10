@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./RecipeCategories.module.css";
-import { Button } from "@components/ui";
+import { Button } from "@components/ui/index.js";
 
 export const RecipeCategories = () => {
   // Example categories - in a real app, these would likely come from an API
@@ -16,11 +16,6 @@ export const RecipeCategories = () => {
   return (
     <div>
       <h2>Recipe Categories</h2>
-      <div style={{ marginBottom: "20px" }}>
-        <Button variant={Button.variants.PRIMARY} to="/design-system">
-          View Design System
-        </Button>
-      </div>
       <div className={styles.categoriesGrid}>
         {categories.map((category) => (
           <div key={category.id}>

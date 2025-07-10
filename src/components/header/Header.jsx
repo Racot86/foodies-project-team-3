@@ -14,6 +14,9 @@ export const Header = () => {
           <li>
             <Link to="/add-recipe">Add Recipe</Link>
           </li>
+          <li>
+            <Link to="/profile">Profile</Link>
+          </li>
         </ul>
       </nav>
       <SignToggle />
