@@ -1,11 +1,11 @@
+// src/components/ui/FieldTextarea/FieldTextarea.jsx
 import clsx from "clsx";
-import { useId, useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useId, useState, useEffect } from "react";
 import css from "../Fields.module.css";
-import { ErrorField } from "@components/ui/index.js";
+import { ErrorField } from "../ErrorField/ErrorField";
 import { useFormikContext } from "formik";
 
-export const FieldInput = ({
+export const FieldTextarea = ({
   name,
   label,
   required,
@@ -16,15 +16,15 @@ export const FieldInput = ({
   strong,
   value,
   style = "default",
-  type = "text",
   className = "",
   helperText,
   disabled = false,
+  minRows = 1,
+  maxRows = 10,
+  expandAt = 60,
 }) => {
-  const [defaultType, setDefaultType] = useState(type);
   const fieldId = useId();
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
-  const withExtra = type === "password" || !!maxLength;
 
   // Отримуємо Formik context
   const formikContext = useFormikContext();
@@ -38,21 +38,44 @@ export const FieldInput = ({
 
   // Визначаємо фінальне значення
   const inputValue = value !== undefined ? value : formikValue || "";
+  const [counter, setCounter] = useState(inputValue.length);
+  const [rows, setRows] = useState(calcRows(inputValue.length));
 
   // Визначаємо фінальну помилку
   const inputError = error || (formikTouched && formikError);
 
+  function calcRows(len) {
+    return Math.min(maxRows, Math.max(minRows, Math.ceil(len / expandAt)));
+  }
+
+  function chunkify(str) {
+    const plain = str.replace(/\n/g, "");
+    const parts = plain.match(new RegExp(`.{1,${expandAt}}`, "g")) || [""];
+    return parts.join("\n");
+  }
+
+  useEffect(() => {
+    const plainLen = inputValue.replace(/\n/g, "").length;
+    setCounter(plainLen);
+    setRows(calcRows(plainLen));
+  }, [inputValue]);
+
   const handleOnChange = (event) => {
-    const { value } = event.target;
+    const raw = event.target.value;
+    const formatted = chunkify(raw);
+
+    const plainLen = formatted.replace(/\n/g, "").length;
+    setCounter(plainLen);
+    setRows(calcRows(plainLen));
 
     // Оновлюємо Formik значення
     if (name && formikSetFieldValue) {
-      formikSetFieldValue(name, value);
+      formikSetFieldValue(name, formatted);
     }
 
     // Викликаємо кастомний onChange якщо є
     if (onChange) {
-      onChange(value);
+      onChange(formatted);
     }
   };
 
@@ -63,18 +86,24 @@ export const FieldInput = ({
     }
   };
 
-  const renderInput = () => {
+  const renderTextarea = () => {
     const defaultProps = {
-      placeholder,
-      maxLength: defaultMaxLength,
-      disabled,
-      "aria-invalid": inputError ? "true" : "false",
-      "aria-describedby": inputError ? `${fieldId}-error` : undefined,
       id: fieldId,
+      placeholder,
+      disabled,
       value: inputValue,
-      type: defaultType,
       onChange: handleOnChange,
       onBlur: handleOnBlur,
+      "aria-invalid": inputError ? "true" : "false",
+      "aria-describedby": inputError ? `${fieldId}-error` : undefined,
+      maxLength: defaultMaxLength,
+      rows: rows,
+      style: {
+        resize: "none",
+        overflow: "hidden",
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-all",
+      },
     };
 
     // Якщо є Formik context і name, додаємо required з валідації
@@ -83,33 +112,23 @@ export const FieldInput = ({
       defaultProps.required = required || fieldMeta?.required;
     }
 
-    return <input {...defaultProps} />;
-  };
-
-  const isPassword = (type) => type === "password";
-
-  const showPassword = () => {
-    if (isPassword(defaultType)) {
-      setDefaultType("text");
-    } else {
-      setDefaultType(type);
-    }
+    return <textarea {...defaultProps} />;
   };
 
   const renderExtra = () => {
-    if (type === "password") {
+    if (maxLength) {
       return (
-        <button
-          type="button"
-          onClick={showPassword}
-          className={css.showPassword}
-          aria-label={
-            isPassword(defaultType) ? "Show password" : "Hide password"
-          }
-          tabIndex={disabled ? -1 : 0}
-        >
-          {isPassword(defaultType) ? <FiEye /> : <FiEyeOff />}
-        </button>
+        <span className={css.count}>
+          <span
+            className={clsx(
+              css.count_active,
+              counter > defaultMaxLength && css.count_error
+            )}
+          >
+            {counter}
+          </span>{" "}
+          / {defaultMaxLength}
+        </span>
       );
     }
   };
@@ -118,11 +137,12 @@ export const FieldInput = ({
     <div
       className={clsx(
         css.field,
+        css.fieldTextarea,
         style && css[style],
         className,
         strong && css.strong,
         inputError && css.error,
-        withExtra && css.withExtra,
+        defaultMaxLength && css.withExtra,
         disabled && css.disabled
       )}
     >
@@ -132,10 +152,14 @@ export const FieldInput = ({
           {required && <span aria-label="required"> *</span>}
         </label>
       )}
-      <div className={clsx(css.inputWrapper, withExtra && css.withExtra)}>
-        {renderInput()}
-        {withExtra && <div className={css.extra}>{renderExtra()}</div>}
+
+      <div
+        className={clsx(css.inputWrapper, defaultMaxLength && css.withExtra)}
+      >
+        {renderTextarea()}
+        {defaultMaxLength && <div className={css.extra}>{renderExtra()}</div>}
       </div>
+
       {helperText && !inputError && (
         <p className={css.helperText}>{helperText}</p>
       )}
