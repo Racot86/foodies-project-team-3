@@ -248,9 +248,9 @@ const DesignSystemPreview = () => {
       </div>
 
       <h2>Pagination Component (Custom)</h2>
-      <div style={{ marginBottom: "40px" }}>
+      <div style={{ marginBottom: "24px" }}>
          <Pagination
-          currentPage={3}
+          currentPage={1}
           totalPages={10}
           onPageChange={(page) => console.log("Go to page:", page)}
         />
