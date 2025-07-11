@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import CheckBox from './components/ui/Checkbox';
+import { BrowserRouter } from "react-router-dom";
+import "./App.css";
+import { AppRoutes } from "@routes/AppRoutes";
 
-function App() {
-  const [isChecked, setIsChecked] = useState(false);
-
+export const App = () => {
   return (
-    <div style={{ padding: "40px" }}>
-      <h1>CheckBox Test</h1>
-      <CheckBox active={isChecked} onChange={() => setIsChecked(!isChecked)} />
-    </div>
+    <BrowserRouter>
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        <h1>Foodies Project</h1>
+        <p>Welcome to the Foodies Recipe Application!</p>
+      </div>
+      <AppRoutes />
+    </BrowserRouter>
   );
-}
-
-export default App;
+};
