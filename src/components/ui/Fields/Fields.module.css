@@ -212,6 +212,12 @@
   padding: 16px 18px;
   margin-top: 50px;
   max-width: 340px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.optionsList::-webkit-scrollbar {
+  display: none;
 }
 
 .option {
