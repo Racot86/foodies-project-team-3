@@ -1,9 +1,10 @@
 // src/components/ui/FieldTextarea/FieldTextarea.jsx
 import clsx from "clsx";
-import { useId, useState, useEffect } from "react";
+import { useId, useState, useEffect, useCallback } from "react";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
 import { useFormikContext } from "formik";
+import { useBreakpoint } from "../../../../hooks/useBreakpoint";
 
 export const FieldTextarea = ({
   name,
@@ -25,6 +26,7 @@ export const FieldTextarea = ({
 }) => {
   const fieldId = useId();
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
+  const { isMobile, isTablet } = useBreakpoint();
 
   // Отримуємо Formik context
   const formikContext = useFormikContext();
@@ -38,17 +40,30 @@ export const FieldTextarea = ({
 
   // Визначаємо фінальне значення
   const inputValue = value !== undefined ? value : formikValue || "";
+
+  const calcRows = useCallback(
+    (len) => {
+      // For mobile and tablet, use natural textarea behavior without artificial row calculation
+      if (isMobile || isTablet) {
+        return minRows; // Use minimum rows, let CSS handle auto-resize
+      }
+      return Math.min(maxRows, Math.max(minRows, Math.ceil(len / expandAt)));
+    },
+    [maxRows, minRows, expandAt, isMobile, isTablet]
+  );
   const [counter, setCounter] = useState(inputValue.length);
   const [rows, setRows] = useState(calcRows(inputValue.length));
+  const [limitReached, setLimitReached] = useState(false);
 
   // Визначаємо фінальну помилку
   const inputError = error || (formikTouched && formikError);
 
-  function calcRows(len) {
-    return Math.min(maxRows, Math.max(minRows, Math.ceil(len / expandAt)));
-  }
-
   function chunkify(str) {
+    // Disable expandAt functionality for mobile and tablet
+    if (isMobile || isTablet) {
+      return str; // Return text as-is without chunking
+    }
+
     const plain = str.replace(/\n/g, "");
     const parts = plain.match(new RegExp(`.{1,${expandAt}}`, "g")) || [""];
     return parts.join("\n");
@@ -58,13 +73,32 @@ export const FieldTextarea = ({
     const plainLen = inputValue.replace(/\n/g, "").length;
     setCounter(plainLen);
     setRows(calcRows(plainLen));
-  }, [inputValue]);
+  }, [inputValue, calcRows]);
 
   const handleOnChange = (event) => {
     const raw = event.target.value;
     const formatted = chunkify(raw);
 
     const plainLen = formatted.replace(/\n/g, "").length;
+
+    // Block input if we have a maxLength and would exceed it
+    if (defaultMaxLength && plainLen > defaultMaxLength) {
+      // Show notification that limit is reached
+      setLimitReached(true);
+
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        setLimitReached(false);
+      }, 3000);
+
+      return; // Don't update anything if limit exceeded
+    }
+
+    // Clear limit reached state if we're under the limit
+    if (limitReached) {
+      setLimitReached(false);
+    }
+
     setCounter(plainLen);
     setRows(calcRows(plainLen));
 
@@ -96,14 +130,7 @@ export const FieldTextarea = ({
       onBlur: handleOnBlur,
       "aria-invalid": inputError ? "true" : "false",
       "aria-describedby": inputError ? `${fieldId}-error` : undefined,
-      maxLength: defaultMaxLength,
       rows: rows,
-      style: {
-        resize: "none",
-        overflow: "hidden",
-        whiteSpace: "pre-wrap",
-        wordBreak: "break-all",
-      },
     };
 
     // Якщо є Formik context і name, додаємо required з валідації
@@ -160,8 +187,13 @@ export const FieldTextarea = ({
         {defaultMaxLength && <div className={css.extra}>{renderExtra()}</div>}
       </div>
 
-      {helperText && !inputError && (
+      {helperText && !inputError && !limitReached && (
         <p className={css.helperText}>{helperText}</p>
+      )}
+      {limitReached && (
+        <ErrorField
+          id={`${fieldId}-error`}
+        >{`Character limit reached (${defaultMaxLength} characters maximum)`}</ErrorField>
       )}
       {inputError && (
         <ErrorField id={`${fieldId}-error`}>{inputError}</ErrorField>

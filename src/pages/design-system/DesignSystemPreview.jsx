@@ -181,7 +181,7 @@ const AddRecipeForm = () => {
               name="preparation"
               label="Опис"
               placeholder="Enter your recipe preparation"
-              maxLength={500}
+              maxLength={100}
               value={formik.values.preparation}
               expandAt={60}
               required
