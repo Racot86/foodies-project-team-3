@@ -13,6 +13,7 @@ import { Layout } from "@components/layout/Layout";
 import RecipeCategories from "@pages/home/components/recipe-categories/RecepieCategories/RecipeCategories.jsx";
 import BrowseCategory from "@pages/home/components/recipe-categories/BrowseCategory/BrowseCategory.jsx";
 import RecipeDetails from "@pages/recipe-details/RecipeDetails";
+import { TestAuth } from "@components/testAuth";
 
 export const AppRoutes = () => {
   return (
@@ -36,6 +37,8 @@ export const AppRoutes = () => {
         </Route>
         <Route path="/design-system" element={<DesignSystemPreview />} />
       </Route>
+      {/* Test Auth route for testing authentication functionality */}
+      <Route path="/test-auth" element={<TestAuth />} />
       {/* Catch-all route for handling wrong/invalid URLs */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
