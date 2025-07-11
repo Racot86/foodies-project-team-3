@@ -13,6 +13,8 @@ import { Layout } from "@components/layout/Layout";
 import RecipeCategories from "@pages/home/components/recipe-categories/RecepieCategories/RecipeCategories.jsx";
 import BrowseCategory from "@pages/home/components/recipe-categories/BrowseCategory/BrowseCategory.jsx";
 import RecipeDetails from "@pages/recipe-details/RecipeDetails";
+import { TestAuth } from "@components/testAuth";
+import PrivateRoute from "@components/PrivateRoute";
 
 export const AppRoutes = () => {
   return (
@@ -26,7 +28,12 @@ export const AppRoutes = () => {
           />
         </Route>
         <Route path="/recipe-details/:recipeId" element={<RecipeDetails />} />
-        <Route path="/add-recipe" element={<AddRecipePage />} />
+
+        {/* Protected routes that require authentication */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/add-recipe" element={<AddRecipePage />} />
+        </Route>
+
         <Route path="/profile" element={<ProfilePage />}>
           <Route index element={<MyRecipes />} />
           <Route path="my-recipes" element={<MyRecipes />} />
@@ -36,6 +43,8 @@ export const AppRoutes = () => {
         </Route>
         <Route path="/design-system" element={<DesignSystemPreview />} />
       </Route>
+      {/* Test Auth route for testing authentication functionality */}
+      <Route path="/test-auth" element={<TestAuth />} />
       {/* Catch-all route for handling wrong/invalid URLs */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
