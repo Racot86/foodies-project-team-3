@@ -5,6 +5,7 @@ import {
   Heading,
   FieldInput,
   FieldCount,
+  Pagination
   SignToggle,
   FieldTextarea,
 } from "@components/ui";
@@ -359,6 +360,15 @@ const DesignSystemPreview = () => {
 
       <SignInForm />
       <AddRecipeForm />
+
+      <h2>Pagination Component (Custom)</h2>
+      <div style={{ marginBottom: "24px" }}>
+         <Pagination
+          currentPage={1}
+          totalPages={10}
+          onPageChange={(page) => console.log("Go to page:", page)}
+        />
+      </div>
 
       <h2>Typography - Headings</h2>
       <div style={{ marginBottom: "24px" }}>
