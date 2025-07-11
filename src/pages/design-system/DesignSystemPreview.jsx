@@ -5,6 +5,7 @@ import {
   Heading,
   FieldInput,
   FieldCount,
+  Pagination
 } from "@components/ui";
 import {
   FiHeart,
@@ -244,6 +245,15 @@ const DesignSystemPreview = () => {
             helperText="Maximum 50 characters allowed"
           />
         </div>
+      </div>
+
+      <h2>Pagination Component (Custom)</h2>
+      <div style={{ marginBottom: "40px" }}>
+         <Pagination
+          currentPage={3}
+          totalPages={10}
+          onPageChange={(page) => console.log("Go to page:", page)}
+        />
       </div>
 
       <h2>Typography - Headings</h2>
