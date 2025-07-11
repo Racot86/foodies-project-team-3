@@ -3,6 +3,7 @@ import clsx from "clsx";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
 import { FiChevronDown } from "react-icons/fi";
+import { FiChevronUp } from "react-icons/fi";
 
 export const FieldSelect = ({
   name,
@@ -99,11 +100,19 @@ export const FieldSelect = ({
         >
           {selectedLabel}
         </div>
-        <FiChevronDown
-          size={18}
-          color={disabled ? "#aaa" : "black"}
-          className={css.selectIcon}
-        />
+        {isOpen ? (
+          <FiChevronUp
+            size={18}
+            color={disabled ? "#aaa" : "black"}
+            className={css.selectIcon}
+          />
+        ) : (
+          <FiChevronDown
+            size={18}
+            color={disabled ? "#aaa" : "black"}
+            className={css.selectIcon}
+          />
+        )}
       </div>
 
       {isOpen && !disabled && (
