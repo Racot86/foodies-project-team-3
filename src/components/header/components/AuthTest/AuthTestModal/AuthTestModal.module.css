@@ -1,0 +1,61 @@
+/* AuthTestModal Component Styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 0 0 0;
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.error {
+  color: #e74c3c;
+  background-color: #fadbd8;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #bdbdbd;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input:focus {
+  border-color: #111;
+}
+
+.submitBtn {
+  margin-top: 8px;
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 12px 0;
+}
+
+.switchOption {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.98rem;
+}
+
+.switchOption a {
+  color: #111;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.switchOption a:hover {
+  color: #0070f3;
+}

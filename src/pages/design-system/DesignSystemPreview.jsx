@@ -5,6 +5,7 @@ import {
   Heading,
   FieldInput,
   FieldCount,
+  Pagination,
   SignToggle,
   FieldTextarea,
 } from "@components/ui";
@@ -22,6 +23,7 @@ import {
 } from "react-icons/fi";
 import { useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
+import {AreaSelect} from "@components/ui/Fields/FieldSelect/test.jsx";
 
 const SignInForm = () => {
   const formik = useFormik({
@@ -360,6 +362,15 @@ const DesignSystemPreview = () => {
       <SignInForm />
       <AddRecipeForm />
 
+      <h2>Pagination Component (Custom)</h2>
+      <div style={{ marginBottom: "24px" }}>
+         <Pagination
+          currentPage={1}
+          totalPages={10}
+          onPageChange={(page) => console.log("Go to page:", page)}
+        />
+      </div>
+
       <h2>Typography - Headings</h2>
       <div style={{ marginBottom: "24px" }}>
         <Heading level={1} size="2xl" color="primary">
@@ -450,6 +461,7 @@ const DesignSystemPreview = () => {
         >
           <SignToggle />
         </div>
+          <AreaSelect />
       </div>
     </div>
   );
