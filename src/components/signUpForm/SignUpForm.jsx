@@ -52,7 +52,7 @@ const SignUpForm = ({ onClose }) => {
       await registerUser(data);
       onClose();
     } catch (err) {
-      toast.error(err?.message || "Sign up failed. Please try again.");
+      toast.error(err || "Sign up failed. Please try again.");
     }
   };
 

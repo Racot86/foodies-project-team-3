@@ -1,64 +1,70 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { authService } from '@/services';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { authService } from "@/services";
 
 // Get token from localStorage
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 
 // Async thunks
 export const signUp = createAsyncThunk(
-  'auth/signUp',
+  "auth/signUp",
   async (userData, { rejectWithValue }) => {
     try {
       const response = await authService.signUp(userData);
       // Store token in localStorage
-      localStorage.setItem('token', response.token);
+      localStorage.setItem("token", response.token);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Sign up failed');
+      return rejectWithValue(
+        error.response?.data?.message || error.message || "Sign up failed"
+      );
     }
   }
 );
 
 export const signIn = createAsyncThunk(
-  'auth/signIn',
+  "auth/signIn",
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await authService.signIn(credentials);
       // Store token in localStorage
-      localStorage.setItem('token', response.token);
+      localStorage.setItem("token", response.token);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Sign in failed');
+      return rejectWithValue(
+        error.response?.data?.message || error.message || "Sign in failed"
+      );
     }
   }
 );
 
 export const getCurrentUser = createAsyncThunk(
-  'auth/getCurrentUser',
+  "auth/getCurrentUser",
   async (_, { rejectWithValue }) => {
     try {
       const response = await authService.getCurrentUser();
       return response;
     } catch (error) {
       // Handle the specific 'Not authenticated' error message from the api interceptor
-      if (error.message === 'Not authenticated') {
-        return rejectWithValue('Not authenticated');
+      if (error.message === "Not authenticated") {
+        return rejectWithValue("Not authenticated");
       }
-      return rejectWithValue(error.message || 'Failed to get user data');
+      return rejectWithValue(error.message || "Failed to get user data");
     }
   }
 );
 
 export const signOut = createAsyncThunk(
-  'auth/signOut',
+  "auth/signOut",
   async (_, { rejectWithValue }) => {
     try {
       await authService.signOut();
       // Remove token from localStorage
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return null;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Sign out failed');
+      return rejectWithValue(
+        error.response?.data?.message || "Sign out failed"
+      );
     }
   }
 );
@@ -77,7 +83,7 @@ const initialState = {
 
 // Auth slice
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     clearError: (state) => {
@@ -133,7 +139,7 @@ export const authSlice = createSlice({
         state.token = null;
         state.error = action.payload;
         // Clear token from localStorage if user data fetch fails
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
       })
       // Sign Out
       .addCase(signOut.pending, (state) => {
@@ -167,7 +173,8 @@ export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectIsSignUpLoading = (state) => state.auth.isSignUpLoading;
 export const selectIsSignInLoading = (state) => state.auth.isSignInLoading;
 export const selectIsSignOutLoading = (state) => state.auth.isSignOutLoading;
-export const selectIsGetCurrentUserLoading = (state) => state.auth.isGetCurrentUserLoading;
+export const selectIsGetCurrentUserLoading = (state) =>
+  state.auth.isGetCurrentUserLoading;
 export const selectError = (state) => state.auth.error;
 
 // Export reducer

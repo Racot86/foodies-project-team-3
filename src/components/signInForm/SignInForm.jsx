@@ -43,7 +43,7 @@ const SignInForm = ({ onClose }) => {
       await login(data);
       onClose();
     } catch (err) {
-      toast.error(err?.message || "Sign in failed. Please try again.");
+      toast.error(err || "Sign in failed. Please try again.");
     }
   };
 

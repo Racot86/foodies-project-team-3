@@ -1,32 +1,49 @@
 // src/components/ui/SignToggle.jsx
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import styles from "./SignToggle.module.css";
 import SignInModal from "@/components/signInModal/SignInModal";
 import SignUpModal from "@/components/signUpModal/SignUpModal";
 import clsx from "clsx";
 
+const initialState = {
+  active: "signin", // 'signin' | 'signup'
+  modalOpen: null, // null | 'signin' | 'signup'
+};
+
+const OPEN_SIGNIN = "OPEN_SIGNIN";
+const OPEN_SIGNUP = "OPEN_SIGNUP";
+const CLOSE = "CLOSE";
+
+function modalReducer(state, action) {
+  switch (action.type) {
+    case OPEN_SIGNIN:
+      return { active: "signin", modalOpen: "signin" };
+    case OPEN_SIGNUP:
+      return { active: "signup", modalOpen: "signup" };
+    case CLOSE:
+      return { active: "signin", modalOpen: null };
+    default:
+      return state;
+  }
+}
+
 const SignToggle = () => {
-  const [active, setActive] = useState("signin");
-  const [modalOpen, setModalOpen] = useState(null); // null | 'signin' | 'signup'
+  const [state, dispatch] = useReducer(modalReducer, initialState);
 
   const handleClick = (type) => {
-    setActive(type);
-    setModalOpen(type);
+    dispatch({ type: type === "signin" ? OPEN_SIGNIN : OPEN_SIGNUP });
   };
 
   const closeModal = () => {
-    setModalOpen(null);
-    setActive("signin");
+    dispatch({ type: CLOSE });
   };
 
   const handleOpenSignUp = () => {
-    setActive("signup");
-    setModalOpen("signup");
+    dispatch({ type: OPEN_SIGNUP });
   };
 
   const handleOpenSignIn = () => {
-    setActive("signin");
-    setModalOpen("signin");
+    dispatch({ type: OPEN_SIGNIN });
   };
 
   return (
@@ -35,13 +52,13 @@ const SignToggle = () => {
         <div
           className={clsx(
             styles.toggleBackground,
-            active === "signup" ? styles.right : styles.left
+            state.active === "signup" ? styles.right : styles.left
           )}
         />
         <button
           className={clsx(
             styles.button,
-            active === "signin" && styles.activeText
+            state.active === "signin" && styles.activeText
           )}
           onClick={() => handleClick("signin")}
         >
@@ -50,7 +67,7 @@ const SignToggle = () => {
         <button
           className={clsx(
             styles.button,
-            active === "signup" && styles.activeText
+            state.active === "signup" && styles.activeText
           )}
           onClick={() => handleClick("signup")}
         >
@@ -58,10 +75,10 @@ const SignToggle = () => {
         </button>
       </div>
 
-      {modalOpen === "signin" && (
+      {state.modalOpen === "signin" && (
         <SignInModal onClose={closeModal} onOpenSignUp={handleOpenSignUp} />
       )}
-      {modalOpen === "signup" && (
+      {state.modalOpen === "signup" && (
         <SignUpModal onClose={closeModal} onOpenSignIn={handleOpenSignIn} />
       )}
     </div>
