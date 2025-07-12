@@ -1,6 +1,10 @@
 .header {
     background-color: #FFD700;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: relative;
 }
 
 .nav ul {
@@ -22,6 +26,31 @@
 
 .nav a:hover {
     text-decoration: underline;
+}
+
+/* Mobile navigation styles */
+.mobileNav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #FFD700;
+    z-index: 5;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mobileNav ul {
+    flex-direction: column;
+}
+
+.mobileNav li {
+    margin-right: 0;
+    margin-bottom: 15px;
+}
+
+.mobileNav li:last-child {
+    margin-bottom: 0;
 }
 
 /* Responsive adjustments */
