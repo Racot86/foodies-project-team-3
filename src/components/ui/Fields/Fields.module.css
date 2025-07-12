@@ -252,6 +252,106 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+/* Textarea wrapper handles borders and interactions when maxLength is present */
+.textAreaWrapper {
+  display: flex;
+  width: 100%;
+  height: 56px;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* When textarea has maxLength, wrapper handles the border */
+.textAreaWrapper.withExtra {
+  border-bottom: 1px solid var(--color-secondary);
+  transition: border-color 0.2s ease;
+}
+
+.textAreaWrapper.withExtra textarea {
+  border: none !important;
+  border-bottom: none !important;
+  flex: 1;
+  padding: var(--spacing-md) 0;
+  background: transparent;
+  min-height: 56px;
+  height: 56px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  resize: none;
+}
+
+/* Counter styling inside wrapper */
+.textAreaWrapper .textareaCountWrapper {
+  display: flex;
+  align-items: center;
+  min-width: 65px;
+  font-size: 24px;
+  padding-left: 8px;
+  border: none;
+  border-bottom: none;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+/* Wrapper hover and focus states */
+.textAreaWrapper.withExtra:hover {
+  border-bottom: 1px solid var(--color-primary);
+}
+
+.textAreaWrapper.withExtra:focus-within {
+  border-bottom: 1px solid var(--color-primary);
+}
+
+/* Error states for wrapper */
+.field.error .textAreaWrapper.withExtra {
+  border-bottom: 1px solid var(--color-error);
+}
+
+.field.error .textAreaWrapper.withExtra:hover,
+.field.error .textAreaWrapper.withExtra:focus-within {
+  border-bottom: 1px solid var(--color-error);
+}
+
+/* Rounded style for textarea wrapper */
+.field.rounded .textAreaWrapper.withExtra {
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-xxl);
+  padding: 0 var(--spacing-lg);
+}
+
+.field.rounded .textAreaWrapper.withExtra:hover {
+  border: 1px solid var(--color-primary);
+}
+
+.field.rounded .textAreaWrapper.withExtra:focus-within {
+  border: 1px solid var(--color-primary);
+}
+
+.field.rounded.error .textAreaWrapper.withExtra {
+  border: 1px solid var(--color-error);
+}
+
+.field.rounded.error .textAreaWrapper.withExtra:hover,
+.field.rounded.error .textAreaWrapper.withExtra:focus-within {
+  border: 1px solid var(--color-error);
+}
+
+/* Override rounded textarea styles when inside wrapper */
+.field.rounded .textAreaWrapper.withExtra textarea {
+  border: none !important;
+  border-radius: 0;
+  padding: var(--spacing-md) 0;
+}
+
+.helperText {
+  font-size: var(--font-sm);
+  color: var(--color-secondary);
+  margin-top: var(--spacing-xs);
+}
 
 @media screen and (min-width: 375px) and (max-width: 768px) {
   .fieldTextarea .extra {
