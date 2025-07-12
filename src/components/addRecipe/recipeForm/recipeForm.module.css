@@ -1,0 +1,18 @@
+.formWrap {
+  display: flex;
+  gap: 80px;
+}
+.rightBlock {
+  width: 649px;
+}
+
+.infoWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.flexRow {
+  display: flex;
+  gap: 20px;
+}

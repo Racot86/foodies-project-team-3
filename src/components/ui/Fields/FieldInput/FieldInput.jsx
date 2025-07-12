@@ -16,6 +16,7 @@ export const FieldInput = ({
   strong,
   value,
   style = "default",
+  inputStyle,
   type = "text",
   className = "",
   helperText,
@@ -83,7 +84,7 @@ export const FieldInput = ({
       defaultProps.required = required || fieldMeta?.required;
     }
 
-    return <input {...defaultProps} />;
+    return <input {...defaultProps} style={inputStyle} />;
   };
 
   const isPassword = (type) => type === "password";

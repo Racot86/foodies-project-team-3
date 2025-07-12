@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/Input";
 import { useRef, useState } from "react";
-import css from "./imgLoader.module.css";
+import css from "./ImageUpload.module.css";
 import { Text } from "@/components/ui";
 import { FaCamera } from "react-icons/fa6";
 import { TbBorderCorners } from "react-icons/tb";

@@ -99,6 +99,10 @@
   font-weight: var(--font-bold);
 }
 
+.weight-bold2 {
+  font-weight: var(--font-bold2);
+}
+
 /* Text alignment */
 .align-left {
   text-align: left;
@@ -112,6 +116,9 @@
   text-align: right;
 }
 
+.titleRecipe {
+  margin-bottom: 20px;
+}
 /* Responsive typography */
 @media (max-width: 767px) {
   .size-xs {

@@ -17,6 +17,7 @@ export const FieldTextarea = ({
   strong,
   value,
   style = "default",
+  textareaStyle,
   className = "",
   helperText,
   disabled = false,
@@ -139,7 +140,7 @@ export const FieldTextarea = ({
       defaultProps.required = required || fieldMeta?.required;
     }
 
-    return <textarea {...defaultProps} />;
+    return <textarea {...defaultProps} style={textareaStyle} />;
   };
 
   const renderExtra = () => {

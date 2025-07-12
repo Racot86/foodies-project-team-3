@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.fieldSelect {
+  gap: var(--spacing-md);
+}
+
 .field label {
   font-weight: var(--font-bold);
   text-transform: uppercase;
@@ -151,7 +155,7 @@
   width: 100%;
   height: 48px;
   cursor: pointer;
-  font-family: var(--font-family-body),sans-serif;
+  font-family: var(--font-family-body), sans-serif;
   font-weight: var(--font-medium);
   font-size: var(--font-sm);
   line-height: 1.43;
@@ -270,7 +274,7 @@
     left: unset;
     transform: unset;
     max-width: unset;
-    margin-top: 60px;
+    margin-top: 106px;
   }
   .selectWrapper {
     width: 315px;

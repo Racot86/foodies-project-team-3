@@ -17,6 +17,7 @@ export const FieldSelect = ({
   className,
   helperText,
   disabled = false,
+  inputStyle,
 }) => {
   const fieldId = useId();
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +61,7 @@ export const FieldSelect = ({
     <div
       className={clsx(
         css.field,
+        css.fieldSelect,
         className,
         error && css.error,
         disabled && css.disabled
