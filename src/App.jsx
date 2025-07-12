@@ -1,6 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { AppRoutes } from "@routes/AppRoutes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const App = () => {
   return (
@@ -10,6 +12,7 @@ export const App = () => {
         <p>Welcome to the Foodies Recipe Application!</p>
       </div>
       <AppRoutes />
+      <ToastContainer position="top-center" autoClose={3000} />
     </BrowserRouter>
   );
 };

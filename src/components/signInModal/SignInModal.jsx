@@ -4,14 +4,14 @@ import SignInForm from "@/components/signInForm/SignInForm";
 import styles from "./SignInModal.module.css";
 import { Heading, Text } from "@/components/ui";
 
-const SignInModal = ({ onClose, onSubmit, onOpenSignUp }) => {
+const SignInModal = ({ onClose, onOpenSignUp }) => {
   return (
     <Modal onClose={onClose}>
       <div className={styles.content}>
         <Heading level={1} size="lg" className={styles.heading}>
           Sign in
         </Heading>
-        <SignInForm onSubmit={onSubmit} />
+        <SignInForm onClose={onClose} />
         <div className={styles.textRow}>
           <Text color="muted" size="sm" className={styles.question}>
             Don't have an account?
