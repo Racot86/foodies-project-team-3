@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useAuthRedux } from "@/hooks";
-import { Button } from "@/components/ui/Button";
-import Modal from "@/components/modal/Modal";
+import { useAuthRedux } from "@/hooks/index.js";
+import { Button } from "@components/ui/Button/index.js";
+import Modal from "@components/modal/Modal.jsx";
 import styles from "./AuthTestModal.module.css";
 
 /**

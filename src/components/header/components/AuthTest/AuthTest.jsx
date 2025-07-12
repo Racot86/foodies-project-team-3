@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useAuthRedux } from "@/hooks";
+import { useAuthRedux } from "@/hooks/index.js";
 import styles from "./AuthTest.module.css";
-import AuthTestModal from "./AuthTestModal/AuthTestModal";
+import AuthTestModal from "./AuthTestModal/AuthTestModal.jsx";
 
 /**
  * AuthTest Component for testing authentication in the header
