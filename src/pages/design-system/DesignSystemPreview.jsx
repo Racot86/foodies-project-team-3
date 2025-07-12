@@ -5,7 +5,7 @@ import {
   Heading,
   FieldInput,
   FieldCount,
-  Pagination
+  Pagination,
   SignToggle,
   FieldTextarea,
 } from "@components/ui";
@@ -23,6 +23,7 @@ import {
 } from "react-icons/fi";
 import { useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
+import {AreaSelect} from "@components/ui/Fields/FieldSelect/test.jsx";
 
 const SignInForm = () => {
   const formik = useFormik({
@@ -460,6 +461,7 @@ const DesignSystemPreview = () => {
         >
           <SignToggle />
         </div>
+          <AreaSelect />
       </div>
     </div>
   );
