@@ -19,7 +19,7 @@
 }
 
 .button {
-  font-family: Mulish;
+  font-family: var(--font-family-body), sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
@@ -31,7 +31,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--Main, #050505);
+  color: var(--color-primary);
   transition: color 0.3s ease;
   padding: 10px 16px;
   min-width: 80px;
@@ -44,12 +44,11 @@
 
 .toggleBackground {
   position: absolute;
-  background-color: #111;
   transition: transform 0.3s ease;
   z-index: 0;
   padding: 10px 16px;
   border-radius: 30px;
-  border: 1px solid var(--Gray, #bfbebe);
+  border: 1px solid var(--color-secondary);
   background: #1a1a1a;
   min-width: 80px;
   min-height: 38px;
