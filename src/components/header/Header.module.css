@@ -1,5 +1,6 @@
 .header {
     background-color: #FFD700;
+    display: flex;
 }
 
 .nav ul {
