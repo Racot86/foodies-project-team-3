@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { SignToggle } from "@components/ui";
 import Logo from "@components/ui/Logo";
+// Import AuthTest component for testing authentication
+import AuthTest from "./AuthTest";
 
 
 export const Header = () => {
   return (
     <header className={styles.header}>
-      <Logo />      
+      <Logo />
       <nav className={styles.nav}>
         <ul>
           <li>
@@ -23,9 +25,8 @@ export const Header = () => {
         </ul>
       </nav>
       <SignToggle />
+      {/* AuthTest component for testing authentication - can be commented out when not needed */}
+      <AuthTest />
     </header>
   );
 };
-
-
-
