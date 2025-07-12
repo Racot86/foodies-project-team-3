@@ -4,14 +4,14 @@ import SignUpForm from "@/components/signUpForm/SignUpForm";
 import styles from "./SignUpModal.module.css";
 import { Heading, Text } from "@/components/ui";
 
-const SignUpModal = ({ onClose, onSubmit, onOpenSignIn }) => {
+const SignUpModal = ({ onClose, onOpenSignIn }) => {
   return (
     <Modal onClose={onClose}>
       <div className={styles.content}>
         <Heading level={1} size="lg" className={styles.heading}>
           Sign Up
         </Heading>
-        <SignUpForm onSubmit={onSubmit} />
+        <SignUpForm onClose={onClose} />
         <div className={styles.textRow}>
           <Text color="muted" size="sm" className={styles.question}>
             I already have an account?
