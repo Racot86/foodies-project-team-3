@@ -1,6 +1,6 @@
 // src/components/ui/FieldTextarea/FieldTextarea.jsx
 import clsx from "clsx";
-import { useId, useState, useEffect, useCallback } from "react";
+import { useId, useState, useEffect, useRef, useCallback } from "react";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
 import { useFormikContext } from "formik";
@@ -9,7 +9,6 @@ import { useBreakpoint } from "../../../../hooks/useBreakpoint";
 export const FieldTextarea = ({
   name,
   label,
-  required,
   placeholder,
   maxLength,
   onChange,
@@ -20,13 +19,11 @@ export const FieldTextarea = ({
   className = "",
   helperText,
   disabled = false,
-  minRows = 1,
-  maxRows = 10,
-  expandAt = 60,
 }) => {
   const fieldId = useId();
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
   const { isMobile, isTablet } = useBreakpoint();
+  const textareaRef = useRef(null);
 
   // Отримуємо Formik context
   const formikContext = useFormikContext();
@@ -39,20 +36,9 @@ export const FieldTextarea = ({
   const formikError = formikContext?.errors?.[name];
 
   // Визначаємо фінальне значення
-  const inputValue = value !== undefined ? value : formikValue || "";
+  const inputValue = formikValue || value || "";
 
-  const calcRows = useCallback(
-    (len) => {
-      // For mobile and tablet, use natural textarea behavior without artificial row calculation
-      if (isMobile || isTablet) {
-        return minRows; // Use minimum rows, let CSS handle auto-resize
-      }
-      return Math.min(maxRows, Math.max(minRows, Math.ceil(len / expandAt)));
-    },
-    [maxRows, minRows, expandAt, isMobile, isTablet]
-  );
-  const [counter, setCounter] = useState(inputValue.length);
-  const [rows, setRows] = useState(calcRows(inputValue.length));
+  const [counter, setCounter] = useState(0);
   const [limitReached, setLimitReached] = useState(false);
 
   // Визначаємо фінальну помилку
@@ -63,35 +49,81 @@ export const FieldTextarea = ({
     if (isMobile || isTablet) {
       return str; // Return text as-is without chunking
     }
-
-    const plain = str.replace(/\n/g, "");
-    const parts = plain.match(new RegExp(`.{1,${expandAt}}`, "g")) || [""];
-    return parts.join("\n");
+    // For desktop, return the string as-is (you can add chunking logic here if needed)
+    return str;
   }
 
+  // Improved auto-resize textarea function
+  const autoResize = useCallback(() => {
+    if (textareaRef.current) {
+      const textarea = textareaRef.current;
+      const maxHeight = 120;
+
+      if (isMobile || isTablet) {
+        // Mobile: Auto-grow functionality
+        textarea.style.height = "auto";
+        textarea.style.overflow = "hidden";
+
+        const scrollHeight = textarea.scrollHeight;
+
+        if (scrollHeight <= maxHeight) {
+          textarea.style.height = `${Math.max(scrollHeight, 56)}px`;
+          textarea.style.overflowY = "hidden";
+        } else {
+          textarea.style.height = `${maxHeight}px`;
+          textarea.style.overflowY = "auto";
+        }
+      } else {
+        // Desktop: Check if content overflows the fixed height
+        const scrollHeight = textarea.scrollHeight;
+        const currentHeight = 56; // Fixed height for desktop
+
+        if (scrollHeight > currentHeight) {
+          textarea.style.overflowY = "auto";
+        } else {
+          textarea.style.overflowY = "hidden";
+        }
+      }
+    }
+  }, [isMobile, isTablet]);
+
   useEffect(() => {
-    const plainLen = inputValue.replace(/\n/g, "").length;
+    const plainLen = inputValue ? inputValue.replace(/\n/g, "").length : 0;
     setCounter(plainLen);
-    setRows(calcRows(plainLen));
-  }, [inputValue, calcRows]);
+
+    // Use requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+      autoResize();
+    });
+  }, [inputValue, isMobile, isTablet, autoResize]);
+
+  useEffect(() => {
+    autoResize();
+  }, [isMobile, isTablet, autoResize]);
 
   const handleOnChange = (event) => {
     const raw = event.target.value;
     const formatted = chunkify(raw);
-
     const plainLen = formatted.replace(/\n/g, "").length;
 
     // Block input if we have a maxLength and would exceed it
     if (defaultMaxLength && plainLen > defaultMaxLength) {
-      // Show notification that limit is reached
-      setLimitReached(true);
+      if (formatted.length >= (inputValue || "").length) {
+        setLimitReached(true);
+        return;
+      }
+      return;
+    }
 
-      // Hide notification after 3 seconds
-      setTimeout(() => {
-        setLimitReached(false);
-      }, 3000);
-
-      return; // Don't update anything if limit exceeded
+    // If limit is reached, block adding new lines (Enter key)
+    if (defaultMaxLength && plainLen === defaultMaxLength) {
+      // If the new value has more newlines than the previous value, block it
+      const prevNewlines = (inputValue.match(/\n/g) || []).length;
+      const newNewlines = (formatted.match(/\n/g) || []).length;
+      if (newNewlines > prevNewlines) {
+        setLimitReached(true);
+        return;
+      }
     }
 
     // Clear limit reached state if we're under the limit
@@ -100,7 +132,6 @@ export const FieldTextarea = ({
     }
 
     setCounter(plainLen);
-    setRows(calcRows(plainLen));
 
     // Оновлюємо Formik значення
     if (name && formikSetFieldValue) {
@@ -111,10 +142,14 @@ export const FieldTextarea = ({
     if (onChange) {
       onChange(formatted);
     }
+
+    // Auto-resize immediately on input for better UX
+    requestAnimationFrame(() => {
+      autoResize();
+    });
   };
 
   const handleOnBlur = () => {
-    // Позначаємо поле як touched в Formik
     if (name && formikSetFieldTouched) {
       formikSetFieldTouched(name, true);
     }
@@ -123,6 +158,7 @@ export const FieldTextarea = ({
   const renderTextarea = () => {
     const defaultProps = {
       id: fieldId,
+      ref: textareaRef,
       placeholder,
       disabled,
       value: inputValue,
@@ -130,14 +166,7 @@ export const FieldTextarea = ({
       onBlur: handleOnBlur,
       "aria-invalid": inputError ? "true" : "false",
       "aria-describedby": inputError ? `${fieldId}-error` : undefined,
-      rows: rows,
     };
-
-    // Якщо є Formik context і name, додаємо required з валідації
-    if (formikContext && name) {
-      const fieldMeta = formikContext.getFieldMeta?.(name);
-      defaultProps.required = required || fieldMeta?.required;
-    }
 
     return <textarea {...defaultProps} />;
   };
@@ -169,22 +198,18 @@ export const FieldTextarea = ({
         className,
         strong && css.strong,
         inputError && css.error,
-        defaultMaxLength && css.withExtra,
         disabled && css.disabled
       )}
     >
-      {label && (
-        <label htmlFor={fieldId}>
-          {label}
-          {required && <span aria-label="required"> *</span>}
-        </label>
-      )}
+      {label && <label htmlFor={fieldId}>{label}</label>}
 
       <div
-        className={clsx(css.inputWrapper, defaultMaxLength && css.withExtra)}
+        className={clsx(css.textAreaWrapper, defaultMaxLength && css.withExtra)}
       >
         {renderTextarea()}
-        {defaultMaxLength && <div className={css.extra}>{renderExtra()}</div>}
+        {defaultMaxLength && (
+          <div className={css.textareaCountWrapper}>{renderExtra()}</div>
+        )}
       </div>
 
       {helperText && !inputError && !limitReached && (
