@@ -6,6 +6,27 @@ import { ErrorField } from "../ErrorField/ErrorField";
 import { useFormikContext } from "formik";
 import { useBreakpoint } from "../../../../hooks/useBreakpoint";
 
+// Constants
+const MOBILE_MAX_HEIGHT = 120;
+const DESKTOP_HEIGHT = 56;
+const CHARACTER_LIMIT_MESSAGE = "Character limit reached";
+
+/**
+ * FieldTextarea - A form textarea component with Formik integration and character counting
+ * @param {Object} props - Component props
+ * @param {string} props.name - Field name for Formik integration
+ * @param {string} [props.label] - Field label
+ * @param {string} [props.placeholder] - Textarea placeholder
+ * @param {number} [props.maxLength] - Maximum character count (excluding newlines)
+ * @param {Function} [props.onChange] - Custom onChange handler
+ * @param {string} [props.error] - External error message
+ * @param {boolean} [props.strong] - Apply strong styling
+ * @param {string} [props.value] - External value (controlled component)
+ * @param {string} [props.style] - Style variant ('default', 'rounded')
+ * @param {string} [props.className] - Additional CSS classes
+ * @param {string} [props.helperText] - Helper text displayed below field
+ * @param {boolean} [props.disabled] - Disable the textarea
+ */
 export const FieldTextarea = ({
   name,
   label,
@@ -13,182 +34,239 @@ export const FieldTextarea = ({
   maxLength,
   onChange,
   error,
-  strong,
+  strong = false,
   value,
   style = "default",
   className = "",
   helperText,
   disabled = false,
 }) => {
+  // Hooks
   const fieldId = useId();
-  const defaultMaxLength = maxLength && parseInt(maxLength, 10);
   const { isMobile, isTablet } = useBreakpoint();
   const textareaRef = useRef(null);
-
-  // Отримуємо Formik context
   const formikContext = useFormikContext();
 
-  // Визначаємо значення та методи з Formik
+  // State
+  const [characterCount, setCharacterCount] = useState(0);
+  const [isLimitReached, setIsLimitReached] = useState(false);
+
+  // Derived values
+  const maxCharacterLimit = maxLength ? parseInt(maxLength, 10) : null;
+  const isMobileDevice = isMobile || isTablet;
+  const hasCharacterCounter = Boolean(maxCharacterLimit);
+
+  // Formik integration
   const formikValue = formikContext?.values?.[name];
   const formikSetFieldValue = formikContext?.setFieldValue;
   const formikSetFieldTouched = formikContext?.setFieldTouched;
   const formikTouched = formikContext?.touched?.[name];
   const formikError = formikContext?.errors?.[name];
 
-  // Визначаємо фінальне значення
-  const inputValue = formikValue || value || "";
+  // Final values
+  const currentValue = formikValue || value || "";
+  const currentError = error || (formikTouched && formikError);
 
-  const [counter, setCounter] = useState(0);
-  const [limitReached, setLimitReached] = useState(false);
+  // Text processing function
+  const processText = useCallback(
+    (text) => {
+      // On mobile/tablet, return text as-is
+      // On desktop, you can add text processing logic here if needed
+      return isMobileDevice ? text : text;
+    },
+    [isMobileDevice]
+  );
 
-  // Визначаємо фінальну помилку
-  const inputError = error || (formikTouched && formikError);
-
-  function chunkify(str) {
-    // Disable expandAt functionality for mobile and tablet
-    if (isMobile || isTablet) {
-      return str; // Return text as-is without chunking
-    }
-    // For desktop, return the string as-is (you can add chunking logic here if needed)
-    return str;
-  }
-
-  // Improved auto-resize textarea function
+  // Auto-resize functionality
   const autoResize = useCallback(() => {
-    if (textareaRef.current) {
-      const textarea = textareaRef.current;
-      const maxHeight = 120;
+    const textarea = textareaRef.current;
+    if (!textarea) return;
 
-      if (isMobile || isTablet) {
-        // Mobile: Auto-grow functionality
-        textarea.style.height = "auto";
-        textarea.style.overflow = "hidden";
+    if (isMobileDevice) {
+      // Mobile: Dynamic height with auto-grow
+      textarea.style.height = "auto";
+      textarea.style.overflow = "hidden";
 
-        const scrollHeight = textarea.scrollHeight;
+      const scrollHeight = textarea.scrollHeight;
+      const maxHeight = MOBILE_MAX_HEIGHT;
 
-        if (scrollHeight <= maxHeight) {
-          textarea.style.height = `${Math.max(scrollHeight, 56)}px`;
-          textarea.style.overflowY = "hidden";
-        } else {
-          textarea.style.height = `${maxHeight}px`;
-          textarea.style.overflowY = "auto";
-        }
+      if (scrollHeight <= maxHeight) {
+        textarea.style.height = `${Math.max(scrollHeight, DESKTOP_HEIGHT)}px`;
+        textarea.style.overflowY = "hidden";
       } else {
-        // Desktop: Check if content overflows the fixed height
-        const scrollHeight = textarea.scrollHeight;
-        const currentHeight = 56; // Fixed height for desktop
+        textarea.style.height = `${maxHeight}px`;
+        textarea.style.overflowY = "auto";
+      }
+    } else {
+      // Desktop: Fixed height with overflow control
+      const scrollHeight = textarea.scrollHeight;
 
-        if (scrollHeight > currentHeight) {
-          textarea.style.overflowY = "auto";
-        } else {
-          textarea.style.overflowY = "hidden";
-        }
+      if (scrollHeight > DESKTOP_HEIGHT) {
+        textarea.style.overflowY = "auto";
+      } else {
+        textarea.style.overflowY = "hidden";
       }
     }
-  }, [isMobile, isTablet]);
+  }, [isMobileDevice]);
 
+  // Character counting logic
+  const getCharacterCount = useCallback((text) => {
+    return text ? text.replace(/\n/g, "").length : 0;
+  }, []);
+
+  // Update character count and auto-resize when value changes
   useEffect(() => {
-    const plainLen = inputValue ? inputValue.replace(/\n/g, "").length : 0;
-    setCounter(plainLen);
+    const count = getCharacterCount(currentValue);
+    setCharacterCount(count);
 
-    // Use requestAnimationFrame for better performance
     requestAnimationFrame(() => {
       autoResize();
     });
-  }, [inputValue, isMobile, isTablet, autoResize]);
+  }, [currentValue, getCharacterCount, autoResize]);
 
+  // Auto-resize on mount and breakpoint changes
   useEffect(() => {
     autoResize();
-  }, [isMobile, isTablet, autoResize]);
+  }, [autoResize]);
 
-  const handleOnChange = (event) => {
-    const raw = event.target.value;
-    const formatted = chunkify(raw);
-    const plainLen = formatted.replace(/\n/g, "").length;
+  // Event handlers
+  const handleChange = useCallback(
+    (event) => {
+      const rawValue = event.target.value;
+      const processedValue = processText(rawValue);
+      const characterLength = getCharacterCount(processedValue);
 
-    // Block input if we have a maxLength and would exceed it
-    if (defaultMaxLength && plainLen > defaultMaxLength) {
-      if (formatted.length >= (inputValue || "").length) {
-        setLimitReached(true);
+      // Block input if exceeding character limit
+      if (maxCharacterLimit && characterLength > maxCharacterLimit) {
+        if (processedValue.length >= currentValue.length) {
+          setIsLimitReached(true);
+          return;
+        }
         return;
       }
-      return;
-    }
 
-    // If limit is reached, block adding new lines (Enter key)
-    if (defaultMaxLength && plainLen === defaultMaxLength) {
-      // If the new value has more newlines than the previous value, block it
-      const prevNewlines = (inputValue.match(/\n/g) || []).length;
-      const newNewlines = (formatted.match(/\n/g) || []).length;
-      if (newNewlines > prevNewlines) {
-        setLimitReached(true);
-        return;
+      // Prevent adding newlines when at character limit
+      if (maxCharacterLimit && characterLength === maxCharacterLimit) {
+        const previousNewlines = (currentValue.match(/\n/g) || []).length;
+        const newNewlines = (processedValue.match(/\n/g) || []).length;
+
+        if (newNewlines > previousNewlines) {
+          setIsLimitReached(true);
+          return;
+        }
       }
+
+      // Clear limit reached state
+      if (isLimitReached) {
+        setIsLimitReached(false);
+      }
+
+      // Update values
+      setCharacterCount(characterLength);
+
+      // Update Formik
+      if (name && formikSetFieldValue) {
+        formikSetFieldValue(name, processedValue);
+      }
+
+      // Call custom onChange if provided
+      if (onChange) {
+        onChange(processedValue);
+      }
+
+      // Auto-resize after change
+      requestAnimationFrame(() => {
+        autoResize();
+      });
+    },
+    [
+      processText,
+      getCharacterCount,
+      maxCharacterLimit,
+      currentValue,
+      isLimitReached,
+      name,
+      formikSetFieldValue,
+      onChange,
+      autoResize,
+    ]
+  );
+
+  const handleFocus = useCallback(() => {
+    // Clear validation error on focus
+    if (name && formikSetFieldTouched) {
+      formikSetFieldTouched(name, false);
     }
+  }, [name, formikSetFieldTouched]);
 
-    // Clear limit reached state if we're under the limit
-    if (limitReached) {
-      setLimitReached(false);
-    }
-
-    setCounter(plainLen);
-
-    // Оновлюємо Formik значення
-    if (name && formikSetFieldValue) {
-      formikSetFieldValue(name, formatted);
-    }
-
-    // Викликаємо кастомний onChange якщо є
-    if (onChange) {
-      onChange(formatted);
-    }
-
-    // Auto-resize immediately on input for better UX
-    requestAnimationFrame(() => {
-      autoResize();
-    });
-  };
-
-  const handleOnBlur = () => {
+  const handleBlur = useCallback(() => {
+    // Trigger validation on blur
     if (name && formikSetFieldTouched) {
       formikSetFieldTouched(name, true);
     }
-  };
+  }, [name, formikSetFieldTouched]);
 
+  // Render functions
   const renderTextarea = () => {
-    const defaultProps = {
+    const textareaProps = {
       id: fieldId,
       ref: textareaRef,
+      name,
       placeholder,
       disabled,
-      value: inputValue,
-      onChange: handleOnChange,
-      onBlur: handleOnBlur,
-      "aria-invalid": inputError ? "true" : "false",
-      "aria-describedby": inputError ? `${fieldId}-error` : undefined,
+      value: currentValue,
+      onChange: handleChange,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
+      "aria-invalid": currentError ? "true" : "false",
+      "aria-describedby": currentError ? `${fieldId}-error` : undefined,
     };
 
-    return <textarea {...defaultProps} />;
+    return <textarea {...textareaProps} />;
   };
 
-  const renderExtra = () => {
-    if (maxLength) {
-      return (
-        <span className={css.count}>
-          <span
-            className={clsx(
-              css.count_active,
-              counter > defaultMaxLength && css.count_error
-            )}
-          >
-            {counter}
-          </span>{" "}
-          / {defaultMaxLength}
+  const renderCharacterCounter = () => {
+    if (!hasCharacterCounter) return null;
+
+    const isOverLimit = characterCount > maxCharacterLimit;
+
+    return (
+      <span className={css.count}>
+        <span
+          className={clsx(css.count_active, isOverLimit && css.count_error)}
+        >
+          {characterCount}
         </span>
+        {" / "}
+        {maxCharacterLimit}
+      </span>
+    );
+  };
+
+  const renderErrorMessage = () => {
+    if (isLimitReached) {
+      return (
+        <ErrorField id={`${fieldId}-error`}>
+          {`${CHARACTER_LIMIT_MESSAGE} (${maxCharacterLimit} characters maximum)`}
+        </ErrorField>
       );
     }
+
+    if (currentError) {
+      return <ErrorField id={`${fieldId}-error`}>{currentError}</ErrorField>;
+    }
+
+    return null;
   };
 
+  const renderHelperText = () => {
+    if (helperText && !currentError && !isLimitReached) {
+      return <p className={css.helperText}>{helperText}</p>;
+    }
+    return null;
+  };
+
+  // Main render
   return (
     <div
       className={clsx(
@@ -197,32 +275,28 @@ export const FieldTextarea = ({
         style && css[style],
         className,
         strong && css.strong,
-        inputError && css.error,
+        currentError && css.error,
         disabled && css.disabled
       )}
     >
       {label && <label htmlFor={fieldId}>{label}</label>}
 
       <div
-        className={clsx(css.textAreaWrapper, defaultMaxLength && css.withExtra)}
+        className={clsx(
+          css.textAreaWrapper,
+          hasCharacterCounter && css.withExtra
+        )}
       >
         {renderTextarea()}
-        {defaultMaxLength && (
-          <div className={css.textareaCountWrapper}>{renderExtra()}</div>
+        {hasCharacterCounter && (
+          <div className={css.textareaCountWrapper}>
+            {renderCharacterCounter()}
+          </div>
         )}
       </div>
 
-      {helperText && !inputError && !limitReached && (
-        <p className={css.helperText}>{helperText}</p>
-      )}
-      {limitReached && (
-        <ErrorField
-          id={`${fieldId}-error`}
-        >{`Character limit reached (${defaultMaxLength} characters maximum)`}</ErrorField>
-      )}
-      {inputError && (
-        <ErrorField id={`${fieldId}-error`}>{inputError}</ErrorField>
-      )}
+      {renderHelperText()}
+      {renderErrorMessage()}
     </div>
   );
 };
