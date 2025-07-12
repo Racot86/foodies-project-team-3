@@ -1,30 +1,42 @@
 // src/components/ui/SignToggle.jsx
 import React, { useState } from "react";
 import styles from "./SignToggle.module.css";
-import SignInSignUpModal from "@/components/signInSignUpModal/SignInSignUpModal";
+import SignInModal from "@/components/signInModal/SignInModal";
+import SignUpModal from "@/components/signUpModal/SignUpModal";
 import clsx from "clsx";
 
 const SignToggle = () => {
   const [active, setActive] = useState("signin");
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(null); // null | 'signin' | 'signup'
 
   const handleClick = (type) => {
     setActive(type);
-    setModalOpen(true);
+    setModalOpen(type);
   };
 
   const closeModal = () => {
-    setModalOpen(false);
+    setModalOpen(null);
     setActive("signin");
+  };
+
+  const handleOpenSignUp = () => {
+    setActive("signup");
+    setModalOpen("signup");
+  };
+
+  const handleOpenSignIn = () => {
+    setActive("signin");
+    setModalOpen("signin");
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.toggleWrapper}>
         <div
-          className={`${styles.toggleBackground} ${
+          className={clsx(
+            styles.toggleBackground,
             active === "signup" ? styles.right : styles.left
-          }`}
+          )}
         />
         <button
           className={clsx(
@@ -46,8 +58,11 @@ const SignToggle = () => {
         </button>
       </div>
 
-      {modalOpen && (
-        <SignInSignUpModal onClose={closeModal} initialType={active} />
+      {modalOpen === "signin" && (
+        <SignInModal onClose={closeModal} onOpenSignUp={handleOpenSignUp} />
+      )}
+      {modalOpen === "signup" && (
+        <SignUpModal onClose={closeModal} onOpenSignIn={handleOpenSignIn} />
       )}
     </div>
   );
