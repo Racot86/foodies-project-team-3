@@ -1,5 +1,9 @@
 .header {
-    background-color: #FFD700;
+    background-color: var(--color-background-dark);
+}
+
+.headerDiv{
+    display: flex;
 }
 
 .nav ul {
