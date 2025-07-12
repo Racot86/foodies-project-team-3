@@ -1,5 +1,5 @@
 import styles from './TestimonialCard.module.css';
-import {Text} from "@components/ui/index.js";
+import {Heading, Text} from "@components/ui/index.js";
 
 const TestimonialCard = ({ testimonial }) => {
   if (!testimonial) {
@@ -15,7 +15,7 @@ const TestimonialCard = ({ testimonial }) => {
       <Text size="2xl" className={styles.testimonialTextMargin}>
         {testimonial.testimonial}
       </Text>
-      <div className={styles.author}>{testimonial.username.toUpperCase()}</div>
+      <Heading size="md" weight="bold" align="center" className={styles.author}>{testimonial.username.toUpperCase()}</Heading>
     </div>
   );
 };

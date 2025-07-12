@@ -1,6 +1,7 @@
 
 .testimonialWrapper {
-    padding-top: 20px;
+    padding: 20px 20px 40px;
+    background-color: #f5f5f5;
     text-align: center;
     width: 343px;
     margin: 0 auto;
@@ -34,7 +35,7 @@
 
 @media (min-width: 375px) {
     .testimonialWrapper {
-        padding-top: 20px;
+        padding: 20px;
     }
 
     .testimonialText {
@@ -52,7 +53,7 @@
 @media (min-width: 768px) {
     .testimonialWrapper {
         width: 704px;
-        padding-top: 40px;
+        padding: 20px 20px 40px;
     }
 
     .testimonialText {
@@ -71,6 +72,7 @@
 @media (min-width: 1440px) {
     .testimonialWrapper {
         width: 822px;
+        padding: 0;
     }
 
     .testimonialText {
