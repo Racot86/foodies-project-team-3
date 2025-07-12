@@ -1,0 +1,180 @@
+/* Heading Component Styles */
+
+.heading {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  line-height: var(--line-height-heading);
+  color: var(--color-text-primary); /* За замовчуванням - існуюча змінна */
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Heading levels */
+.level-1 {
+  font-family: var(--font-family-heading);
+  line-height: var(--line-height-tight);
+}
+
+.level-2 {
+  font-family: var(--font-family-heading);
+  line-height: var(--line-height-heading);
+}
+
+.level-3,
+.level-4,
+.level-5,
+.level-6 {
+  font-family: var(--font-family-heading);
+  line-height: var(--line-height-heading);
+}
+
+/* Sizes */
+.size-xs {
+  font-size: var(--font-lg);
+}
+
+.size-sm {
+  font-size: var(--font-xl);
+}
+
+.size-md {
+  font-size: var(--font-2xl);
+}
+
+.size-lg {
+  font-size: var(--font-3xl);
+}
+
+.size-xl {
+  font-size: var(--font-4xl);
+}
+
+.size-2xl {
+  font-size: var(--font-4xl);
+}
+
+/* Colors */
+.color-default {
+  color: var(--color-text-primary); /* За замовчуванням - чорний #050505 */
+}
+
+.color-muted {
+  color: var(--color-text-secondary); /* Темно-сірий #1a1a1a */
+}
+
+.color-primary {
+  color: var(--color-primary); /* Чорний для акцентів #050505 */
+}
+
+.color-success {
+  color: var(--color-success);
+}
+
+.color-warning {
+  color: var(--color-warning);
+}
+
+.color-error {
+  color: var(--color-error);
+}
+
+.color-white {
+  color: var(--color-white);
+}
+
+/* Font weights */
+.weight-normal {
+  font-weight: var(--font-normal);
+}
+
+.weight-medium {
+  font-weight: var(--font-medium);
+}
+
+.weight-semibold {
+  font-weight: var(--font-semibold);
+}
+
+.weight-bold {
+  font-weight: var(--font-bold);
+}
+
+/* Text alignment */
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+/* Responsive typography */
+@media (max-width: 767px) {
+  .size-xs {
+    font-size: calc(var(--font-lg) * 0.9);
+  }
+
+  .size-sm {
+    font-size: calc(var(--font-xl) * 0.9);
+  }
+
+  .size-md {
+    font-size: calc(var(--font-2xl) * 0.85);
+  }
+
+  .size-lg {
+    font-size: calc(var(--font-3xl) * 0.8);
+  }
+
+  .size-xl {
+    font-size: calc(var(--font-4xl) * 0.75);
+  }
+
+  .size-2xl {
+    font-size: calc(var(--font-4xl) * 0.7);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .heading {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .color-muted {
+    color: var(
+      --color-text-primary
+    ); /* В high contrast режимі показуємо як звичайний текст */
+  }
+}
+
+/* Dark mode considerations */
+@media (prefers-color-scheme: dark) {
+  .color-default {
+    color: var(--color-text-primary);
+  }
+
+  .color-muted {
+    color: var(--color-text-secondary);
+  }
+}
+
+/* Special spacing for modal headings */
+.heading + p,
+.heading + .text {
+  margin-top: var(--spacing-sm);
+}
+
+/* Focus styles for accessibility */
+.heading:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}

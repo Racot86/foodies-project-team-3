@@ -1,0 +1,28 @@
+.button {
+  outline: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #050505;                
+  border: 1px solid #bfbebe;
+  font-size: 20px;
+  transition: border 0.2s, color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus-visible {
+  color: #fff;
+}
+
+.button svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  fill: currentColor;
+  stroke: currentColor;
+}

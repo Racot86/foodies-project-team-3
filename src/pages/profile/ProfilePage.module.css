@@ -1,0 +1,105 @@
+.profilePage {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profileContent {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profileImageContainer {
+    flex-shrink: 0;
+}
+
+.imagePlaceholder {
+    width: 100px;
+    height: 100px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #555;
+}
+
+.userInfo h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.userInfo p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.profileStats {
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profileStats h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.profileStats ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profileStats li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+.profileStats li:last-child {
+    border-bottom: none;
+}
+
+.tabsSection {
+    margin-top: 2rem;
+}
+
+.tabContent {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+    .profileContent {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .profileInfo {
+        flex: 2;
+    }
+
+    .profileStats {
+        flex: 1;
+    }
+}
