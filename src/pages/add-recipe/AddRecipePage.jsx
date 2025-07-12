@@ -3,7 +3,7 @@ import styles from "./AddRecipePage.module.css";
 import Page from "@components/page/Page";
 import { ResponsiveContainer } from "@/components/container/ResponsiveContainer";
 import { Heading, Text } from "@/components/ui";
-import { ImageUpload } from "@/components/addRecipe/imgLoader/imgLoader";
+import RecipeForm from "@/components/addRecipe/recipeForm/recipeForm";
 
 function AddRecipePage() {
   return (
@@ -16,7 +16,7 @@ function AddRecipePage() {
           Reveal your culinary art, share your favorite recipe and create
           gastronomic masterpieces with us.
         </Text>
-        <ImageUpload />
+        <RecipeForm />
       </ResponsiveContainer>
     </Page>
   );
