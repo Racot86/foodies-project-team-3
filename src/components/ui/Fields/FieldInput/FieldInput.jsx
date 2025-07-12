@@ -72,7 +72,7 @@ export const FieldInput = ({
           }
           tabIndex={disabled ? -1 : 0}
         >
-          {isPassword(defaultType) ? <FiEye /> : <FiEyeOff />}
+          {isPassword(defaultType) ? <FiEyeOff /> : <FiEye />}
         </button>
       );
     }
