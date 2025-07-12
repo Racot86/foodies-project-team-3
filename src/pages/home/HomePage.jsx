@@ -1,23 +1,18 @@
-import React from 'react';
-import {Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import styles from './HomePage.module.css';
 import Page from '../../components/page/Page';
-import {Hero} from '@pages/home/components/hero/Hero.jsx';
-import Testimonials from '@pages/home/components/testimonials/Testimonials';
+import Hero from '@pages/home/components/hero/Hero';
+import TestimonialCard from '../../components/TestimonialCard';
 
 function HomePage() {
-
-    return (
-        <Page className={styles.homePage}>
-            <Hero/>
-
-            {/* Example of using the responsive components */}
-            {/*<ResponsiveExample />*/}
-
-            <Outlet/>
-            <Testimonials/>
-        </Page>
-    );
+  return (
+    <Page className={styles.homePage}>
+          <Hero />
+          <Outlet />
+      <TestimonialCard />
+    
+    </Page>
+  );
 }
 
 export default HomePage;
