@@ -13,7 +13,7 @@ export const fetchCategories = createAsyncThunk(
   }
 );
 
-const areasSlice = createSlice({
+const categoriesSlice = createSlice({
   name: "categories",
   initialState: {
     data: [],
@@ -23,19 +23,19 @@ const areasSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAreas.pending, (state) => {
+      .addCase(fetchCategories.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchAreas.fulfilled, (state, action) => {
+      .addCase(fetchCategories.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(fetchAreas.rejected, (state, action) => {
+      .addCase(fetchCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
   },
 });
 
-export default areasSlice.reducer;
+export default categoriesSlice.reducer;

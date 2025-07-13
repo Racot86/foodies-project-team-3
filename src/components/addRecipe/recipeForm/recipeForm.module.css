@@ -16,3 +16,9 @@
   display: flex;
   gap: 20px;
 }
+
+.ingredientsList {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
