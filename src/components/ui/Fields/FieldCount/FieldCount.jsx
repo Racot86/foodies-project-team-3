@@ -1,74 +1,51 @@
-import { useEffect, useId, useState, useMemo } from "react";
+import React from "react";
 import clsx from "clsx";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import css from "../Fields.module.css";
+import styles from "../Fields.module.css";
 import { ButtonIcon } from "../../ButtonIcon/ButtonIcon";
 import { ErrorField } from "../ErrorField/ErrorField";
-import { useFormikContext } from "formik";
 
 export const FieldCount = ({
-  label,
-  name,
-  strong,
+  value = 0,
   onChange,
+  label,
   error,
-  value,
+  strong = false,
   step = 10,
   className = "",
 }) => {
-  const [count, setCount] = useState(value);
-  const formikContext = useFormikContext();
-
-  // Отримуємо values з Formik замість react-hook-form
-  const getValues = useMemo(() => {
-    return formikContext?.values ? () => formikContext.values : null;
-  }, [formikContext?.values]);
-
-  const fieldId = useId();
-  const values = useMemo(() => {
-    return getValues ? getValues() : {};
-  }, [getValues]);
-
-  const handleOnChange = (value) => () => {
-    const currentValue = count + value;
-    if (currentValue >= 0) {
-      onChange(currentValue);
-      setCount(currentValue);
-
-      // Оновлюємо Formik значення якщо є name
-      if (name && formikContext?.setFieldValue) {
-        formikContext.setFieldValue(name, currentValue);
-      }
+  const handleChange = (delta) => {
+    const newValue = (value ?? 0) + delta;
+    if (newValue >= 0) {
+      onChange(newValue);
     }
   };
-
-  useEffect(() => {
-    if (
-      name &&
-      values &&
-      count !== values[name] &&
-      values[name] !== undefined
-    ) {
-      setCount(values[name]);
-    }
-  }, [count, name, values]);
 
   return (
     <div
       className={clsx(
-        css.field,
+        styles.field,
         className,
-        strong && css.strong,
-        error && css.error
+        strong && styles.strong,
+        error && styles.error
       )}
     >
-      {label && <label htmlFor={fieldId}>{label}</label>}
-      <div className={clsx(css.inputCountWrapper)}>
-        <ButtonIcon onClick={handleOnChange(-step)}>
+      {label && <label>{label}</label>}
+
+      <div className={clsx(styles.inputCountWrapper)}>
+        <ButtonIcon
+          onClick={() => handleChange(-step)}
+          aria-label="Increase value"
+        >
           <FaMinus />
         </ButtonIcon>
-        <div className={css.step}>{count} min</div>
-        <ButtonIcon onClick={handleOnChange(step)}>
+
+        <div className={styles.step}>{value} min</div>
+
+        <ButtonIcon
+          onClick={() => handleChange(step)}
+          aria-label="Decrease value"
+        >
           <FaPlus />
         </ButtonIcon>
       </div>
