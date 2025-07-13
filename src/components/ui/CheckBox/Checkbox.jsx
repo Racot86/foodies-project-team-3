@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './CheckBox.module.css';
+import styles from './Checkbox.module.css';
 
 const CheckBox = ({ active: propActive, onChange }) => {
   const [internalActive, setInternalActive] = useState(false);
@@ -29,8 +29,8 @@ const CheckBox = ({ active: propActive, onChange }) => {
         >
           <path
             fillRule="evenodd"
-            d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 
-              4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 
+            d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586
+              4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0
               001.414 0l8-8a1 1 0 000-1.414z"
             clipRule="evenodd"
           />

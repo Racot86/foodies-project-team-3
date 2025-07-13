@@ -60,7 +60,6 @@ export const FieldSelect = ({
     <div
       className={clsx(
         css.field,
-        css.fieldSelect,
         className,
         error && css.error,
         disabled && css.disabled

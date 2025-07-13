@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import css from "./UserBar.module.css";
-import defaultAvatar from "@/assets/default-avatar.png"; // додати зображення на дефолтний аватар
-import  Modal  from "../../modal/Modal.jsx"
-import  LogOutModal  from "@/components/logout/LogOutModal.jsx";
-import UserDropDown from "@components/ui/UserDropDown/UserDropDown"
+import defaultAvatar from "@assets/react.svg"; // додати зображення на дефолтний аватар
+import  Modal  from "../../../modal/Modal.jsx"
+
+import UserDropDown from "@components/ui/UserDropDown/UserDropDown.jsx"
 import { GoChevronDown } from "react-icons/go";
+import LogOutModal from "@components/logOutModal/LogOutModal.jsx";
 
 
 

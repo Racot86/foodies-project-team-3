@@ -11,11 +11,10 @@ export const FieldCount = ({
   name,
   strong,
   onChange,
-  inputError,
+  error,
   value,
   step = 10,
   className = "",
-  style,
 }) => {
   const [count, setCount] = useState(value);
   const formikContext = useFormikContext();
@@ -60,9 +59,8 @@ export const FieldCount = ({
         css.field,
         className,
         strong && css.strong,
-        inputError && css.error
+        error && css.error
       )}
-      style={style}
     >
       {label && <label htmlFor={fieldId}>{label}</label>}
       <div className={clsx(css.inputCountWrapper)}>
@@ -75,7 +73,7 @@ export const FieldCount = ({
         </ButtonIcon>
       </div>
 
-      {inputError && <ErrorField>{inputError}</ErrorField>}
+      {error && <ErrorField>{error}</ErrorField>}
     </div>
   );
 };
