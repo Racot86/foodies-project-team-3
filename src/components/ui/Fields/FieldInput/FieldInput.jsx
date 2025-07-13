@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useId, useState } from "react";
+import { useId, useState, useCallback } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import css from "../Fields.module.css";
 import { ErrorField } from "@components/ui/index.js";
@@ -29,7 +29,41 @@ export const FieldInput = ({
   // Визначаємо фінальне значення
   const inputValue = value !== undefined ? value : "";
   // Визначаємо фінальну помилку
-  const inputError = error;
+  const inputError = error || (formikTouched && formikError);
+
+  const handleOnChange = useCallback(
+    (event) => {
+      const { value } = event.target;
+
+      // Оновлюємо Formik значення
+      if (name && formikSetFieldValue) {
+        formikSetFieldValue(name, value);
+      }
+
+      // Викликаємо кастомний onChange якщо є
+      if (onChange) {
+        onChange(value);
+      }
+    },
+    [name, formikSetFieldValue, onChange]
+  );
+
+  // FIXED: Add onFocus handler to clear errors
+  const handleOnFocus = useCallback(() => {
+    // Clear error on focus - same as FieldTextarea
+    if (name && formikSetFieldTouched) {
+      formikSetFieldTouched(name, false);
+    }
+  }, [name, formikSetFieldTouched]);
+
+  // FIXED: Update onBlur handler
+  const handleOnBlur = useCallback(() => {
+    // Set field as touched to show validation errors
+    if (name && formikSetFieldTouched) {
+      formikSetFieldTouched(name, true);
+    }
+  }, [name, formikSetFieldTouched]);
+
 
   const renderInput = () => {
     const defaultProps = {
@@ -40,10 +74,14 @@ export const FieldInput = ({
       "aria-describedby": inputError ? `${fieldId}-error` : undefined,
       id: fieldId,
       type: defaultType,
+
       name,
-      onChange,
+      onChange: handleOnChange,
+      onFocus: handleOnFocus, // ADDED: Focus handler
+      onBlur: handleOnBlur,
       required,
       ...rest,
+
     };
     // value не треба явно передавати, якщо працюємо з react-hook-form
     // ref передається через ...rest
@@ -52,13 +90,13 @@ export const FieldInput = ({
 
   const isPassword = (type) => type === "password";
 
-  const showPassword = () => {
+  const showPassword = useCallback(() => {
     if (isPassword(defaultType)) {
       setDefaultType("text");
     } else {
       setDefaultType(type);
     }
-  };
+  }, [defaultType, type]);
 
   const renderExtra = () => {
     if (type === "password") {
@@ -74,6 +112,25 @@ export const FieldInput = ({
         >
           {isPassword(defaultType) ? <FiEyeOff /> : <FiEye />}
         </button>
+      );
+    }
+
+    // ADDED: Character counter for maxLength fields
+    if (maxLength) {
+      const currentLength = inputValue ? inputValue.length : 0;
+      return (
+        <span className={css.count}>
+          <span
+            className={clsx(
+              css.count_active,
+              currentLength > defaultMaxLength && css.count_error
+            )}
+          >
+            {currentLength}
+          </span>
+          {" / "}
+          {defaultMaxLength}
+        </span>
       );
     }
   };
@@ -96,13 +153,16 @@ export const FieldInput = ({
           {required && <span aria-label="required"> *</span>}
         </label>
       )}
+
       <div className={clsx(css.inputWrapper, withExtra && css.withExtra)}>
         {renderInput()}
         {withExtra && <div className={css.extra}>{renderExtra()}</div>}
       </div>
+
       {helperText && !inputError && (
         <p className={css.helperText}>{helperText}</p>
       )}
+
       {inputError && (
         <ErrorField id={`${fieldId}-error`}>{inputError}</ErrorField>
       )}
