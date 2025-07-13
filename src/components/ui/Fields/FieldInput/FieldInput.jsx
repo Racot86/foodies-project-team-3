@@ -21,6 +21,7 @@ export const FieldInput = ({
                              className = "",
                              helperText,
                              disabled = false,
+                             inputStyle,
                              ...rest // для додаткових пропсів (наприклад, ref)
                            }) => {
 
@@ -91,6 +92,7 @@ export const FieldInput = ({
       onFocus: handleOnFocus, // ADDED: Focus handler
       onBlur: handleOnBlur,
       required,
+      style: inputStyle, // Apply inputStyle as a style object
       ...rest,
     };
 

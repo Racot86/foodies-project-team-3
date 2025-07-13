@@ -17,7 +17,6 @@ export const FieldSelect = ({
   className,
   helperText,
   disabled = false,
-  inputStyle,
 }) => {
   const fieldId = useId();
   const [isOpen, setIsOpen] = useState(false);
