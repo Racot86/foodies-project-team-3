@@ -9,10 +9,34 @@ const api = axios.create({
   },
 });
 
+// API endpoints
+/**
+ * Fetches testimonials from the backend
+ * @returns {Promise<Array<{username: string, testimonial: string}>>} Array of testimonial objects
+ */
+export const getTestimonials = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/testimonials`);
+    return response.data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw new Error(error.response?.data?.message || 'An error occurred while fetching testimonials');
+  }
+};
+
 // Add a request interceptor to include the token in the headers
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    let token = null;
+    const foodiesData = localStorage.getItem('foodies');
+    if (foodiesData) {
+      try {
+        const parsedData = JSON.parse(foodiesData);
+        token = parsedData.token || null;
+      } catch (error) {
+        console.error('Error parsing foodies data from localStorage:', error);
+      }
+    }
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

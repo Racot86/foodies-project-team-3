@@ -9,11 +9,14 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  overflow: auto;
 }
 
 .modal {
   position: relative;
   width: 343px;
+  min-width: 343px;
+  flex-shrink: 0;
   display: inline-flex;
   padding: 60px 30px;
   justify-content: center;

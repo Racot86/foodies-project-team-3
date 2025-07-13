@@ -1,5 +1,7 @@
+
 import styles from "../footer/Footer.module.css";
 import { SocialLink } from "../ui/SocialLink/SocialLink";
+
 import {RiInstagramFill} from "react-icons/ri";
 import { TfiFacebook } from "react-icons/tfi";
 import { FaYoutube } from "react-icons/fa6";
