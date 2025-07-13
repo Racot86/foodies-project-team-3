@@ -1,19 +1,13 @@
-import React from 'react';
 import {Outlet} from 'react-router-dom';
 import styles from './HomePage.module.css';
 import Page from '../../components/page/Page';
-import {Hero} from '@pages/home/components/hero/Hero.jsx';
-import Testimonials from '@pages/home/components/testimonials/Testimonials';
+import Hero from '@pages/home/components/hero/Hero';
+import Testimonials from "@pages/home/components/testimonials/Testimonials.jsx";
 
 function HomePage() {
-
     return (
         <Page className={styles.homePage}>
             <Hero/>
-
-            {/* Example of using the responsive components */}
-            {/*<ResponsiveExample />*/}
-
             <Outlet/>
             <Testimonials/>
         </Page>

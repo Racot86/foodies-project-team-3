@@ -47,6 +47,18 @@
   font-size: var(--font-xl);
 }
 
+.size-2xl {
+  font-size: var(--font-2xl);
+}
+
+.size-3xl {
+  font-size: var(--font-3xl);
+}
+
+.size-4xl {
+  font-size: var(--font-4xl);
+}
+
 /* Colors */
 .color-default {
   color: var(--color-text-primary); /* За замовчуванням - чорний #050505 */
@@ -126,6 +138,18 @@
 
   .size-xl {
     font-size: calc(var(--font-xl) * 0.95);
+  }
+
+  .size-2xl {
+    font-size: calc(var(--font-2xl) * 0.95);
+  }
+
+  .size-3xl {
+    font-size: calc(var(--font-3xl) * 0.95);
+  }
+
+  .size-4xl {
+    font-size: calc(var(--font-4xl) * 0.95);
   }
 }
 
