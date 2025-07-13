@@ -2,15 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import Logo from "@components/ui/Logo";
-// Import AuthTest component for testing authentication
-import AuthTest from "./components/AuthTest";
+import UserBar from "./components/UserBar";
 import BurgerMenu from "./components/BurgerMenu/BurgerMenu.jsx";
 import { useBreakpoint } from "@/hooks/useBreakpoint.js";
+import { SignToggle } from "../ui";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "@/redux/slices/authSlice";
 
 
 export const Header = () => {
   const { breakpoint } = useBreakpoint();
   const isMobile = breakpoint === 'mobile' || breakpoint === 'mobile-small';
+
+  const isAuth = useSelector(selectIsAuthenticated)
 
   return (
     <header className={styles.header}>
@@ -21,7 +25,7 @@ export const Header = () => {
         <nav className={styles.nav}>
           <ul>
             <li>
-              <Link to="/">Main Page</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/add-recipe">Add Recipe</Link>
@@ -32,9 +36,8 @@ export const Header = () => {
           </ul>
         </nav>
       )}
+      {isAuth ? <UserBar /> : <SignToggle />}
 
-      {/* AuthTest component for testing authentication - can be commented out when not needed */}
-      <AuthTest />
     </header>
   );
 };
