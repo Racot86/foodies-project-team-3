@@ -33,7 +33,7 @@ export const signUp = createAsyncThunk(
       localStorage.setItem('foodies', JSON.stringify(foodiesData));
       return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Sign up failed');
+      return rejectWithValue(error.response?.data?.message || error.message ||  'Sign up failed');
     }
   }
 );
@@ -52,7 +52,7 @@ export const signIn = createAsyncThunk(
       localStorage.setItem('foodies', JSON.stringify(foodiesData));
       return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Sign in failed');
+      return rejectWithValue(error.response?.data?.message || error.message ||  'Sign in failed');
     }
   }
 );
