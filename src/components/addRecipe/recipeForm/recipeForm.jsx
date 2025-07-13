@@ -1,6 +1,6 @@
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import RecipeSchema from "./recipeSchema.jsx";
+import RecipeSchema from "./RecipeSchema.jsx";
 
 import { useEffect, useState } from "react";
 import {
