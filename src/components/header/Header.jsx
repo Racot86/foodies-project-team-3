@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import Logo from "@components/ui/Logo";
-import UserBar from "./components/UserBar";
+import Logo from "@components/ui/Logo/Logo.jsx";
+import UserBar from "./components/UserBar/UserBar.jsx";
 import BurgerMenu from "./components/BurgerMenu/BurgerMenu.jsx";
 import { useBreakpoint } from "@/hooks/useBreakpoint.js";
 import { SignToggle } from "../ui";
@@ -29,9 +29,6 @@ export const Header = () => {
             </li>
             <li>
               <Link to="/add-recipe">Add Recipe</Link>
-            </li>
-            <li>
-              <Link to="/profile">Profile</Link>
             </li>
           </ul>
         </nav>
