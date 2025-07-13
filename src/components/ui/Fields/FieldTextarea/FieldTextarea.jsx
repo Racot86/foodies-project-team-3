@@ -37,6 +37,7 @@ export const FieldTextarea = ({
   strong = false,
   value,
   style = "default",
+  textareaStyle,
   className = "",
   helperText,
   disabled = false,
@@ -230,6 +231,7 @@ export const FieldTextarea = ({
 
     const isOverLimit = characterCount > maxCharacterLimit;
 
+
     return (
       <span className={css.count}>
         <span
@@ -241,6 +243,7 @@ export const FieldTextarea = ({
         {maxCharacterLimit}
       </span>
     );
+
   };
 
   const renderErrorMessage = () => {

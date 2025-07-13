@@ -116,6 +116,9 @@
   text-align: right;
 }
 
+.titleRecipe {
+  margin-bottom: 20px;
+}
 /* Responsive typography */
 @media (max-width: 767px) {
   .size-xs {

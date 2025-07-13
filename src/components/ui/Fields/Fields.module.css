@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.fieldSelect {
+  gap: var(--spacing-md);
+}
+
 .field label {
   font-weight: var(--font-bold);
   text-transform: uppercase;
@@ -421,7 +425,7 @@
     left: unset;
     transform: unset;
     max-width: unset;
-    margin-top: 60px;
+    margin-top: 106px;
   }
   .selectWrapper {
     width: 315px;

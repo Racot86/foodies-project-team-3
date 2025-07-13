@@ -60,7 +60,9 @@ const Button = ({
 }) => {
   const clickHandler = (event) => {
     if (onClick) {
-      event.preventDefault();
+      if (type !== "submit" && type !== "reset") {
+        event.preventDefault();
+      }
       onClick(event);
     }
   };

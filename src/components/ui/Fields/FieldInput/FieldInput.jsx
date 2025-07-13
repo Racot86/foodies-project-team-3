@@ -6,6 +6,7 @@ import { ErrorField } from "@components/ui/index.js";
 import { useFormikContext } from "formik";
 
 export const FieldInput = ({
+
                              name,
                              label,
                              required,
@@ -22,6 +23,7 @@ export const FieldInput = ({
                              disabled = false,
                              ...rest // для додаткових пропсів (наприклад, ref)
                            }) => {
+
   const [defaultType, setDefaultType] = useState(type);
   const fieldId = useId();
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
@@ -91,8 +93,10 @@ export const FieldInput = ({
       required,
       ...rest,
     };
+
     // ref передається через ...rest
     return <input {...defaultProps} />;
+
   };
 
   const isPassword = (type) => type === "password";
