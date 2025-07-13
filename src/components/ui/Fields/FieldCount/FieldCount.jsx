@@ -15,6 +15,7 @@ export const FieldCount = ({
   value,
   step = 10,
   className = "",
+  style,
 }) => {
   const [count, setCount] = useState(value);
   const formikContext = useFormikContext();
@@ -61,6 +62,7 @@ export const FieldCount = ({
         strong && css.strong,
         error && css.error
       )}
+      style={style}
     >
       {label && <label htmlFor={fieldId}>{label}</label>}
       <div className={clsx(css.inputCountWrapper)}>

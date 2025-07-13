@@ -1,240 +1,3 @@
-// import { useForm, Controller } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { useEffect, useState } from "react";
-// import RecipeSchema from "./recipeSchema";
-// import {
-//   Button,
-//   ButtonIcon,
-//   FieldCount,
-//   FieldInput,
-//   FieldTextarea,
-// } from "@/components/ui";
-// import { FieldSelect } from "@/components/ui/Fields/FieldSelect/FieldSelect";
-// import { ImageUpload } from "../ImageUpload/ImageUpload";
-// import IngredientItem from "@components/addRecipe/IngredientItem/IngredientItem.jsx";
-// import { FiPlus, FiTrash } from "react-icons/fi";
-// import styles from "./RecipeForm.module.css";
-// import { areasService } from "@services/areasService";
-// import { categoriesService } from "@services/categoriesService";
-// import { ingredientsService } from "@services/ingredientsService";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { postRecipe } from "@/redux/slices/addRecipeSlice";
-
-// const AddRecipeForm = () => {
-//   const [areas, setAreas] = useState([]);
-//   const [categories, setCategories] = useState([]);
-//   const [ingredientsList, setIngredientsList] = useState([]);
-//   const [tempImage, setTempImage] = useState(null);
-//   const [addedIngredients, setAddedIngredients] = useState([]);
-//   const [ingredientId, setIngredientId] = useState("");
-//   const [quantity, setQuantity] = useState("");
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const { loading, error } = useSelector((state) => state.recipes);
-
-//   const {
-//     register,
-//     handleSubmit,
-//     control,
-//     reset,
-//     setValue,
-//     formState: { errors },
-//   } = useForm({
-//     resolver: yupResolver(RecipeSchema),
-//     defaultValues: {
-//       title: "",
-//       description: "",
-//       category: "",
-//       area: "",
-//       instructions: "",
-//       cookingTime: 1,
-//       image: null,
-//     },
-//   });
-
-//   useEffect(() => {
-//     areasService().then(setAreas);
-//     categoriesService().then(setCategories);
-//     ingredientsService().then(setIngredientsList);
-//   }, []);
-
-//   useEffect(() => {
-//     return () => {
-//       if (tempImage) {
-//         URL.revokeObjectURL(tempImage);
-//       }
-//     };
-//   }, [tempImage]);
-
-//   const onImageChange = (file) => {
-//     setValue("image", file);
-//     setTempImage(URL.createObjectURL(file));
-//   };
-
-//   const addIngredient = () => {
-//     if (!ingredientId || !quantity) return;
-//     const found = ingredientsList.find((i) => i.id === ingredientId);
-//     if (!found) return;
-
-//     setAddedIngredients((prev) => [
-//       ...prev,
-//       { id: found.id, name: found.name, image: found.img, quantity },
-//     ]);
-//     setIngredientId("");
-//     setQuantity("");
-//   };
-
-//   const removeIngredient = (index) => {
-//     setAddedIngredients((prev) => prev.filter((_, i) => i !== index));
-//   };
-
-//   const clearForm = () => {
-//     reset();
-//     setTempImage(null);
-//     setAddedIngredients([]);
-//     setIngredientId("");
-//     setQuantity("");
-//   };
-
-//   const onSubmit = (data) => {
-//     if (addedIngredients.length === 0) {
-//       alert("Please add at least one ingredient.");
-//       return;
-//     }
-
-//     const formData = new FormData();
-//     formData.append("title", data.title);
-//     formData.append("description", data.description);
-//     formData.append("category", data.category);
-//     formData.append("area", data.area);
-//     formData.append("instructions", data.instructions);
-//     formData.append("time", data.cookingTime.toString());
-//     formData.append("image", data.image);
-//     formData.append("ingredients", JSON.stringify(addedIngredients));
-
-//     dispatch(postRecipe(formData))
-//       .unwrap()
-//       .then(() => {
-//         navigate("/user");
-//         clearForm();
-//       })
-//       .catch((err) => {
-//         alert(err);
-//       });
-//   };
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrap}>
-//       <ImageUpload onImageChange={onImageChange} preview={tempImage} />
-
-//       <div className={styles.rightBlock}>
-//         <FieldInput
-//           placeholder="RECIPE NAME"
-//           {...register("title")}
-//           error={errors.title?.message}
-//         />
-
-//         <FieldTextarea
-//           placeholder="Short description"
-//           maxLength={200}
-//           {...register("description")}
-//           error={errors.description?.message}
-//         />
-
-//         <Controller
-//           control={control}
-//           name="area"
-//           render={({ field }) => (
-//             <FieldSelect
-//               label="Area"
-//               options={areas.map((a) => ({ value: a.id, label: a.name }))}
-//               {...field}
-//               error={errors.area?.message}
-//             />
-//           )}
-//         />
-
-//         <div className={styles.flexRow}>
-//           <Controller
-//             control={control}
-//             name="category"
-//             render={({ field }) => (
-//               <FieldSelect
-//                 label="Category"
-//                 options={categories.map((c) => ({
-//                   value: c.id,
-//                   label: c.name,
-//                 }))}
-//                 {...field}
-//                 error={errors.category?.message}
-//               />
-//             )}
-//           />
-
-//           <Controller
-//             control={control}
-//             name="cookingTime"
-//             render={({ field }) => (
-//               <FieldCount label="Cooking Time" {...field} min={1} />
-//             )}
-//           />
-//         </div>
-
-//         <div className={styles.flexRow}>
-//           <FieldSelect
-//             label="Ingredients"
-//             options={ingredientsList.map((i) => ({
-//               value: i.id,
-//               label: i.name,
-//             }))}
-//             value={ingredientId}
-//             onChange={(val) => setIngredientId(val)}
-//           />
-//           <FieldInput
-//             placeholder="Quantity"
-//             value={quantity}
-//             onChange={(e) => setQuantity(e.target.value)}
-//           />
-//         </div>
-
-//         <Button type="button" onClick={addIngredient}>
-//           ADD INGREDIENT <FiPlus />
-//         </Button>
-
-//         {addedIngredients.length > 0 && (
-//           <ul className={styles.ingredientsList}>
-//             {addedIngredients.map((item, i) => (
-//               <IngredientItem
-//                 key={i}
-//                 name={item.name}
-//                 image={item.image}
-//                 quantity={item.quantity}
-//                 onRemove={() => removeIngredient(i)}
-//               />
-//             ))}
-//           </ul>
-//         )}
-
-//         <FieldTextarea
-//           label="Recipe Preparation"
-//           maxLength={2000}
-//           {...register("instructions")}
-//           error={errors.instructions?.message}
-//         />
-
-//         <div className={styles.buttonsRow}>
-//           <ButtonIcon type="button" onClick={clearForm}>
-//             <FiTrash />
-//           </ButtonIcon>
-//           <Button type="submit">PUBLISH</Button>
-//         </div>
-//       </div>
-//     </form>
-//   );
-// };
-
-// export default AddRecipeForm;
-
 import { Formik, Form } from "formik";
 import RecipeSchema from "./recipeSchema.jsx";
 import { ImageUpload } from "../ImageUpload/ImageUpload.jsx";
@@ -262,6 +25,7 @@ const RecipeForm = () => {
   const [areas, setAreas] = useState([]);
   const [categories, setCategories] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [image, setImage] = useState(null); // стан картинки
 
   useEffect(() => {
     areasService()
@@ -334,9 +98,7 @@ const RecipeForm = () => {
     formik.setFieldValue("ingredients", updated);
   };
 
-  const onSubmit = async (values) => {
-    console.log("Submitting form with values:", values);
-    console.log("Image file:", values.image);
+  const onSubmit = async (values, { resetForm }) => {
     try {
       const formData = new FormData();
 
@@ -353,24 +115,24 @@ const RecipeForm = () => {
         formData.append(`ingredients[${index}][measure]`, ingredient.quantity);
       });
 
-      console.log(formData);
       const response = await addRecipeService(formData);
 
-      if (!response.ok) {
-        throw new Error("Failed to submit recipe");
-      }
+      console.log("✅ Recipe submitted successfully:", response.data);
 
-      const data = await response.json();
-      console.log("Recipe submitted successfully:", data);
+      resetForm({ values: initialValues });
+      setImage(null); // очищаємо картинку у стані
     } catch (error) {
-      console.error("Error submitting recipe:", error);
+      console.error(" Error submitting recipe:", error);
+      if (error.response) {
+        console.error("Server responded with:", error.response.data);
+      }
     }
   };
 
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={RecipeSchema}
+      validationSchema={RecipeSchema}
       onSubmit={onSubmit}
     >
       {(formik) => {
@@ -379,7 +141,11 @@ const RecipeForm = () => {
         return (
           <Form className={styles.formWrap}>
             <ImageUpload
-              onImageChange={(file) => setFieldValue("image", file)}
+              image={image} // передаємо контролювану картинку
+              onImageChange={(file) => {
+                setImage(file);
+                setFieldValue("image", file);
+              }}
             />
 
             <div className={styles.rightBlock}>
@@ -393,14 +159,9 @@ const RecipeForm = () => {
                   minHeight: "unset",
                   fontWeight: "800",
                   fontSize: "24px",
-                  marginBottom: "8px",
+                  marginBottom: "40px",
                 }}
               />
-              {touched.name && errors.name && (
-                <div style={{ color: "red", marginBottom: "16px" }}>
-                  {errors.name}
-                </div>
-              )}
 
               <div className={styles.infoWrap}>
                 <FieldTextarea
@@ -416,18 +177,13 @@ const RecipeForm = () => {
                     marginBottom: "8px",
                   }}
                 />
-                {touched.description && errors.description && (
-                  <div style={{ color: "red", marginBottom: "16px" }}>
-                    {errors.description}
-                  </div>
-                )}
 
                 <FieldSelect
                   name="area"
                   label="Area"
                   placeholder="Select an area"
                   options={areas.map((area) => ({
-                    value: area.id,
+                    value: area.name,
                     label: area.name,
                   }))}
                   value={values.area}
@@ -445,7 +201,7 @@ const RecipeForm = () => {
                     label="Category"
                     placeholder="Select a category"
                     options={categories.map((category) => ({
-                      value: category.id,
+                      value: category.name,
                       label: category.name,
                     }))}
                     value={values.category}
@@ -463,6 +219,7 @@ const RecipeForm = () => {
                     strong
                     onChange={(value) => setFieldValue("cookingTime", value)}
                     step={10}
+                    style={{ gap: "16px" }}
                   />
                   {touched.cookingTime && errors.cookingTime && (
                     <div style={{ color: "red", marginBottom: "16px" }}>
@@ -518,11 +275,6 @@ const RecipeForm = () => {
                 expandAt={60}
                 textareaStyle={{ marginTop: "8px" }}
               />
-              {touched.preparation && errors.preparation && (
-                <div style={{ color: "red", marginBottom: "16px" }}>
-                  {errors.preparation}
-                </div>
-              )}
 
               <div className={styles.buttonsRow}>
                 <ButtonIcon

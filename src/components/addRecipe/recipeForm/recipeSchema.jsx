@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const RecipeSchema = yup.object().shape({
-  title: yup.string().required("Title is required"),
+  name: yup.string().required("Name is required"),
 
   description: yup
     .string()
@@ -11,7 +11,7 @@ const RecipeSchema = yup.object().shape({
   category: yup.string().required("Category is required"),
   area: yup.string().required("Area is required"),
 
-  instructions: yup
+  preparation: yup
     .string()
     .max(200, "Instructions must be at most 200 characters")
     .required("Instructions are required"),

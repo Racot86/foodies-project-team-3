@@ -1,22 +1,35 @@
 import { Input } from "@/components/ui/Input";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import css from "./ImageUpload.module.css";
 import { Text } from "@/components/ui";
 import { FaCamera } from "react-icons/fa6";
 import { TbBorderCorners } from "react-icons/tb";
 
-export const ImageUpload = ({ onImageChange }) => {
+export const ImageUpload = ({ image, onImageChange }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!image) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    if (image instanceof File) {
+      const objectUrl = URL.createObjectURL(image);
+      setPreviewUrl(objectUrl);
+
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+
+    if (typeof image === "string") {
+      setPreviewUrl(image);
+    }
+  }, [image]);
 
   const handleChange = (e) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
       if (onImageChange) {
         onImageChange(file);
       }
