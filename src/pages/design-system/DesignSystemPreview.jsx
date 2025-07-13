@@ -26,6 +26,8 @@ import * as Yup from "yup";
 import { AreaSelect } from "@components/ui/Fields/FieldSelect/test.jsx";
 import PrivateContentArea from "@/components/privateContentArea/PrivateContentArea";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import LogOutModal from "@/components/logOutModal/LogOutModal";
 
 const SignInForm = () => {
   const formik = useFormik({
@@ -214,7 +216,16 @@ const AddRecipeForm = () => {
 };
 
 const DesignSystemPreview = () => {
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const handleClick = () => console.log("Button clicked!");
+
+  const handleOpenLogoutModal = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleCloseLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -472,6 +483,34 @@ const DesignSystemPreview = () => {
             </Link>
           </PrivateContentArea>
         </div>
+
+        <div
+          style={{
+            marginTop: 40,
+            width: "394px",
+          }}
+        >
+          <style>
+            {`
+              .logout-button-343 {
+                width: 343px;
+              }
+            `}
+          </style>
+          <Button
+            variant={Button.variants.PRIMARY}
+            onClick={handleOpenLogoutModal}
+            type="button"
+            href={null}
+            to={null}
+            className="logout-button-343"
+            isLoading={false}
+          >
+            Log out
+          </Button>
+        </div>
+
+        {isLogoutModalOpen && <LogOutModal onClose={handleCloseLogoutModal} />}
       </div>
     </div>
   );
