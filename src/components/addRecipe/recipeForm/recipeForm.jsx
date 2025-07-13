@@ -256,6 +256,7 @@ import { ingredientsService } from "@services/ingredientsService.js";
 import IngredientItem from "@components/addRecipe/IngredientItem/IngredientItem.jsx";
 
 import { useEffect, useState } from "react";
+import { addRecipeService } from "@/services/addRecipeService.js";
 
 const RecipeForm = () => {
   const [areas, setAreas] = useState([]);
@@ -353,10 +354,7 @@ const RecipeForm = () => {
       });
 
       console.log(formData);
-      const response = await fetch("/api/recipes", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await addRecipeService(formData);
 
       if (!response.ok) {
         throw new Error("Failed to submit recipe");
