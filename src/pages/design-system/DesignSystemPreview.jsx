@@ -23,7 +23,9 @@ import {
 } from "react-icons/fi";
 import { useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
-import {AreaSelect} from "@components/ui/Fields/FieldSelect/test.jsx";
+import { AreaSelect } from "@components/ui/Fields/FieldSelect/test.jsx";
+import PrivateContentArea from "@/components/privateContentArea/PrivateContentArea";
+import { Link } from "react-router-dom";
 
 const SignInForm = () => {
   const formik = useFormik({
@@ -364,7 +366,7 @@ const DesignSystemPreview = () => {
 
       <h2>Pagination Component (Custom)</h2>
       <div style={{ marginBottom: "24px" }}>
-         <Pagination
+        <Pagination
           currentPage={1}
           totalPages={10}
           onPageChange={(page) => console.log("Go to page:", page)}
@@ -461,7 +463,15 @@ const DesignSystemPreview = () => {
         >
           <SignToggle />
         </div>
-          <AreaSelect />
+        <AreaSelect />
+
+        <div style={{ marginTop: 40 }}>
+          <PrivateContentArea>
+            <Link to="/test-auth" style={{ fontWeight: "bold", fontSize: 18 }}>
+              Test Content Private Area (Private Link)
+            </Link>
+          </PrivateContentArea>
+        </div>
       </div>
     </div>
   );

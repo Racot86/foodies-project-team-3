@@ -1,31 +1,16 @@
-// src/components/ui/SignToggle.jsx
 import React, { useReducer } from "react";
 import styles from "./SignToggle.module.css";
 import SignInModal from "@/components/signInModal/SignInModal";
 import SignUpModal from "@/components/signUpModal/SignUpModal";
 import clsx from "clsx";
 
-const initialState = {
-  active: "signin", // 'signin' | 'signup'
-  modalOpen: null, // null | 'signin' | 'signup'
-};
-
-const OPEN_SIGNIN = "OPEN_SIGNIN";
-const OPEN_SIGNUP = "OPEN_SIGNUP";
-const CLOSE = "CLOSE";
-
-function modalReducer(state, action) {
-  switch (action.type) {
-    case OPEN_SIGNIN:
-      return { active: "signin", modalOpen: "signin" };
-    case OPEN_SIGNUP:
-      return { active: "signup", modalOpen: "signup" };
-    case CLOSE:
-      return { active: "signin", modalOpen: null };
-    default:
-      return state;
-  }
-}
+import {
+  modalReducer,
+  initialModalState as initialState,
+  OPEN_SIGNIN,
+  OPEN_SIGNUP,
+  CLOSE,
+} from "@/reducers/singInSignUpModalReducer";
 
 const SignToggle = () => {
   const [state, dispatch] = useReducer(modalReducer, initialState);
