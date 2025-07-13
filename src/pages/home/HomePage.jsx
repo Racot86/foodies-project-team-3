@@ -4,7 +4,6 @@ import styles from './HomePage.module.css';
 import Page from '../../components/page/Page';
 import {Hero} from '@pages/home/components/hero/Hero.jsx';
 import Testimonials from '@pages/home/components/testimonials/Testimonials';
-
 function HomePage() {
 
     return (
@@ -15,7 +14,8 @@ function HomePage() {
             {/*<ResponsiveExample />*/}
 
             <Outlet/>
-            <Testimonials/>
+            <Testimonials />
+            
         </Page>
     );
 }
