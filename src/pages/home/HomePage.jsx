@@ -1,15 +1,16 @@
 import {Outlet} from 'react-router-dom';
 import styles from './HomePage.module.css';
 import Page from '../../components/page/Page';
-import Hero from '@pages/home/components/hero/Hero';
-import Testimonials from "@pages/home/components/testimonials/Testimonials.jsx";
+import {Hero} from '@pages/home/components/hero/Hero.jsx';
+import Testimonials from '@pages/home/components/testimonials/Testimonials';
 
 function HomePage() {
     return (
         <Page className={styles.homePage}>
             <Hero/>
             <Outlet/>
-            <Testimonials/>
+            <Testimonials />
+            
         </Page>
     );
 }
