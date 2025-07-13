@@ -11,7 +11,7 @@ export const FieldCount = ({
   name,
   strong,
   onChange,
-  error,
+  inputError,
   value,
   step = 10,
   className = "",
@@ -60,7 +60,7 @@ export const FieldCount = ({
         css.field,
         className,
         strong && css.strong,
-        error && css.error
+        inputError && css.error
       )}
       style={style}
     >
@@ -75,7 +75,7 @@ export const FieldCount = ({
         </ButtonIcon>
       </div>
 
-      {error && <ErrorField>{error}</ErrorField>}
+      {inputError && <ErrorField>{inputError}</ErrorField>}
     </div>
   );
 };

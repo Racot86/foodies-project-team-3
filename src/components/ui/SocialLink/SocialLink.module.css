@@ -1,5 +1,4 @@
 .button {
-  outline: none;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -12,11 +11,6 @@
   font-size: 20px;
   transition: border 0.2s, color 0.2s, background 0.2s;
   cursor: pointer;
-}
-
-.button:hover,
-.button:focus-visible {
-  color: #fff;
 }
 
 .button svg {

@@ -1,0 +1,22 @@
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.titleBox {
+    margin-bottom: 20px;
+}
+
+.subtitleBox {
+    margin-bottom: 28px;
+}
+
+@media (max-width: 767px) {
+    .titleBox {
+        margin-bottom: 16px;
+    }
+
+    .subtitleBox {
+        margin-bottom: 18px;
+    }
+}
