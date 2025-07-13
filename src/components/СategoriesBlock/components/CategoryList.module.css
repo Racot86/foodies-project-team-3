@@ -1,0 +1,23 @@
+.list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Десктоп: 3 в ряд */
+    gap: 40px;
+    width: 100%;
+}
+
+@media (max-width: 1023px) {
+    .list {
+        grid-template-columns: repeat(2, 1fr);
+        /* Планшет: 2 в ряд */
+        gap: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .list {
+        grid-template-columns: 1fr;
+        /* Телефон: по одній */
+        gap: 32px;
+    }
+}
