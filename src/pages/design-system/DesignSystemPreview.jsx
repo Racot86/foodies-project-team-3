@@ -20,6 +20,7 @@ import {
   FiInstagram,
   FiTwitter,
   FiYoutube,
+  FiArrowUpRight,
 } from "react-icons/fi";
 import { useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
@@ -366,6 +367,9 @@ const DesignSystemPreview = () => {
         </ButtonIcon>
         <ButtonIcon onClick={handleClick}>
           <FiPlus />
+        </ButtonIcon>
+        <ButtonIcon onClick={handleClick}>
+          <FiArrowUpRight />
         </ButtonIcon>
         <ButtonIcon
           loading={true}

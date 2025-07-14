@@ -1,9 +1,10 @@
 import React, {useState} from "react";
+import PropTypes from "prop-types";
 import CategoryCard from "./CategoryCard.jsx";
 import styles from "./CategoryList.module.css";
 import { INITIAL_CATEGORIES } from "../../../../constants/recipy_category.js"; 
 
-const CategoryList = () => {
+const CategoryList = ({ onCategorySelect }) => {
   const [showAll, setShowAll] = useState(false);
 
   const VISIBLE_COUNT = 11;
@@ -24,6 +25,7 @@ const CategoryList = () => {
           key={cat.name}
           category={cat.name}
           image={cat.img}
+          onClick={onCategorySelect}
         />
       ))}
       <CategoryCard isAll {...allCategoriesCardProps} />
@@ -31,5 +33,12 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+CategoryList.propTypes = {
+  onCategorySelect: PropTypes.func,
+};
 
+CategoryList.defaultProps = {
+  onCategorySelect: () => {},
+};
+
+export default CategoryList;

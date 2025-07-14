@@ -1,10 +1,10 @@
-import React from "react";
-import  Heading from "../../ui/Heading/Heading";
+import PropTypes from "prop-types";
+import Heading from "../../ui/Heading/Heading";
 import CategoryList from "./CategoryList";
 import styles from "./CategoriesBlock.module.css";
 import { ResponsiveContainer } from "../../container/ResponsiveContainer";
 
-const CategoriesBlock = () => (
+const CategoriesBlock = ({ onCategorySelect }) => (
   <ResponsiveContainer>
     <div className={styles.section}>
       <div className={styles.titleBox}>
@@ -17,10 +17,17 @@ const CategoriesBlock = () => (
           Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style and the warm atmosphere of the kitchen.
         </Heading>
       </div>
-      <CategoryList />
+      <CategoryList onCategorySelect={onCategorySelect} />
     </div>
   </ResponsiveContainer>
 );
 
-export default CategoriesBlock;
+CategoriesBlock.propTypes = {
+  onCategorySelect: PropTypes.func,
+};
 
+CategoriesBlock.defaultProps = {
+  onCategorySelect: () => {},
+};
+
+export default CategoriesBlock;

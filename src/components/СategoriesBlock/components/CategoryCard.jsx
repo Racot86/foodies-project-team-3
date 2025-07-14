@@ -1,14 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styles from "./CategoryCard.module.css";
 import { FiArrowUpRight } from "react-icons/fi";
+
 /**
  * @param {Object} props
  * @param {string} [props.category]
  * @param {string} [props.image]
  * @param {boolean} [props.isAll]
  * @param {boolean} [props.isActive]
- * @param {function} [props.onClick]
+ * @param {Function} [props.onClick] - Callback when category is selected or toggle is clicked
  */
 const CategoryCard = ({
   category,
@@ -22,7 +22,7 @@ const CategoryCard = ({
     return (
       <div
         className={`${styles.card} ${styles.allCategoriesCard} ${isActive ? styles.active : ""}`}
-        onClick={onClick}
+        onClick={() => onClick && onClick()}
         tabIndex={0}
         role="button"
         aria-pressed={isActive}
@@ -35,17 +35,22 @@ const CategoryCard = ({
   }
 
   return (
-    <Link to={`/categories/${category}`} className={styles.cardLink}>
+    <div className={styles.cardLink}>
       <div className={styles.card}>
         <img src={image} alt={category} className={styles.image} loading="lazy" />
         <div className={styles.captionRow}>
           <span className={styles.caption}>{category}</span>
-          <span className={styles.iconButton} aria-hidden="true">
+          <button 
+            type="button" 
+            className={styles.iconButton} 
+            onClick={() => onClick && onClick(category)}
+            aria-label={`View ${category} recipes`}
+          >
             <FiArrowUpRight className={styles.icon} />
-          </span>
+          </button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
