@@ -19,13 +19,11 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <Logo />
-      {isMobile ? (
-        <BurgerMenu />
-      ) : (
+      {!isMobile && (
         <nav className={styles.nav}>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link  to="/">Home</Link>
             </li>
             <li>
               <Link to="/add-recipe">Add Recipe</Link>
@@ -34,7 +32,9 @@ export const Header = () => {
         </nav>
       )}
       {isAuth ? <UserBar /> : <SignToggle />}
-
+      {isMobile && (
+            <BurgerMenu />
+        )}
     </header>
   );
 };
