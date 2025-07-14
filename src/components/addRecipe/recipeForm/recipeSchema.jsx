@@ -23,6 +23,8 @@ const RecipeSchema = yup.object().shape({
 
   image: yup.mixed().required("Image is required"),
 
+  ingredient: yup.string().required("At least one ingredient must be listed"),
+
   ingredients: yup
     .array()
     .min(1, "At least one ingredient is required")
@@ -33,7 +35,8 @@ const RecipeSchema = yup.object().shape({
         image: yup.string().url().required(),
         quantity: yup.string().required("Quantity is required"),
       })
-    ),
+    )
+    .required("At least one ingredient must be listed"),
 });
 
 export default RecipeSchema;

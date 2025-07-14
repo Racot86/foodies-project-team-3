@@ -44,6 +44,7 @@
   font-family: var(--font-family-body), sans-serif;
   font-weight: var(--font-bold);
   font-size: var(--font-lg);
+  transition: border-color 0.5s ease-out;
 }
 
 .field.strong input,
@@ -147,8 +148,9 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 343px;
+  max-width: 343px;
   position: relative;
+  width: 100%;
 }
 .selectedValue {
   flex-grow: 1;
@@ -161,8 +163,8 @@
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
-  pointer-events: none;
   color: var(--color-secondary);
+  cursor: pointer;
 }
 
 .field .selectedValue {
@@ -195,7 +197,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 16px 18px;
-  margin-top: 50px;
+  margin-top: 94px;
   max-width: 340px;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -243,6 +245,14 @@
 .stepInitial {
   color: var(--color-secondary);
 }
+.clearIcon {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--color-secondary);
+}
 
 @media screen and (min-width: 375px) and (max-width: 768px) {
   /* .fieldTextarea .extra {
@@ -272,15 +282,15 @@
   .selectWrapper {
     font-size: var(--font-md);
     line-height: 1.5;
+    width: 315px;
+    max-width: unset;
   }
   .field .selectedValue {
     width: 315px;
-    padding: 16px 18px;
+    padding: 16px 64px 16px 18px;
     height: 56px;
   }
-  .selectWrapper {
-    width: 315px;
-  }
+
   .inputCountWrapper {
     gap: 16px;
   }

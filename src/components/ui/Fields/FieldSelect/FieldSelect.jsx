@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useId } from "react";
 import clsx from "clsx";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
 
 export const FieldSelect = ({
   name,
@@ -77,6 +77,12 @@ export const FieldSelect = ({
     setIsOpen(true);
   };
 
+  const handleClear = () => {
+    setInputValue("");
+    onChange && onChange("");
+    setIsOpen(false);
+  };
+
   const listHeightClass = clsx({
     [css.categoriesOption]: name === "category",
     [css.areasOption]: name === "area",
@@ -126,6 +132,18 @@ export const FieldSelect = ({
           autoComplete="off"
           className={clsx(css.selectedValue, !inputValue && css.placeholder)}
         />
+
+        {inputValue && !disabled && (
+          <FiX
+            size={18}
+            className={css.clearIcon}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClear();
+            }}
+            aria-label="Clear input"
+          />
+        )}
 
         {isOpen ? (
           <FiChevronUp

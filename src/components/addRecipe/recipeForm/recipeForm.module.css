@@ -4,18 +4,21 @@
   flex-direction: column;
 }
 .rightBlock {
-  width: 649px;
+  max-width: 343px;
 }
 
 .infoWrap {
   display: flex;
   flex-direction: column;
   margin-bottom: 64px;
+  max-width: 343px;
 }
 
 .flexRow {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 343px;
 }
 
 .ingredientsList {
@@ -34,26 +37,39 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  max-width: 343px;
 }
 
 @media screen and (min-width: 768px) {
   .formWrap {
     gap: 80px;
   }
+  .rightBlock {
+    width: 649px;
+    max-width: unset;
+  }
   .infoWrap {
     gap: 60px;
     margin-bottom: 80px;
+    max-width: unset;
   }
   .flexRow {
     flex-direction: row;
     align-items: flex-end;
     gap: 20px;
+    max-width: unset;
   }
   .addWrap {
     gap: 40px;
   }
   .ingredientsList {
     gap: 28px;
+  }
+  .buttonsRow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    max-width: unset;
   }
 }
 

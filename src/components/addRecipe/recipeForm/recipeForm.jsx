@@ -35,7 +35,7 @@ const RecipeForm = () => {
     setValue,
     getValues,
     reset,
-    formState: { errors, dirtyFields },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       image: null,
@@ -286,7 +286,7 @@ const RecipeForm = () => {
           <div className={styles.buttonsRow}>
             <ButtonIcon
               className="recipeTrash"
-              variant={ButtonIcon.variants.PRIMARY}
+              variant={Button.variants.SECONDARY}
               onClick={() => {
                 if (fields.length > 0) remove(fields.length - 1);
               }}

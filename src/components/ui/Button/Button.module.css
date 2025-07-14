@@ -57,6 +57,9 @@
   background-color: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border-color: var(--btn-primary-border);
+  transition: background-color 0.5s ease-out, color 0.5s ease-out,
+    border-color 0.5s ease-out, box-shadow 0.5s ease-out,
+    transform 0.5s ease-out;
 }
 
 .primary:disabled,
@@ -79,6 +82,9 @@
   background-color: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
   border-color: var(--btn-secondary-border);
+  transition: background-color 0.5s ease-out, color 0.5s ease-out,
+    border-color 0.5s ease-out, box-shadow 0.5s ease-out,
+    transform 0.5s ease-out;
 }
 
 .secondary:disabled,
