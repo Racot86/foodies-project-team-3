@@ -13,6 +13,7 @@ export const FieldCount = ({
   strong = false,
   step = 10,
   className = "",
+  isInitial = false,
 }) => {
   const handleChange = (delta) => {
     const newValue = (value ?? 0) + delta;
@@ -41,7 +42,15 @@ export const FieldCount = ({
           <FaMinus />
         </ButtonIcon>
 
-        <div className={styles.step}>{value} min</div>
+        <div
+          className={clsx(
+            styles.step,
+            value > 0 && styles.stepActive,
+            isInitial && value === 10 && styles.stepInitial
+          )}
+        >
+          {value} min
+        </div>
 
         <ButtonIcon
           className="recipeCount"

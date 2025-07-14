@@ -1,6 +1,7 @@
 .formWrap {
   display: flex;
-  gap: 80px;
+  gap: 32px;
+  flex-direction: column;
 }
 .rightBlock {
   width: 649px;
@@ -9,16 +10,59 @@
 .infoWrap {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  margin-bottom: 64px;
 }
 
 .flexRow {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
 }
 
 .ingredientsList {
   display: flex;
-  gap: 28px;
+  gap: 16px;
   flex-wrap: wrap;
+}
+
+.addWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.buttonsRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+  .formWrap {
+    gap: 80px;
+  }
+  .infoWrap {
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+  .flexRow {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  .addWrap {
+    gap: 40px;
+  }
+  .ingredientsList {
+    gap: 28px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .formWrap {
+    flex-direction: row;
+  }
+  .form {
+    display: flex;
+    gap: 80px;
+  }
 }

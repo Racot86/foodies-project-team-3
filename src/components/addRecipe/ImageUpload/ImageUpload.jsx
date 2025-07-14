@@ -41,21 +41,34 @@ export const ImageUpload = ({ image, onImageChange }) => {
   };
 
   return (
-    <div className={`${css.loadWrapBox} ${previewUrl && css.loaded}`}>
+    <>
       {!previewUrl ? (
-        <div onClick={handleClick} className={css.loadWrap}>
-          <div className={css.imgWrap}>
-            <TbBorderCorners className={css.cameraFrame} />
-            <FaCamera className={css.camera} />
-          </div>
+        <div className={`${css.loadWrapBox} ${previewUrl && css.loaded}`}>
+          <div onClick={handleClick} className={css.loadWrap}>
+            <div className={css.imgWrap}>
+              <TbBorderCorners className={css.cameraFrame} />
+              <FaCamera className={css.camera} />
+            </div>
 
-          <Text size="md" color="primary" className={css.placeholder}>
-            Upload a photo
-          </Text>
+            <Text size="md" color="primary" className={css.placeholder}>
+              Upload a photo
+            </Text>
+          </div>
+          <Input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            className={css.hiddenInput}
+          />
         </div>
       ) : (
-        <div className={css.uploadWrap}>
-          <img src={previewUrl} alt="Preview" className={css.previewImg} />
+        <div className={`${css.loadedWrapBox} ${previewUrl && css.loaded}`}>
+          <div className={css.uploadWrap}>
+            <div className={css.imgWrapPrev}>
+              <img src={previewUrl} alt="Preview" className={css.previewImg} />
+            </div>
+          </div>
           <Text
             onClick={handleClick}
             size="md"
@@ -64,16 +77,15 @@ export const ImageUpload = ({ image, onImageChange }) => {
           >
             Upload another photo
           </Text>
+          <Input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            className={css.hiddenInput}
+          />
         </div>
       )}
-
-      <Input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleChange}
-        className={css.hiddenInput}
-      />
-    </div>
+    </>
   );
 };
