@@ -34,6 +34,7 @@ export const FieldCount = ({
 
       <div className={clsx(styles.inputCountWrapper)}>
         <ButtonIcon
+          className="recipeCount"
           onClick={() => handleChange(-step)}
           aria-label="Increase value"
         >
@@ -43,6 +44,7 @@ export const FieldCount = ({
         <div className={styles.step}>{value} min</div>
 
         <ButtonIcon
+          className="recipeCount"
           onClick={() => handleChange(step)}
           aria-label="Decrease value"
         >

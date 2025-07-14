@@ -1,0 +1,35 @@
+.recipeText {
+  margin-bottom: 40px;
+  margin-top: 0;
+  line-height: var(--line-height-normal);
+  letter-spacing: -0.02em;
+  width: 443px;
+}
+.recipePageTitle {
+  margin-bottom: 20px;
+}
+
+.nameRecipeInput input {
+  font-weight: var(--font-bold2);
+  padding: 0 !important;
+  border: none !important;
+  min-height: unset !important;
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+
+.recipeDescrInput div textarea {
+  padding: 0 !important;
+  height: 40px;
+  min-height: unset !important;
+}
+
+@media screen and (min-width: 768px) {
+  .recipeCount {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  .recipeWrapLabel label {
+    margin-bottom: 16px;
+  }
+}

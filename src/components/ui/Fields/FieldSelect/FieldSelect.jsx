@@ -24,13 +24,11 @@ export const FieldSelect = ({
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(options);
 
-  // Поддержка controlled компонента — если value меняется извне, обновляем inputValue
   useEffect(() => {
     const selectedOption = options.find((opt) => opt.value === value);
     setInputValue(selectedOption ? selectedOption.label : "");
   }, [value, options]);
 
-  // Фильтруем опции при изменении ввода
   useEffect(() => {
     const filtered = options.filter((opt) =>
       opt.label.toLowerCase().includes(inputValue.toLowerCase())
@@ -38,7 +36,6 @@ export const FieldSelect = ({
     setFilteredOptions(filtered);
   }, [inputValue, options]);
 
-  // Закрытие селекта по клику вне
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -48,11 +45,22 @@ export const FieldSelect = ({
         setIsOpen(false);
       }
     }
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
-  const handleToggle = () => {
+  const toggleOpen = () => {
     if (!disabled) setIsOpen((prev) => !prev);
   };
 
@@ -69,9 +77,12 @@ export const FieldSelect = ({
     setIsOpen(true);
   };
 
-  const handleInputFocus = () => {
-    if (!disabled) setIsOpen(true);
-  };
+  const listHeightClass = clsx({
+    [css.categoriesOption]: name === "category",
+    [css.areasOption]: name === "area",
+    [css.ingredientsOption]: name === "ingredient",
+    [css.timeOption]: name === "time",
+  });
 
   return (
     <div
@@ -101,7 +112,10 @@ export const FieldSelect = ({
           type="text"
           value={inputValue}
           onChange={handleInputChange}
-          onFocus={handleInputFocus}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleOpen();
+          }}
           placeholder={placeholder}
           disabled={disabled}
           aria-autocomplete="list"
@@ -112,12 +126,16 @@ export const FieldSelect = ({
           autoComplete="off"
           className={clsx(css.selectedValue, !inputValue && css.placeholder)}
         />
+
         {isOpen ? (
           <FiChevronUp
             size={18}
             color={disabled ? "#aaa" : "black"}
             className={css.selectIcon}
-            onClick={handleToggle}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
             aria-hidden="true"
           />
         ) : (
@@ -125,7 +143,10 @@ export const FieldSelect = ({
             size={18}
             color={disabled ? "#aaa" : "black"}
             className={css.selectIcon}
-            onClick={handleToggle}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(true);
+            }}
             aria-hidden="true"
           />
         )}
@@ -133,7 +154,7 @@ export const FieldSelect = ({
 
       {isOpen && !disabled && (
         <ul
-          className={css.optionsList}
+          className={clsx(css.optionsList, listHeightClass)}
           role="listbox"
           id={`${fieldId}-listbox`}
           tabIndex={-1}
