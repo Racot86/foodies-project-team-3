@@ -1,7 +1,9 @@
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import RecipeSchema from "./RecipeSchema.jsx";
+import RecipeSchema from "./recipeSchema.jsx";
 import { toast, ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { postRecipe } from "@redux/slices/addRecipeSlice.js";
 
 import { useEffect, useState } from "react";
 import {
@@ -12,7 +14,7 @@ import {
   FieldTextarea,
 } from "@/components/ui";
 import { FieldSelect } from "@/components/ui/Fields/FieldSelect/FieldSelect";
-import IngredientItem from "@components/addRecipe/IngredientItem/IngredientItem.jsx";
+import IngredientItem from "@/pages/add-recipe/components/IngredientItem/IngredientItem.jsx";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { ImageUpload } from "../ImageUpload/ImageUpload.jsx";
 import { addRecipeService } from "@/services/addRecipeService.js";
@@ -56,6 +58,8 @@ const RecipeForm = () => {
     resolver: yupResolver(RecipeSchema),
   });
 
+  const dispatch = useDispatch();
+
   const selectedIngredient = watch("ingredient");
 
   const isAddButtonDisabled =
@@ -84,20 +88,30 @@ const RecipeForm = () => {
       formData.append("instructions", data.preparation);
       formData.append("description", data.description);
       formData.append("time", data.cookingTime.toString());
-      formData.append("image", data.image);
+
+      if (data.image) {
+        formData.append("image", data.image);
+      }
 
       data.ingredients.forEach((ingredient, index) => {
-        formData.append(`ingredients[${index}][id]`, ingredient.id);
-        formData.append(`ingredients[${index}][measure]`, ingredient.quantity);
+        if (ingredient.id && ingredient.quantity) {
+          formData.append(`ingredients[${index}][id]`, ingredient.id);
+          formData.append(
+            `ingredients[${index}][measure]`,
+            ingredient.quantity
+          );
+        }
       });
 
-      const response = await addRecipeService(formData);
-      console.log("✅ Recipe submitted successfully:", response.data);
+      await dispatch(postRecipe(formData)).unwrap();
 
+      toast.dismiss(); // Очищаємо всі існуючі тости перед показом нового
+      toast.success("Recipe submitted successfully!");
       reset();
       setImage(null);
     } catch (error) {
-      console.error("❌ Error submitting recipe:", error);
+      toast.dismiss(); // Очищаємо перед показом помилки
+      toast.error(`Failed to submit recipe: ${error.message || error}`);
     }
   };
 

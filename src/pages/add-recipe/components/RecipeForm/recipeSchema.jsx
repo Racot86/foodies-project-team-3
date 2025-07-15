@@ -23,7 +23,6 @@ const RecipeSchema = yup.object().shape({
 
   image: yup.mixed().required("Image is required"),
 
-  // Тимчасове поле для quantity перед додаванням інгредієнта
   quantity: yup
     .string()
     .nullable()

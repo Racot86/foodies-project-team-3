@@ -2,7 +2,7 @@ import styles from "./AddRecipePage.module.css";
 import Page from "@components/page/Page";
 import { ResponsiveContainer } from "@/components/container/ResponsiveContainer";
 import { Heading, Text } from "@/components/ui";
-import RecipeForm from "@/components/addRecipe/recipeForm/RecipeForm";
+import RecipeForm from "@/pages/add-recipe/components/RecipeForm/recipeForm";
 
 function AddRecipePage() {
   return (
