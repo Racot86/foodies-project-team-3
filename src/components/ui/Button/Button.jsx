@@ -82,7 +82,7 @@ const Button = ({
     );
   } else if (to) {
     return (
-      <Link to={to} className={classNames}>
+      <Link to={to} className={classNames} onClick={clickHandler}>
         {children}
       </Link>
     );
