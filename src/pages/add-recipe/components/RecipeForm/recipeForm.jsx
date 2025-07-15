@@ -105,10 +105,14 @@ const RecipeForm = () => {
       await dispatch(postRecipe(formData)).unwrap();
 
       toast.dismiss();
-      toast.success("Recipe submitted successfully!");
+      toast.success(
+        "Recipe submitted successfully! Redirecting to your profile..."
+      );
       reset();
       setImage(null);
-      navigate("/profile");
+      setTimeout(() => {
+        navigate("/profile");
+      }, 2500);
     } catch (error) {
       toast.dismiss();
       toast.error(`Failed to submit recipe: ${error.message || error}`);
