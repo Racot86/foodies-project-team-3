@@ -134,6 +134,9 @@
   line-height: 1.43;
   max-width: 343px;
 }
+.quantityField.quantityField {
+  gap: 8px;
+}
 @media screen and (min-width: 768px) {
   .nameRecipeInput.nameRecipeInput input {
     font-size: 24px;
@@ -193,6 +196,22 @@
   }
   .nameRecipeInput.nameRecipeInput {
     max-width: unset;
+  }
+  /* .quantityField {
+    position: relative;
+  } */
+
+  /* .quantityField p {
+    position: absolute;
+    bottom: -50px;
+  } */
+  .quantityField.quantityField {
+    gap: 16px;
+  }
+  .quantityField div {
+    height: 102px;
+    display: flex;
+    align-items: flex-end;
   }
 }
 @media screen and (min-width: 1440px) {

@@ -55,9 +55,12 @@
   }
   .flexRow {
     flex-direction: row;
-    align-items: flex-end;
+
     gap: 20px;
     max-width: unset;
+  }
+  .flexRowQuantity {
+    align-items: flex-start;
   }
   .addWrap {
     gap: 40px;
@@ -70,6 +73,9 @@
     gap: 8px;
     align-items: center;
     max-width: unset;
+  }
+  .flexRowQuantityValid {
+    align-items: flex-start;
   }
 }
 

@@ -27,6 +27,7 @@ const RecipeForm = () => {
   const [ingredientsList, setIngredientsList] = useState([]);
   const [image, setImage] = useState(null);
   const [touchedCookingTime, setTouchedCookingTime] = useState(false);
+  const [touchedFields, setTouchedFields] = useState({});
 
   const {
     control,
@@ -35,6 +36,7 @@ const RecipeForm = () => {
     setValue,
     getValues,
     reset,
+    trigger,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -90,18 +92,21 @@ const RecipeForm = () => {
     }
   };
 
-  const addIngredient = () => {
+  const addIngredient = async () => {
+    setTouchedFields((prev) => ({ ...prev, quantity: true }));
+
+    const isValid = await trigger(["ingredient", "quantity"]);
+    if (!isValid) return;
+
     const selectedId = getValues("ingredient");
     const quantity = getValues("quantity");
 
-    if (!selectedId || !quantity?.trim()) return;
-
     const currentIngredients = getValues("ingredients");
-
     if (
       currentIngredients.some((item) => String(item.id) === String(selectedId))
-    )
+    ) {
       return;
+    }
 
     const found = ingredientsList.find(
       (ing) => String(ing.id) === String(selectedId)
@@ -117,6 +122,7 @@ const RecipeForm = () => {
 
     setValue("ingredient", "");
     setValue("quantity", "");
+    setTouchedFields((prev) => ({ ...prev, quantity: false }));
   };
 
   return (
@@ -217,7 +223,13 @@ const RecipeForm = () => {
               />
             </div>
             <div className={styles.addWrap}>
-              <div className={styles.flexRow}>
+              <div
+                className={`${styles.flexRow} ${
+                  errors.ingredients
+                    ? styles.flexRowQuantityValid
+                    : styles.flexRowQuantity
+                } `}
+              >
                 <Controller
                   name="ingredient"
                   control={control}
@@ -227,6 +239,7 @@ const RecipeForm = () => {
                       label="Ingredients"
                       placeholder="Add the ingredient"
                       className="recipeWrapLabel"
+                      error={errors.ingredients?.message}
                       options={ingredientsList.map((ing) => ({
                         value: ing.id,
                         label: ing.name,
@@ -234,10 +247,15 @@ const RecipeForm = () => {
                     />
                   )}
                 />
+
                 <FieldInput
                   {...register("quantity")}
                   placeholder="Enter quantity"
-                  error={errors.quantity?.message}
+                  error={
+                    touchedFields.quantity && errors.quantity?.message
+                      ? errors.quantity.message
+                      : undefined
+                  }
                   className="quantityField"
                 />
               </div>

@@ -18,12 +18,25 @@ const RecipeSchema = yup.object().shape({
 
   cookingTime: yup
     .number()
-    .min(1, "Cooking time must be at least 1 minute")
+    .min(10, "Cooking time must be at least 10 minutes")
     .required("Cooking time is required"),
 
   image: yup.mixed().required("Image is required"),
 
-  ingredient: yup.string().required("At least one ingredient must be listed"),
+  // Тимчасове поле для quantity перед додаванням інгредієнта
+  quantity: yup
+    .string()
+    .nullable()
+    .when("ingredient", {
+      is: (val) => val !== undefined && val !== "",
+      then: (schema) =>
+        schema
+          .required("Quantity is required")
+          .max(10, "Quantity must be at most 10 characters")
+          .matches(/\d/, "Quantity must contain at least one number"),
+    }),
+
+  ingredient: yup.string().nullable(),
 
   ingredients: yup
     .array()
@@ -33,7 +46,11 @@ const RecipeSchema = yup.object().shape({
         id: yup.string().required(),
         name: yup.string().required(),
         image: yup.string().url().required(),
-        quantity: yup.string().required("Quantity is required"),
+        quantity: yup
+          .string()
+          .required("Quantity is required")
+          .max(10, "Quantity must be at most 10 characters")
+          .matches(/\d/, "Quantity must contain at least one number"),
       })
     )
     .required("At least one ingredient must be listed"),
