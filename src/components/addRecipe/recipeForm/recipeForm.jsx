@@ -1,6 +1,7 @@
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RecipeSchema from "./RecipeSchema.jsx";
+import { toast, ToastContainer } from "react-toastify";
 
 import { useEffect, useState } from "react";
 import {
@@ -37,6 +38,7 @@ const RecipeForm = () => {
     getValues,
     reset,
     trigger,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -53,6 +55,13 @@ const RecipeForm = () => {
     },
     resolver: yupResolver(RecipeSchema),
   });
+
+  const selectedIngredient = watch("ingredient");
+
+  const isAddButtonDisabled =
+    selectedIngredient === undefined ||
+    selectedIngredient === null ||
+    selectedIngredient === "";
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -93,13 +102,15 @@ const RecipeForm = () => {
   };
 
   const addIngredient = async () => {
+    const selectedId = getValues("ingredient");
+    const quantity = getValues("quantity");
+
     setTouchedFields((prev) => ({ ...prev, quantity: true }));
+    setValue("ingredient", selectedId);
+    setValue("quantity", quantity);
 
     const isValid = await trigger(["ingredient", "quantity"]);
     if (!isValid) return;
-
-    const selectedId = getValues("ingredient");
-    const quantity = getValues("quantity");
 
     const currentIngredients = getValues("ingredients");
     if (
@@ -126,204 +137,210 @@ const RecipeForm = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <ImageUpload
-        image={image}
-        onImageChange={(file) => {
-          setImage(file);
-          setValue("image", file);
-        }}
-      />
-      <div className={styles.formWrap}>
-        <div className={styles.rightBlock}>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <FieldInput
-                {...field}
-                placeholder="THE NAME OF THE RECIPE"
-                error={errors.name?.message}
-                className="nameRecipeInput"
-              />
-            )}
-          />
-
-          <div className={styles.infoWrap}>
+    <>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <ImageUpload
+          image={image}
+          error={errors.image?.message}
+          onImageChange={async (file) => {
+            setImage(file);
+            setValue("image", file);
+            await trigger("image");
+          }}
+        />
+        <div className={styles.formWrap}>
+          <div className={styles.rightBlock}>
             <Controller
-              name="description"
+              name="name"
               control={control}
               render={({ field }) => (
-                <FieldTextarea
+                <FieldInput
                   {...field}
-                  className="recipeDescrInput"
-                  placeholder="Enter a description of the dish"
-                  maxLength={200}
-                  expandAt={60}
-                  error={errors.description?.message}
+                  placeholder="THE NAME OF THE RECIPE"
+                  error={errors.name?.message}
+                  className="nameRecipeInput"
                 />
               )}
             />
 
-            <Controller
-              name="area"
-              control={control}
-              render={({ field }) => (
-                <FieldSelect
-                  {...field}
-                  label="Area"
-                  className="recipeWrapLabel"
-                  placeholder="Select an area"
-                  options={areas.map((area) => ({
-                    value: area.name,
-                    label: area.name,
-                  }))}
-                  error={errors.area?.message}
-                />
-              )}
-            />
-
-            <div className={styles.flexRow}>
+            <div className={styles.infoWrap}>
               <Controller
-                name="category"
+                name="description"
+                control={control}
+                render={({ field }) => (
+                  <FieldTextarea
+                    {...field}
+                    className="recipeDescrInput"
+                    placeholder="Enter a description of the dish"
+                    maxLength={200}
+                    expandAt={60}
+                    error={errors.description?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                name="area"
                 control={control}
                 render={({ field }) => (
                   <FieldSelect
                     {...field}
-                    label="Category"
+                    label="Area"
                     className="recipeWrapLabel"
-                    placeholder="Select a category"
-                    options={categories.map((cat) => ({
-                      value: cat.name,
-                      label: cat.name,
+                    placeholder="Select an area"
+                    options={areas.map((area) => ({
+                      value: area.name,
+                      label: area.name,
                     }))}
-                    error={errors.category?.message}
+                    error={errors.area?.message}
                   />
                 )}
               />
 
-              <Controller
-                name="cookingTime"
-                control={control}
-                render={({ field }) => (
-                  <FieldCount
-                    {...field}
-                    label="Cooking Time"
-                    strong
-                    step={10}
-                    error={errors.cookingTime?.message}
-                    className="recipeWrapLabel"
-                    isInitial={!touchedCookingTime && field.value === 10}
-                    onChange={(val) => {
-                      field.onChange(val);
-                      if (!touchedCookingTime) setTouchedCookingTime(true);
-                    }}
-                  />
-                )}
-              />
-            </div>
-            <div className={styles.addWrap}>
-              <div
-                className={`${styles.flexRow} ${
-                  errors.ingredients
-                    ? styles.flexRowQuantityValid
-                    : styles.flexRowQuantity
-                } `}
-              >
+              <div className={styles.flexRow}>
                 <Controller
-                  name="ingredient"
+                  name="category"
                   control={control}
                   render={({ field }) => (
                     <FieldSelect
                       {...field}
-                      label="Ingredients"
-                      placeholder="Add the ingredient"
+                      label="Category"
                       className="recipeWrapLabel"
-                      error={errors.ingredients?.message}
-                      options={ingredientsList.map((ing) => ({
-                        value: ing.id,
-                        label: ing.name,
+                      placeholder="Select a category"
+                      options={categories.map((cat) => ({
+                        value: cat.name,
+                        label: cat.name,
                       }))}
+                      error={errors.category?.message}
                     />
                   )}
                 />
 
-                <FieldInput
-                  {...register("quantity")}
-                  placeholder="Enter quantity"
-                  error={
-                    touchedFields.quantity && errors.quantity?.message
-                      ? errors.quantity.message
-                      : undefined
-                  }
-                  className="quantityField"
+                <Controller
+                  name="cookingTime"
+                  control={control}
+                  render={({ field }) => (
+                    <FieldCount
+                      {...field}
+                      label="Cooking Time"
+                      strong
+                      step={10}
+                      error={errors.cookingTime?.message}
+                      className="recipeWrapLabel"
+                      isInitial={!touchedCookingTime && field.value === 10}
+                      onChange={(val) => {
+                        field.onChange(val);
+                        if (!touchedCookingTime) setTouchedCookingTime(true);
+                      }}
+                    />
+                  )}
                 />
               </div>
+              <div className={styles.addWrap}>
+                <div
+                  className={`${styles.flexRow} ${
+                    errors.ingredients
+                      ? styles.flexRowQuantityValid
+                      : styles.flexRowQuantity
+                  } `}
+                >
+                  <Controller
+                    name="ingredient"
+                    control={control}
+                    render={({ field }) => (
+                      <FieldSelect
+                        {...field}
+                        label="Ingredients"
+                        placeholder="Add the ingredient"
+                        className="recipeWrapLabel"
+                        error={errors.ingredients?.message}
+                        options={ingredientsList.map((ing) => ({
+                          value: ing.id,
+                          label: ing.name,
+                        }))}
+                      />
+                    )}
+                  />
+
+                  <FieldInput
+                    {...register("quantity")}
+                    placeholder="Enter quantity"
+                    error={
+                      touchedFields.quantity && errors.quantity?.message
+                        ? errors.quantity.message
+                        : undefined
+                    }
+                    className="quantityField"
+                  />
+                </div>
+
+                <Button
+                  variant={Button.variants.SECONDARY}
+                  onClick={addIngredient}
+                  type="button"
+                  disabled={isAddButtonDisabled}
+                  className="addIngredientBtn"
+                >
+                  ADD INGREDIENT
+                  <FiPlus />
+                </Button>
+
+                {fields.length > 0 && (
+                  <ul className={styles.ingredientsList}>
+                    {fields.map((item, index) => (
+                      <IngredientItem
+                        key={item.id}
+                        name={item.name}
+                        image={item.image}
+                        quantity={item.quantity}
+                        onRemove={() => remove(index)}
+                      />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+            <Controller
+              name="preparation"
+              control={control}
+              render={({ field }) => (
+                <FieldTextarea
+                  {...field}
+                  label="Recipe Preparation"
+                  className="recipeDescrInput preparationWrap"
+                  placeholder="Enter recipe"
+                  maxLength={200}
+                  expandAt={60}
+                  error={errors.preparation?.message}
+                />
+              )}
+            />
+
+            <div className={styles.buttonsRow}>
+              <ButtonIcon
+                className="recipeTrash"
+                variant={Button.variants.SECONDARY}
+                onClick={() => {
+                  if (fields.length > 0) remove(fields.length - 1);
+                }}
+                type="button"
+              >
+                <FiTrash />
+              </ButtonIcon>
 
               <Button
-                variant={Button.variants.SECONDARY}
-                onClick={addIngredient}
-                type="button"
-                className="addIngredientBtn"
+                className="publishBtn"
+                variant={Button.variants.PRIMARY}
+                type="submit"
               >
-                ADD INGREDIENT
-                <FiPlus />
+                PUBLISH
               </Button>
-
-              {fields.length > 0 && (
-                <ul className={styles.ingredientsList}>
-                  {fields.map((item, index) => (
-                    <IngredientItem
-                      key={item.id}
-                      name={item.name}
-                      image={item.image}
-                      quantity={item.quantity}
-                      onRemove={() => remove(index)}
-                    />
-                  ))}
-                </ul>
-              )}
             </div>
           </div>
-          <Controller
-            name="preparation"
-            control={control}
-            render={({ field }) => (
-              <FieldTextarea
-                {...field}
-                label="Recipe Preparation"
-                className="recipeDescrInput preparationWrap"
-                placeholder="Enter recipe"
-                maxLength={200}
-                expandAt={60}
-                error={errors.preparation?.message}
-              />
-            )}
-          />
-
-          <div className={styles.buttonsRow}>
-            <ButtonIcon
-              className="recipeTrash"
-              variant={Button.variants.SECONDARY}
-              onClick={() => {
-                if (fields.length > 0) remove(fields.length - 1);
-              }}
-              type="button"
-            >
-              <FiTrash />
-            </ButtonIcon>
-
-            <Button
-              className="publishBtn"
-              variant={Button.variants.PRIMARY}
-              type="submit"
-            >
-              PUBLISH
-            </Button>
-          </div>
         </div>
-      </div>
-    </form>
+      </form>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 };
 

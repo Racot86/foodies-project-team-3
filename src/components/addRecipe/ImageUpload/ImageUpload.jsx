@@ -5,7 +5,7 @@ import { Text } from "@/components/ui";
 import { FaCamera } from "react-icons/fa6";
 import { TbBorderCorners } from "react-icons/tb";
 
-export const ImageUpload = ({ image, onImageChange }) => {
+export const ImageUpload = ({ image, onImageChange, error }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -61,6 +61,11 @@ export const ImageUpload = ({ image, onImageChange }) => {
             onChange={handleChange}
             className={css.hiddenInput}
           />
+          {error && (
+            <Text size="sm" color="error" className={css.errorText}>
+              {error}
+            </Text>
+          )}
         </div>
       ) : (
         <div className={`${css.loadedWrapBox} ${previewUrl && css.loaded}`}>
@@ -84,6 +89,11 @@ export const ImageUpload = ({ image, onImageChange }) => {
             onChange={handleChange}
             className={css.hiddenInput}
           />
+          {error && (
+            <Text size="sm" color="error" className={css.errorText}>
+              {error}
+            </Text>
+          )}
         </div>
       )}
     </>
