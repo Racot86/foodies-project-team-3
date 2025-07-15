@@ -16,6 +16,7 @@
 
 .loaded {
   border: none;
+  position: relative;
 }
 
 .loaded p {
@@ -23,6 +24,14 @@
   margin-bottom: 32px;
 }
 
+.placeholderError.placeholderError {
+  margin-bottom: 8px;
+  text-decoration: underline;
+}
+
+.errorText.errorText {
+  margin-bottom: 32px;
+}
 .imgWrapPrev {
   border-radius: 30px;
   overflow: hidden;
@@ -114,6 +123,14 @@
   }
   .loaded p {
     text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .placeholderError.placeholderError {
+    margin-bottom: 16px;
+  }
+
+  .errorText.errorText {
     margin-bottom: 80px;
   }
 }

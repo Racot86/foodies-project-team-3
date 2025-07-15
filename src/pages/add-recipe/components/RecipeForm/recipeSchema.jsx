@@ -21,7 +21,18 @@ const RecipeSchema = yup.object().shape({
     .min(10, "Cooking time must be at least 10 minutes")
     .required("Cooking time is required"),
 
-  image: yup.mixed().required("Image is required"),
+  image: yup
+    .mixed()
+    .required("Image is required")
+    .test(
+      "fileFormat",
+      "Unsupported image format. Only JPG, PNG, and WEBP are allowed.",
+      (value) => {
+        if (!value) return false;
+        const supportedFormats = ["image/jpeg", "image/png", "image/jpg"];
+        return supportedFormats.includes(value.type);
+      }
+    ),
 
   quantity: yup
     .string()

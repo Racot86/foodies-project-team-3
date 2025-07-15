@@ -4,7 +4,7 @@ import RecipeSchema from "./recipeSchema.jsx";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { postRecipe } from "@redux/slices/addRecipeSlice.js";
-
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -17,7 +17,6 @@ import { FieldSelect } from "@/components/ui/Fields/FieldSelect/FieldSelect";
 import IngredientItem from "@/pages/add-recipe/components/IngredientItem/IngredientItem.jsx";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { ImageUpload } from "../ImageUpload/ImageUpload.jsx";
-import { addRecipeService } from "@/services/addRecipeService.js";
 import { areasService } from "@services/areasService.js";
 import { categoriesService } from "@services/categoriesService.js";
 import { ingredientsService } from "@services/ingredientsService.js";
@@ -31,7 +30,7 @@ const RecipeForm = () => {
   const [image, setImage] = useState(null);
   const [touchedCookingTime, setTouchedCookingTime] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
-
+  const navigate = useNavigate();
   const {
     control,
     register,
@@ -105,12 +104,13 @@ const RecipeForm = () => {
 
       await dispatch(postRecipe(formData)).unwrap();
 
-      toast.dismiss(); // Очищаємо всі існуючі тости перед показом нового
+      toast.dismiss();
       toast.success("Recipe submitted successfully!");
       reset();
       setImage(null);
+      navigate("/profile");
     } catch (error) {
-      toast.dismiss(); // Очищаємо перед показом помилки
+      toast.dismiss();
       toast.error(`Failed to submit recipe: ${error.message || error}`);
     }
   };
@@ -130,6 +130,9 @@ const RecipeForm = () => {
     if (
       currentIngredients.some((item) => String(item.id) === String(selectedId))
     ) {
+      toast.error(
+        `The selected ingredient has already been added to the list.`
+      );
       return;
     }
 
@@ -172,7 +175,9 @@ const RecipeForm = () => {
                   {...field}
                   placeholder="THE NAME OF THE RECIPE"
                   error={errors.name?.message}
-                  className="nameRecipeInput"
+                  className={
+                    errors.name ? "nameRecipeError" : "nameRecipeInput"
+                  }
                 />
               )}
             />
@@ -335,9 +340,11 @@ const RecipeForm = () => {
                 className="recipeTrash"
                 variant={Button.variants.SECONDARY}
                 onClick={() => {
-                  if (fields.length > 0) remove(fields.length - 1);
+                  reset();
+                  setImage(null);
+                  setTouchedCookingTime(false);
+                  setTouchedFields({});
                 }}
-                type="button"
               >
                 <FiTrash />
               </ButtonIcon>

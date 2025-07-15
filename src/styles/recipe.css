@@ -25,14 +25,18 @@
 .nameRecipeInput.nameRecipeInput {
   max-width: 343px;
   width: 100%;
-  position: relative;
 }
 
-.nameRecipeInput.nameRecipeInput p {
-  position: absolute;
-  bottom: 10px;
-  margin-top: 0;
+.nameRecipeError.nameRecipeError {
+  gap: 8px;
+  margin-bottom: 32px;
 }
+.nameRecipeError div input {
+  border-bottom: none;
+  padding: 0;
+  min-height: unset;
+}
+
 .recipeDescrInput.recipeDescrInput {
   margin-bottom: 32px;
   max-width: 343px;
@@ -197,14 +201,10 @@
   .nameRecipeInput.nameRecipeInput {
     max-width: unset;
   }
-  /* .quantityField {
-    position: relative;
-  } */
-
-  /* .quantityField p {
-    position: absolute;
-    bottom: -50px;
-  } */
+  .nameRecipeError.nameRecipeError {
+    gap: 16px;
+    margin-bottom: 40px;
+  }
   .quantityField.quantityField {
     gap: 16px;
   }

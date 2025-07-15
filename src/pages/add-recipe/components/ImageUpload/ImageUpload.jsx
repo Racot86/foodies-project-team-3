@@ -78,7 +78,7 @@ export const ImageUpload = ({ image, onImageChange, error }) => {
             onClick={handleClick}
             size="md"
             color="primary"
-            className={css.placeholder}
+            className={`${error ? css.placeholderError : css.placeholder}`}
           >
             Upload another photo
           </Text>
