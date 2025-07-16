@@ -2,14 +2,15 @@
     position: relative;
     border-radius: 30px;
     overflow: hidden;
-    width: 100%;
     height: 369px;
-    aspect-ratio: 1 / 1;
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: flex-end;
     background: #f5f5f5;
 }
+
+
 
 .image {
     width: 100%;
@@ -122,9 +123,21 @@
         border: 1px solid #fff;
     }
 }
+
+@media (max-width: 1023px) {
+
+    .card,
+    .cardWide {
+        width: 100%;
+        max-width: none;
+        flex: 1 0 48%;
+    }}
 /* Mobile адаптив */
 @media (max-width: 767px) {
-    .card {
+    .card, .cardWide {
+        width: 100%;
+        max-width: none;
+        flex: 1 0 100%;
         height: 250px;
         border-radius: 20px;
     }

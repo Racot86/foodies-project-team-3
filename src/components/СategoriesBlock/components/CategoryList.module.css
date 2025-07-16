@@ -1,23 +1,56 @@
 .list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* Десктоп: 3 в ряд */
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
-    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+   
+}
+/* Окрема картка */
+.item {
+    flex: 1 0 28%;
+    max-width: 28%;
+    min-width: 0;
+    box-sizing: border-box;
+
+}
+/* Wide-картки: 3-тя, 1-ша (з 2го ряду), 2-га (з 3го ряду), 1-ша (з 4го) — патерн*/
+.item:nth-child(3),
+.item:nth-child(4n+1):not(:first-child),
+.item:nth-child(4n+3) {
+    flex: 1 0 40%;
+    max-width: 40%;
+}
+
+/* Остання картка (All Categories) — бажано обмежити ширину */
+.item:last-child {
+    max-width: 40%;
+}
+
+/* Для вирівнювання, якщо треба (аналог .navigation::after) */
+.list::after {
+    content: "";
+    flex: 1 0 28%;
+    max-width: 28%;
 }
 
 @media (max-width: 1023px) {
-    .list {
-        grid-template-columns: repeat(2, 1fr);
-        /* Планшет: 2 в ряд */
-        gap: 20px;
-    }
+
+        .list {
+            
+            gap: 20px;
+        }
 }
 
 @media (max-width: 767px) {
-    .list {
-        grid-template-columns: 1fr;
-        /* Телефон: по одній */
-        gap: 16px;
-    }
+
+        .list {
+           
+            gap: 16px;
+        }
+}
+
+@media (max-width: 1439px) {
+ 
 }
