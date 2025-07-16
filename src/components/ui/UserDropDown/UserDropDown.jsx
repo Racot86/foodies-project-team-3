@@ -7,7 +7,7 @@ const UserDropDown = ({ onProfileClick, onLogoutClick }) => {
   return (
     <div className={css.dropdown}>
       <NavLink
-        to="/profile"
+        to="/profile/me"
         className={({ isActive }) =>
           isActive ? `${css.link} ${css.active}` : css.link
         }

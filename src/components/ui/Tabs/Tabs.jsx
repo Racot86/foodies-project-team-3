@@ -7,10 +7,10 @@ const Tabs = ({ visibleTabs = {} }) => {
   const navigate = useNavigate();
 
   const tabs = [
-    { label: "MY RECIPES", path: "/profile/my-recipes", key: "myRecipes" },
-    { label: "MY FAVORITES", path: "/profile/favorites", key: "favorites" },
-    { label: "FOLLOWERS", path: "/profile/followers", key: "followers" },
-    { label: "FOLLOWING", path: "/profile/following", key: "following" },
+    { label: "MY RECIPES", path: "/profile/me/my-recipes", key: "myRecipes" },
+    { label: "MY FAVORITES", path: "/profile/me/favorites", key: "favorites" },
+    { label: "FOLLOWERS", path: "/profile/me/followers", key: "followers" },
+    { label: "FOLLOWING", path: "/profile/me/following", key: "following" },
   ];
 
   return (

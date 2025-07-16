@@ -32,7 +32,7 @@ export const AppRoutes = () => {
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<ProfilePage />}>
+          <Route path="/profile/:userId" element={<ProfilePage />}>
             <Route index element={<MyRecipes />} />
             <Route path="my-recipes" element={<MyRecipes />} />
             <Route path="favorites" element={<Favorites />} />

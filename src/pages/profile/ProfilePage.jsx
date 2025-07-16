@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import styles from "./ProfilePage.module.css";
 import Page from "@components/page/Page";
-import { Tabs, Heading, Text, ButtonIcon } from "@components/ui";
+import { Tabs, Heading, Text, ButtonIcon, Button } from "@components/ui";
+import Modal from "@components/modal/Modal";
+import LogOutModal from "@components/logOutModal/LogOutModal";
 
 import { FiPlus } from "react-icons/fi";
 
@@ -12,21 +15,29 @@ import {
   selectUserDetails,
   userDetails,
   userAvatar,
+  followUser,
 } from "../../redux/slices/userSlice";
 
 function ProfilePage() {
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const loggedUser = useSelector(selectUser);
   const requestedUserDetails = useSelector(selectUserDetails);
 
+  // get current user
   useEffect(() => {
     dispatch(getCurrentUser());
   }, [dispatch]);
+
+  const { userId } = useParams();
+  const isMe = userId === "me";
+  const idOfUserToRender = isMe ? loggedUser?.id : userId;
+
+  // get specific user details
   useEffect(() => {
-    if (user?.id) {
-      dispatch(userDetails(user.id));
-    }
-  }, [user, dispatch]);
+    dispatch(userDetails(idOfUserToRender));
+  }, [idOfUserToRender, dispatch]);
 
   const input = document.createElement("input");
   input.type = "file";
@@ -39,95 +50,149 @@ function ProfilePage() {
     }
   };
 
+  const openLogoutModal = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const closeLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
+
+  const followUserHandler = () => {
+    if (!isMe) {
+      dispatch(followUser(userId));
+    }
+  };
+
   return (
     <Page className={styles.profilePage}>
       <Heading
         level={1}
         size="xl"
         weight="bold2"
-        style={{
-          marginBottom: "20px",
-        }}
+        className={styles.profileHeading}
       >
         PROFILE
       </Heading>
-      <Text
-        color="primary"
-        weight="semibold"
-        сlassName={styles.profileDescription}
-      >
-        Reveal your culinary art, share your favorite recipe and create
-        gastronomic masterpieces with us.
-      </Text>
+      <div>
+        <Text
+          color="primary"
+          weight="semibold"
+          className={styles.profileDescription}
+        >
+          Reveal your culinary art, share your favorite recipe and create
+          gastronomic masterpieces with us.
+        </Text>
+      </div>
       <div className={styles.profileContainer}>
-        <div className={styles.profileContent}>
-          <div className={styles.profileInfo}>
-            <div className={styles.profileImageContainer}>
-              {/* Placeholder for profile image */}
-              <div className={styles.imagePlaceholder}>
-                {requestedUserDetails?.avatar && (
-                  <img src={requestedUserDetails.avatar} alt="User Avatar" />
-                )}
+        <div className={styles.controlPanelContainer}>
+          <div className={styles.controlPanel}>
+            <div className={styles.profileContent}>
+              <div className={styles.profileInfo}>
+                <div className={styles.profileImageContainer}>
+                  <div className={styles.imagePlaceholder}>
+                    {requestedUserDetails?.avatar && (
+                      <img
+                        src={requestedUserDetails.avatar}
+                        alt="User Avatar"
+                      />
+                    )}
+                  </div>
+                  {isMe && (
+                    <ButtonIcon
+                      variant={ButtonIcon.variants.PRIMARY}
+                      className={styles.uploadPhotoButton}
+                      onClick={() => input.click()}
+                    >
+                      <FiPlus />
+                    </ButtonIcon>
+                  )}
+                </div>
+                <Heading
+                  level={4}
+                  size="sm"
+                  weight="semibold"
+                  className={styles.userName}
+                >
+                  {requestedUserDetails.name.toUpperCase()}
+                </Heading>
+                <div className={styles.userInfo}>
+                  <ul>
+                    <li>
+                      <Text variant="body" size="sm" color="muted">
+                        Email:
+                      </Text>
+                      <Text variant="body" size="md">
+                        {requestedUserDetails.email}
+                      </Text>
+                    </li>
+                    <li>
+                      <Text variant="body" size="sm" color="muted">
+                        Added recipes:
+                      </Text>
+                      <Text variant="body" size="md">
+                        {requestedUserDetails.recipes}
+                      </Text>
+                    </li>
+                    {isMe && (
+                      <li>
+                        <Text variant="body" size="sm" color="muted">
+                          Favorites:
+                        </Text>
+                        <Text variant="body" size="md">
+                          {requestedUserDetails.favorites}
+                        </Text>
+                      </li>
+                    )}
+                    <li>
+                      <Text variant="body" size="sm" color="muted">
+                        Followers:
+                      </Text>
+                      <Text variant="body" size="md">
+                        {requestedUserDetails.followers}
+                      </Text>
+                    </li>
+                    {isMe && (
+                      <li>
+                        <Text variant="body" size="sm" color="muted">
+                          Following:
+                        </Text>
+                        <Text variant="body" size="md">
+                          {requestedUserDetails.following}
+                        </Text>
+                      </li>
+                    )}
+                  </ul>
+                </div>
               </div>
-              <ButtonIcon
-                variant={ButtonIcon.variants.PRIMARY}
-                className={styles.uploadPhotoButton}
-                onClick={() => input.click()}
-              >
-                <FiPlus />
-              </ButtonIcon>
             </div>
-            <div className={styles.userInfo}>
-              <Heading
-                level={4}
-                size="sm"
-                weight="semibold"
-                className={styles.userName}
-              >
-                {requestedUserDetails.name.toUpperCase()}
-              </Heading>
-              <ul>
-                <li>
-                  <Text variant="body" size="sm" color="muted">
-                    Email:
-                  </Text>
-                  <Text variant="body" size="md">
-                    {requestedUserDetails.email}
-                  </Text>
-                </li>
-                <li>
-                  <Text variant="body" size="sm" color="muted">
-                    Added recipes:
-                  </Text>
-                  <Text variant="body" size="md">
-                    {requestedUserDetails.recipes}
-                  </Text>
-                </li>
-                <li>
-                  <Text variant="body" size="sm" color="muted">
-                    Favorites:
-                  </Text>
-                  <Text variant="body" size="md">
-                    {requestedUserDetails.favorites}
-                  </Text>
-                </li>
-                <li>
-                  <Text variant="body" size="sm" color="muted">
-                    Followers:
-                  </Text>
-                  <Text variant="body" size="md">
-                    {requestedUserDetails.followers}
-                  </Text>
-                </li>
-                <li>
-                  <Text variant="body" size="sm" color="muted">
-                    Following:
-                  </Text>
-                  <Text variant="body" size="md">
-                    {requestedUserDetails.following}
-                  </Text>
-                </li>
-              </ul>
+            <div>
+              {isMe && (
+                <Button
+                  variant={Button.variants.PRIMARY}
+                  onClick={openLogoutModal}
+                  type="button"
+                  href={null}
+                  to={null}
+                  className={styles.actionButton}
+                  isLoading={false}
+                >
+                  Log out
+                </Button>
+              )}
+              {!isMe && (
+                <Button
+                  variant={Button.variants.PRIMARY}
+                  onClick={followUserHandler}
+                  type="button"
+                  href={null}
+                  to={null}
+                  className={styles.actionButton}
+                  isLoading={false}
+                >
+                  Follow
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -139,6 +204,12 @@ function ProfilePage() {
           </div>
         </div>
       </div>
+
+      {isLogoutModalOpen && (
+        <Modal onClose={closeLogoutModal}>
+          <LogOutModal onClose={closeLogoutModal} />
+        </Modal>
+      )}
     </Page>
   );
 }
