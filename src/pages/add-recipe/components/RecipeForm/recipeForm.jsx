@@ -21,7 +21,7 @@ import { areasService } from "@services/areasService.js";
 import { categoriesService } from "@services/categoriesService.js";
 import { ingredientsService } from "@services/ingredientsService.js";
 
-import styles from "./RecipeForm.module.css";
+import styles from "./recipeForm.module.css";
 
 const RecipeForm = () => {
   const [areas, setAreas] = useState([]);
