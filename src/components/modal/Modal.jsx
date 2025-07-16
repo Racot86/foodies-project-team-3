@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./Modal.module.css";
 import icons from "../../assets/icons/icons.svg";
+import PageTransitionWrapper from "../pageTransitionWrapper/PageTransitionWrapper";
 
 const Modal = ({ onClose, children }) => {
   useEffect(() => {
@@ -17,19 +18,21 @@ const Modal = ({ onClose, children }) => {
 
   return (
     <div className={styles.overlay} onClick={handleBackdrop}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button
-          className={styles.closeBtn}
-          onClick={onClose}
-          aria-label="Close modal"
-          type="button"
-        >
-          <svg className={styles.closeIcon} width="24" height="24">
-            <use href={`${icons}#icon-x`} />
-          </svg>
-        </button>
-        {children}
-      </div>
+      <PageTransitionWrapper>
+        <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+          <button
+            className={styles.closeBtn}
+            onClick={onClose}
+            aria-label="Close modal"
+            type="button"
+          >
+            <svg className={styles.closeIcon} width="24" height="24">
+              <use href={`${icons}#icon-x`} />
+            </svg>
+          </button>
+          {children}
+        </div>
+      </PageTransitionWrapper>
     </div>
   );
 };
