@@ -9,10 +9,12 @@
 }
 /* Окрема картка */
 .item {
-    flex: 1 0 28%;
-    max-width: 28%;
+    flex: 1 0 28.5%;
+    max-width: 28.5%;
     min-width: 0;
     box-sizing: border-box;
+    margin: 0;
+        padding: 0;
 
 }
 /* Wide-картки: 3-тя, 1-ша (з 2го ряду), 2-га (з 3го ряду), 1-ша (з 4го) — патерн*/
@@ -27,8 +29,8 @@
 }
 
 .item.allCategoriesCard {
-    flex: 1 0 28%;
-    max-width: 28%;
+    flex: 1 0 28.5%;
+    max-width: 28.5%;
 }
 
 
@@ -36,8 +38,8 @@
 /* Для вирівнювання, якщо треба (аналог .navigation::after) */
 .list::after {
     content: "";
-    flex: 1 0 28%;
-    max-width: 28%;
+    flex: 1 0 28.5%;
+    max-width: 28.5%;
 }
 
 @media (max-width: 1023px) {
