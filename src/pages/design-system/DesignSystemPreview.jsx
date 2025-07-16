@@ -28,6 +28,7 @@ import PrivateContentArea from "@/components/privateContentArea/PrivateContentAr
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import LogOutModal from "@/components/logOutModal/LogOutModal";
+import RecipeCard from "@/components/recipeCard/RecipeCard";
 
 const SignInForm = () => {
   const formik = useFormik({
@@ -528,6 +529,11 @@ const DesignSystemPreview = () => {
         </div>
 
         {isLogoutModalOpen && <LogOutModal onClose={handleCloseLogoutModal} />}
+      </div>
+
+      <h2>Recipe Card Component</h2>
+      <div style={{ marginBottom: "24px", maxWidth: "350px" }}>
+        <RecipeCard recipeId="1" />
       </div>
     </div>
   );
