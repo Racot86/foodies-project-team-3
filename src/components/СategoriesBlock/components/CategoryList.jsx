@@ -56,7 +56,7 @@ const CategoryList = () => {
           />
         </li>
       ))}
-      <li className={styles.item}>
+      <li className={`${styles.item} ${styles.allCategoriesCard}`}>
         <CategoryCard {...allCategoriesCardProps} />
       </li>
     </ul>

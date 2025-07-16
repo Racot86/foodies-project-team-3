@@ -26,10 +26,12 @@
     max-width: 40%;
 }
 
-/* Остання картка (All Categories) — бажано обмежити ширину */
-.item:last-child {
-    max-width: 40%;
+.item.allCategoriesCard {
+    flex: 1 0 28%;
+    max-width: 28%;
 }
+
+
 
 /* Для вирівнювання, якщо треба (аналог .navigation::after) */
 .list::after {
