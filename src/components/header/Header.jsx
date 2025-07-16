@@ -31,6 +31,9 @@ export const Header = () => {
                 <Link to="/add-recipe">Add Recipe</Link>
               </PrivateContentArea>
             </li>
+            <li>
+              <Link to="/design-system">Design System</Link>
+            </li>
           </ul>
         </nav>
       )}
