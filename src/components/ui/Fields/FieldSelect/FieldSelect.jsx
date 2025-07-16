@@ -2,8 +2,7 @@ import { useState, useRef, useEffect, useId } from "react";
 import clsx from "clsx";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
-import { FiChevronDown } from "react-icons/fi";
-import { FiChevronUp } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
 
 export const FieldSelect = ({
   name,
@@ -11,7 +10,7 @@ export const FieldSelect = ({
   error,
   options = [],
   required,
-  placeholder,
+  placeholder = "Select...",
   onChange,
   value,
   className,
@@ -19,8 +18,23 @@ export const FieldSelect = ({
   disabled = false,
 }) => {
   const fieldId = useId();
-  const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState(options);
+
+  useEffect(() => {
+    const selectedOption = options.find((opt) => opt.value === value);
+    setInputValue(selectedOption ? selectedOption.label : "");
+  }, [value, options]);
+
+  useEffect(() => {
+    const filtered = options.filter((opt) =>
+      opt.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setFilteredOptions(filtered);
+  }, [inputValue, options]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -31,23 +45,43 @@ export const FieldSelect = ({
         setIsOpen(false);
       }
     }
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
-  const handleToggle = () => {
+  const toggleOpen = () => {
     if (!disabled) setIsOpen((prev) => !prev);
   };
 
-  const handleOptionClick = (optionValue) => {
+  const handleOptionClick = (optionValue, optionLabel) => {
     if (optionValue !== value) {
       onChange && onChange(optionValue);
     }
+    setInputValue(optionLabel);
     setIsOpen(false);
   };
 
-  const selectedLabel =
-    options.find((opt) => opt.value === value)?.label || placeholder;
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    setIsOpen(true);
+  };
+
+  const handleClear = () => {
+    setInputValue("");
+    onChange && onChange("");
+    setIsOpen(false);
+  };
 
   const listHeightClass = clsx({
     [css.categoriesOption]: name === "category",
@@ -69,15 +103,7 @@ export const FieldSelect = ({
       aria-haspopup="listbox"
       aria-expanded={isOpen}
       aria-disabled={disabled}
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          handleToggle();
-        } else if (e.key === "Escape") {
-          setIsOpen(false);
-        }
-      }}
+      tabIndex={-1}
     >
       {label && (
         <label htmlFor={fieldId}>
@@ -86,49 +112,98 @@ export const FieldSelect = ({
         </label>
       )}
 
-      <div
-        className={clsx(css.selectWrapper, disabled && css.disabled)}
-        onClick={handleToggle}
-        role="button"
-        aria-label="Toggle select dropdown"
-      >
-        <div
-          className={clsx(
-            css.selectedValue,
-            selectedLabel === placeholder && css.placeholder
-          )}
-        >
-          {selectedLabel}
-        </div>
+      <div className={clsx(css.selectWrapper, disabled && css.disabled)}>
+        <input
+          id={fieldId}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleOpen();
+          }}
+          placeholder={placeholder}
+          disabled={disabled}
+          aria-autocomplete="list"
+          aria-controls={`${fieldId}-listbox`}
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-activedescendant={isOpen ? `${fieldId}-option-0` : undefined}
+          autoComplete="off"
+          className={clsx(css.selectedValue, !inputValue && css.placeholder)}
+        />
+
+        {inputValue && !disabled && (
+          <FiX
+            size={18}
+            className={css.clearIcon}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClear();
+            }}
+            aria-label="Clear input"
+          />
+        )}
+
         {isOpen ? (
           <FiChevronUp
             size={18}
             color={disabled ? "#aaa" : "black"}
             className={css.selectIcon}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
+            aria-hidden="true"
           />
         ) : (
           <FiChevronDown
             size={18}
             color={disabled ? "#aaa" : "black"}
             className={css.selectIcon}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(true);
+            }}
+            aria-hidden="true"
           />
         )}
       </div>
 
       {isOpen && !disabled && (
-        <ul className={clsx(css.optionsList, listHeightClass)} role="listbox">
-          {options.map(({ value: optionValue, label: optionLabel }) => (
-            <li
-              key={optionValue}
-              role="option"
-              aria-selected={optionValue === value}
-              className={css.option}
-              onClick={() => handleOptionClick(optionValue)}
-              tabIndex={0}
-            >
-              {optionLabel}
+        <ul
+          className={clsx(css.optionsList, listHeightClass)}
+          role="listbox"
+          id={`${fieldId}-listbox`}
+          tabIndex={-1}
+        >
+          {filteredOptions.length > 0 ? (
+            filteredOptions.map(
+              ({ value: optionValue, label: optionLabel }, idx) => (
+                <li
+                  key={optionValue}
+                  id={`${fieldId}-option-${idx}`}
+                  role="option"
+                  aria-selected={optionValue === value}
+                  className={css.option}
+                  onClick={() => handleOptionClick(optionValue, optionLabel)}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleOptionClick(optionValue, optionLabel);
+                    }
+                  }}
+                >
+                  {optionLabel}
+                </li>
+              )
+            )
+          ) : (
+            <li className={css.option} aria-disabled="true">
+              No options found
             </li>
-          ))}
+          )}
         </ul>
       )}
 
