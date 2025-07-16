@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const BASE_URL = "https://project-team-3-backend-2.onrender.com/api";
-export const DEFAULT_AVATAR = "/cook-default.jpg";
+export const DEFAULT_AVATAR = "/default-avatar.jpg";
+export const DEFAULT_RECIPE_IMAGE = "/default-recipe-image.jpg";
 
 const api = axios.create({
   baseURL: BASE_URL,

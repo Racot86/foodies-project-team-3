@@ -68,6 +68,15 @@
 .author {
     display: flex;
     align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.author:hover {
+    opacity: 0.8;
 }
 
 .avatar {
@@ -145,7 +154,7 @@
 
 @media (min-width: 768px) {
     .card {
-        max-width: 290px;
+        min-width: 290px;
     }   
     .imageContainer {
         height: 275px;
