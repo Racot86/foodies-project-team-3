@@ -5,7 +5,7 @@ import styles from "./CategoriesBlock.module.css";
 import { ResponsiveContainer } from "../../container/ResponsiveContainer";
 
 const CategoriesBlock = () => (
-  <ResponsiveContainer>
+  <div className={styles.categoriesContainer}>
     <div className={styles.section}>
       <div className={styles.titleBox}>
         <Heading level={1} size="xl" weight="bold" align="left" className="">
@@ -19,7 +19,7 @@ const CategoriesBlock = () => (
       </div>
       <CategoryList />
     </div>
-  </ResponsiveContainer>
+  </div>
 );
 
 export default CategoriesBlock;

@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     /* Десктоп: 3 в ряд */
-    gap: 40px;
+    gap: 20px;
     width: 100%;
 }
 
@@ -10,7 +10,7 @@
     .list {
         grid-template-columns: repeat(2, 1fr);
         /* Планшет: 2 в ряд */
-        gap: 40px;
+        gap: 20px;
     }
 }
 
@@ -18,6 +18,6 @@
     .list {
         grid-template-columns: 1fr;
         /* Телефон: по одній */
-        gap: 32px;
+        gap: 16px;
     }
 }
