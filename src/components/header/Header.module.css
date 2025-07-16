@@ -1,11 +1,12 @@
 .header {
-    background-color: orange;
+    background-color: var(--color-primary);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
     position: relative;
     border-radius:  var(--radius-xxl) var(--radius-xxl) 0 0;
+    
 }
 
 .nav ul {
@@ -13,20 +14,24 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    
 }
 
 .nav li {
     margin-right: 20px;
+    
 }
 
 .nav a {
     text-decoration: none;
-    color: #333;
+    color: var(--color-white);
     font-weight: bold;
 }
 
 .nav a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
 }
 
 /* Mobile navigation styles */

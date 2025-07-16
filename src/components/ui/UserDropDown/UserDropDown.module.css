@@ -17,7 +17,7 @@
 
   border: 1px solid rgba(255, 255, 255, 0.2);
 
-  padding: 16px;
+  padding: 16px 16px 18px 16px;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
   
 }
@@ -55,3 +55,19 @@
   transition: inherit;
 }
 
+@media (min-width: 768px) {
+ .dropdown{
+    width: 148px;
+    height: 74px;
+    
+ }
+}
+
+@media (min-width: 1440px){
+    .dropdown{
+        margin-right: 14px;
+        border: 1px solid var(--color-white);
+         
+    }
+
+}

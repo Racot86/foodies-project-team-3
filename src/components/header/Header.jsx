@@ -8,6 +8,7 @@ import { useBreakpoint } from "@/hooks/useBreakpoint.js";
 import { SignToggle } from "../ui";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "@/redux/slices/authSlice";
+import PrivateContentArea from "../privateContentArea/PrivateContentArea";
 
 
 export const Header = () => {
@@ -26,7 +27,9 @@ export const Header = () => {
               <Link  to="/">Home</Link>
             </li>
             <li>
-              <Link to="/add-recipe">Add Recipe</Link>
+              <PrivateContentArea>
+                <Link to="/add-recipe">Add Recipe</Link>
+              </PrivateContentArea>
             </li>
           </ul>
         </nav>
