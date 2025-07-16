@@ -6,7 +6,8 @@ import areasReducer from "./slices/areasSlice";
 import categoriesReducer from "./slices/categoriesSlice";
 import ingredientsReducer from "./slices/ingredientsSlice";
 import recipesReducer from "./slices/addRecipeSlice";
-import myrecipeReducer from "./slices/myRecipeSlice";
+import myRecipeReducer from "./slices/myRecipeSlice";
+import favoritesReducer from "@/redux/slices/favoriteRecipeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
     categories: categoriesReducer,
     ingredients: ingredientsReducer,
     recipes: recipesReducer,
-    myrecipe: myrecipeReducer,
+    myrecipe: myRecipeReducer,
+    favorites: favoritesReducer,
   },
 });
 

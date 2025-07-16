@@ -141,7 +141,9 @@ export const addToFavorites = async (recipeId) => {
  */
 export const removeFromFavorites = async (recipeId) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/favorites/${recipeId}`);
+    const response = await axios.delete(
+      `${BASE_URL}/recipes/${recipeId}/myfavorites`
+    );
     return response.data;
   } catch (error) {
     console.error("API Error:", error);
@@ -159,7 +161,7 @@ export const removeFromFavorites = async (recipeId) => {
  */
 export const isRecipeInFavorites = async (recipeId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/favorites`);
+    const response = await axios.get(`${BASE_URL}/myfavorites`);
     return response.data.some((favorite) => favorite.id === recipeId);
   } catch (error) {
     console.error("API Error:", error);

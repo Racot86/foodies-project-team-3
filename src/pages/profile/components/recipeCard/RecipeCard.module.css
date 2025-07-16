@@ -1,11 +1,13 @@
 .recipeCardWrapper {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 }
 
 .flexPhotoWrapper {
   display: flex;
   gap: 10px;
+  margin-bottom: 6px;
 }
 
 .recipeTextWrapper {
@@ -15,23 +17,31 @@
 .recipeInstructions {
   font-size: 14px;
   letter-spacing: -0.02em;
-  color: var(--color-text);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--color-text-secondary);
+  line-height: 1.43;
 }
 
 .recipeTitle {
   font-size: 16px;
   font-weight: var(--font-bold2);
   text-transform: uppercase;
+  line-height: 1.5;
+  margin-bottom: 8px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .buttonWrapper {
   display: flex;
   gap: 4px;
+  justify-content: center;
 }
 .recipeCard {
   width: 75px;
@@ -50,11 +60,43 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-bottom: 60px;
 }
 
 .navLink {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-text-muted);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLink:hover {
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.navLink svg {
+  stroke: var(--color-text-primary);
+}
+
+.navLink:hover svg {
+  stroke: var(--color-white);
+}
+@media screen and (min-width: 375px) {
+  .recipeCardWrapper {
+    flex-direction: row;
+  }
+  .buttonWrapper {
+    justify-content: unset;
+  }
+  .flexPhotoWrapper {
+    margin-bottom: 0;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -67,6 +109,15 @@
     height: 100px;
   }
 
+  .navLink {
+    width: 42px;
+    height: 42px;
+  }
+
+  .navLink svg {
+    width: 18px;
+    height: 18px;
+  }
   .recipeTitle {
     font-size: 20px;
     margin-bottom: 10px;
@@ -81,6 +132,7 @@
   .recipeInstructions {
     font-size: 16px;
     line-height: 1.5;
+    color: var(--color-text-primary);
   }
   .recipeCard {
     width: 100px;
