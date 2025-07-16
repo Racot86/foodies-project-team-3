@@ -6,6 +6,7 @@ import areasReducer from "./slices/areasSlice";
 import categoriesReducer from "./slices/categoriesSlice";
 import ingredientsReducer from "./slices/ingredientsSlice";
 import recipesReducer from "./slices/addRecipeSlice";
+import myrecipeReducer from "./slices/myRecipeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     categories: categoriesReducer,
     ingredients: ingredientsReducer,
     recipes: recipesReducer,
+    myrecipe: myrecipeReducer,
   },
 });
 
