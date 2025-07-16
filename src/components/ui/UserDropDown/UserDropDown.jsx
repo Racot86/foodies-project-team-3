@@ -13,11 +13,11 @@ const UserDropDown = ({ onProfileClick, onLogoutClick }) => {
         }
         onClick={onProfileClick}
       >
-        Profile
+        PROFILE
       </NavLink>
 
       <button className={css.button} onClick={onLogoutClick}>
-        Log out <GoArrowUpRight className={css.arrowIcon} />
+        LOG OUT <GoArrowUpRight className={css.arrowIcon} />
       </button>
     </div>
   );
