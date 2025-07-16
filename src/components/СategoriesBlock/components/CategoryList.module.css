@@ -9,8 +9,8 @@
 }
 /* Окрема картка */
 .item {
-    flex: 1 0 28.5%;
-    max-width: 28.5%;
+    flex: 1 0 25.4%;
+    max-width: 25.4%;
     min-width: 0;
     box-sizing: border-box;
     margin: 0;
@@ -24,19 +24,19 @@
 .item:nth-child(10),
 .item:nth-child(14),
 .item:nth-child(14n+3) {
-    flex: 1 0 40%;
-    max-width: 40%;
+    flex: 1 0 46.1%;
+    max-width: 46.1%;
 }
 
 .item.allCategoriesCard {
-    flex: 1 0 28.5%;
-    max-width: 28.5%;
+    flex: 1 0 25.4%;
+    max-width: 25.4%;
 }
 
 .list::after {
     content: "";
-    flex: 1 0 28.5%;
-    max-width: 28.5%;
+    flex: 1 0 25.4%;
+    max-width: 25.4%;
 }
 
 @media (max-width: 1023px) {
