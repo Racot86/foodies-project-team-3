@@ -24,8 +24,6 @@
   padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) 0;
   outline: none;
   height: auto;
-  overflow: hidden;
-  resize: none;
 }
 
 .field.rounded input,
@@ -37,6 +35,12 @@
 
 .field textarea {
   line-height: inherit;
+  min-height: 56px;
+  height: auto;
+  overflow: hidden; /* Changed from auto to hidden for smooth auto-resize */
+  resize: none; /* Disabled resize since we're handling it with JS */
+  box-sizing: border-box; /* Ensure padding is included in height calculations */
+  transition: height 0.1s ease; /* Smooth height transitions */
 }
 
 .field.strong input {
@@ -96,7 +100,7 @@
 
 .textAreaWrapper.withExtra textarea {
   padding-right: 80px;
-  padding-bottom: 40px; /* Extra space for character count */
+  /* Removed excessive bottom padding */
 }
 
 .showPassword {
@@ -250,10 +254,15 @@
 @media screen and (min-width: 375px) and (max-width: 768px) {
   .fieldTextarea .extra {
     position: unset;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
   }
-  .fieldTextarea textarea {
-    overflow: visible;
+  .fieldTextarea .textAreaWrapper.withExtra textarea {
+    padding-right: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
   }
+  /* Removed overflow: visible to maintain consistent auto-resize behavior across devices */
 }
 
 /* tablet */
