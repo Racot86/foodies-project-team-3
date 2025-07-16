@@ -60,7 +60,9 @@ const Button = ({
 }) => {
   const clickHandler = (event) => {
     if (onClick) {
-      event.preventDefault();
+      if (type !== "submit" && type !== "reset") {
+        event.preventDefault();
+      }
       onClick(event);
     }
   };
@@ -80,7 +82,7 @@ const Button = ({
     );
   } else if (to) {
     return (
-      <Link to={to} className={classNames}>
+      <Link to={to} className={classNames} onClick={clickHandler}>
         {children}
       </Link>
     );

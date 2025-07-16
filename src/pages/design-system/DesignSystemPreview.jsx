@@ -23,7 +23,12 @@ import {
 } from "react-icons/fi";
 import { useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
-import {AreaSelect} from "@components/ui/Fields/FieldSelect/test.jsx";
+import { AreaSelect } from "@components/ui/Fields/FieldSelect/test.jsx";
+import PrivateContentArea from "@/components/privateContentArea/PrivateContentArea";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import LogOutModal from "@/components/logOutModal/LogOutModal";
+import RecipeCard from "@/components/recipeCard/RecipeCard";
 
 const SignInForm = () => {
   const formik = useFormik({
@@ -86,12 +91,16 @@ const AddRecipeForm = () => {
     validationSchema: Yup.object({
       ingredient: Yup.string().required("Ingredient is required"),
       quantity: Yup.string().required("Quantity is required"),
-      cookingTime: Yup.number().min(1).required("Cooking time is required"),
+      cookingTime: Yup.number().min(10).required("Cooking time is required"),
       preparation: Yup.string()
         .max(200)
         .required("Recipe preparation is required"),
     }),
-    onSubmit: (values) => console.log("Recipe submitted:", values),
+    onSubmit: (values) => {
+      console.log("Recipe submitted:", values);
+    },
+    validateOnBlur: true,
+    validateOnChange: true,
   });
 
   const addIngredient = () => {
@@ -100,6 +109,18 @@ const AddRecipeForm = () => {
       formik.values.ingredient,
       formik.values.quantity
     );
+  };
+
+  // Custom submit handler to mark all fields as touched
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formik.setTouched({
+      ingredient: true,
+      quantity: true,
+      cookingTime: true,
+      preparation: true,
+    });
+    formik.handleSubmit();
   };
 
   return (
@@ -118,7 +139,7 @@ const AddRecipeForm = () => {
       </Heading>
       <FormikProvider value={formik}>
         <form
-          onSubmit={formik.handleSubmit}
+          onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: "24px" }}
         >
           {/* Ingredients Section */}
@@ -164,6 +185,9 @@ const AddRecipeForm = () => {
               onChange={(value) => formik.setFieldValue("cookingTime", value)}
               value={formik.values.cookingTime}
               step={10}
+              inputError={
+                formik.touched.cookingTime && formik.errors.cookingTime
+              }
             />
           </div>
 
@@ -183,10 +207,8 @@ const AddRecipeForm = () => {
               name="preparation"
               label="Опис"
               placeholder="Enter your recipe preparation"
-              maxLength={100}
+              maxLength={200}
               value={formik.values.preparation}
-              expandAt={60}
-              required
             />
           </div>
 
@@ -212,7 +234,16 @@ const AddRecipeForm = () => {
 };
 
 const DesignSystemPreview = () => {
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const handleClick = () => console.log("Button clicked!");
+
+  const handleOpenLogoutModal = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleCloseLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -364,7 +395,7 @@ const DesignSystemPreview = () => {
 
       <h2>Pagination Component (Custom)</h2>
       <div style={{ marginBottom: "24px" }}>
-         <Pagination
+        <Pagination
           currentPage={1}
           totalPages={10}
           onPageChange={(page) => console.log("Go to page:", page)}
@@ -461,7 +492,48 @@ const DesignSystemPreview = () => {
         >
           <SignToggle />
         </div>
-          <AreaSelect />
+        <AreaSelect />
+
+        <div style={{ marginTop: 40 }}>
+          <PrivateContentArea>
+            <Link to="/test-auth" style={{ fontWeight: "bold", fontSize: 18 }}>
+              Test Content Private Area (Private Link)
+            </Link>
+          </PrivateContentArea>
+        </div>
+
+        <div
+          style={{
+            marginTop: 40,
+            width: "394px",
+          }}
+        >
+          <style>
+            {`
+              .logout-button-343 {
+                width: 343px;
+              }
+            `}
+          </style>
+          <Button
+            variant={Button.variants.PRIMARY}
+            onClick={handleOpenLogoutModal}
+            type="button"
+            href={null}
+            to={null}
+            className="logout-button-343"
+            isLoading={false}
+          >
+            Log out
+          </Button>
+        </div>
+
+        {isLogoutModalOpen && <LogOutModal onClose={handleCloseLogoutModal} />}
+      </div>
+
+      <h2>Recipe Card Component</h2>
+      <div style={{ marginBottom: "24px", maxWidth: "350px" }}>
+        <RecipeCard recipeId="1" />
       </div>
     </div>
   );

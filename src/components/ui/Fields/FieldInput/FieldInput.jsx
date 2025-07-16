@@ -3,7 +3,6 @@ import { useId, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import css from "../Fields.module.css";
 import { ErrorField } from "@components/ui/index.js";
-import { useFormikContext } from "formik";
 
 export const FieldInput = ({
   name,
@@ -20,69 +19,34 @@ export const FieldInput = ({
   className = "",
   helperText,
   disabled = false,
+  ...rest // для додаткових пропсів (наприклад, ref)
 }) => {
   const [defaultType, setDefaultType] = useState(type);
   const fieldId = useId();
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
   const withExtra = type === "password" || !!maxLength;
 
-  // Отримуємо Formik context
-  const formikContext = useFormikContext();
-
-  // Визначаємо значення та методи з Formik
-  const formikValue = formikContext?.values?.[name];
-  const formikSetFieldValue = formikContext?.setFieldValue;
-  const formikSetFieldTouched = formikContext?.setFieldTouched;
-  const formikTouched = formikContext?.touched?.[name];
-  const formikError = formikContext?.errors?.[name];
-
   // Визначаємо фінальне значення
-  const inputValue = value !== undefined ? value : formikValue || "";
-
+  const inputValue = value !== undefined ? value : "";
   // Визначаємо фінальну помилку
-  const inputError = error || (formikTouched && formikError);
-
-  const handleOnChange = (event) => {
-    const { value } = event.target;
-
-    // Оновлюємо Formik значення
-    if (name && formikSetFieldValue) {
-      formikSetFieldValue(name, value);
-    }
-
-    // Викликаємо кастомний onChange якщо є
-    if (onChange) {
-      onChange(value);
-    }
-  };
-
-  const handleOnBlur = () => {
-    // Позначаємо поле як touched в Formik
-    if (name && formikSetFieldTouched) {
-      formikSetFieldTouched(name, true);
-    }
-  };
+  const inputError = error;
 
   const renderInput = () => {
     const defaultProps = {
       placeholder,
       maxLength: defaultMaxLength,
       disabled,
-      "aria-invalid": inputError ? "true" : "false",
+      "aria-invalid": !!inputError,
       "aria-describedby": inputError ? `${fieldId}-error` : undefined,
       id: fieldId,
-      value: inputValue,
       type: defaultType,
-      onChange: handleOnChange,
-      onBlur: handleOnBlur,
+      name,
+      onChange,
+      required,
+      ...rest,
     };
-
-    // Якщо є Formik context і name, додаємо required з валідації
-    if (formikContext && name) {
-      const fieldMeta = formikContext.getFieldMeta?.(name);
-      defaultProps.required = required || fieldMeta?.required;
-    }
-
+    // value не треба явно передавати, якщо працюємо з react-hook-form
+    // ref передається через ...rest
     return <input {...defaultProps} />;
   };
 
@@ -108,7 +72,7 @@ export const FieldInput = ({
           }
           tabIndex={disabled ? -1 : 0}
         >
-          {isPassword(defaultType) ? <FiEye /> : <FiEyeOff />}
+          {isPassword(defaultType) ? <FiEyeOff /> : <FiEye />}
         </button>
       );
     }

@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 
-// Define breakpoints
-export const breakpoints = {
+// Default breakpoints (will be overridden by CSS variables)
+export const defaultBreakpoints = {
     mobile: 375,
     tablet: 768,
     desktop: 1440
@@ -12,8 +12,33 @@ export const useBreakpoint = () => {
     const [breakpoint, setBreakpoint] = useState('');
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    // Get breakpoints from CSS variables
+    const [breakpoints, setBreakpoints] = useState(defaultBreakpoints);
+
+    // Effect to get breakpoints from CSS variables
     useEffect(() => {
-        // Function to update breakpoint based on window width
+        try {
+            const computedStyle = getComputedStyle(document.documentElement);
+            const mobile = parseInt(computedStyle.getPropertyValue('--container-mobile'));
+            const tablet = parseInt(computedStyle.getPropertyValue('--container-tablet'));
+            const desktop = parseInt(computedStyle.getPropertyValue('--container-desktop'));
+
+            // Only update if we got valid values
+            if (!isNaN(mobile) && !isNaN(tablet) && !isNaN(desktop)) {
+                setBreakpoints({
+                    mobile,
+                    tablet,
+                    desktop
+                });
+            }
+        } catch (error) {
+            console.error('Error reading CSS variables:', error);
+            // Keep using default breakpoints
+        }
+    }, []);
+
+    // Effect to update breakpoint based on window width
+    useEffect(() => {
         const updateBreakpoint = () => {
             const width = window.innerWidth;
             setWindowWidth(width);
@@ -39,7 +64,7 @@ export const useBreakpoint = () => {
         return () => {
             window.removeEventListener('resize', updateBreakpoint);
         };
-    }, []);
+    }, [breakpoints]);
 
     return {breakpoint, windowWidth};
 };
