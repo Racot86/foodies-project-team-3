@@ -20,9 +20,23 @@ const categoryImages = {
   Soup: "/images/Images_categories/Soup.jpg",
 };
 
-const VISIBLE_COUNT = 11;
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
+}
+const VISIBLE_COUNT_DESKTOP = 11;
+const VISIBLE_COUNT_TABLET = 12;
+const VISIBLE_COUNT_MOBILE = 8;
 
 const CategoryList = () => {
+   const width = useWindowWidth(); 
   const [categories, setCategories] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -36,9 +50,16 @@ const CategoryList = () => {
       .catch(() => setCategories([]));
   }, []);
 
+  let visibleCount = VISIBLE_COUNT_DESKTOP;
+  if (width < 1440 && width >= 768) {
+    visibleCount = VISIBLE_COUNT_TABLET;
+  } else if (width < 768) {
+    visibleCount = VISIBLE_COUNT_MOBILE;
+  }
+
   const visibleCategories = showAll
     ? categories
-    : categories.slice(0, VISIBLE_COUNT);
+    : categories.slice(0, visibleCount);
 
   const allCategoriesCardProps = {
     isActive: showAll,
