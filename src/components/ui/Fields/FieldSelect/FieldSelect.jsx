@@ -117,16 +117,18 @@ export const FieldSelect = ({
 
       {isOpen && !disabled && (
         <ul className={clsx(css.optionsList, listHeightClass)} role="listbox">
-          {options.map(({ value: optionValue, label: optionLabel }) => (
+          {options.map((option) => (
             <li
-              key={optionValue}
+              key={option.value}
               role="option"
-              aria-selected={optionValue === value}
-              className={css.option}
-              onClick={() => handleOptionClick(optionValue)}
+              aria-selected={option.value === value}
+              onClick={() => handleOptionClick(option.value)}
+              className={clsx(css.option, {
+                [css.selected]: value === option.value,
+              })}
               tabIndex={0}
             >
-              {optionLabel}
+              {option.label}
             </li>
           ))}
         </ul>

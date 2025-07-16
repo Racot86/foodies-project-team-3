@@ -50,6 +50,23 @@
     color: var(--color-text-secondary);
 }
 
+.filtersContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.recipesContainer {
+    display: flex;
+    flex-direction: column;
+}
+
 @media (min-width: 768px) {
     .categoryPage {
         gap: 40px;
@@ -65,5 +82,22 @@
         font-size: 16px;
         line-height: 24px;
         color: var(--color-text-main);
+    }
+    .filtersContainer {
+        gap: 40px;
+    }
+    .filters {
+        flex-direction: row;    
+        /* align-items: center; */
+        /* justify-content: space-between; */
+    }   
+}
+
+@media (min-width: 1440px) {
+    .filtersContainer {
+        flex-direction: row;
+    }
+    .filters {
+        flex-direction: column;
     }
 }

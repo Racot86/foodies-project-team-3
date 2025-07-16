@@ -1,6 +1,6 @@
 .card {
     width: 100%;
-    max-width: 343px;
+    /* max-width: 343px; */
     overflow: hidden;
     background-color: var(--color-background);
     display: flex;

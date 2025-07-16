@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipesByCategory } from '@/services/recipeService';
 import { Heading, Text, Pagination } from '@components/ui';
-import { AreaSelect } from "@/components/ui/Fields/AreaSelect/AreaSelect";
 import { IngredientSelect } from "@/components/ui/Fields/IngredientSelect/IngredientSelect"; 
+import { AreaSelect } from "@/components/ui/Fields/AreaSelect/AreaSelect";
 import RecipeCard from '@/components/recipeCard/RecipeCard';
 import { FiArrowLeft } from 'react-icons/fi';
 import styles from './BrowseCategory.module.css';
@@ -23,8 +23,8 @@ const BrowseCategory = () => {
   const recipesPerPage = 9;
 
   // Filter state
-  const [selectedArea, setSelectedArea] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
+  const [selectedArea, setSelectedArea] = useState("");
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -34,8 +34,8 @@ const BrowseCategory = () => {
         const options = {
           page: currentPage,
           limit: recipesPerPage,
-          area: selectedArea,
           ingredient: selectedIngredient,
+          area: selectedArea,
         };
         const data = await getRecipesByCategory(categoryName, options);
         
@@ -64,13 +64,13 @@ const BrowseCategory = () => {
     setCurrentPage(page);
   };
 
-  const handleAreaChange = (area) => {
-    setSelectedArea(area);
+  const handleIngredientChange = (ingredient) => {
+    setSelectedIngredient(ingredient);
     setCurrentPage(1); // Reset to first page when filter changes
   };
 
-  const handleIngredientChange = (ingredient) => {
-    setSelectedIngredient(ingredient);
+  const handleAreaChange = (area) => {
+    setSelectedArea(area);
     setCurrentPage(1); // Reset to first page when filter changes
   };
 
@@ -100,8 +100,8 @@ const BrowseCategory = () => {
 
       <div className={styles.filtersContainer}>
           <div className={styles.filters}>
-            <AreaSelect value={selectedArea} onChange={handleAreaChange} />
             <IngredientSelect value={selectedIngredient} onChange={handleIngredientChange} />
+            <AreaSelect value={selectedArea} onChange={handleAreaChange} />
           </div>
           <div className={styles.recipesContainer}>
               <div className={styles.recipeList}>

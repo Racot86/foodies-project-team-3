@@ -10,7 +10,7 @@ export const IngredientSelect = (props) => {
     const fetchIngredients = async () => {
       try {
         const data = await ingredientsService();
-        const formatted = data.map((item) => ({
+        const formatted = (data || []).map((item) => ({
           value: item._id,
           label: item.name,
         }));
