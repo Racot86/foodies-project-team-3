@@ -1,69 +1,132 @@
-import React from 'react';
-import {Link, useParams} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getRecipesByCategory } from '@/services/recipeService';
+import { Heading, Text, Pagination } from '@components/ui';
+import { AreaSelect } from "@/components/ui/Fields/AreaSelect/AreaSelect";
+import { IngredientSelect } from "@/components/ui/Fields/IngredientSelect/IngredientSelect"; 
+import RecipeCard from '@/components/recipeCard/RecipeCard';
+import { FiArrowLeft } from 'react-icons/fi';
 import styles from './BrowseCategory.module.css';
 
-export const BrowseCategory = () => {
-    const {categoryId} = useParams();
+const BrowseCategory = () => {
+  const { categoryName } = useParams();
+  const navigate = useNavigate();
 
-    // Example categories data - in a real app, this would come from an API
-    const categories = {
-        1: {id: 1, name: 'Breakfast', description: 'Start your day with these delicious breakfast recipes.'},
-        2: {id: 2, name: 'Lunch', description: 'Perfect meals for your midday break.'},
-        3: {id: 3, name: 'Dinner', description: 'Hearty and satisfying dinner recipes for the whole family.'},
-        4: {id: 4, name: 'Desserts', description: 'Sweet treats to end your meal on a high note.'},
-        5: {id: 5, name: 'Vegetarian', description: 'Delicious meat-free recipes packed with flavor.'},
+  const [recipes, setRecipes] = useState([]);
+  const [categoryData, setCategoryData] = useState({ description: '' }); // Placeholder for description
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const recipesPerPage = 9;
+
+  // Filter state
+  const [selectedArea, setSelectedArea] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState("");
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const options = {
+          page: currentPage,
+          limit: recipesPerPage,
+          area: selectedArea,
+          ingredient: selectedIngredient,
+        };
+        const data = await getRecipesByCategory(categoryName, options);
+        
+        if (data && data.recipes) {
+          setRecipes(data.recipes);
+          setTotalPages(Math.ceil(data.total / recipesPerPage));
+          // In a real app, you'd fetch category details from an API
+          // For now, we'll use a placeholder description.
+          setCategoryData({ description: `Recipes from the ${categoryName} category.` });
+        } else {
+          setRecipes([]);
+          setTotalPages(0);
+        }
+      } catch (err) {
+        setError(err.message || 'Failed to fetch recipes.');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    // Example recipes data - in a real app, this would be filtered based on the category
-    const recipes = [
-        {id: 101, categoryId: 1, title: 'Fluffy Pancakes', time: '20 min'},
-        {id: 102, categoryId: 1, title: 'Avocado Toast', time: '10 min'},
-        {id: 103, categoryId: 1, title: 'Breakfast Burrito', time: '25 min'},
-        {id: 201, categoryId: 2, title: 'Caesar Salad', time: '15 min'},
-        {id: 202, categoryId: 2, title: 'Chicken Wrap', time: '20 min'},
-        {id: 301, categoryId: 3, title: 'Spaghetti Bolognese', time: '45 min'},
-        {id: 302, categoryId: 3, title: 'Roast Chicken', time: '90 min'},
-        {id: 401, categoryId: 4, title: 'Chocolate Cake', time: '60 min'},
-        {id: 501, categoryId: 5, title: 'Vegetable Stir Fry', time: '30 min'},
-    ];
+    fetchRecipes();
+  }, [categoryName, currentPage, selectedArea, selectedIngredient]);
 
-    const category = categories[categoryId];
-    const categoryRecipes = recipes.filter(recipe => recipe.categoryId === parseInt(categoryId));
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
-    if (!category) {
-        return <div className={styles.notFound}>Category not found</div>;
-    }
+  const handleAreaChange = (area) => {
+    setSelectedArea(area);
+    setCurrentPage(1); // Reset to first page when filter changes
+  };
 
-    return (
-        <div className={styles.categoryDetail}>
-            <div className={styles.backLinkContainer}>
-                <Link to="/" className={styles.backLink}>
-                    &larr; Back to Categories
-                </Link>
-            </div>
-            <h1>{category.name} Recipes</h1>
-            <p className={styles.description}>{category.description}</p>
+  const handleIngredientChange = (ingredient) => {
+    setSelectedIngredient(ingredient);
+    setCurrentPage(1); // Reset to first page when filter changes
+  };
 
-            <div className={styles.recipesList}>
-                {categoryRecipes.length > 0 ? (
-                    categoryRecipes.map(recipe => (
-                        <Link to={`/recipe-details/${recipe.id}`} key={recipe.id} className={styles.recipeCard}>
-                            <div className={styles.recipeImage}>
-                                {/* Placeholder for recipe image */}
-                                <div className={styles.imagePlaceholder}>{recipe.title[0]}</div>
-                            </div>
-                            <div className={styles.recipeInfo}>
-                                <h3>{recipe.title}</h3>
-                                <p>Preparation time: {recipe.time}</p>
-                            </div>
-                        </Link>
-                    ))
+  if (isLoading) {
+    return <div>Loading recipes...</div>; 
+  }
+
+  if (error) {
+    return <div className={styles.error}>Error: {error}</div>;
+  }
+
+  return (
+    <div className={styles.categoryPage}>
+      <div className={styles.header}>
+          <div className={styles.backLinkContainer}>
+            <button onClick={() => navigate(-1)} className={styles.backLink}>
+              <FiArrowLeft /> Back
+            </button>
+          </div>
+          <Heading level={1} size="2xl" className={styles.mainTitle}>
+            {categoryName}
+          </Heading>
+          <Text variant="body" size="lg" className={styles.subtitle}>
+            {categoryData.description}
+          </Text>
+      </div>
+
+      <div className={styles.filtersContainer}>
+          <div className={styles.filters}>
+            <AreaSelect value={selectedArea} onChange={handleAreaChange} />
+            <IngredientSelect value={selectedIngredient} onChange={handleIngredientChange} />
+          </div>
+          <div className={styles.recipesContainer}>
+              <div className={styles.recipeList}>
+                {recipes.length > 0 ? (
+                  recipes.map((recipe) => (
+                    <RecipeCard key={recipe.id} recipeId={recipe.id} />
+                  ))
                 ) : (
-                    <p>No recipes found in this category.</p>
+                  <p>No recipes found in this category.</p>
                 )}
-            </div>
-        </div>
-    );
+              </div>
+              {totalPages > 1 && (
+                <div className={styles.paginationContainer}>
+                  <Pagination
+                    totalPages={totalPages}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
+          </div>
+      </div>
+    </div>
+  );
 };
 
 export default BrowseCategory;
+
