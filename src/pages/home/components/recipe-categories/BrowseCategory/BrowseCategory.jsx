@@ -75,7 +75,7 @@ const BrowseCategory = () => {
   };
 
   if (isLoading) {
-    return <div>Loading recipes...</div>; 
+    return <div className={styles.loadingContainer}>Loading recipes...</div>; 
   }
 
   if (error) {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiHeart, FiArrowUpRight } from 'react-icons/fi';
 import { ButtonIcon } from '@components/ui/ButtonIcon/ButtonIcon';
+import { Loader } from '@components/ui';
 import Heading from '@components/ui/Heading/Heading';
 import { getRecipeById, addToFavorites, removeFromFavorites } from '../../services/recipeService';
 import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '../../services/api';
@@ -98,8 +99,8 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
   // Show loading state
   if (loading) {
     return (
-      <div className={`${styles.card} ${styles.loading}`}>
-        <div className={styles.loadingAnimation}></div>
+      <div className={`${styles.card} ${styles.loading}`}> 
+        <Loader size={40} />
       </div>
     );
   }
