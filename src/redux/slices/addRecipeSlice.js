@@ -6,7 +6,10 @@ export const postRecipe = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await addRecipeService(formData);
-      return response;
+      return {
+        data: response.data,
+        status: response.status,
+      };
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -19,6 +22,7 @@ const recipesSlice = createSlice({
     recipe: null,
     loading: false,
     error: null,
+    status: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -26,14 +30,17 @@ const recipesSlice = createSlice({
       .addCase(postRecipe.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.status = null;
       })
       .addCase(postRecipe.fulfilled, (state, action) => {
         state.loading = false;
-        state.recipe = action.payload;
+        state.recipe = action.payload.data;
+        state.status = action.payload.status;
       })
       .addCase(postRecipe.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.status = null;
       });
   },
 });

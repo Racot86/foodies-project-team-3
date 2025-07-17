@@ -1,6 +1,6 @@
 // src/components/ui/FieldTextarea/FieldTextarea.jsx
 import clsx from "clsx";
-import { useId, useState, useEffect, useCallback } from "react";
+import { useId, useState, useEffect, useCallback, useRef } from "react";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
 import { useFormikContext } from "formik";
@@ -25,6 +25,7 @@ export const FieldTextarea = ({
   expandAt = 60,
 }) => {
   const fieldId = useId();
+  const textareaRef = useRef(null);
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
   const { isMobile, isTablet } = useBreakpoint();
 
@@ -43,13 +44,11 @@ export const FieldTextarea = ({
 
   const calcRows = useCallback(
     (len) => {
-      // For mobile and tablet, use natural textarea behavior without artificial row calculation
-      if (isMobile || isTablet) {
-        return minRows; // Use minimum rows, let CSS handle auto-resize
-      }
-      return Math.min(maxRows, Math.max(minRows, Math.ceil(len / expandAt)));
+      // For all devices, use a more flexible approach that allows for multiline input
+      // Start with minRows and let the textarea expand naturally based on content
+      return minRows;
     },
-    [maxRows, minRows, expandAt, isMobile, isTablet]
+    [minRows]
   );
   const [counter, setCounter] = useState(inputValue.length);
   const [rows, setRows] = useState(calcRows(inputValue.length));
@@ -59,26 +58,51 @@ export const FieldTextarea = ({
   const inputError = error || (formikTouched && formikError);
 
   function chunkify(str) {
-    // Disable expandAt functionality for mobile and tablet
-    if (isMobile || isTablet) {
-      return str; // Return text as-is without chunking
-    }
-
-    const plain = str.replace(/\n/g, "");
-    const parts = plain.match(new RegExp(`.{1,${expandAt}}`, "g")) || [""];
-    return parts.join("\n");
+    // Always preserve user-entered line breaks
+    return str;
   }
+
+  // Function to adjust textarea height based on content
+  const adjustHeight = useCallback(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    // Reset height to calculate the new height
+    textarea.style.height = 'auto';
+
+    // Calculate new height based on scrollHeight
+    const newHeight = Math.min(
+      textarea.scrollHeight,
+      // Approximate max height based on maxRows
+      // Using 24px as an estimate for line height
+      minRows * 24 + (maxRows - minRows) * 24
+    );
+
+    textarea.style.height = `${newHeight}px`;
+  }, [minRows, maxRows]);
 
   useEffect(() => {
     const plainLen = inputValue.replace(/\n/g, "").length;
     setCounter(plainLen);
     setRows(calcRows(plainLen));
-  }, [inputValue, calcRows]);
+
+    // Adjust height when content changes
+    adjustHeight();
+  }, [inputValue, calcRows, adjustHeight]);
+
+  // Adjust height on initial render and when ref changes
+  useEffect(() => {
+    if (textareaRef.current) {
+      adjustHeight();
+    }
+  }, [textareaRef, adjustHeight]);
 
   const handleOnChange = (event) => {
     const raw = event.target.value;
-    const formatted = chunkify(raw);
+    // No need to format the text, preserve user input as is
+    const formatted = raw;
 
+    // Count characters excluding line breaks for the character limit
     const plainLen = formatted.replace(/\n/g, "").length;
 
     // Block input if we have a maxLength and would exceed it
@@ -111,6 +135,9 @@ export const FieldTextarea = ({
     if (onChange) {
       onChange(formatted);
     }
+
+    // Adjust height after state updates
+    setTimeout(adjustHeight, 0);
   };
 
   const handleOnBlur = () => {
@@ -131,6 +158,8 @@ export const FieldTextarea = ({
       "aria-invalid": inputError ? "true" : "false",
       "aria-describedby": inputError ? `${fieldId}-error` : undefined,
       rows: rows,
+      ref: textareaRef,
+      style: { overflow: 'hidden' }, // Hide scrollbar during auto-resize
     };
 
     // Якщо є Formik context і name, додаємо required з валідації
@@ -181,7 +210,7 @@ export const FieldTextarea = ({
       )}
 
       <div
-        className={clsx(css.inputWrapper, defaultMaxLength && css.withExtra)}
+        className={clsx(css.inputWrapper, css.textAreaWrapper, defaultMaxLength && css.withExtra)}
       >
         {renderTextarea()}
         {defaultMaxLength && <div className={css.extra}>{renderExtra()}</div>}
