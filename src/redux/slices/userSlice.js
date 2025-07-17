@@ -113,4 +113,7 @@ export const { clearError } = userSlice.actions;
 export const selectUserDetails = (state) => {
   return state.users.details;
 };
+export const selectError = (state) => {
+  return state.users.error;
+};
 export default userSlice.reducer;

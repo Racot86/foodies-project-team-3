@@ -8,6 +8,7 @@ import Modal from "@components/modal/Modal";
 import LogOutModal from "@components/logOutModal/LogOutModal";
 
 import { FiPlus } from "react-icons/fi";
+import { toast, ToastContainer } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, selectUser } from "../../redux/slices/authSlice";
@@ -16,6 +17,7 @@ import {
   userDetails,
   userAvatar,
   followUser,
+  selectError,
 } from "../../redux/slices/userSlice";
 
 function ProfilePage() {
@@ -24,6 +26,7 @@ function ProfilePage() {
   const dispatch = useDispatch();
   const loggedUser = useSelector(selectUser);
   const requestedUserDetails = useSelector(selectUserDetails);
+  const error = useSelector(selectError);
 
   // get current user
   useEffect(() => {
@@ -63,6 +66,12 @@ function ProfilePage() {
       dispatch(followUser(userId));
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   return (
     <Page className={styles.profilePage}>
@@ -210,6 +219,8 @@ function ProfilePage() {
           <LogOutModal onClose={closeLogoutModal} />
         </Modal>
       )}
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </Page>
   );
 }
