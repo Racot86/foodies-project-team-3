@@ -1,24 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { removeFromFavorites } from "@/services/recipeService";
-import axios from "axios";
-import { BASE_URL } from "@/services/api";
+import { getFavorites, removeFromFavorites } from "@/services/recipeService";
 
-// Получение всех избранных рецептов
 export const fetchFavorites = createAsyncThunk(
   "favorites/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/recipes/myfavorites`);
-      return response.data;
+      const favorites = await getFavorites();
+      return favorites;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch favorites"
-      );
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// Удаление рецепта из избранного
 export const deleteFavorite = createAsyncThunk(
   "favorites/delete",
   async (recipeId, { rejectWithValue }) => {
@@ -44,21 +38,19 @@ const favoritesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch
       .addCase(fetchFavorites.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload;
+        state.data = action.payload.recipes || [];
       })
       .addCase(fetchFavorites.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-      // Delete
       .addCase(deleteFavorite.pending, (state) => {
         state.isDeleting = true;
         state.error = null;

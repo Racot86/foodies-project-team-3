@@ -10,7 +10,6 @@ const RecipeList = ({ recipes, onDelete }) => {
 
   const totalPages = Math.ceil(recipes.length / ITEMS_PER_PAGE);
 
-  // Сбрасываем страницу, если recipes уменьшился и текущая страница стала невалидной
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages || 1);
@@ -26,9 +25,14 @@ const RecipeList = ({ recipes, onDelete }) => {
     setCurrentPage(page);
   };
 
+  const listClassName =
+    totalPages > 1
+      ? `${styles.recipeCardList} ${styles.hasPagination}`
+      : styles.recipeCardList;
+
   return (
     <>
-      <ul className={styles.recipeCardList}>
+      <ul className={listClassName}>
         {currentRecipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}

@@ -4,39 +4,48 @@ import { fetchMyRecipe, deleteMyRecipe } from "@/redux/slices/myRecipeSlice.js";
 import RecipeList from "./recipeCard/RecipeList";
 import EmptyState from "./recipeCard/EmptyState";
 import css from "./RecipesList.module.css";
+import { toast } from "react-toastify";
+// import Loader from "@/components/Loader";
 
 const MyRecipes = () => {
   const dispatch = useDispatch();
-  // Добавляем isDeleting из состояния
   const { data, isLoading, isDeleting, error } = useSelector(
     (state) => state.myrecipe
   );
 
-  // Предполагается, что data — объект с recipes, или пустой массив
   const recipes = data?.recipes || data || [];
 
   useEffect(() => {
     dispatch(fetchMyRecipe());
   }, [dispatch]);
 
-  const deleteRecipe = (id) => {
-    dispatch(deleteMyRecipe(id));
+  const deleteRecipe = async (id) => {
+    const result = await dispatch(deleteMyRecipe(id));
+    if (deleteMyRecipe.fulfilled.match(result)) {
+      dispatch(fetchMyRecipe());
+    } else {
+      toast.error(
+        `Failed to delete the recipe: ${result.payload || "Unknown error"}`
+      );
+    }
   };
 
-  // Показываем загрузку только при загрузке списка, а не при удалении
-  if (isLoading) return <p>Загрузка...</p>;
-  if (error) return <p>Ошибка: {error}</p>;
+  useEffect(() => {
+    if (error) {
+      toast.error(`Something went wrong: ${error}`);
+    }
+  }, [error]);
 
   return (
     <div className={css.recipeWrap}>
-      {recipes.length > 0 ? (
-        <RecipeList recipes={recipes} onDelete={deleteRecipe} />
-      ) : (
-        <EmptyState text="Nothing has been added to your recipes list yet. Please browse our recipes and add your favorites for easy access in the future." />
-      )}
+      {/* {isLoading && <Loader />}
+      {isDeleting && <Loader >} */}
 
-      {/* Можно показать индикатор удаления, если нужно */}
-      {isDeleting && <p>Удаление...</p>}
+      {!isLoading && recipes.length > 0 ? (
+        <RecipeList recipes={recipes} onDelete={deleteRecipe} />
+      ) : !isLoading ? (
+        <EmptyState text="Nothing has been added to your recipes list yet. Please browse our recipes and add your favorites for easy access in the future." />
+      ) : null}
     </div>
   );
 };

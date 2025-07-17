@@ -1,6 +1,8 @@
 import axios from "axios";
 import { BASE_URL, DEFAULT_AVATAR } from "./api";
 
+import api from "./api";
+
 /**
  * Fetches all recipes
  * @returns {Promise<Array>} Array of recipe objects
@@ -140,18 +142,8 @@ export const addToFavorites = async (recipeId) => {
  * @returns {Promise<Object>} Response object
  */
 export const removeFromFavorites = async (recipeId) => {
-  try {
-    const response = await axios.delete(
-      `${BASE_URL}/recipes/${recipeId}/myfavorites`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("API Error:", error);
-    throw new Error(
-      error.response?.data?.message ||
-        "An error occurred while removing recipe from favorites"
-    );
-  }
+  const response = await api.delete(`/recipes/${recipeId}/favorites`);
+  return response.data;
 };
 
 /**
@@ -217,4 +209,9 @@ export const getAreasByCategory = async (categoryId) => {
         "An error occurred while fetching areas by category"
     );
   }
+};
+
+export const getFavorites = async () => {
+  const response = await api.get("/recipes/myfavorites");
+  return response;
 };

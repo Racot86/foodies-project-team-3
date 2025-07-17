@@ -5,41 +5,44 @@ import {
   deleteFavorite,
 } from "@/redux/slices/favoriteRecipeSlice";
 
-import css from "./RecipesList.module.css"; // стили
+import css from "./RecipesList.module.css";
 import RecipeList from "./recipeCard/RecipeList";
 import EmptyState from "./recipeCard/EmptyState";
+import { toast } from "react-toastify";
+// import Loader from "@/components/Loader";
 
 const Favorites = () => {
   const dispatch = useDispatch();
 
-  // Получаем нужные части состояния
-  const recipes = useSelector((state) => state.favorites.data);
-  const isLoading = useSelector((state) => state.favorites.isLoading);
-  const isDeleting = useSelector((state) => state.favorites.isDeleting);
-  const error = useSelector((state) => state.favorites.error);
+  const { data, isLoading, isDeleting, error } = useSelector(
+    (state) => state.favorites
+  );
 
-  // Получаем список при монтировании
   useEffect(() => {
     dispatch(fetchFavorites());
   }, [dispatch]);
 
-  // Обработчик удаления
+  useEffect(() => {
+    if (error) {
+      toast.error(`Something went wrong: ${error}`);
+    }
+  }, [error]);
+
+  const recipes = data || [];
+
   const handleDelete = (recipeId) => {
     dispatch(deleteFavorite(recipeId));
   };
 
   return (
     <div className={css.recipeWrap}>
-      {isLoading ? (
-        <p>Загрузка...</p>
-      ) : recipes.length > 0 ? (
-        <RecipeList recipes={recipes} onDelete={handleDelete} />
-      ) : (
-        <EmptyState text="Nothing has been added to your favorite recipes list yet. Please browse our recipes and add your favorites for easy access in the future." />
-      )}
+      {/* {isLoading || isDeleting ? <Loader /> : null} */}
 
-      {isDeleting && <p>Удаление...</p>}
-      {error && <p className={css.error}>Ошибка: {error}</p>}
+      {!isLoading && recipes.length > 0 ? (
+        <RecipeList recipes={recipes} onDelete={handleDelete} />
+      ) : !isLoading && recipes.length === 0 ? (
+        <EmptyState text="Nothing has been added to your favorite recipes list yet. Please browse our recipes and add your favorites for easy access in the future." />
+      ) : null}
     </div>
   );
 };

@@ -1,6 +1,8 @@
+import css from "./RecipeCard.module.css";
+
 const EmptyState = ({ text }) => {
   return (
-    <div>
+    <div className={css.emptyWrap}>
       <p>{text}</p>
     </div>
   );

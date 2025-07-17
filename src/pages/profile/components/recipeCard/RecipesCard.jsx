@@ -15,7 +15,7 @@ const RecipeCard = ({ data, onDelete }) => {
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <NavLink to={`/recipe/${data.id}`} className={styles.navLink}>
+        <NavLink to={`/recipe-details/${data.id}`} className={styles.navLink}>
           <svg width="16" height="16">
             <use href={`${icons}#icon-arrow-up-right`} />
           </svg>
