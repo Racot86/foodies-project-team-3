@@ -6,9 +6,12 @@
     padding: 10px 20px;
     position: relative;
     border-radius:  var(--radius-xxl) var(--radius-xxl) 0 0;
-    
+    /* filter: brightness(0) saturate(100%) invert(0); */
 }
 
+/* .open .logoWrapper {
+  filter: brightness(0) saturate(100%) invert(0); 
+} */
 .nav ul {
     display: flex;
     list-style: none;
@@ -36,13 +39,13 @@
     
 }
 
-/* Mobile navigation styles */
+
 .mobileNav {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #FFD700;
+    background-color: var(--color-primary);
     z-index: 5;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -74,11 +77,6 @@
 }
 
 @media (min-width: 1440px){
-    .nav a:hover {
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-}
-    
+      
 
 }
