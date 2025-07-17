@@ -36,7 +36,7 @@ export const Header = () => {
                   `${styles.link} ${isActive ? styles.active : ''} ${isWhiteHeader ? styles.white : ''}`
                 }
               >
-                Home
+                HOME
               </NavLink>
             </li>
             <li>
@@ -47,7 +47,7 @@ export const Header = () => {
                     `${styles.link} ${isActive ? styles.active : ''} ${isWhiteHeader ? styles.white : ''}`
                   }
                 >
-                  Add Recipe
+                  ADD RECIPE
                 </NavLink>
               </PrivateContentArea>
             </li>
