@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    padding: 0 8px;
 }
 
 .header {
@@ -86,6 +87,7 @@
 @media (min-width: 768px) {
     .categoryPage {
         gap: 40px;
+        padding: 0 16px;
     }
 
     .header {
@@ -125,6 +127,10 @@
 }
 
 @media (min-width: 1440px) {
+    .categoryPage {
+        padding: 0 60px;
+    }
+    
     .filtersContainer {
         flex-direction: row;
     }
