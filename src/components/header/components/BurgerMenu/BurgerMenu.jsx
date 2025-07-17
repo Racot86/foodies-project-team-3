@@ -4,7 +4,7 @@ import Logo from '@/components/ui/Logo/Logo';
 import { Link } from "react-router-dom";
 import PrivateContentArea from '@/components/privateContentArea/PrivateContentArea';
 
-export const BurgerMenu = () => {
+export const BurgerMenu = ({ isWhiteTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [headerWidth, setHeaderWidth] = useState(0);
   const menuRef = useRef(null);
@@ -37,7 +37,7 @@ export const BurgerMenu = () => {
   return (
     <div className={styles.wrapper}>
       <div
-        className={`${styles.burgerMenu} ${isOpen ? styles.open : ''}`}
+        className={`${styles.burgerMenu} ${isOpen ? styles.open : ''} ${isWhiteTheme ? styles.black : ''}`}
         onClick={handleClick}
         aria-label="Toggle menu"
         role="button"

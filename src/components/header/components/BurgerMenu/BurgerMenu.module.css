@@ -16,6 +16,7 @@
   transition: all 0.3s ease;
 }
 
+
 /* Menu overlay styles */
 .menuOverlay {
   position: fixed;
@@ -104,4 +105,9 @@
     height: 172px;
     object-fit: cover;
 }
+
+.black .line {
+  background-color: var(--color-primary);
+}
+
 

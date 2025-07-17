@@ -64,6 +64,38 @@
     margin-bottom: 0;
 }
 
+.whiteTheme {
+  background-color: var(--color-white);
+}
+
+.whiteTheme .logoWrapper img {
+  filter: invert(100%) brightness(0);
+}
+
+.whiteTheme .line {
+  background-color: var(--color-primary);
+}
+
+.whiteTheme .nav a {
+  color: var(--color-primary); 
+}
+
+.whiteTheme .nav a:hover {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.userbarWrapper{
+    display: flex;
+    gap: 4px;
+}
+.nav a.active {
+  padding: 14px;
+  border: 2px solid var(--color-white);
+  border-radius: 30px;
+}
+.whiteTheme .nav a.active {
+  border: 2px solid var(--color-primary);
+}
+
 /* Responsive adjustments */
 @media screen and (min-width: 768px) {
     .header{
