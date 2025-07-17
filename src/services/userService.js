@@ -14,5 +14,9 @@ export const userService = {
                 'Content-Type': 'multipart/form-data'
             }
         });
+    },
+
+    followUser: async (userId) => {
+        return api.post(`/users/follow/${userId}`);
     }
 }
