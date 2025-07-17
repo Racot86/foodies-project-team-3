@@ -22,7 +22,7 @@ export const AppRoutes = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />}>
           <Route index element={<RecipeCategories />} />
-          <Route path="category/:categoryId" element={<BrowseCategory />} />
+          <Route path="category/:categoryName" element={<BrowseCategory />} />
         </Route>
         <Route path="/recipe-details/:recipeId" element={<RecipeDetails />} />
 
