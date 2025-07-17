@@ -100,8 +100,8 @@ const BrowseCategory = () => {
 
       <div className={styles.filtersContainer}>
           <div className={styles.filters}>
-            <IngredientSelect value={selectedIngredient} onChange={handleIngredientChange} />
-            <AreaSelect value={selectedArea} onChange={handleAreaChange} />
+            <IngredientSelect value={selectedIngredient} onChange={handleIngredientChange} wrapperClassName={styles.fullWidthWrapper} />
+            <AreaSelect value={selectedArea} onChange={handleAreaChange} wrapperClassName={styles.fullWidthWrapper} />
           </div>
           <div className={styles.recipesContainer}>
               <div className={styles.recipeList}>

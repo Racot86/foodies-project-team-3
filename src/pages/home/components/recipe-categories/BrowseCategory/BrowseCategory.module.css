@@ -95,9 +95,12 @@
         gap: 40px;
     }
     .filters {
-        flex-direction: row;    
-        /* align-items: center; */
-        /* justify-content: space-between; */
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+    .fullWidthWrapper {
+        width: 100%;
     }
     .recipesContainer {
         gap: 60px;
@@ -115,6 +118,9 @@
     }
     .filters {
         flex-direction: column;
+    }
+    .fullWidthWrapper {
+        width: 330px;
     }
     .recipeList {
         grid-template-columns: repeat(3, 1fr);

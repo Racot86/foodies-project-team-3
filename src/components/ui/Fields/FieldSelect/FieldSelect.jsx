@@ -15,6 +15,7 @@ export const FieldSelect = ({
   onChange,
   value,
   className,
+  wrapperClassName, // Add new prop
   helperText,
   disabled = false,
 }) => {
@@ -87,7 +88,7 @@ export const FieldSelect = ({
       )}
 
       <div
-        className={clsx(css.selectWrapper, disabled && css.disabled)}
+        className={clsx(css.selectWrapper, wrapperClassName, disabled && css.disabled)} // Apply the new prop here
         onClick={handleToggle}
         role="button"
         aria-label="Toggle select dropdown"
