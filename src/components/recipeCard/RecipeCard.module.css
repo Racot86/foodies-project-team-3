@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    border-radius: 30px 30px 0 0;
 }
 
 .imageContainer {
@@ -40,6 +41,9 @@
 .title {
     text-transform: uppercase;
     letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .titleContainer .instructions {
@@ -47,7 +51,8 @@
     font-size: 14px;
     font-weight: 500;
     color: var(--color-text-main);
-    line-height: 20px;  
+    line-height: 20px; 
+    min-height: 40px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -162,6 +167,7 @@
     .instructions {
         font-size: 16px;
         line-height: 24px;
+        min-height: 48px;
     }
     .avatar {
         width: 40px;
