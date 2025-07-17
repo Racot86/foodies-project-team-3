@@ -31,11 +31,6 @@ export const Layout = () => {
     return (
         <div className={styles.layout}>
             <ResponsiveContainer>
-                <div style={{ marginBottom: "20px" }}>
-                    <Button variant={Button.variants.PRIMARY} to="/design-system">
-                        View Design System
-                    </Button>
-                </div>
                 <Header/>
                 {shouldShowBreadcrumbs() && (
                     <BreadCrumbs className={styles.breadcrumbs} />
