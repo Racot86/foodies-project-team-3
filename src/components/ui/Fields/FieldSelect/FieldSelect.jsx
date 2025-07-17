@@ -5,6 +5,22 @@ import { ErrorField } from "../ErrorField/ErrorField";
 import { FiChevronDown } from "react-icons/fi";
 import { FiChevronUp } from "react-icons/fi";
 
+/**
+ * @param {{ 
+ *   name?: any; 
+ *   label?: any; 
+ *   error?: any; 
+ *   options?: any[]; 
+ *   required?: any; 
+ *   placeholder?: any; 
+ *   onChange?: any; 
+ *   value?: any; 
+ *   className?: any; 
+ *   wrapperClassName?: any; 
+ *   helperText?: any; 
+ *   disabled?: boolean; 
+ * }} props
+ */
 export const FieldSelect = ({
   name,
   label,
@@ -15,7 +31,7 @@ export const FieldSelect = ({
   onChange,
   value,
   className,
-  wrapperClassName, // Add new prop
+  wrapperClassName,
   helperText,
   disabled = false,
 }) => {

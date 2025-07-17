@@ -1,36 +1,31 @@
-import { useEffect, useState } from "react";
-import { FieldSelect } from "@/components/ui/Fields/FieldSelect/FieldSelect";
-import { areasService } from "@/services/areasService";
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { fetchAreas } from '@/redux/slices/areasSlice';
+import { FieldSelect } from '../FieldSelect/FieldSelect';
 
-export const AreaSelect = (props) => {
-  const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(true);
+export const AreaSelect = ({ onChange, value, ...props }) => {
+  const dispatch = useAppDispatch();
+  const { data: areas, isLoading } = useAppSelector((state) => state.areas);
 
   useEffect(() => {
-    const fetchAreas = async () => {
-      try {
-        const data = await areasService();
-        const formatted = (data || []).map((item) => ({
-          value: item._id,
-          label: item.name,
-        }));
-        setOptions(formatted);
-      } catch (error) {
-        console.error("Error fetching areas:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (areas.length === 0) {
+      dispatch(fetchAreas());
+    }
+  }, [dispatch, areas.length]);
 
-    fetchAreas();
-  }, []);
+  const options = (areas || []).map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
 
   return (
     <FieldSelect
       label=""
       name="area"
       options={options}
-      placeholder={loading ? "Loading..." : "Region"}
+      placeholder={isLoading ? 'Loading...' : 'Region'}
+      onChange={onChange}
+      value={value}
       {...props}
     />
   );
