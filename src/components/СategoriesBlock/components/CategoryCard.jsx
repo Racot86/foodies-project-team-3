@@ -37,7 +37,7 @@ const CategoryCard = ({
   }
 
   return (
-    <Link to={`/categories/${category}`} className={styles.cardLink}>
+    <Link to={`/category/${category}`} className={styles.cardLink}>
       <div className={`${styles.card} ${wide ? styles.cardWide : ""}`}
         data-wide={wide ? "true" : undefined}
       >

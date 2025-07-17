@@ -5,6 +5,9 @@ import { ErrorField } from "../ErrorField/ErrorField";
 import { FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
 
 export const FieldSelect = ({
+  selectWrapperClassName,
+  optionsListClassName,
+  selectedValueClassName,
   name,
   label,
   error,
@@ -14,6 +17,7 @@ export const FieldSelect = ({
   onChange,
   value,
   className,
+  wrapperClassName,
   helperText,
   disabled = false,
 }) => {
@@ -92,12 +96,7 @@ export const FieldSelect = ({
 
   return (
     <div
-      className={clsx(
-        css.field,
-        className,
-        error && css.error,
-        disabled && css.disabled
-      )}
+      className={`${clsx(css.field, error && css.error, disabled && css.disabled)} ${className || ''} ${wrapperClassName || ''}`.trim()}
       ref={containerRef}
       id={fieldId}
       aria-haspopup="listbox"
@@ -112,7 +111,7 @@ export const FieldSelect = ({
         </label>
       )}
 
-      <div className={clsx(css.selectWrapper, disabled && css.disabled)}>
+      <div className={clsx(css.selectWrapper, selectWrapperClassName, disabled && css.disabled)}>
         <input
           id={fieldId}
           type="text"
@@ -130,7 +129,7 @@ export const FieldSelect = ({
           aria-haspopup="listbox"
           aria-activedescendant={isOpen ? `${fieldId}-option-0` : undefined}
           autoComplete="off"
-          className={clsx(css.selectedValue, !inputValue && css.placeholder)}
+          className={clsx(css.selectedValue, selectedValueClassName, !inputValue && css.placeholder)}
         />
 
         {inputValue && !disabled && (
@@ -172,7 +171,7 @@ export const FieldSelect = ({
 
       {isOpen && !disabled && (
         <ul
-          className={clsx(css.optionsList, listHeightClass)}
+          className={clsx(css.optionsList, optionsListClassName, listHeightClass)}
           role="listbox"
           id={`${fieldId}-listbox`}
           tabIndex={-1}
