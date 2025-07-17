@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import css from "./UserBar.module.css";
 import defaultAvatar from "@assets/react.svg"; // додати зображення на дефолтний аватар
 import  Modal  from "../../../modal/Modal.jsx"
-
+import clsx from "clsx";
 import UserDropDown from "@components/ui/UserDropDown/UserDropDown.jsx"
 import { GoChevronDown } from "react-icons/go";
 import LogOutModal from "@components/logOutModal/LogOutModal.jsx";
@@ -51,7 +51,7 @@ const UserBar = () => {
           className={css.avatar}
         />
         <span className={css.username}>{user.name}</span>
-        <GoChevronDown className={css.icon} />
+        <GoChevronDown className={clsx(css.icon, isDropdownOpen && css.iconOpen)}/>
       </button>
 
       {isDropdownOpen && (

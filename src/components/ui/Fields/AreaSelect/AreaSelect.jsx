@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { fetchAreas } from '@/redux/slices/areasSlice';
-import { FieldSelect } from '../FieldSelect/FieldSelect';
+import { FieldSelect } from '@/components/ui/Fields/FieldSelect/FieldSelect';
 
 export const AreaSelect = ({ onChange, value, ...props }) => {
   const dispatch = useAppDispatch();
