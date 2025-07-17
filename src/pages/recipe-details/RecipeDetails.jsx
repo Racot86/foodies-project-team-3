@@ -59,7 +59,7 @@ export const RecipeDetails = () => {
           if (favRes.ok) {
             const favData = await favRes.json();
             const isFav = (favData?.favorites || []).some(
-  (fav) => fav._id === data._id || fav.id === data.id
+                  (fav) => fav._id === data._id || fav.id === data.id
 );
             setIsFavorite(isFav);
           }
@@ -180,8 +180,8 @@ export const RecipeDetails = () => {
           <div className={styles.recipeInfo}>
             <h2 className={styles.ingredients}>RECIPE PREPARATION</h2>
             {recipe.instructions
-  .split(/\r\n\r\n/)
-  .map((paragraph, index) => (
+            .split(/\r\n\r\n/)
+            .map((paragraph, index) => (
     <p key={index} className={styles.instructions}>
       {paragraph.trim()}
     </p>

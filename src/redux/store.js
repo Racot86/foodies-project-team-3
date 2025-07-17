@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from 'react-redux';
 import breadcrumbsReducer from "./slices/breadcrumbsSlice";
 import authReducer from "./slices/authSlice";
 import testimonialsReducer from "./slices/testimonialsSlice";
@@ -19,8 +20,17 @@ export const store = configureStore({
     recipes: recipesReducer,
     users: userReducer,
   },
-  devTools: process.env.NODE_ENV !== 'production', // 🆕 додано
 });
 
+/**
+ * @typedef {ReturnType<typeof store.getState>} RootState
+ * @typedef {typeof store.dispatch} AppDispatch
+ */
+
+/** @type {() => AppDispatch} */
+export const useAppDispatch = useDispatch;
+
+/** @type {import('react-redux').TypedUseSelectorHook<RootState>} */
+export const useAppSelector = useSelector;
 
 export default store;

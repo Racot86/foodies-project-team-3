@@ -1,1 +1,150 @@
-/* All styles removed as requested */
+.categoryPage {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.backLink {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-text);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.backLink:hover {
+    opacity: 0.8;
+}
+
+.backLinkContainer button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.mainTitle {
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    margin: 0 !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--color-text-secondary);
+}
+
+.filtersContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.recipesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.recipeList {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+.fullWidthWrapper,
+.unlimitedMaxWidth {
+    width: 100% !important;
+}
+
+.fullWidthInner {
+    width: 100% !important;
+}
+
+@media (min-width: 768px) {
+    .categoryPage {
+        gap: 40px;
+    }
+
+    .header {
+        gap: 20px;
+    }
+
+    .mainTitle {
+        font-size: 40px;
+        line-height: 44px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--color-text-main);
+    }
+
+    .filtersContainer {
+        gap: 40px;
+    }
+
+    .filters {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .recipesContainer {
+        gap: 60px;
+    }
+
+    .recipeList {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 20px;
+        row-gap: 40px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .filtersContainer {
+        flex-direction: row;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .fullWidthWrapper,
+    .unlimitedMaxWidth {
+        width: 330px;
+    }
+
+    .fullWidthInner {
+        width: 330px !important;
+    }
+
+    .recipeList {
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 20px;
+        row-gap: 40px;
+    }
+}

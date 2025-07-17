@@ -130,7 +130,7 @@
     .cardWide {
         width: 100%;
         max-width: none;
-        flex: 1 0 48%;
+        flex: 1 0 48.5%;
     }}
 /* Mobile адаптив */
 @media (max-width: 767px) {

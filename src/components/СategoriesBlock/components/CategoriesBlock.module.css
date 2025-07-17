@@ -1,22 +1,54 @@
 .section {
     display: flex;
     flex-direction: column;
+   
+}
+
+.titlesubtitle {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+    width: 531px;
 }
 
 .titleBox {
-    margin-bottom: 20px;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #050505;
 }
 
 .subtitleBox {
-    margin-bottom: 28px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+   
+   
 }
 
 @media (max-width: 767px) {
     .titleBox {
-        margin-bottom: 16px;
+        font-size: 28px;
     }
 
     .subtitleBox {
-        margin-bottom: 18px;
+        font-size: 14px;
+        line-height: 1.42857;
+        letter-spacing: -0.02em;
+        color: #bfbebe;
+    }
+
+    .titlesubtitle {
+        gap: 16px;
+        width: 343px;
+        margin-bottom: 32px;
+        
     }
 }
