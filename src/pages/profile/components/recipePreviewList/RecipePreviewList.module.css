@@ -1,0 +1,24 @@
+.recipePreview {
+  display: grid;
+  gap: 8px;
+}
+
+/* 4 previews: 2x2 grid (desktop) */
+.recipePreview[data-preview-count="4"] {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 120px;
+}
+
+/* 3 previews: 3x1 grid (tablet) */
+.recipePreview[data-preview-count="3"] {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  width: 144px;
+}
+
+/* Fallback for any other count */
+.recipePreview:not([data-preview-count="3"]):not([data-preview-count="4"]) {
+  grid-template-columns: repeat(2, 1fr);
+  width: 120px;
+}

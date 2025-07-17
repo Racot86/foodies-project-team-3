@@ -39,6 +39,11 @@ export const AppRoutes = () => {
             <Route path="followers" element={<Followers />} />
             <Route path="following" element={<Following />} />
           </Route>
+          <Route path="/profile/:userId" element={<ProfilePage />}>
+            <Route index element={<MyRecipes />} />
+            <Route path="my-recipes" element={<MyRecipes />} />
+            <Route path="followers" element={<Followers />} />
+          </Route>
         </Route>
         <Route path="/design-system" element={<DesignSystemPreview />} />
       </Route>
