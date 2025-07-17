@@ -1,19 +1,17 @@
-import { BrowserRouter } from "react-router-dom";
-import "./App.css";
-import { AppRoutes } from "@routes/AppRoutes";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./styles/toastifyCustom.css";
+import { Routes, Route } from 'react-router-dom';
+import RecipeDetails from '../src/pages/recipe-details/RecipeDetails';
+import SignInForm from '../src/components/signInForm/SignInForm'; 
+import SignUpForm from '../src/components/signUpForm/SignUpForm';
 
-export const App = () => {
+const AppRoutes = () => {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        toastClassName="toastify__custom"
-      />
-    </BrowserRouter>
+    <Routes>
+      <Route path="/signin" element={<SignInForm onClose={() => {}} />} />
+<Route path="/signup" element={<SignUpForm onClose={() => {}} />} />
+
+      <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
+    </Routes>
   );
 };
+
+export default AppRoutes;

@@ -17,6 +17,8 @@ export const store = configureStore({
     ingredients: ingredientsReducer,
     recipes: recipesReducer,
   },
+  devTools: process.env.NODE_ENV !== 'production', // 🆕 додано
 });
+
 
 export default store;
