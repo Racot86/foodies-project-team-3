@@ -1,0 +1,182 @@
+.card {
+    width: 100%;
+    max-width: 343px;
+    overflow: hidden;
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.imageContainer {
+    width: 100%;
+    height: 230px;
+    position: relative;
+    overflow: hidden;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.title {
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+}
+
+.titleContainer .instructions {
+    margin: 0 !important; /* Using !important to ensure this rule takes precedence */
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-main);
+    line-height: 20px;  
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3em;
+    letter-spacing: -0.02em;
+    /* Approximately 2 lines */
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.author:hover {
+    opacity: 0.8;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+}
+
+.authorName {
+    font-size: 14px;
+    color: var(--color-text-main);
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+}
+
+.actions {
+    display: flex;
+    gap: 4px;
+}
+
+.actions button {
+    width: 36px;
+    height: 36px;
+}
+
+.actions button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.favoriteButton,
+.linkButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Loading state */
+.loading {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loadingAnimation {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-text-secondary);
+    border-radius: 50%;
+    border-top-color: var(--color-text-primary);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Error state */
+.error {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    color: var(--color-text-error);
+}
+
+@media (min-width: 768px) {
+    .card {
+        min-width: 290px;
+    }   
+    .imageContainer {
+        height: 275px;
+    } 
+    .instructions {
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }  
+    .authorName {
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .actions button {
+        width: 42px;
+        height: 42px;
+    }
+    .actions button svg {
+        width: 18px;
+        height: 18px;
+    }
+}

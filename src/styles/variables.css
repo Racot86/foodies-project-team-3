@@ -3,6 +3,7 @@
 :root {
   /* === COLORS === */
   --color-primary: #050505; /* Основний чорний */
+  --color-main: #1a1a1a; /* Основний темно-сірий */
   --color-secondary: #bfbebe; /* Світло-сірий */
   --color-white: #ffffff; /* Білий */
   --color-success: #22c55e; /* Зелений */
@@ -14,7 +15,8 @@
   --color-background-dark: var(--color-primary);
   --color-text: var(--color-primary); /* Основний колір тексту - чорний */
   --color-text-primary: var(--color-primary); /* #050505 - чорний */
-  --color-text-secondary: var(--color-secondary); /* #1a1a1a - темно-сірий */
+  --color-text-main: var(--color-main); /* #1a1a1a - темно-сірий */
+  --color-text-secondary: var(--color-secondary);
   --color-text-muted: var(--color-secondary); /* #bfbebe - світло-сірий */
   --color-text-inverse: var(--color-white);
 

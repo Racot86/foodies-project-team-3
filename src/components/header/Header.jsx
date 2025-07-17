@@ -8,6 +8,7 @@ import { useBreakpoint } from "@/hooks/useBreakpoint.js";
 import { SignToggle } from "../ui";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "@/redux/slices/authSlice";
+import PrivateContentArea from "../privateContentArea/PrivateContentArea";
 
 
 export const Header = () => {
@@ -19,22 +20,24 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <Logo />
-      {isMobile ? (
-        <BurgerMenu />
-      ) : (
+      {!isMobile && (
         <nav className={styles.nav}>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link  to="/">Home</Link>
             </li>
             <li>
-              <Link to="/add-recipe">Add Recipe</Link>
+              <PrivateContentArea>
+                <Link to="/add-recipe">Add Recipe</Link>
+              </PrivateContentArea>
             </li>
           </ul>
         </nav>
       )}
       {isAuth ? <UserBar /> : <SignToggle />}
-
+      {isMobile && (
+            <BurgerMenu />
+        )}
     </header>
   );
 };
