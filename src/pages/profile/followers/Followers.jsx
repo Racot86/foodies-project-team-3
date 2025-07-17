@@ -6,8 +6,9 @@ import {
   followUser,
   setFollowersPage,
 } from "@/redux/slices/followerSlice";
-import UserList from "./userList/UserList";
+import UserList from "../components/userList/UserList";
 import { Pagination } from "@/components/ui/Pagination";
+import styles from "./Followers.module.css";
 
 const Followers = () => {
   const dispatch = useDispatch();
@@ -72,11 +73,13 @@ const Followers = () => {
         error={fetchingError}
       />
       {totalPages > 1 && (
-        <Pagination
-          currentPage={followersPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        <div className={styles.paginationContainer}>
+          <Pagination
+            currentPage={followersPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       )}
     </div>
   );

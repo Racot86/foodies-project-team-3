@@ -7,7 +7,7 @@ import { useDeviceType } from "@/hooks/useDeviceType";
 import icons from "@/assets/icons/icons.svg";
 import styles from "./UserCard.module.css";
 
-const UserCard = ({ user, onButtonClick, buttonText = "Follow" }) => {
+const UserCard = ({ user, onButtonClick, tabType }) => {
   const navigate = useNavigate();
   const firstName = user.name ? user.name.split(" ")[0] : "";
 
@@ -31,12 +31,29 @@ const UserCard = ({ user, onButtonClick, buttonText = "Follow" }) => {
   };
 
   const handleButtonClick = () => {
-    // Simply call the parent callback - let Redux handle the logic
     onButtonClick(user.id);
   };
 
+  const getUserCardClass = () => {
+    if (tabType === "followers") {
+      return styles.followerUserCard;
+    } else if (tabType === "following") {
+      return styles.followingUserCard;
+    }
+    return styles.userCard;
+  };
+
+  const getButtonText = () => {
+    if (tabType === "followers") {
+      return "Follow";
+    } else if (tabType === "following") {
+      return "Following";
+    }
+    return "Follow";
+  };
+
   return (
-    <div className={styles.userCard}>
+    <div className={getUserCardClass()}>
       <div className={styles.userDetails}>
         <div className={styles.avatar}>
           <img
@@ -66,7 +83,7 @@ const UserCard = ({ user, onButtonClick, buttonText = "Follow" }) => {
             isLoading={false}
             type="button"
           >
-            {buttonText}
+            {getButtonText()}
           </Button>
         </div>
       </div>
@@ -85,7 +102,7 @@ const UserCard = ({ user, onButtonClick, buttonText = "Follow" }) => {
           onClick={handleNavigateToProfile}
           className={styles.iconButton}
         >
-          <svg width="18" height="18">
+          <svg className={styles.icon} width="16" height="16">
             <use href={`${icons}#icon-arrow-up-right`} />
           </svg>
         </ButtonIcon>

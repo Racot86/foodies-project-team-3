@@ -13,12 +13,11 @@ const initialState = {
   isFollowersLoading: false,
   isFollowingLoading: false,
   isFollowActionLoading: false,
-  fetchingError: null, // Only for data fetching errors (getFollowers, getFollowing)
-  followActionError: null, // Separate error for follow actions
-  unfollowActionError: null, // Separate error for unfollow actions
+  fetchingError: null,
+  followActionError: null,
+  unfollowActionError: null,
 };
 
-// Async thunks
 export const getFollowers = createAsyncThunk(
   "followers/getFollowers",
   async (params, { rejectWithValue }) => {
@@ -64,7 +63,7 @@ export const followUser = createAsyncThunk(
         userId,
         message: response.message,
         alreadyFollowing: false,
-        newFollowedUser: response.user, // Assuming the API returns the user data
+        newFollowedUser: response.user,
       };
     } catch (error) {
       // If it's 409 (Conflict) - user is already following
@@ -169,11 +168,11 @@ export const followersSlice = createSlice({
       // Follow user
       .addCase(followUser.pending, (state) => {
         state.isFollowActionLoading = true;
-        state.followActionError = null; // Clear follow action errors
+        state.followActionError = null;
       })
       .addCase(followUser.fulfilled, (state, action) => {
         state.isFollowActionLoading = false;
-        state.followActionError = null; // Clear follow action errors
+        state.followActionError = null;
 
         // If user was already following, don't modify state
         if (action.payload.alreadyFollowing) {
@@ -189,16 +188,16 @@ export const followersSlice = createSlice({
       })
       .addCase(followUser.rejected, (state, action) => {
         state.isFollowActionLoading = false;
-        state.followActionError = action.payload; // Set only follow action error, not main error
+        state.followActionError = action.payload;
       })
       // Unfollow user
       .addCase(unfollowUser.pending, (state) => {
         state.isFollowActionLoading = true;
-        state.unfollowActionError = null; // Clear unfollow action errors
+        state.unfollowActionError = null;
       })
       .addCase(unfollowUser.fulfilled, (state, action) => {
         state.isFollowActionLoading = false;
-        state.unfollowActionError = null; // Clear unfollow action errors
+        state.unfollowActionError = null;
         state.following = state.following.filter(
           (user) => user.id !== action.payload.userId
         );
@@ -206,7 +205,7 @@ export const followersSlice = createSlice({
       })
       .addCase(unfollowUser.rejected, (state, action) => {
         state.isFollowActionLoading = false;
-        state.unfollowActionError = action.payload; // Set only unfollow action error, not main error
+        state.unfollowActionError = action.payload;
       });
   },
 });

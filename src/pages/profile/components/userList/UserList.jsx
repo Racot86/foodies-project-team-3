@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "@/components/ui";
 import UserCard from "../userCard/UserCard";
 import styles from "./UserList.module.css";
 
@@ -9,23 +10,18 @@ const UserList = ({
   isLoading = false,
   error = null,
 }) => {
-  // Determine button text based on tab type
-  const getButtonText = () => {
-    return tabType === "followers" ? "FOLLOW" : "Following";
-  };
-
   // Determine empty message based on tab type
   const getEmptyMessage = () => {
     return tabType === "followers"
-      ? "No followers yet"
-      : "Not following anyone yet";
+      ? "There are currently no followers on your account. Please engage our visitors with interesting content and draw their attention to your profile."
+      : "Your account currently has no subscriptions to other users. Learn more about our users and select those whose content interests you.";
   };
 
   // Show loading state
   if (isLoading) {
     return (
       <div className={styles.container}>
-        <div className={styles.loading}>Loading users...</div>
+        <Text className={styles.loading}>Loading users...</Text>
       </div>
     );
   }
@@ -34,7 +30,9 @@ const UserList = ({
   if (error) {
     return (
       <div className={styles.container}>
-        <div className={styles.error}>{error}</div>
+        <Text className={styles.error}>
+          Something went wrong, please, try again later.
+        </Text>
       </div>
     );
   }
@@ -43,7 +41,7 @@ const UserList = ({
   if (users.length === 0) {
     return (
       <div className={styles.container}>
-        <div className={styles.empty}>{getEmptyMessage()}</div>
+        <Text className={styles.empty}>{getEmptyMessage()}</Text>
       </div>
     );
   }
@@ -56,9 +54,8 @@ const UserList = ({
             <UserCard
               user={user}
               onButtonClick={onButtonClick}
-              buttonText={getButtonText()}
+              tabType={tabType}
             />
-            {/* Render divider line between cards (not after the last one) */}
             {index < users.length - 1 && (
               <div className={styles.divider}>
                 <svg

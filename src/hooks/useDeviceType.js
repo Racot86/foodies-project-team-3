@@ -2,17 +2,18 @@ import { useState, useEffect } from "react";
 import { getDeviceType } from "@/utils/deviceUtils";
 
 export const useDeviceType = () => {
-  const [deviceType, setDeviceType] = useState(getDeviceType());
+  const [deviceType, setDeviceType] = useState(() => getDeviceType());
 
   useEffect(() => {
     const handleResize = () => {
-      setDeviceType(getDeviceType());
+      const newDeviceType = getDeviceType();
+      setDeviceType(newDeviceType);
     };
 
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
+    handleResize();
+
     return () => {
       window.removeEventListener("resize", handleResize);
     };

@@ -5,6 +5,15 @@
   gap: 139px;
 }
 
+.followerUserCard {
+  composes: userCard;
+}
+
+.followingUserCard {
+  composes: userCard;
+  gap: 115px;
+}
+
 .userDetails {
   display: flex;
   align-items: flex-start;
@@ -52,14 +61,16 @@
   margin-bottom: 8px;
 }
 
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
 .actionButton {
-  display: flex;
-  padding: 8px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 30px;
-  border: 1px solid #bfbebe;
+  color: #bfbebe;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.28px;
 }
 
 .previewContainer {
@@ -73,10 +84,15 @@
 .iconButton {
   color: #4a4a4a;
   transition: color 0.2s ease;
+  color: #050505;
+  fill: #050505;
+  stroke: #050505;
 }
 
 .iconButton:hover {
-  color: #1a1a1a;
+  color: white;
+  fill: white;
+  stroke: white;
 }
 
 @media (min-width: 768px) {
@@ -85,6 +101,9 @@
     width: 704px;
     align-items: flex-start;
     gap: 60px;
+  }
+  .followingUserCard {
+    gap: 46px;
   }
 
   .userName {
@@ -98,6 +117,13 @@
     letter-spacing: -0.28px;
     line-height: 1.43;
   }
+  .actionButton {
+    font-size: 16px;
+  }
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -105,6 +131,14 @@
     display: flex;
     width: 846px;
     align-items: flex-start;
-    gap: 61px;
+    gap: 75px;
+  }
+
+  .followingUserCard {
+    gap: 60px;
+  }
+
+  .actionButton {
+    color: #1a1a1a;
   }
 }

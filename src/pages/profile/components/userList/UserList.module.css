@@ -1,7 +1,5 @@
 .container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+  width: 343px;
 }
 
 .userList {
@@ -25,46 +23,17 @@
   display: block;
 }
 
-/* Loading state */
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  font-family: Mulish, sans-serif;
-  font-size: 16px;
-  color: #666;
-  text-align: center;
-}
-
-/* Error state */
+.loading,
+.empty,
 .error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  font-family: Mulish, sans-serif;
-  font-size: 16px;
-  color: #e74c3c;
+  color: #bfbebe;
   text-align: center;
-  background: #fdf2f2;
-  border: 1px solid #e74c3c;
-  border-radius: 8px;
-}
-
-/* Empty state */
-.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  font-family: Mulish, sans-serif;
-  font-size: 16px;
-  color: #666;
-  text-align: center;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  width: 343px;
+  padding: 20px 0;
+  margin-top: 80px;
 }
 
 /* Following button special styling */
@@ -80,41 +49,36 @@
   border-color: #dee2e6;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .container {
-    padding: 0 16px;
-  }
-
-  .divider {
-    padding: 16px 0;
-  }
-
-  .dividerSvg {
-    max-width: 100%;
+    width: 704px;
   }
 
   .loading,
-  .error,
-  .empty {
-    padding: 30px 16px;
-    font-size: 14px;
+  .empty,
+  .error {
+    width: 610px;
+    color: #1a1a1a;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    margin-top: 100px;
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 1440px) {
   .container {
-    padding: 0 12px;
-  }
-
-  .divider {
-    padding: 12px 0;
+    width: 846px;
   }
 
   .loading,
-  .error,
-  .empty {
-    padding: 24px 12px;
-    font-size: 13px;
+  .empty,
+  .error {
+    width: 610px;
+    color: #1a1a1a;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    margin-top: 140px;
   }
 }
