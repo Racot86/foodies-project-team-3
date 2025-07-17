@@ -74,6 +74,14 @@
     gap: 32px;
 }
 
+.fullWidthWrapper,
+.unlimitedMaxWidth {
+    width: 100% !important;
+}
+
+.fullWidthInner {
+    width: 100% !important;
+}
 
 @media (min-width: 768px) {
     .categoryPage {
@@ -105,10 +113,6 @@
         gap: 20px;
     }
 
-    .fullWidthWrapper {
-        width: 100%;
-    }
-
     .recipesContainer {
         gap: 60px;
     }
@@ -129,8 +133,13 @@
         flex-direction: column;
     }
 
-    .fullWidthWrapper {
+    .fullWidthWrapper,
+    .unlimitedMaxWidth {
         width: 330px;
+    }
+
+    .fullWidthInner {
+        width: 330px !important;
     }
 
     .recipeList {

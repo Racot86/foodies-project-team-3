@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipesByCategory } from '@/services/recipeService';
 import { Heading, Text, Pagination } from '@components/ui';
-// import { IngredientSelect } from "@/components/ui/Fields/IngredientSelect/IngredientSelect"; 
-// import { AreaSelect } from "@/components/ui/Fields/AreaSelect/AreaSelect";
+import { IngredientSelect } from "@/components/ui/Fields/IngredientSelect/IngredientSelect"; 
+import { AreaSelect } from "@/components/ui/Fields/AreaSelect/AreaSelect";
 import RecipeCard from '@/components/recipeCard/RecipeCard';
 import { FiArrowLeft } from 'react-icons/fi';
 import styles from './BrowseCategory.module.css';
@@ -23,8 +23,8 @@ const BrowseCategory = () => {
   const recipesPerPage = 9;
 
   // Filter state
-//   const [selectedIngredient, setSelectedIngredient] = useState("");
-//   const [selectedArea, setSelectedArea] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState("");
+  const [selectedArea, setSelectedArea] = useState("");
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -34,8 +34,8 @@ const BrowseCategory = () => {
         const options = {
           page: currentPage,
           limit: recipesPerPage,
-        //   ingredient: selectedIngredient,
-        //   area: selectedArea,
+          ingredient: selectedIngredient || undefined,
+          area: selectedArea || undefined,
         };
         const data = await getRecipesByCategory(categoryName, options);
         
@@ -58,22 +58,21 @@ const BrowseCategory = () => {
     };
 
     fetchRecipes();
-  }, [categoryName, currentPage]);
-//   }, [categoryName, currentPage, selectedArea, selectedIngredient]);
+  }, [categoryName, currentPage, selectedArea, selectedIngredient]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-//   const handleIngredientChange = (ingredient) => {
-//     setSelectedIngredient(ingredient);
-//     setCurrentPage(1); // Reset to first page when filter changes
-//   };
+  const handleIngredientChange = (ingredient) => {
+    setSelectedIngredient(ingredient?.value || "");
+    setCurrentPage(1); // Reset to first page when filter changes
+  };
 
-//   const handleAreaChange = (area) => {
-//     setSelectedArea(area);
-//     setCurrentPage(1); // Reset to first page when filter changes
-//   };
+  const handleAreaChange = (area) => {
+    setSelectedArea(area?.value || "");
+    setCurrentPage(1); // Reset to first page when filter changes
+  };
 
   if (isLoading) {
     return <div>Loading recipes...</div>; 
@@ -101,8 +100,22 @@ const BrowseCategory = () => {
 
       <div className={styles.filtersContainer}>
           <div className={styles.filters}>
-            {/* <IngredientSelect value={selectedIngredient} onChange={handleIngredientChange} wrapperClassName={styles.fullWidthWrapper} /> */}
-            {/* <AreaSelect value={selectedArea} onChange={handleAreaChange} wrapperClassName={styles.fullWidthWrapper} /> */}
+            <IngredientSelect
+              value={selectedIngredient}
+              onChange={handleIngredientChange}
+              wrapperClassName={styles.fullWidthWrapper}
+              selectWrapperClassName={styles.unlimitedMaxWidth}
+              optionsListClassName={styles.fullWidthInner}
+              selectedValueClassName={styles.fullWidthInner}
+            />
+            <AreaSelect
+              value={selectedArea}
+              onChange={handleAreaChange}
+              wrapperClassName={styles.fullWidthWrapper}
+              selectWrapperClassName={styles.unlimitedMaxWidth}
+              optionsListClassName={styles.fullWidthInner}
+              selectedValueClassName={styles.fullWidthInner}
+            />
           </div>
           <div className={styles.recipesContainer}>
               <div className={styles.recipeList}>
