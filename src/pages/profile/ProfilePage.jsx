@@ -34,12 +34,14 @@ function ProfilePage() {
   }, [dispatch]);
 
   const { userId } = useParams();
-  const isMe = userId === "me";
+  const isMe = !userId || userId === loggedUser?.id;
   const idOfUserToRender = isMe ? loggedUser?.id : userId;
 
   // get specific user details
   useEffect(() => {
-    dispatch(userDetails(idOfUserToRender));
+    if (idOfUserToRender) {
+      dispatch(userDetails(idOfUserToRender));
+    }
   }, [idOfUserToRender, dispatch]);
 
   const input = document.createElement("input");

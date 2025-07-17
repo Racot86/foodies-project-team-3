@@ -111,7 +111,7 @@ const RecipeForm = () => {
       reset();
       setImage(null);
       setTimeout(() => {
-        navigate("/profile/me");
+        navigate("/profile");
       }, 2500);
     } catch (error) {
       toast.dismiss();
