@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipesByCategory } from '@/services/recipeService';
 import { Heading, Text, Pagination } from '@components/ui';
-import { IngredientSelect } from "@/components/ui/Fields/IngredientSelect/IngredientSelect"; 
-import { AreaSelect } from "@/components/ui/Fields/AreaSelect/AreaSelect";
+import { CustomSelect } from "@/components/ui/CustomSelect";
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { fetchAreas } from '@/redux/slices/areasSlice';
+import { fetchIngredients } from '@/redux/slices/ingredientsSlice';
 import RecipeCard from '@/components/recipeCard/RecipeCard';
 import { FiArrowLeft } from 'react-icons/fi';
 import styles from './BrowseCategory.module.css';
@@ -11,6 +13,7 @@ import styles from './BrowseCategory.module.css';
 const BrowseCategory = () => {
   const { categoryName } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [recipes, setRecipes] = useState([]);
   const [categoryData, setCategoryData] = useState({ description: '' }); // Placeholder for description
@@ -26,6 +29,20 @@ const BrowseCategory = () => {
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [selectedArea, setSelectedArea] = useState("");
 
+  // Get areas and ingredients from Redux store
+  const { data: areas, isLoading: areasLoading } = useAppSelector((state) => state.areas);
+  const { data: ingredients, isLoading: ingredientsLoading } = useAppSelector((state) => state.ingredients);
+
+  // Fetch areas and ingredients if not already loaded
+  useEffect(() => {
+    if (areas.length === 0) {
+      dispatch(fetchAreas());
+    }
+    if (ingredients.length === 0) {
+      dispatch(fetchIngredients());
+    }
+  }, [dispatch, areas.length, ingredients.length]);
+
   useEffect(() => {
     const fetchRecipes = async () => {
       setIsLoading(true);
@@ -38,7 +55,7 @@ const BrowseCategory = () => {
           area: selectedArea || undefined,
         };
         const data = await getRecipesByCategory(categoryName, options);
-        
+
         if (data && data.recipes) {
           setRecipes(data.recipes);
           setTotalPages(Math.ceil(data.total / recipesPerPage));
@@ -64,6 +81,17 @@ const BrowseCategory = () => {
     setCurrentPage(page);
   };
 
+  // Transform areas and ingredients data into options format for CustomSelect
+  const areaOptions = (areas || []).map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
+
+  const ingredientOptions = (ingredients || []).map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
+
   const handleIngredientChange = (ingredient) => {
     setSelectedIngredient(ingredient?.value || "");
     setCurrentPage(1); // Reset to first page when filter changes
@@ -75,7 +103,7 @@ const BrowseCategory = () => {
   };
 
   if (isLoading) {
-    return <div>Loading recipes...</div>; 
+    return <div>Loading recipes...</div>;
   }
 
   if (error) {
@@ -100,21 +128,21 @@ const BrowseCategory = () => {
 
       <div className={styles.filtersContainer}>
           <div className={styles.filters}>
-            <IngredientSelect
-              value={selectedIngredient}
+            <CustomSelect
+              options={ingredientOptions}
+              placeholder={ingredientsLoading ? 'Loading...' : 'Select Ingredient'}
               onChange={handleIngredientChange}
-              wrapperClassName={styles.fullWidthWrapper}
-              selectWrapperClassName={styles.unlimitedMaxWidth}
-              optionsListClassName={styles.fullWidthInner}
-              selectedValueClassName={styles.fullWidthInner}
+              value={selectedIngredient}
+              className={styles.customSelect}
+              disabled={ingredientsLoading}
             />
-            <AreaSelect
-              value={selectedArea}
+            <CustomSelect
+              options={areaOptions}
+              placeholder={areasLoading ? 'Loading...' : 'Select Region'}
               onChange={handleAreaChange}
-              wrapperClassName={styles.fullWidthWrapper}
-              selectWrapperClassName={styles.unlimitedMaxWidth}
-              optionsListClassName={styles.fullWidthInner}
-              selectedValueClassName={styles.fullWidthInner}
+              value={selectedArea}
+              className={styles.customSelect}
+              disabled={areasLoading}
             />
           </div>
           <div className={styles.recipesContainer}>
