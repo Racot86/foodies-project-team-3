@@ -87,8 +87,9 @@
     width: 100% !important;
 }
 
-.fullWidthInner {
-    width: 100% !important;
+.fullWidthInner.fullWidthInner {
+    top: 70px;
+    width: 100%;
 }
 
 @media (min-width: 768px) {
