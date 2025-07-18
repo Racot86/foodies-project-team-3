@@ -5,8 +5,8 @@ import AddRecipePage from "@pages/add-recipe/AddRecipePage";
 import ProfilePage from "@pages/profile/ProfilePage";
 import MyRecipes from "@pages/profile/components/MyRecipes";
 import Favorites from "@pages/profile/components/Favorites";
-import Followers from "@pages/profile/components/Followers";
-import Following from "@pages/profile/components/Following";
+import Followers from "@/pages/profile/followers/Followers";
+import Following from "@/pages/profile/following/Following";
 import DesignSystemPreview from "@pages/design-system/DesignSystemPreview";
 import NotFoundPage from "@pages/not-found/NotFoundPage";
 import { Layout } from "@components/layout/Layout";
@@ -38,6 +38,11 @@ export const AppRoutes = () => {
             <Route path="favorites" element={<Favorites />} />
             <Route path="followers" element={<Followers />} />
             <Route path="following" element={<Following />} />
+          </Route>
+          <Route path="/profile/:userId" element={<ProfilePage />}>
+            <Route index element={<MyRecipes />} />
+            <Route path="my-recipes" element={<MyRecipes />} />
+            <Route path="followers" element={<Followers />} />
           </Route>
         </Route>
         <Route path="/design-system" element={<DesignSystemPreview />} />
