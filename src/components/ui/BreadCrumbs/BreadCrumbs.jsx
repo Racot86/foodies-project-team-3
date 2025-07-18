@@ -62,7 +62,7 @@ export const BreadCrumbs = ({ items = [], className = '' }) => {
     <nav className={`${styles.breadcrumbs} ${className}`} aria-label="Breadcrumb">
       <ol className={styles.list}>
         <li className={styles.item}>
-          <Link to="/" className={styles.link}>HOME</Link>
+          <Link to="/" className={styles.homeLink}>HOME</Link>
         </li>
 
         {breadcrumbItems.map((item, index) => (
