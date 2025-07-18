@@ -1,78 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './RecipeDetails.module.css';
 import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import {
+  fetchRecipeById,
+  processRecipeData,
+  checkFavoriteStatus,
+  toggleFavoriteStatus
+} from '@/redux/slices/recipeDetailsSlice';
 import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
 
 export const RecipeDetails = () => {
   const { recipeId } = useParams();
   const token = useSelector((state) => state?.auth?.token);
+  const dispatch = useAppDispatch();
 
-  const [recipe, setRecipe] = useState(null);
-  const [categoryName, setCategoryName] = useState('');
-  const [author, setAuthor] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(false);
+  // Get recipe details from Redux store
+  const {
+    isLoading,
+    error,
+    processedData,
+    isFavorite
+  } = useAppSelector((state) => state.recipeDetails);
+
+  const { recipe = null, categoryName = '', author = null } = processedData || {};
 
   useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        const response = await fetch(`https://project-team-3-backend-2.onrender.com/api/recipes/${recipeId}`);
-        if (!response.ok) throw new Error('Recipe not found');
-        const data = await response.json();
+    // Fetch recipe details using Redux action
+    dispatch(fetchRecipeById(recipeId));
+  }, [recipeId, dispatch]);
 
-        // Categories
-        const catsRes = await fetch('https://project-team-3-backend-2.onrender.com/api/categories');
-        const cats = await catsRes.json();
-        const found = cats.find((c) => c.name === data.category?.name || c._id === data.category?.id);
-        if (found) setCategoryName(found.name);
+  useEffect(() => {
+    // Process recipe data after fetching
+    dispatch(processRecipeData());
+  }, [dispatch, recipeId]);
 
-        // Ingredients
-        const ingRes = await fetch('https://project-team-3-backend-2.onrender.com/api/ingredients');
-        const allIngredients = await ingRes.json();
-        const enrichedIngredients = data.ingredients.map((item) => {
-          const idToMatch = item.id || item.ingredient?.id;
-          const full = allIngredients.find((ing) => ing._id === idToMatch);
-          return {
-            ...item,
-            name: full?.name || item.ingredient?.name || 'Unknown',
-            image: full?.thumb || item.ingredient?.image || '',
-          };
-        });
+  useEffect(() => {
+    // Check if recipe is in favorites
+    if (recipe && token) {
+      dispatch(checkFavoriteStatus({ recipeId: recipe._id || recipe.id, token }));
+    }
+  }, [recipe, token, dispatch]);
 
-        // Set recipe with ensured _id
-        setRecipe({ ...data, _id: data._id || data.id, ingredients: enrichedIngredients });
-
-        // Author
-        setAuthor({
-          name: data.owner?.name || 'Unknown Author',
-          avatar: data.owner?.avatar || 'https://i.pravatar.cc/150?img=13',
-        });
-
-        // Check if it's in favorites
-        if (token) {
-          const favRes = await fetch('https://project-team-3-backend-2.onrender.com/api/recipes/myfavorites', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-
-          if (favRes.ok) {
-            const favData = await favRes.json();
-            const isFav = (favData?.favorites || []).some(
-                  (fav) => fav._id === data._id || fav.id === data.id
-);
-            setIsFavorite(isFav);
-          }
-        }
-
-      } catch (error) {
-        console.error('Failed to load recipe data:', error.message);
-      }
-    };
-
-    fetchRecipe();
-  }, [recipeId, token]);
-
-
-  const handleToggleFavorite = async () => {
+  const handleToggleFavorite = () => {
     if (!recipe || !token) {
       alert('Please sign in to manage favorites.');
       return;
@@ -84,22 +55,11 @@ export const RecipeDetails = () => {
       return;
     }
 
-    const url = `https://project-team-3-backend-2.onrender.com/api/recipes/${recipeID}/favorites`;
-
-    try {
-      const response = await fetch(url, {
-        method: isFavorite ? 'DELETE' : 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) throw new Error(`Favorite update failed: ${response.status}`);
-      setIsFavorite((prev) => !prev);
-    } catch (err) {
-      console.error('Favorite toggle failed:', err.message);
-    }
+    dispatch(toggleFavoriteStatus({
+      recipeId: recipeID,
+      isFavorite,
+      token
+    }));
   };
 
   const getFullImageUrl = (imgPath) => {
@@ -109,7 +69,14 @@ export const RecipeDetails = () => {
       : `https://project-team-3-backend-2.onrender.com${imgPath}`;
   };
 
-  if (!recipe) return <div className={styles.notFound}>Recipe not found</div>;
+  // Handle loading state
+  if (isLoading) return <div className={styles.loading}>Loading recipe...</div>;
+
+  // Handle error state
+  if (error) return <div className={styles.notFound}>Error: {error}</div>;
+
+  // Handle no recipe data
+  if (!recipe && !isLoading) return <div className={styles.notFound}>Recipe not found</div>;
 
   return (
     <div className={styles.recipeDetail}>
