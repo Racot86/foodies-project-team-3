@@ -21,8 +21,9 @@
 </symbol>
 
 
-<symbol id="icon-arrow-up-right" viewBox="0 0 32 32">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5.25 12.75 7.5-7.5m-7.5 0h7.5v7.5"/>
+<symbol id="icon-arrow-up-right" viewBox="0 0 32 32" >
+<path fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.6667" stroke="" d="M9.333 22.667l13.333-13.333"></path>
+<path fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.6667" stroke="" d="M9.333 9.333h13.333v13.333"></path>
 </symbol>
 
 <symbol id="icon-arrow-up-right" viewBox="0 0 1024 1024">

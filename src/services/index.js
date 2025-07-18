@@ -5,3 +5,4 @@ export { areasService } from "./areasService";
 export { categoriesService } from "./categoriesService";
 export { ingredientsService } from "./ingredientsService";
 export { addRecipeService } from "./addRecipeService";
+export { getMyRecipe, deleteRecipeById } from "./myRecipeService";
