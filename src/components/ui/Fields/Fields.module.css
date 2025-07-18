@@ -98,6 +98,11 @@
 .inputWrapper.withExtra .extra {
   right: var(--spacing-md);
   font-size: var(--font-xl);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .textAreaWrapper.withExtra textarea {
@@ -112,6 +117,10 @@
   background: none;
   outline: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .count {
