@@ -179,7 +179,8 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
               {/* Favorite button */}
               <ButtonIcon
                 onClick={handleFavoriteClick}
-                className={`${styles.favoriteButton} ${isFavorite ? styles.active : ''}`}
+                variant={isFavorite ? ButtonIcon.variants.PRIMARY : ButtonIcon.variants.DEFAULT}
+                className={styles.favoriteButton}
               >
                 <FiHeart />
               </ButtonIcon>

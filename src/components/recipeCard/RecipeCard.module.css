@@ -124,11 +124,6 @@
     justify-content: center;
 }
 
-.favoriteButton.active svg {
-    fill: var(--color-error);
-    color: var(--color-error);
-    stroke: var(--color-error);
-}
 
 /* Loading state */
 .loading {
