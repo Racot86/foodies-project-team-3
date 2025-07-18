@@ -156,7 +156,7 @@ const CustomSelect = ({
             filteredOptions.map(
               ({ value: optionValue, label: optionLabel }, idx) => (
                 <li
-                  key={optionValue}
+                  key={`${optionValue}-${idx}`}
                   id={`${fieldId}-option-${idx}`}
                   role="option"
                   aria-selected={optionValue === value}

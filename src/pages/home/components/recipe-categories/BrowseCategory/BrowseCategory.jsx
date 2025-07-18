@@ -1,128 +1,140 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getRecipesByCategory } from '@/services/recipeService';
 import { Heading, Text, Pagination } from '@components/ui';
 import { CustomSelect } from "@/components/ui/CustomSelect";
-import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { fetchAreas } from '@/redux/slices/areasSlice';
-import { fetchIngredients } from '@/redux/slices/ingredientsSlice';
 import RecipeCard from '@/components/recipeCard/RecipeCard';
 import { FiArrowLeft } from 'react-icons/fi';
 import styles from './BrowseCategory.module.css';
+import { fetchIngredients } from '@/redux/slices/ingredientsSlice';
+import { fetchAreas } from '@/redux/slices/areasSlice';
+import { getRecipes } from '@/services/recipeService';
 
 const BrowseCategory = () => {
+  const dispatch = useDispatch();
   const { categoryName } = useParams();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
-  const [recipes, setRecipes] = useState([]);
-  const [categoryData, setCategoryData] = useState({ description: '' }); // Placeholder for description
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const recipesPerPage = 9;
-
-  // Filter state
+  // State for filters and pagination
+  const [selectedCategory, setSelectedCategory] = useState(categoryName || "");
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [selectedArea, setSelectedArea] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(10);
+  const [recipesData, setRecipesData] = useState({
+    recipes: [],
+    total: 0,
+    totalPages: 0,
+    page: 1,
+    limit: 10
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Get areas and ingredients from Redux store
-  const { data: areas, isLoading: areasLoading } = useAppSelector((state) => state.areas);
-  const { data: ingredients, isLoading: ingredientsLoading } = useAppSelector((state) => state.ingredients);
+  // Get data from Redux store
+  const { data: ingredients, isLoading: ingredientsLoading } = useSelector(state => state.ingredients);
+  const { data: areas, isLoading: areasLoading } = useSelector(state => state.areas);
 
-  // Fetch areas and ingredients if not already loaded
+  // Fetch ingredients and areas data when component mounts
   useEffect(() => {
-    if (areas.length === 0) {
-      dispatch(fetchAreas());
-    }
-    if (ingredients.length === 0) {
-      dispatch(fetchIngredients());
-    }
-  }, [dispatch, areas.length, ingredients.length]);
+    dispatch(fetchIngredients());
+    dispatch(fetchAreas());
+  }, [dispatch]);
 
+  // Update selectedCategory when categoryName changes
   useEffect(() => {
-    const fetchRecipes = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const options = {
-          page: currentPage,
-          limit: recipesPerPage,
-          ingredient: selectedIngredient || undefined,
-          area: selectedArea || undefined,
-        };
-        const data = await getRecipesByCategory(categoryName, options);
+    if (categoryName !== undefined) {
+      setSelectedCategory(categoryName);
+    }
+  }, [categoryName]);
 
-        if (data && data.recipes) {
-          setRecipes(data.recipes);
-          setTotalPages(Math.ceil(data.total / recipesPerPage));
-          // In a real app, you'd fetch category details from an API
-          // For now, we'll use a placeholder description.
-          setCategoryData({ description: `Recipes from the ${categoryName} category.` });
-        } else {
-          setRecipes([]);
-          setTotalPages(0);
-        }
-      } catch (err) {
-        setError(err.message || 'Failed to fetch recipes.');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // Function to fetch recipes with current filters and pagination
+  const fetchRecipesWithFilters = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const options = {
+        category: selectedCategory,
+        ingredient: selectedIngredient,
+        area: selectedArea,
+        page: currentPage,
+        limit
+      };
 
-    fetchRecipes();
-  }, [categoryName, currentPage, selectedArea, selectedIngredient]);
+      const data = await getRecipes(options);
+      setRecipesData(data);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [selectedCategory, selectedIngredient, selectedArea, currentPage, limit]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  // Fetch recipes when filters or pagination change
+  useEffect(() => {
+    fetchRecipesWithFilters();
+  }, [fetchRecipesWithFilters]);
+
+  // Handle page change
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
-  // Transform areas and ingredients data into options format for CustomSelect
-  const areaOptions = (areas || []).map((item) => ({
-    value: item._id,
-    label: item.name,
-  }));
+  // Transform ingredients data for select options
+  const ingredientOptions = useMemo(() => {
+    const options = [{ value: "", label: "All Ingredients" }];
 
-  const ingredientOptions = (ingredients || []).map((item) => ({
-    value: item._id,
-    label: item.name,
-  }));
+    if (ingredients && ingredients.length > 0) {
+      ingredients.forEach(ingredient => {
+        options.push({
+          value: ingredient.name || ingredient.title,
+          label: ingredient.name || ingredient.title
+        });
+      });
+    }
 
-  const handleIngredientChange = (ingredient) => {
-    setSelectedIngredient(ingredient?.value || "");
-    setCurrentPage(1); // Reset to first page when filter changes
+    return options;
+  }, [ingredients]);
+
+  // Transform areas data for select options
+  const areaOptions = useMemo(() => {
+    const options = [{ value: "", label: "All Regions" }];
+
+    if (areas && areas.length > 0) {
+      areas.forEach(area => {
+        options.push({
+          value: area.name || area.title,
+          label: area.name || area.title
+        });
+      });
+    }
+
+    return options;
+  }, [areas]);
+
+  // Get recipes from state
+  const { recipes, totalPages } = recipesData;
+
+  // Get category information
+  const categoryInfo = recipesData.category || {
+    name: selectedCategory || "All Recipes",
+    description: selectedCategory ? `Recipes from the ${selectedCategory} category.` : "Browse all recipes."
   };
-
-  const handleAreaChange = (area) => {
-    setSelectedArea(area?.value || "");
-    setCurrentPage(1); // Reset to first page when filter changes
-  };
-
-  if (isLoading) {
-    return <div>Loading recipes...</div>;
-  }
-
-  if (error) {
-    return <div className={styles.error}>Error: {error}</div>;
-  }
 
   return (
     <div className={styles.categoryPage}>
       <div className={styles.header}>
           <div className={styles.backLinkContainer}>
-            <button onClick={() => navigate(-1)} className={styles.backLink}>
+            <button
+              className={styles.backLink}
+              onClick={() => navigate('/')}
+            >
               <FiArrowLeft /> Back
             </button>
           </div>
           <Heading level={1} size="2xl" className={styles.mainTitle}>
-            {categoryName}
+            {categoryInfo.name}
           </Heading>
           <Text variant="body" size="lg" className={styles.subtitle}>
-            {categoryData.description}
+            {categoryInfo.description}
           </Text>
       </div>
 
@@ -130,39 +142,47 @@ const BrowseCategory = () => {
           <div className={styles.filters}>
             <CustomSelect
               options={ingredientOptions}
-              placeholder={ingredientsLoading ? 'Loading...' : 'Select Ingredient'}
-              onChange={handleIngredientChange}
-              value={selectedIngredient}
+              placeholder={ingredientsLoading ? "Loading ingredients..." : "Select Ingredient"}
               className={styles.customSelect}
-              disabled={ingredientsLoading}
+              isDisabled={ingredientsLoading || isLoading}
+              onChange={(option) => setSelectedIngredient(option ? option.value : "")}
+              value={ingredientOptions.find(option => option.value === selectedIngredient)}
             />
             <CustomSelect
               options={areaOptions}
-              placeholder={areasLoading ? 'Loading...' : 'Select Region'}
-              onChange={handleAreaChange}
-              value={selectedArea}
+              placeholder={areasLoading ? "Loading regions..." : "Select Region"}
               className={styles.customSelect}
-              disabled={areasLoading}
+              isDisabled={areasLoading || isLoading}
+              onChange={(option) => setSelectedArea(option ? option.value : "")}
+              value={areaOptions.find(option => option.value === selectedArea)}
             />
           </div>
           <div className={styles.recipesContainer}>
-              <div className={styles.recipeList}>
-                {recipes.length > 0 ? (
-                  recipes.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipeId={recipe.id} />
-                  ))
-                ) : (
-                  <p>No recipes found in this category.</p>
-                )}
-              </div>
-              {totalPages > 1 && (
-                <div className={styles.paginationContainer}>
-                  <Pagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                  />
+              {isLoading ? (
+                <div className={styles.loadingContainer}>
+                  <p>Loading recipes...</p>
                 </div>
+              ) : (
+                <>
+                  <div className={styles.recipeList}>
+                    {recipes && recipes.length > 0 ? (
+                      recipes.map((recipe) => (
+                        <RecipeCard key={recipe.id} recipeId={recipe.id} />
+                      ))
+                    ) : (
+                      <p>No recipes found with the selected filters.</p>
+                    )}
+                  </div>
+                  {totalPages > 0 && (
+                    <div className={styles.paginationContainer}>
+                      <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                      />
+                    </div>
+                  )}
+                </>
               )}
           </div>
       </div>
