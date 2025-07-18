@@ -19,3 +19,14 @@
     width: 846px;
   }
 }
+
+.recipeWrap {
+  width: 100%;
+}
+
+.recipesInfo {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
