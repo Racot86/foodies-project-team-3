@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Heading, Text, Pagination } from '@components/ui';
@@ -20,15 +20,17 @@ const BrowseCategory = () => {
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [selectedArea, setSelectedArea] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(10);
   const [recipesData, setRecipesData] = useState({
     recipes: [],
     total: 0,
     totalPages: 0,
     page: 1,
-    limit: 10
+    limit: 12
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  // Use a ref to store the limit value to avoid dependency cycle
+  const limitRef = useRef(12);
 
   // Get data from Redux store
   const { data: ingredients, isLoading: ingredientsLoading } = useSelector(state => state.ingredients);
@@ -47,6 +49,11 @@ const BrowseCategory = () => {
     }
   }, [categoryName]);
 
+  // Update limitRef when recipesData.limit changes
+  useEffect(() => {
+    limitRef.current = recipesData.limit;
+  }, [recipesData.limit]);
+
   // Function to fetch recipes with current filters and pagination
   const fetchRecipesWithFilters = useCallback(async () => {
     setIsLoading(true);
@@ -56,7 +63,7 @@ const BrowseCategory = () => {
         ingredient: selectedIngredient,
         area: selectedArea,
         page: currentPage,
-        limit
+        limit: limitRef.current
       };
 
       const data = await getRecipes(options);
@@ -66,7 +73,7 @@ const BrowseCategory = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [selectedCategory, selectedIngredient, selectedArea, currentPage, limit]);
+  }, [selectedCategory, selectedIngredient, selectedArea, currentPage]);
 
   // Fetch recipes when filters or pagination change
   useEffect(() => {
@@ -80,7 +87,7 @@ const BrowseCategory = () => {
 
   // Transform ingredients data for select options
   const ingredientOptions = useMemo(() => {
-    const options = [{ value: "", label: "All Ingredients" }];
+    const options = [];
 
     if (ingredients && ingredients.length > 0) {
       ingredients.forEach(ingredient => {
@@ -96,7 +103,7 @@ const BrowseCategory = () => {
 
   // Transform areas data for select options
   const areaOptions = useMemo(() => {
-    const options = [{ value: "", label: "All Regions" }];
+    const options = [];
 
     if (areas && areas.length > 0) {
       areas.forEach(area => {
@@ -111,7 +118,10 @@ const BrowseCategory = () => {
   }, [areas]);
 
   // Get recipes from state
-  const { recipes, totalPages } = recipesData;
+  const { recipes } = recipesData;
+
+  // Use totalPages from API response
+  const { totalPages } = recipesData;
 
   // Get category information
   const categoryInfo = recipesData.category || {
@@ -145,16 +155,32 @@ const BrowseCategory = () => {
               placeholder={ingredientsLoading ? "Loading ingredients..." : "Select Ingredient"}
               className={styles.customSelect}
               isDisabled={ingredientsLoading || isLoading}
-              onChange={(option) => setSelectedIngredient(option ? option.value : "")}
-              value={ingredientOptions.find(option => option.value === selectedIngredient)}
+              onChange={(option) => {
+                setSelectedIngredient(option ? option.value : "");
+                setCurrentPage(1); // Reset to first page when ingredient changes
+                // Reset totalPages to avoid showing stale pagination
+                setRecipesData(prevData => ({
+                  ...prevData,
+                  totalPages: 0
+                }));
+              }}
+              value={selectedIngredient}
             />
             <CustomSelect
               options={areaOptions}
               placeholder={areasLoading ? "Loading regions..." : "Select Region"}
               className={styles.customSelect}
               isDisabled={areasLoading || isLoading}
-              onChange={(option) => setSelectedArea(option ? option.value : "")}
-              value={areaOptions.find(option => option.value === selectedArea)}
+              onChange={(option) => {
+                setSelectedArea(option ? option.value : "");
+                setCurrentPage(1); // Reset to first page when region changes
+                // Reset totalPages to avoid showing stale pagination
+                setRecipesData(prevData => ({
+                  ...prevData,
+                  totalPages: 0
+                }));
+              }}
+              value={selectedArea}
             />
           </div>
           <div className={styles.recipesContainer}>
@@ -173,7 +199,7 @@ const BrowseCategory = () => {
                       <p>No recipes found with the selected filters.</p>
                     )}
                   </div>
-                  {totalPages > 0 && (
+                  {recipes && recipes.length > 0 && totalPages > 0 && (
                     <div className={styles.paginationContainer}>
                       <Pagination
                         totalPages={totalPages}
