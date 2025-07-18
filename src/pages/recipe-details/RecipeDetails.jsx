@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './RecipeDetails.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { setRecipeName, clearRecipeName } from '@/redux/slices/breadcrumbsSlice.js';
+import { useSelector } from 'react-redux';
 import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
 
 export const RecipeDetails = () => {
   const { recipeId } = useParams();
-  const dispatch = useDispatch();
-  const recipeName = useSelector((state) => state?.breadcrumbs?.recipeName);
   const token = useSelector((state) => state?.auth?.token);
 
   const [recipe, setRecipe] = useState(null);
@@ -74,10 +71,6 @@ export const RecipeDetails = () => {
     fetchRecipe();
   }, [recipeId, token]);
 
-  useEffect(() => {
-    if (recipe) dispatch(setRecipeName(recipe.title));
-    return () => dispatch(clearRecipeName());
-  }, [dispatch, recipe]);
 
   const handleToggleFavorite = async () => {
     if (!recipe || !token) {
@@ -120,12 +113,6 @@ export const RecipeDetails = () => {
 
   return (
     <div className={styles.recipeDetail}>
-      <div className={styles.breadcrumb}>
-        <Link to="/" className={styles.breadcrumbLink}>HOME</Link>
-        <span className={styles.separator}>/</span>
-        <span className={styles.current}>{recipeName}</span>
-      </div>
-
       <div className={styles.recipeContent}>
         <div className={styles.recipeImageContainer}>
           {recipe.image ? (

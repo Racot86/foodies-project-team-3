@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectRecipeName } from '@/redux/slices/breadcrumbsSlice.js';
 import styles from './BreadCrumbs.module.css';
 
 /**
@@ -13,13 +11,33 @@ import styles from './BreadCrumbs.module.css';
  */
 export const BreadCrumbs = ({ items = [], className = '' }) => {
   const location = useLocation();
-  const recipeName = useSelector(selectRecipeName);
+  const [recipeName, setRecipeName] = useState('');
+
+  // Fetch recipe name if on recipe details page
+  useEffect(() => {
+    const fetchRecipeName = async () => {
+      if (location.pathname.includes('/recipe-details/')) {
+        const recipeId = location.pathname.split('/recipe-details/')[1];
+        try {
+          const response = await fetch(`https://project-team-3-backend-2.onrender.com/api/recipes/${recipeId}`);
+          if (response.ok) {
+            const data = await response.json();
+            setRecipeName(data.title);
+          }
+        } catch (error) {
+          console.error('Failed to fetch recipe name:', error);
+        }
+      }
+    };
+
+    fetchRecipeName();
+  }, [location.pathname]);
 
   // Generate breadcrumb items based on the current path
   const getBreadcrumbItems = () => {
     const generatedItems = [];
 
-    // For recipe details page, add the recipe name from Redux
+    // For recipe details page, add the recipe name
     if (location.pathname.includes('/recipe-details/') && recipeName) {
       generatedItems.push({ label: recipeName });
     }
@@ -44,7 +62,7 @@ export const BreadCrumbs = ({ items = [], className = '' }) => {
     <nav className={`${styles.breadcrumbs} ${className}`} aria-label="Breadcrumb">
       <ol className={styles.list}>
         <li className={styles.item}>
-          <Link to="/" className={styles.link}>Home</Link>
+          <Link to="/" className={styles.link}>HOME</Link>
         </li>
 
         {breadcrumbItems.map((item, index) => (
@@ -52,10 +70,10 @@ export const BreadCrumbs = ({ items = [], className = '' }) => {
             <span className={styles.separator}>/</span>
             {item.path ? (
               <Link to={item.path} className={styles.link}>
-                {item.label}
+                {item.label.toUpperCase()}
               </Link>
             ) : (
-              <span className={styles.current}>{item.label}</span>
+              <span className={styles.current}>{item.label.toUpperCase()}</span>
             )}
           </li>
         ))}
