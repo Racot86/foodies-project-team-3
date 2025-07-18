@@ -48,16 +48,6 @@ export const getRecipes = async (
     }
 
     const url = `${BASE_URL}/recipes?${queryParams.toString()}`;
-    console.log("Fetching recipes from:", url);
-    console.log("Query parameters:", {
-      category,
-      ingredient,
-      area,
-      ownerId,
-      page,
-      limit,
-      sort
-    });
 
     const response = await axios.get(url);
 
@@ -101,6 +91,8 @@ export const getRecipes = async (
             description: recipe.category.description || "",
           }
         : null,
+      // Preserve ingredients information if available
+      ingredients: recipe.ingredients || [],
     }));
 
     // Return formatted data with recipes, total count, and pagination info
@@ -184,17 +176,6 @@ export const getRecipesByCategory = async (
     queryParams.append("category", categoryName);
 
     const url = `${BASE_URL}/recipes?${queryParams.toString()}`;
-    console.log("Fetching recipes from:", url);
-    console.log("Query parameters:", {
-      category: categoryName,
-      page,
-      limit,
-      area,
-      ingredient,
-      sort,
-      ownerId
-    });
-    console.log("Query string:", queryParams.toString());
     const response = await axios.get(url);
 
     // Transform API response to match the format expected by RecipeCard
@@ -237,6 +218,8 @@ export const getRecipesByCategory = async (
             description: recipe.category.description || "",
           }
         : null,
+      // Preserve ingredients information if available
+      ingredients: recipe.ingredients || [],
     }));
 
     // Extract category information from the first recipe if available
