@@ -100,7 +100,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
       setShowSignInModal(true);
     } else {
       // Navigate to author's profile page
-      navigate(`/user/${recipe.owner.id}`);
+      navigate(`/profile/${recipe.owner.id}`);
     }
   };
 
