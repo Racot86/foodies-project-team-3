@@ -12,6 +12,7 @@ import userReducer from "./slices/userSlice";
 import followersReducer from "./slices/followerSlice";
 import myRecipeReducer from "./slices/myRecipeSlice";
 import favoritesReducer from "@/redux/slices/favoriteRecipeSlice";
+import userRecipesReducer from "./slices/userRecipesSlice";
 
 
 export const store = configureStore({
@@ -29,7 +30,7 @@ export const store = configureStore({
 
     myrecipe: myRecipeReducer,
     favorites: favoritesReducer,
-
+    userRecipes: userRecipesReducer,
   },
 });
 

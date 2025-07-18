@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   getFollowers,
@@ -25,18 +26,22 @@ const Followers = () => {
   const { user } = useSelector((state) => state.auth);
   const currentUserId = user?.id;
 
+  // Get userId from URL params, or use current user's ID if not provided
+  const { userId } = useParams();
+  const targetUserId = userId || currentUserId;
+
   useEffect(() => {
-    if (currentUserId) {
-      // Fetch followers for current user
+    if (targetUserId) {
+      // Fetch followers for the target user (either current user or specified user)
       dispatch(
         getFollowers({
-          userId: currentUserId,
+          userId: targetUserId,
           page: followersPage,
           limit: followersLimit,
         })
       );
     }
-  }, [dispatch, currentUserId, followersPage, followersLimit]);
+  }, [dispatch, targetUserId, followersPage, followersLimit]);
   const handleFollowUser = async (userId) => {
     try {
       const result = await dispatch(followUser(userId));

@@ -13,9 +13,12 @@ const initialState = {
   isFollowersLoading: false,
   isFollowingLoading: false,
   isFollowActionLoading: false,
+  isCheckingFollowStatus: false,
+  isFollowing: false,
   fetchingError: null,
   followActionError: null,
   unfollowActionError: null,
+  followStatusError: null,
 };
 
 export const getFollowers = createAsyncThunk(
@@ -42,7 +45,10 @@ export const getFollowing = createAsyncThunk(
   "followers/getFollowing",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await followerService.getFollowing(1, 5);
+      const response = await followerService.getFollowing(
+        params?.page || 1,
+        params?.limit || 5
+      );
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -95,6 +101,22 @@ export const unfollowUser = createAsyncThunk(
         error.response?.data?.message ||
           error.message ||
           "Failed to unfollow user"
+      );
+    }
+  }
+);
+
+export const checkFollowStatus = createAsyncThunk(
+  "followers/checkFollowStatus",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const isFollowing = await followerService.checkFollowStatus(userId);
+      return { userId, isFollowing };
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to check follow status"
       );
     }
   }
@@ -206,6 +228,20 @@ export const followersSlice = createSlice({
       .addCase(unfollowUser.rejected, (state, action) => {
         state.isFollowActionLoading = false;
         state.unfollowActionError = action.payload;
+      })
+      // Check follow status
+      .addCase(checkFollowStatus.pending, (state) => {
+        state.isCheckingFollowStatus = true;
+        state.followStatusError = null;
+      })
+      .addCase(checkFollowStatus.fulfilled, (state, action) => {
+        state.isCheckingFollowStatus = false;
+        state.isFollowing = action.payload.isFollowing;
+        state.followStatusError = null;
+      })
+      .addCase(checkFollowStatus.rejected, (state, action) => {
+        state.isCheckingFollowStatus = false;
+        state.followStatusError = action.payload;
       });
   },
 });

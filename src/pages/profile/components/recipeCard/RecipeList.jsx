@@ -5,24 +5,47 @@ import { Pagination } from "@/components/ui";
 
 const ITEMS_PER_PAGE = 2;
 
-const RecipeList = ({ recipes, onDelete }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const RecipeList = ({
+  recipes,
+  onDelete,
+  currentPage: propCurrentPage,
+  totalPages: propTotalPages,
+  onPageChange: propOnPageChange,
+  useServerPagination = false
+}) => {
+  const [localCurrentPage, setLocalCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(recipes.length / ITEMS_PER_PAGE);
+  // Use props or calculate locally based on useServerPagination
+  const currentPage = useServerPagination ? propCurrentPage : localCurrentPage;
+  const totalPages = useServerPagination
+    ? propTotalPages
+    : Math.ceil(recipes.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages || 1);
+    if (!useServerPagination && localCurrentPage > totalPages) {
+      setLocalCurrentPage(totalPages || 1);
     }
-  }, [recipes, currentPage, totalPages]);
+  }, [recipes, localCurrentPage, totalPages, useServerPagination]);
 
   const currentRecipes = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return recipes.slice(start, start + ITEMS_PER_PAGE);
-  }, [recipes, currentPage]);
+    if (useServerPagination) {
+      // When using server pagination, all recipes from the current page are already fetched
+      return recipes;
+    } else {
+      // For client-side pagination, slice the recipes array
+      const start = (localCurrentPage - 1) * ITEMS_PER_PAGE;
+      return recipes.slice(start, start + ITEMS_PER_PAGE);
+    }
+  }, [recipes, localCurrentPage, useServerPagination]);
 
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    if (useServerPagination) {
+      // For server-side pagination, call the provided callback
+      propOnPageChange(page);
+    } else {
+      // For client-side pagination, update local state
+      setLocalCurrentPage(page);
+    }
   };
 
   const listClassName =
@@ -35,7 +58,7 @@ const RecipeList = ({ recipes, onDelete }) => {
       <ul className={listClassName}>
         {currentRecipes.map((recipe) => (
           <RecipeCard
-            key={recipe.id}
+            key={recipe.id || recipe._id}
             data={recipe}
             onDelete={() => onDelete(recipe._id || recipe.id)}
           />
