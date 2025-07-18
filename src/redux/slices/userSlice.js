@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userService } from "../../services/userService";
+import { getCurrentUser } from "./authSlice";
 
 const initialState = {
   details: {
@@ -13,6 +14,7 @@ const initialState = {
   },
   isUserDetailsLoading: false,
   isUserAvatarUploading: false,
+  isFollowUserProcessing: false,
   error: null,
 };
 
@@ -32,13 +34,29 @@ export const userDetails = createAsyncThunk(
 
 export const userAvatar = createAsyncThunk(
   "user/avatar",
-  async (file, { rejectWithValue }) => {
+  async (file, { rejectWithValue, dispatch }) => {
     try {
       const response = await userService.uploadAvatar(file);
+      // After successful avatar upload, get the current user data to refresh Redux state
+      dispatch(getCurrentUser());
       return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || error.message || "Update avatar failed"
+      );
+    }
+  }
+);
+
+export const followUser = createAsyncThunk(
+  "user/follow",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await userService.followUser(userId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || error.message || "Failed to follow"
       );
     }
   }
@@ -79,6 +97,17 @@ export const userSlice = createSlice({
       .addCase(userAvatar.rejected, (state, action) => {
         state.isUserAvatarUploading = false;
         state.error = action.payload;
+      })
+      .addCase(followUser.pending, (state) => {
+        state.isFollowUserProcessing = true;
+        state.error = null;
+      })
+      .addCase(followUser.fulfilled, (state) => {
+        state.isFollowUserProcessing = false;
+      })
+      .addCase(followUser.rejected, (state, action) => {
+        state.isFollowUserProcessing = false;
+        state.error = action.payload;
       });
   },
 });
@@ -86,5 +115,8 @@ export const userSlice = createSlice({
 export const { clearError } = userSlice.actions;
 export const selectUserDetails = (state) => {
   return state.users.details;
+};
+export const selectError = (state) => {
+  return state.users.error;
 };
 export default userSlice.reducer;

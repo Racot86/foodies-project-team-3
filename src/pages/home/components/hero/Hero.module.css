@@ -36,11 +36,13 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    gap: var(--spacing-xl); /* Adding gap between images to prevent overlapping */
 }
 
 .mobileHero .imagesContainer {
     justify-content: space-around;
     padding-bottom: var(--spacing-lg); /* Using spacing variable instead of fixed 20px */
+    gap: var(--spacing-md); /* Smaller gap for mobile to fit the smaller screen */
 }
 
 /* Images are displayed inline without special positioning */
@@ -111,6 +113,7 @@
 
     .imagesContainer {
         height: 360px; /* 45% of 800px */
+        gap: var(--spacing-lg); /* Medium gap for tablet view */
     }
 
     .improveYourCulinaryTalents {
@@ -139,6 +142,7 @@
 
     .imagesContainer {
         height: 300px;
+        gap: var(--spacing-md); /* Consistent with mobile hero gap */
     }
 
     .improveYourCulinaryTalents {
@@ -185,6 +189,7 @@
 
     .imagesContainer {
         height: 275px;
+        gap: var(--spacing-sm); /* Smaller gap for very small screens */
     }
 
     .improveYourCulinaryTalents {

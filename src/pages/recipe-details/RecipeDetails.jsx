@@ -1,75 +1,165 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './RecipeDetails.module.css';
-import { useDispatch } from 'react-redux';
-import { setRecipeName, clearRecipeName } from '@/redux/slices/breadcrumbsSlice.js';
+import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import {
+  fetchRecipeById,
+  processRecipeData,
+  checkFavoriteStatus,
+  toggleFavoriteStatus
+} from '@/redux/slices/recipeDetailsSlice';
+import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
 
 export const RecipeDetails = () => {
-    const { recipeId } = useParams();
-    const dispatch = useDispatch();
+  const { recipeId } = useParams();
+  const token = useSelector((state) => state?.auth?.token);
+  const dispatch = useAppDispatch();
 
-    // Example recipes data - in a real app, this would come from an API
-    const recipes = [
-        {id: '101', categoryId: 1, title: 'Fluffy Pancakes', time: '20 min', ingredients: ['2 cups flour', '2 eggs', '1 cup milk', '2 tbsp sugar', '1 tsp baking powder'], instructions: 'Mix all ingredients. Heat a pan and pour batter. Flip when bubbles form. Serve with maple syrup.'},
-        {id: '102', categoryId: 1, title: 'Avocado Toast', time: '10 min', ingredients: ['2 slices bread', '1 avocado', 'Salt and pepper', 'Red pepper flakes'], instructions: 'Toast bread. Mash avocado and spread on toast. Season with salt, pepper, and red pepper flakes.'},
-        {id: '103', categoryId: 1, title: 'Breakfast Burrito', time: '25 min', ingredients: ['2 eggs', '1 tortilla', '1/4 cup cheese', 'Salsa', 'Avocado'], instructions: 'Scramble eggs. Warm tortilla. Add eggs, cheese, salsa, and avocado. Roll up and serve.'},
-        {id: '201', categoryId: 2, title: 'Caesar Salad', time: '15 min', ingredients: ['Romaine lettuce', 'Croutons', 'Parmesan cheese', 'Caesar dressing'], instructions: 'Chop lettuce. Toss with dressing. Add croutons and cheese.'},
-        {id: '202', categoryId: 2, title: 'Chicken Wrap', time: '20 min', ingredients: ['Grilled chicken', 'Tortilla', 'Lettuce', 'Tomato', 'Mayo'], instructions: 'Grill chicken. Warm tortilla. Add chicken and veggies. Roll up and serve.'},
-        {id: '301', categoryId: 3, title: 'Spaghetti Bolognese', time: '45 min', ingredients: ['Spaghetti', 'Ground beef', 'Tomato sauce', 'Onion', 'Garlic'], instructions: 'Cook pasta. Brown beef with onion and garlic. Add sauce. Simmer. Serve over pasta.'},
-        {id: '302', categoryId: 3, title: 'Roast Chicken', time: '90 min', ingredients: ['Whole chicken', 'Butter', 'Herbs', 'Salt and pepper', 'Lemon'], instructions: 'Preheat oven to 375°F. Season chicken. Roast for 1.5 hours or until internal temperature reaches 165°F.'},
-        {id: '401', categoryId: 4, title: 'Chocolate Cake', time: '60 min', ingredients: ['Flour', 'Sugar', 'Cocoa powder', 'Eggs', 'Butter', 'Milk'], instructions: 'Mix dry ingredients. Add wet ingredients. Bake at 350°F for 30-35 minutes.'},
-        {id: '501', categoryId: 5, title: 'Vegetable Stir Fry', time: '30 min', ingredients: ['Mixed vegetables', 'Tofu', 'Soy sauce', 'Ginger', 'Garlic'], instructions: 'Stir fry vegetables and tofu. Add sauce ingredients. Serve over rice.'},
-    ];
+  // Get recipe details from Redux store
+  const {
+    isLoading,
+    error,
+    processedData,
+    isFavorite,
+    data: recipeData
+  } = useAppSelector((state) => state.recipeDetails);
 
-    const recipe = recipes.find(r => r.id === recipeId);
+  const { recipe = null, categoryName = '', author = null } = processedData || {};
 
-    // Update Redux store with recipe name when component mounts or recipe changes
-    useEffect(() => {
-        if (recipe) {
-            dispatch(setRecipeName(recipe.title));
-        }
+  useEffect(() => {
+    // Fetch recipe details using Redux action
+    dispatch(fetchRecipeById(recipeId));
+  }, [recipeId, dispatch]);
 
-        // Clear recipe name when component unmounts
-        return () => {
-            dispatch(clearRecipeName());
-        };
-    }, [dispatch, recipe, recipeId]);
+  useEffect(() => {
+    // Process recipe data only after fetchRecipeById has completed successfully
+    if (recipeData) {
+      dispatch(processRecipeData());
+    }
+  }, [dispatch, recipeData]);
 
-    if (!recipe) {
-        return <div className={styles.notFound}>Recipe not found</div>;
+  useEffect(() => {
+    // Check if recipe is in favorites
+    if (recipe && token) {
+      dispatch(checkFavoriteStatus({ recipeId: recipe._id || recipe.id, token }));
+    }
+  }, [recipe, token, dispatch]);
+
+  const handleToggleFavorite = () => {
+    if (!recipe || !token) {
+      alert('Please sign in to manage favorites.');
+      return;
     }
 
-    return (
-        <div className={styles.recipeDetail}>
-            <div className={styles.backLinkContainer}>
-                <Link to={`/category/${recipe.categoryId}`} className={styles.backLink}>
-                    &larr; Back to Category
-                </Link>
-            </div>
+    const recipeID = recipe._id || recipe.id;
+    if (!recipeID) {
+      console.error('Recipe ID missing!');
+      return;
+    }
 
-            <h1>{recipe.title}</h1>
-            <p className={styles.prepTime}>Preparation time: {recipe.time}</p>
+    dispatch(toggleFavoriteStatus({
+      recipeId: recipeID,
+      isFavorite,
+      token
+    }));
+  };
 
-            <div className={styles.recipeContent}>
-                <div className={styles.recipeImageContainer}>
-                    {/* Placeholder for recipe image */}
-                    <div className={styles.imagePlaceholder}>{recipe.title[0]}</div>
-                </div>
+  const getFullImageUrl = (imgPath) => {
+    if (!imgPath) return '';
+    return imgPath.startsWith('http')
+      ? imgPath
+      : `https://project-team-3-backend-2.onrender.com${imgPath}`;
+  };
 
-                <div className={styles.recipeInfo}>
-                    <h2>Ingredients</h2>
-                    <ul className={styles.ingredientsList}>
-                        {recipe.ingredients.map((ingredient, index) => (
-                            <li key={index}>{ingredient}</li>
-                        ))}
-                    </ul>
+  // Handle loading state
+  if (isLoading) return <div className={styles.loading}>Loading recipe...</div>;
 
-                    <h2>Instructions</h2>
-                    <p className={styles.instructions}>{recipe.instructions}</p>
-                </div>
-            </div>
+  // Handle error state
+  if (error) return <div className={styles.notFound}>Error: {error}</div>;
+
+  // Handle no recipe data
+  if (!recipe && !isLoading) return <div className={styles.notFound}>Recipe not found</div>;
+
+  return (
+    <div className={styles.recipeDetail}>
+      <div className={styles.recipeContent}>
+        <div className={styles.recipeImageContainer}>
+          {recipe.image ? (
+            <img src={getFullImageUrl(recipe.image)} alt={recipe.title} className={styles.image} />
+          ) : (
+            <div className={styles.imagePlaceholder}>{recipe.title[0]}</div>
+          )}
         </div>
-    );
+
+        <div className={styles.allButImage}>
+          <h1 className={styles.recipeName}>{recipe.title}</h1>
+
+          <div className={styles.recipeCategoryTime}>
+            {categoryName && <p className={styles.category}>{categoryName}</p>}
+            <p className={styles.prepTime}>{recipe.time} min</p>
+          </div>
+
+          {recipe.description && <p className={styles.description}>{recipe.description}</p>}
+
+          {author && (
+            <div className={styles.authorContainer}>
+              <img src={author.avatar} alt={author.name} className={styles.authorAvatar} />
+              <div className={styles.authorInfo}>
+                <p className={styles.createdBy}>Created by:</p>
+                <p className={styles.authorName}>{author.name}</p>
+              </div>
+            </div>
+          )}
+
+          {recipe.ingredients?.length > 0 && (
+            <div className={styles.ingredientsSection}>
+              <h2 className={styles.ingredients}>Ingredients</h2>
+              <div className={styles.ingredientsGrid}>
+                {recipe.ingredients.map((ing, index) => (
+                  <div key={index} className={styles.ingredientCard}>
+                    <div className={styles.imageWrapper}>
+                      {ing.image ? (
+                        <img src={ing.image} alt={ing.name} className={styles.ingredientImage} />
+                      ) : (
+                        <div className={styles.ingredientPlaceholder}>{ing.name[0]}</div>
+                      )}
+                    </div>
+                    <div className={styles.nameMeasure}>
+                      <p className={styles.ingredientName}>{ing.name}</p>
+                      <p className={styles.ingredientMeasure}>{ing.measure}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className={styles.recipeInfo}>
+            <h2 className={styles.ingredients}>RECIPE PREPARATION</h2>
+            {recipe.instructions
+            .split(/\r\n\r\n/)
+            .map((paragraph, index) => (
+    <p key={index} className={styles.instructions}>
+      {paragraph.trim()}
+    </p>
+))}
+
+          </div>
+
+          <div className={styles.favoriteSection}>
+            <button
+              className={`${styles.favButton} ${isFavorite ? styles.active : ''}`}
+              onClick={handleToggleFavorite}
+            >
+              {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            </button>
+          </div>
+        </div>
+      </div>
+      <PopularRecipes />
+    </div>
+  );
 };
 
 export default RecipeDetails;

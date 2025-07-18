@@ -4,6 +4,7 @@
   align-items: flex-start;
   gap: var(--spacing-xs);
   width: 100%;
+  position: relative;
 }
 
 .field label {
@@ -97,6 +98,11 @@
 .inputWrapper.withExtra .extra {
   right: var(--spacing-md);
   font-size: var(--font-xl);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .textAreaWrapper.withExtra textarea {
@@ -111,6 +117,10 @@
   background: none;
   outline: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .count {
@@ -201,7 +211,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 16px 18px;
-  margin-top: 94px;
+  top: 94px;
   max-width: 340px;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -286,7 +296,7 @@
     left: unset;
     transform: unset;
     max-width: unset;
-    margin-top: 106px;
+    top: 106px;
   }
   .selectWrapper {
     font-size: var(--font-md);

@@ -5,8 +5,8 @@ import AddRecipePage from "@pages/add-recipe/AddRecipePage";
 import ProfilePage from "@pages/profile/ProfilePage";
 import MyRecipes from "@pages/profile/components/MyRecipes";
 import Favorites from "@pages/profile/components/Favorites";
-import Followers from "@pages/profile/components/Followers";
-import Following from "@pages/profile/components/Following";
+import Followers from "@/pages/profile/followers/Followers";
+import Following from "@/pages/profile/following/Following";
 import DesignSystemPreview from "@pages/design-system/DesignSystemPreview";
 import NotFoundPage from "@pages/not-found/NotFoundPage";
 import { Layout } from "@components/layout/Layout";
@@ -22,7 +22,7 @@ export const AppRoutes = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />}>
           <Route index element={<RecipeCategories />} />
-          <Route path="category/:categoryId" element={<BrowseCategory />} />
+          <Route path="category/:categoryName" element={<BrowseCategory />} />
         </Route>
         <Route path="/recipe-details/:recipeId" element={<RecipeDetails />} />
 
@@ -32,7 +32,7 @@ export const AppRoutes = () => {
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<ProfilePage />}>
+          <Route path="/profile/:userId?" element={<ProfilePage />}>
             <Route index element={<MyRecipes />} />
             <Route path="my-recipes" element={<MyRecipes />} />
             <Route path="favorites" element={<Favorites />} />

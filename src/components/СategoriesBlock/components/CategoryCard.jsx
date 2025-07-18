@@ -9,6 +9,7 @@ import { FiArrowUpRight } from "react-icons/fi";
  * @param {boolean} [props.isAll]
  * @param {boolean} [props.isActive]
  * @param {function} [props.onClick]
+ * @param {boolean} [props.wide]
  */
 const CategoryCard = ({
   category,
@@ -16,6 +17,7 @@ const CategoryCard = ({
   isAll = false,
   isActive,
   onClick,
+  wide = false,
 }) => {
   if (isAll) {
     // Картка ALL CATEGORIES
@@ -35,8 +37,10 @@ const CategoryCard = ({
   }
 
   return (
-    <Link to={`/categories/${category}`} className={styles.cardLink}>
-      <div className={styles.card}>
+    <Link to={`/category/${category}`} className={styles.cardLink}>
+      <div className={`${styles.card} ${wide ? styles.cardWide : ""}`}
+        data-wide={wide ? "true" : undefined}
+      >
         <img src={image} alt={category} className={styles.image} loading="lazy" />
         <div className={styles.captionRow}>
           <span className={styles.caption}>{category}</span>

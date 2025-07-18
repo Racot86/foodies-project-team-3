@@ -13,7 +13,8 @@ export const getDeviceType = () => {
     return { isMobile: false, isTablet: false, isDesktop: true };
   }
 
-  const width = window.innerWidth;
+  // Use clientWidth for more accurate measurement (excludes scrollbar)
+  const width = document.documentElement.clientWidth || window.innerWidth;
 
   const isMobile = width < breakpoints.tablet;
   const isTablet = width >= breakpoints.tablet && width < breakpoints.desktop;

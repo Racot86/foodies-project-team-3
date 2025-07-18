@@ -141,6 +141,11 @@
 .quantityField.quantityField {
   gap: 8px;
 }
+.myrecipeTrash.myrecipeTrash {
+  width: 36px;
+  height: 36px;
+}
+
 @media screen and (min-width: 768px) {
   .nameRecipeInput.nameRecipeInput input {
     font-size: 24px;
@@ -173,7 +178,10 @@
     line-height: 1.5;
     font-style: 16px;
   }
-
+  .myrecipeTrash.myrecipeTrash {
+    width: 42px;
+    height: 42px;
+  }
   .recipeWrapLabel div input {
     font-size: 16px;
     line-height: 1.5;
