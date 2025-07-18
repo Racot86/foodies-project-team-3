@@ -18,7 +18,10 @@ export const Header = () => {
   const { isAuthenticated } = useAuthRedux();
 
   const isWhiteHeader =
-    location.pathname === '/add-recipe' || location.pathname === '/profile' || location.pathname.includes('profile');
+    location.pathname === '/add-recipe' ||
+    location.pathname === '/profile' ||
+    location.pathname.includes('profile') ||
+    location.pathname.includes('recipe-details');
 
   return (
     <header className={`${styles.header} ${isWhiteHeader ? styles.whiteTheme : ''}`}>

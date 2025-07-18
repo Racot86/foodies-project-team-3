@@ -148,6 +148,14 @@ export const authSlice = createSlice({
         state.isGetCurrentUserLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload;
+
+        // Update local storage with the latest user data
+        const foodiesData = {
+          token: state.token,
+          username: action.payload.name,
+          avatar: action.payload.avatar || null
+        };
+        localStorage.setItem('foodies', JSON.stringify(foodiesData));
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isGetCurrentUserLoading = false;

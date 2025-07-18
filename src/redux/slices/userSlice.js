@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userService } from "../../services/userService";
+import { getCurrentUser } from "./authSlice";
 
 const initialState = {
   details: {
@@ -33,9 +34,11 @@ export const userDetails = createAsyncThunk(
 
 export const userAvatar = createAsyncThunk(
   "user/avatar",
-  async (file, { rejectWithValue }) => {
+  async (file, { rejectWithValue, dispatch }) => {
     try {
       const response = await userService.uploadAvatar(file);
+      // After successful avatar upload, get the current user data to refresh Redux state
+      dispatch(getCurrentUser());
       return response;
     } catch (error) {
       return rejectWithValue(
