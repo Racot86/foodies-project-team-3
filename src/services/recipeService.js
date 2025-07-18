@@ -286,8 +286,8 @@ export const getRecipeById = async (id) => {
  */
 export const addToFavorites = async (recipeId) => {
   try {
-    const response = await axios.post(`${BASE_URL}/favorites`, { recipeId });
-    return response.data;
+    const response = await api.post(`/recipes/${recipeId}/favorites`);
+    return response;
   } catch (error) {
     console.error("API Error:", error);
     throw new Error(
@@ -314,8 +314,10 @@ export const removeFromFavorites = async (recipeId) => {
  */
 export const isRecipeInFavorites = async (recipeId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/myfavorites`);
-    return response.data.some((favorite) => favorite.id === recipeId);
+    const response = await api.get("/recipes/myfavorites");
+    // The response structure is { recipes: [...] }
+    const favorites = response.recipes || [];
+    return favorites.some((favorite) => (favorite.id === recipeId || favorite._id === recipeId));
   } catch (error) {
     console.error("API Error:", error);
     throw new Error(
@@ -374,5 +376,6 @@ export const getAreasByCategory = async (categoryId) => {
 
 export const getFavorites = async () => {
   const response = await api.get("/recipes/myfavorites");
+  // Return the entire response which has the structure { recipes: [...] }
   return response;
 };

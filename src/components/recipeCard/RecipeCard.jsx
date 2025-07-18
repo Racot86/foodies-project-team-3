@@ -4,12 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiHeart, FiArrowUpRight } from 'react-icons/fi';
 import { ButtonIcon } from '@components/ui/ButtonIcon/ButtonIcon';
 import Heading from '@components/ui/Heading/Heading';
-import { getRecipeById, addToFavorites, removeFromFavorites } from '../../services/recipeService';
+import { getRecipeById, addToFavorites, removeFromFavorites, isRecipeInFavorites } from '../../services/recipeService';
 import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '../../services/api';
 import styles from './RecipeCard.module.css';
 import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { useAuthRedux } from '@/hooks';
 import SignInModal from '@/components/signInModal/SignInModal';
+import PrivateContentArea from "@components/privateContentArea/PrivateContentArea.jsx";
+import { toast } from 'react-toastify';
 
 const FALLBACK_IMAGE = DEFAULT_RECIPE_IMAGE;
 const FALLBACK_AVATAR = DEFAULT_AVATAR;
@@ -55,8 +57,17 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
   // Check if recipe is in favorites when recipe data is loaded
   useEffect(() => {
     if (recipe && isAuthenticated) {
-      // Here you would check if the recipe is in user's favorites
-      // For now, we'll just use the local state
+      const checkFavoriteStatus = async () => {
+        try {
+          const isFav = await isRecipeInFavorites(recipe.id);
+          setIsFavorite(isFav);
+        } catch (err) {
+          console.error('Error checking favorite status:', err);
+          // Keep the current state if there's an error
+        }
+      };
+
+      checkFavoriteStatus();
     }
   }, [recipe, isAuthenticated]);
 
@@ -70,14 +81,16 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
     try {
       if (isFavorite) {
         await removeFromFavorites(recipe.id);
+        toast.success(`"${title}" removed from favorites`, { position: "top-center", autoClose: 3000 });
       } else {
         await addToFavorites(recipe.id);
+        toast.success(`"${title}" added to favorites`, { position: "top-center", autoClose: 3000 });
       }
       // Toggle favorite state
       setIsFavorite(!isFavorite);
     } catch (err) {
       console.error('Error updating favorites:', err);
-      // Show error notification if needed
+      toast.error(`Failed to update favorites: ${err.message || 'Unknown error'}`, { position: "top-center", autoClose: 3000 });
     }
   };
 
@@ -162,6 +175,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
             </button>
 
             <div className={styles.actions}>
+              <PrivateContentArea>
               {/* Favorite button */}
               <ButtonIcon
                 onClick={handleFavoriteClick}
@@ -169,7 +183,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
               >
                 <FiHeart />
               </ButtonIcon>
-
+              </PrivateContentArea>
               {/* Recipe details link */}
               <Link to={`/recipe-details/${id}`} className={styles.linkButton}>
                 <ButtonIcon>
