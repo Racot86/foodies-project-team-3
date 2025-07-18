@@ -29,6 +29,11 @@
 }
 
 /* Sizes */
+.size-xxs {
+  font-size: var(--font-md);
+  font-weight: var(--font-medium);
+}
+
 .size-xs {
   font-size: var(--font-lg);
 }
@@ -47,6 +52,7 @@
 
 .size-xl {
   font-size: var(--font-4xl);
+  font-weight: var(--font-bold2);
 }
 
 .size-2xl {
@@ -118,6 +124,11 @@
 
 /* Responsive typography */
 @media (max-width: 767px) {
+  .size-xxs {
+      font-size: calc(var(--font-md) * 0.88);
+      color: #bfbebe;
+    }
+  
   .size-xs {
     font-size: calc(var(--font-lg) * 0.9);
   }
@@ -135,7 +146,7 @@
   }
 
   .size-xl {
-    font-size: calc(var(--font-4xl) * 0.75);
+    font-size: calc(var(--font-4xl) * 0.70);
   }
 
   .size-2xl {

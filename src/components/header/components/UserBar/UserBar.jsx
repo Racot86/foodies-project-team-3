@@ -6,6 +6,7 @@ import clsx from "clsx";
 import UserDropDown from "@components/ui/UserDropDown/UserDropDown.jsx"
 import { GoChevronDown } from "react-icons/go";
 import LogOutModal from "@components/logOutModal/LogOutModal.jsx";
+import { useAuthRedux } from "@/hooks/useAuthRedux";
 
 
 
@@ -14,10 +15,13 @@ const UserBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const user = {
-    name: "IronMan",
-    avatar: null,
-  }
+  const { user, isAuthenticated, fetchCurrentUser } = useAuthRedux();
+
+  useEffect(() => {
+    if (!user && isAuthenticated) {
+      fetchCurrentUser();
+    }
+  }, [user, isAuthenticated, fetchCurrentUser]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -54,12 +58,12 @@ const UserBar = () => {
         <GoChevronDown className={clsx(css.icon, isDropdownOpen && css.iconOpen)}/>
       </button>
 
-      {isDropdownOpen && (
+      <div className={clsx(css.dropdownContainer, isDropdownOpen && css.dropdownVisible)}>
         <UserDropDown
           onProfileClick={() => setIsDropdownOpen(false)}
           onLogoutClick={openLogoutModal}
         />
-      )}
+      </div>
 
       {isModalOpen && (
         <Modal onClose={closeLogoutModal}>

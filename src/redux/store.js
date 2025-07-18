@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from 'react-redux';
 import breadcrumbsReducer from "./slices/breadcrumbsSlice";
 import authReducer from "./slices/authSlice";
 import testimonialsReducer from "./slices/testimonialsSlice";
@@ -20,5 +21,16 @@ export const store = configureStore({
     users: userReducer,
   },
 });
+
+/**
+ * @typedef {ReturnType<typeof store.getState>} RootState
+ * @typedef {typeof store.dispatch} AppDispatch
+ */
+
+/** @type {() => AppDispatch} */
+export const useAppDispatch = useDispatch;
+
+/** @type {import('react-redux').TypedUseSelectorHook<RootState>} */
+export const useAppSelector = useSelector;
 
 export default store;

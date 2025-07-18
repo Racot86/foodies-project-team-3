@@ -1,24 +1,13 @@
 import { useState, useRef, useEffect, useId } from "react";
-import clsx from "clsx";
-import css from "../Fields.module.css";
-import { ErrorField } from "../ErrorField/ErrorField";
 import { FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
+import styles from "./CustomSelect.module.css";
 
-export const FieldSelect = ({
-  selectWrapperClassName,
-  optionsListClassName,
-  selectedValueClassName,
-  name,
-  label,
-  error,
+const CustomSelect = ({
   options = [],
-  required,
   placeholder = "Select...",
   onChange,
   value,
   className,
-  wrapperClassName,
-  helperText,
   disabled = false,
 }) => {
   const fieldId = useId();
@@ -28,11 +17,13 @@ export const FieldSelect = ({
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(options);
 
+  // Update input value when value or options change
   useEffect(() => {
     const selectedOption = options.find((opt) => opt.value === value);
     setInputValue(selectedOption ? selectedOption.label : "");
   }, [value, options]);
 
+  // Filter options based on input value
   useEffect(() => {
     const filtered = options.filter((opt) =>
       opt.label.toLowerCase().includes(inputValue.toLowerCase())
@@ -40,6 +31,7 @@ export const FieldSelect = ({
     setFilteredOptions(filtered);
   }, [inputValue, options]);
 
+  // Handle clicks outside the component
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -70,7 +62,7 @@ export const FieldSelect = ({
 
   const handleOptionClick = (optionValue, optionLabel) => {
     if (optionValue !== value) {
-      onChange && onChange(optionValue);
+      onChange && onChange({ value: optionValue, label: optionLabel });
     }
     setInputValue(optionLabel);
     setIsOpen(false);
@@ -87,16 +79,9 @@ export const FieldSelect = ({
     setIsOpen(false);
   };
 
-  const listHeightClass = clsx({
-    [css.categoriesOption]: name === "category",
-    [css.areasOption]: name === "area",
-    [css.ingredientsOption]: name === "ingredient",
-    [css.timeOption]: name === "time",
-  });
-
   return (
     <div
-      className={`${clsx(css.field, error && css.error, disabled && css.disabled)} ${className || ''} ${wrapperClassName || ''}`.trim()}
+      className={`${styles.customSelect} ${className || ""} ${disabled ? styles.disabled : ""}`}
       ref={containerRef}
       id={fieldId}
       aria-haspopup="listbox"
@@ -104,14 +89,7 @@ export const FieldSelect = ({
       aria-disabled={disabled}
       tabIndex={-1}
     >
-      {label && (
-        <label htmlFor={fieldId}>
-          {label}
-          {required && <span aria-label="required"> *</span>}
-        </label>
-      )}
-
-      <div className={clsx(css.selectWrapper, selectWrapperClassName, disabled && css.disabled)}>
+      <div className={styles.selectWrapper}>
         <input
           id={fieldId}
           type="text"
@@ -129,13 +107,13 @@ export const FieldSelect = ({
           aria-haspopup="listbox"
           aria-activedescendant={isOpen ? `${fieldId}-option-0` : undefined}
           autoComplete="off"
-          className={clsx(css.selectedValue, selectedValueClassName, !inputValue && css.placeholder)}
+          className={`${styles.selectedValue} ${!inputValue ? styles.placeholder : ""}`}
         />
 
         {inputValue && !disabled && (
           <FiX
             size={18}
-            className={css.clearIcon}
+            className={styles.clearIcon}
             onClick={(e) => {
               e.stopPropagation();
               handleClear();
@@ -147,8 +125,7 @@ export const FieldSelect = ({
         {isOpen ? (
           <FiChevronUp
             size={18}
-            color={disabled ? "#aaa" : "black"}
-            className={css.selectIcon}
+            className={styles.selectIcon}
             onClick={(e) => {
               e.stopPropagation();
               setIsOpen(false);
@@ -158,8 +135,7 @@ export const FieldSelect = ({
         ) : (
           <FiChevronDown
             size={18}
-            color={disabled ? "#aaa" : "black"}
-            className={css.selectIcon}
+            className={styles.selectIcon}
             onClick={(e) => {
               e.stopPropagation();
               setIsOpen(true);
@@ -171,7 +147,7 @@ export const FieldSelect = ({
 
       {isOpen && !disabled && (
         <ul
-          className={clsx(css.optionsList, optionsListClassName, listHeightClass)}
+          className={styles.optionsList}
           role="listbox"
           id={`${fieldId}-listbox`}
           tabIndex={-1}
@@ -180,11 +156,11 @@ export const FieldSelect = ({
             filteredOptions.map(
               ({ value: optionValue, label: optionLabel }, idx) => (
                 <li
-                  key={optionValue}
+                  key={`${optionValue}-${idx}`}
                   id={`${fieldId}-option-${idx}`}
                   role="option"
                   aria-selected={optionValue === value}
-                  className={css.option}
+                  className={styles.option}
                   onClick={() => handleOptionClick(optionValue, optionLabel)}
                   tabIndex={0}
                   onKeyDown={(e) => {
@@ -199,15 +175,14 @@ export const FieldSelect = ({
               )
             )
           ) : (
-            <li className={css.option} aria-disabled="true">
+            <li className={styles.option} aria-disabled="true">
               No options found
             </li>
           )}
         </ul>
       )}
-
-      {helperText && !error && <p className={css.helperText}>{helperText}</p>}
-      {error && <ErrorField id={`${fieldId}-error`}>{error}</ErrorField>}
     </div>
   );
 };
+
+export default CustomSelect;

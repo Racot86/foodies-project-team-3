@@ -22,7 +22,7 @@ export const AppRoutes = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />}>
           <Route index element={<RecipeCategories />} />
-          <Route path="category/:categoryId" element={<BrowseCategory />} />
+          <Route path="category/:categoryName" element={<BrowseCategory />} />
         </Route>
         <Route path="/recipe-details/:recipeId" element={<RecipeDetails />} />
 
@@ -32,7 +32,7 @@ export const AppRoutes = () => {
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<ProfilePage />}>
+          <Route path="/profile/:userId?" element={<ProfilePage />}>
             <Route index element={<MyRecipes />} />
             <Route path="my-recipes" element={<MyRecipes />} />
             <Route path="favorites" element={<Favorites />} />
