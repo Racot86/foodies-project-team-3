@@ -6,12 +6,8 @@
     padding: 10px 20px;
     position: relative;
     border-radius:  var(--radius-xxl) var(--radius-xxl) 0 0;
-    /* filter: brightness(0) saturate(100%) invert(0); */
 }
 
-/* .open .logoWrapper {
-  filter: brightness(0) saturate(100%) invert(0);
-} */
 .nav ul {
     display: flex;
     list-style: none;
@@ -30,15 +26,22 @@
     color: var(--color-white);
     font-weight: bold;
     padding: 14px;
-    border: 1px solid transparent;
+
+    border: 1px solid var(--color-primary);
     border-radius: 30px;
-    transition: border-color 0.3s ease;
+
+    border: 1px solid var(--color-primary);
+    border-radius: 30px;
+
 }
 
 .nav a:hover {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
-
+.nav a.active {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  
+}
 
 .mobileNav {
     position: absolute;
@@ -77,7 +80,8 @@
 }
 
 .whiteTheme .nav a {
-  color: var(--color-primary);
+  color: var(--color-primary); 
+   border: 1px solid var(--color-white);
 }
 
 .whiteTheme .nav a:hover {
@@ -87,11 +91,9 @@
     display: flex;
     gap: 4px;
 }
-.nav a.active {
-  border: 1px solid var(--color-white);
-}
+
 .whiteTheme .nav a.active {
-  border: 1px solid var(--color-primary);
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive adjustments */

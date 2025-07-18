@@ -1,6 +1,125 @@
 import axios from "axios";
 import { BASE_URL, DEFAULT_AVATAR } from "./api";
 
+import api from "./api";
+
+/**
+ * Fetches recipes with filtering and pagination
+ * @param {Object} options - Options for filtering and pagination
+ * @param {string} [options.category=''] - Category filter (empty string for all categories)
+ * @param {string} [options.ingredient=''] - Ingredient filter (empty string for all ingredients)
+ * @param {string} [options.area=''] - Area filter (empty string for all areas)
+ * @param {string} [options.ownerId=''] - Owner ID filter (empty string for all owners)
+ * @param {number} [options.page=1] - Page number for pagination
+ * @param {number} [options.limit=10] - Number of recipes per page
+ * @param {string} [options.sort=''] - Sort parameter (e.g., 'newest', 'oldest', 'popular')
+ * @returns {Promise<Object>} Object containing recipes array, total count, and pagination info
+ */
+export const getRecipes = async (
+  options = { category: '', ingredient: '', area: '', ownerId: '', page: 1, limit: 10, sort: '' }
+) => {
+  try {
+    const { category = '', ingredient = '', area = '', ownerId = '', page = 1, limit = 10, sort = '' } = options;
+
+    // Build query parameters
+    const queryParams = new URLSearchParams();
+    queryParams.append("page", String(page));
+    queryParams.append("limit", String(limit));
+
+    // Add filters if they are provided
+    if (category !== null && category !== undefined && category !== '') {
+      queryParams.append("category", category);
+    }
+
+    if (ingredient !== null && ingredient !== undefined && ingredient !== '') {
+      queryParams.append("ingredient", ingredient);
+    }
+
+    if (area !== null && area !== undefined && area !== '') {
+      queryParams.append("area", area);
+    }
+
+    if (ownerId !== null && ownerId !== undefined && ownerId !== '') {
+      queryParams.append("ownerId", ownerId);
+    }
+
+    if (sort !== null && sort !== undefined && sort !== '') {
+      queryParams.append("sort", sort);
+    }
+
+    const url = `${BASE_URL}/recipes?${queryParams.toString()}`;
+    console.log("Fetching recipes from:", url);
+    console.log("Query parameters:", {
+      category,
+      ingredient,
+      area,
+      ownerId,
+      page,
+      limit,
+      sort
+    });
+
+    const response = await axios.get(url);
+
+    // Transform API response to match the format expected by RecipeCard
+    const rawData = response.data;
+
+    // Check if we have a valid response with recipes
+    if (!rawData) {
+      return { recipes: [], total: 0, totalPages: 0, page, limit };
+    }
+
+    const recipesArray = Array.isArray(rawData)
+      ? rawData
+      : rawData.recipes || [];
+
+    // Extract recipes and transform them if needed
+    const recipes = recipesArray.map((recipe) => ({
+      id: recipe.id || recipe._id,
+      title: recipe.title || recipe.name || "Untitled Recipe",
+      instructions: recipe.instructions || recipe.description || "",
+      image:
+        recipe.image ||
+        recipe.thumb ||
+        "https://via.placeholder.com/300x200?text=No+Image",
+      owner: {
+        name: recipe.owner?.name || "Unknown Chef",
+        avatar: recipe.owner?.avatar || DEFAULT_AVATAR,
+      },
+      // Preserve area information for filtering
+      area: recipe.area
+        ? {
+            id: recipe.area.id || recipe.area._id,
+            name: recipe.area.name,
+          }
+        : null,
+      // Preserve category information
+      category: recipe.category
+        ? {
+            id: recipe.category.id || recipe.category._id,
+            name: recipe.category.name,
+            description: recipe.category.description || "",
+          }
+        : null,
+    }));
+
+    // Return formatted data with recipes, total count, and pagination info
+    return {
+      recipes,
+      total: rawData.total || recipesArray.length || recipes.length,
+      totalPages: rawData.totalPages || Math.ceil((rawData.total || recipesArray.length || recipes.length) / limit),
+      page,
+      limit
+    };
+  } catch (error) {
+    console.error("API Error:", error);
+    throw new Error(
+      error.response?.data?.message ||
+        "An error occurred while fetching recipes"
+    );
+  }
+};
+
 /**
  * Fetches all recipes
  * @returns {Promise<Array>} Array of recipe objects
@@ -25,29 +144,57 @@ export const getAllRecipes = async () => {
  * @param {number} [options.page=1] - Page number for pagination
  * @param {number} [options.limit=9] - Number of recipes per page
  * @param {string} [options.area=''] - Area filter (empty string for all areas)
+ * @param {string} [options.ingredient=''] - Ingredient filter (empty string for all ingredients)
+ * @param {string} [options.sort=''] - Sort parameter (e.g., 'newest', 'oldest', 'popular')
+ * @param {string} [options.ownerId=''] - Owner ID filter (empty string for all owners)
  * @returns {Promise<Object>} Object containing recipes array and total count
  */
 export const getRecipesByCategory = async (
   categoryName,
-  options = { page: 1, limit: 9, area: "" }
+  options = { page: 1, limit: 9, area: "", ingredient: "", sort: "", ownerId: "" }
 ) => {
   try {
-    const { page = 1, limit = 9, area = "" } = options;
+    const { page = 1, limit = 9, area = "", ingredient = "", sort = "", ownerId = "" } = options;
 
     // Build query parameters
     const queryParams = new URLSearchParams();
     queryParams.append("page", String(page));
     queryParams.append("limit", String(limit));
 
-    // Only append area if it's not empty
-    if (area && area.trim() !== "") {
+    // Always append area, even if it's empty
+    if (area !== null && area !== undefined) {
       queryParams.append("area", area);
+    }
+
+    // Always append ingredient, even if it's empty
+    if (ingredient !== null && ingredient !== undefined) {
+      queryParams.append("ingredient", ingredient);
+    }
+
+    // Always append sort, even if it's empty
+    if (sort !== null && sort !== undefined) {
+      queryParams.append("sort", sort);
+    }
+
+    // Always append ownerId, even if it's empty
+    if (ownerId !== null && ownerId !== undefined) {
+      queryParams.append("ownerId", ownerId);
     }
 
     queryParams.append("category", categoryName);
 
     const url = `${BASE_URL}/recipes?${queryParams.toString()}`;
     console.log("Fetching recipes from:", url);
+    console.log("Query parameters:", {
+      category: categoryName,
+      page,
+      limit,
+      area,
+      ingredient,
+      sort,
+      ownerId
+    });
+    console.log("Query string:", queryParams.toString());
     const response = await axios.get(url);
 
     // Transform API response to match the format expected by RecipeCard
@@ -82,12 +229,28 @@ export const getRecipesByCategory = async (
             name: recipe.area.name,
           }
         : null,
+      // Preserve category information
+      category: recipe.category
+        ? {
+            id: recipe.category.id || recipe.category._id,
+            name: recipe.category.name,
+            description: recipe.category.description || "",
+          }
+        : null,
     }));
 
-    // Return formatted data with recipes and total count
+    // Extract category information from the first recipe if available
+    let categoryInfo = null;
+    if (recipes.length > 0 && recipes[0].category) {
+      categoryInfo = recipes[0].category;
+    }
+
+    // Return formatted data with recipes, total count, totalPages, and category info
     return {
       recipes,
       total: rawData.total || recipesArray.length || recipes.length,
+      totalPages: rawData.totalPages || Math.ceil((rawData.total || recipesArray.length || recipes.length) / (options.limit || 9)),
+      category: categoryInfo || { name: categoryName, description: `Recipes from the ${categoryName} category.` },
     };
   } catch (error) {
     console.error("API Error:", error);
@@ -140,16 +303,8 @@ export const addToFavorites = async (recipeId) => {
  * @returns {Promise<Object>} Response object
  */
 export const removeFromFavorites = async (recipeId) => {
-  try {
-    const response = await axios.delete(`${BASE_URL}/favorites/${recipeId}`);
-    return response.data;
-  } catch (error) {
-    console.error("API Error:", error);
-    throw new Error(
-      error.response?.data?.message ||
-        "An error occurred while removing recipe from favorites"
-    );
-  }
+  const response = await api.delete(`/recipes/${recipeId}/favorites`);
+  return response.data;
 };
 
 /**
@@ -159,7 +314,7 @@ export const removeFromFavorites = async (recipeId) => {
  */
 export const isRecipeInFavorites = async (recipeId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/favorites`);
+    const response = await axios.get(`${BASE_URL}/myfavorites`);
     return response.data.some((favorite) => favorite.id === recipeId);
   } catch (error) {
     console.error("API Error:", error);
@@ -215,4 +370,9 @@ export const getAreasByCategory = async (categoryId) => {
         "An error occurred while fetching areas by category"
     );
   }
+};
+
+export const getFavorites = async () => {
+  const response = await api.get("/recipes/myfavorites");
+  return response;
 };

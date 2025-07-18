@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import styles from './RecipeDetails.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRecipeName, clearRecipeName } from '@/redux/slices/breadcrumbsSlice.js';
+import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
 
 export const RecipeDetails = () => {
   const { recipeId } = useParams();
@@ -199,6 +200,7 @@ export const RecipeDetails = () => {
           </div>
         </div>
       </div>
+      <PopularRecipes />
     </div>
   );
 };
