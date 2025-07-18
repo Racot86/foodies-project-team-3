@@ -21,7 +21,8 @@ export const RecipeDetails = () => {
     isLoading,
     error,
     processedData,
-    isFavorite
+    isFavorite,
+    data: recipeData
   } = useAppSelector((state) => state.recipeDetails);
 
   const { recipe = null, categoryName = '', author = null } = processedData || {};
@@ -32,9 +33,11 @@ export const RecipeDetails = () => {
   }, [recipeId, dispatch]);
 
   useEffect(() => {
-    // Process recipe data after fetching
-    dispatch(processRecipeData());
-  }, [dispatch, recipeId]);
+    // Process recipe data only after fetchRecipeById has completed successfully
+    if (recipeData) {
+      dispatch(processRecipeData());
+    }
+  }, [dispatch, recipeData]);
 
   useEffect(() => {
     // Check if recipe is in favorites
