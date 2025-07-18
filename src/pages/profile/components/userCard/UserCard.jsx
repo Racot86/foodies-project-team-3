@@ -6,13 +6,14 @@ import RecipePreviewList from "../recipePreviewList/RecipePreviewList";
 import { useDeviceType } from "@/hooks/useDeviceType";
 import icons from "@/assets/icons/icons.svg";
 import styles from "./UserCard.module.css";
+import { DEFAULT_AVATAR } from "@/services/api";
 
 const UserCard = ({ user, onButtonClick, tabType }) => {
   const navigate = useNavigate();
   const firstName = user.name ? user.name.split(" ")[0] : "";
 
   const avatarUrl =
-    user.avatar || "https://via.placeholder.com/60x60?text=User";
+    user.avatar || DEFAULT_AVATAR;
 
   const { isMobile, isTablet, isDesktop } = useDeviceType();
 
