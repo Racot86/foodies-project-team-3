@@ -6,6 +6,7 @@ import Page from "@components/page/Page";
 import { Tabs, Heading, Text, ButtonIcon, Button } from "@components/ui";
 import Modal from "@components/modal/Modal";
 import LogOutModal from "@components/logOutModal/LogOutModal";
+import { DEFAULT_AVATAR } from "../../services/api";
 
 import { FiPlus } from "react-icons/fi";
 import { toast, ToastContainer } from "react-toastify";
@@ -124,12 +125,10 @@ function ProfilePage() {
               <div className={styles.profileInfo}>
                 <div className={styles.profileImageContainer}>
                   <div className={styles.imagePlaceholder}>
-                    {requestedUserDetails?.avatar && (
-                      <img
-                        src={requestedUserDetails.avatar}
-                        alt="User Avatar"
-                      />
-                    )}
+                    <img
+                      src={requestedUserDetails?.avatar || DEFAULT_AVATAR}
+                      alt="User Avatar"
+                    />
                   </div>
                   {isMe && (
                     <ButtonIcon

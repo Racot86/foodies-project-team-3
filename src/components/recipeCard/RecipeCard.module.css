@@ -161,7 +161,7 @@
 
 @media (min-width: 768px) {
     .card {
-        min-width: 290px;
+        /* Removed min-width to allow card to adapt to container width */
     }
 
     .imageContainer {
