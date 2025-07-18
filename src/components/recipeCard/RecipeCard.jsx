@@ -22,11 +22,11 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
   const [imageError, setImageError] = useState(false);
   const [avatarError, setAvatarError] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
-  
+
   // Use breakpoint to determine heading level
   const { breakpoint } = useBreakpoint();
   const isMobile = breakpoint === 'mobile' || breakpoint === 'mobile-small';
-  
+
   // Authentication and navigation
   const { isAuthenticated } = useAuthRedux();
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
   const fetchRecipe = async (id) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const data = await getRecipeById(id);
       setRecipe(data);
@@ -45,13 +45,13 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (recipeId && !initialRecipe) {
       fetchRecipe(recipeId);
     }
   }, [recipeId, initialRecipe]);
-  
+
   // Check if recipe is in favorites when recipe data is loaded
   useEffect(() => {
     if (recipe && isAuthenticated) {
@@ -66,7 +66,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
       setShowSignInModal(true);
       return;
     }
-    
+
     try {
       if (isFavorite) {
         await removeFromFavorites(recipe.id);
@@ -80,21 +80,21 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
       // Show error notification if needed
     }
   };
-  
+
   const handleAuthorClick = () => {
     if (!isAuthenticated) {
       // Show sign in modal if user is not authenticated
       setShowSignInModal(true);
     } else {
       // Navigate to author's profile page
-      navigate(`/user/${owner.id}`);
+      navigate(`/user/${recipe.owner.id}`);
     }
   };
-  
+
   const handleCloseModal = () => {
     setShowSignInModal(false);
   };
-  
+
   // Show loading state
   if (loading) {
     return (
@@ -103,7 +103,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
       </div>
     );
   }
-  
+
   // Show error state
   if (error || !recipe) {
     return (
@@ -112,30 +112,30 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
       </div>
     );
   }
-  
+
   const { id, title, instructions, image, owner } = recipe;
-  
+
   // Truncate instructions to 2 lines (approximately 120 characters)
-  const truncatedInstructions = instructions.length > 120 
-    ? `${instructions.substring(0, 120)}...` 
+  const truncatedInstructions = instructions.length > 120
+    ? `${instructions.substring(0, 120)}...`
     : instructions;
 
   return (
     <>
       <div className={styles.card}>
         <div className={styles.imageContainer}>
-          <img 
-            src={imageError ? FALLBACK_IMAGE : image} 
-            alt={title} 
-            className={styles.image} 
+          <img
+            src={imageError ? FALLBACK_IMAGE : image}
+            alt={title}
+            className={styles.image}
             onError={() => setImageError(true)}
           />
         </div>
-        
+
         <div className={styles.content}>
           <div className={styles.titleContainer}>
-            <Heading 
-              level={isMobile ? 3 : 4} 
+            <Heading
+              level={isMobile ? 3 : 4}
               className={styles.title}
               weight="bold2"
               color="primary"
@@ -144,32 +144,32 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
             </Heading>
             <p className={styles.instructions}>{truncatedInstructions}</p>
           </div>
-        
+
           <div className={styles.footer}>
             {/* Author section as a button */}
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={styles.author}
               onClick={handleAuthorClick}
             >
-              <img 
-                src={avatarError || !owner.avatar ? DEFAULT_AVATAR : owner.avatar} 
-                alt={owner.name} 
+              <img
+                src={avatarError || !owner.avatar ? DEFAULT_AVATAR : owner.avatar}
+                alt={owner.name}
                 className={styles.avatar}
-                onError={() => setAvatarError(true)} 
+                onError={() => setAvatarError(true)}
               />
               <span className={styles.authorName}>{owner.name}</span>
             </button>
-          
+
             <div className={styles.actions}>
               {/* Favorite button */}
-              <ButtonIcon 
-                onClick={handleFavoriteClick} 
+              <ButtonIcon
+                onClick={handleFavoriteClick}
                 className={`${styles.favoriteButton} ${isFavorite ? styles.active : ''}`}
               >
                 <FiHeart />
               </ButtonIcon>
-            
+
               {/* Recipe details link */}
               <Link to={`/recipe-details/${id}`} className={styles.linkButton}>
                 <ButtonIcon>
@@ -183,12 +183,12 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
 
       {/* Sign In Modal */}
       {showSignInModal && (
-        <SignInModal 
-          onClose={handleCloseModal} 
+        <SignInModal
+          onClose={handleCloseModal}
           onOpenSignUp={() => {
             handleCloseModal();
             // Here you could open SignUp modal if needed
-          }} 
+          }}
         />
       )}
     </>

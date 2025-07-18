@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Heading, Text, Pagination } from '@components/ui';
@@ -24,13 +24,12 @@ const BrowseCategory = () => {
     recipes: [],
     total: 0,
     totalPages: 0,
-    page: 1,
-    limit: 12
+    page: 1
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Use a ref to store the limit value to avoid dependency cycle
-  const limitRef = useRef(12);
+  // Fixed limit for recipes per page
+  const RECIPES_PER_PAGE = 12;
 
   // Get data from Redux store
   const { data: ingredients, isLoading: ingredientsLoading } = useSelector(state => state.ingredients);
@@ -49,11 +48,6 @@ const BrowseCategory = () => {
     }
   }, [categoryName]);
 
-  // Update limitRef when recipesData.limit changes
-  useEffect(() => {
-    limitRef.current = recipesData.limit;
-  }, [recipesData.limit]);
-
   // Function to fetch recipes with current filters and pagination
   const fetchRecipesWithFilters = useCallback(async () => {
     setIsLoading(true);
@@ -63,7 +57,7 @@ const BrowseCategory = () => {
         ingredient: selectedIngredient,
         area: selectedArea,
         page: currentPage,
-        limit: limitRef.current
+        limit: RECIPES_PER_PAGE
       };
 
       const data = await getRecipes(options);
@@ -85,46 +79,34 @@ const BrowseCategory = () => {
     setCurrentPage(newPage);
   };
 
+  // Helper function to handle filter changes
+  const handleFilterChange = (setter, value) => {
+    setter(value);
+    setCurrentPage(1); // Reset to first page when filter changes
+    // Reset totalPages to avoid showing stale pagination
+    setRecipesData(prevData => ({
+      ...prevData,
+      totalPages: 0
+    }));
+  };
+
   // Transform ingredients data for select options
-  const ingredientOptions = useMemo(() => {
-    const options = [];
-
-    if (ingredients && ingredients.length > 0) {
-      ingredients.forEach(ingredient => {
-        options.push({
-          value: ingredient.name || ingredient.title,
-          label: ingredient.name || ingredient.title
-        });
-      });
-    }
-
-    return options;
-  }, [ingredients]);
+  const ingredientOptions = ingredients?.map(ingredient => ({
+    value: ingredient.name || ingredient.title,
+    label: ingredient.name || ingredient.title
+  })) || [];
 
   // Transform areas data for select options
-  const areaOptions = useMemo(() => {
-    const options = [];
+  const areaOptions = areas?.map(area => ({
+    value: area.name || area.title,
+    label: area.name || area.title
+  })) || [];
 
-    if (areas && areas.length > 0) {
-      areas.forEach(area => {
-        options.push({
-          value: area.name || area.title,
-          label: area.name || area.title
-        });
-      });
-    }
-
-    return options;
-  }, [areas]);
-
-  // Get recipes from state
-  const { recipes } = recipesData;
-
-  // Use totalPages from API response
-  const { totalPages } = recipesData;
+  // Ensure recipesData and its properties are always defined
+  const recipes = recipesData?.recipes || [];
 
   // Get category information
-  const categoryInfo = recipesData.category || {
+  const categoryInfo = recipesData?.category || {
     name: selectedCategory || "All Recipes",
     description: selectedCategory ? `Recipes from the ${selectedCategory} category.` : "Browse all recipes."
   };
@@ -155,15 +137,7 @@ const BrowseCategory = () => {
               placeholder={ingredientsLoading ? "Loading ingredients..." : "Select Ingredient"}
               className={styles.customSelect}
               isDisabled={ingredientsLoading || isLoading}
-              onChange={(option) => {
-                setSelectedIngredient(option ? option.value : "");
-                setCurrentPage(1); // Reset to first page when ingredient changes
-                // Reset totalPages to avoid showing stale pagination
-                setRecipesData(prevData => ({
-                  ...prevData,
-                  totalPages: 0
-                }));
-              }}
+              onChange={(option) => handleFilterChange(setSelectedIngredient, option ? option.value : "")}
               value={selectedIngredient}
             />
             <CustomSelect
@@ -171,15 +145,7 @@ const BrowseCategory = () => {
               placeholder={areasLoading ? "Loading regions..." : "Select Region"}
               className={styles.customSelect}
               isDisabled={areasLoading || isLoading}
-              onChange={(option) => {
-                setSelectedArea(option ? option.value : "");
-                setCurrentPage(1); // Reset to first page when region changes
-                // Reset totalPages to avoid showing stale pagination
-                setRecipesData(prevData => ({
-                  ...prevData,
-                  totalPages: 0
-                }));
-              }}
+              onChange={(option) => handleFilterChange(setSelectedArea, option ? option.value : "")}
               value={selectedArea}
             />
           </div>
@@ -191,7 +157,7 @@ const BrowseCategory = () => {
               ) : (
                 <>
                   <div className={styles.recipeList}>
-                    {recipes && recipes.length > 0 ? (
+                    {recipes.length > 0 ? (
                       recipes.map((recipe) => (
                         <RecipeCard key={recipe.id} recipeId={recipe.id} />
                       ))
@@ -199,10 +165,10 @@ const BrowseCategory = () => {
                       <p>No recipes found with the selected filters.</p>
                     )}
                   </div>
-                  {recipes && recipes.length > 0 && totalPages > 0 && (
+                  {recipes.length > 0 && recipesData?.totalPages > 0 && (
                     <div className={styles.paginationContainer}>
                       <Pagination
-                        totalPages={totalPages}
+                        totalPages={recipesData.totalPages}
                         currentPage={currentPage}
                         onPageChange={handlePageChange}
                       />
