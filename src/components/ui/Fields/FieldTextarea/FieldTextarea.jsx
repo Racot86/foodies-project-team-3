@@ -68,7 +68,7 @@ export const FieldTextarea = ({
     if (!textarea) return;
 
     // Reset height to calculate the new height
-    textarea.style.height = 'auto';
+    textarea.style.height = "auto";
 
     // Calculate new height based on scrollHeight
     const newHeight = Math.min(
@@ -159,7 +159,7 @@ export const FieldTextarea = ({
       "aria-describedby": inputError ? `${fieldId}-error` : undefined,
       rows: rows,
       ref: textareaRef,
-      style: { overflow: 'hidden' }, // Hide scrollbar during auto-resize
+      style: { overflow: "hidden" }, // Hide scrollbar during auto-resize
     };
 
     // Якщо є Formik context і name, додаємо required з валідації
@@ -177,7 +177,7 @@ export const FieldTextarea = ({
         <span className={css.count}>
           <span
             className={clsx(
-              css.count_active,
+              counter > 0 && css.count_active,
               counter > defaultMaxLength && css.count_error
             )}
           >
@@ -210,7 +210,11 @@ export const FieldTextarea = ({
       )}
 
       <div
-        className={clsx(css.inputWrapper, css.textAreaWrapper, defaultMaxLength && css.withExtra)}
+        className={clsx(
+          css.inputWrapper,
+          css.textAreaWrapper,
+          defaultMaxLength && css.withExtra
+        )}
       >
         {renderTextarea()}
         {defaultMaxLength && <div className={css.extra}>{renderExtra()}</div>}

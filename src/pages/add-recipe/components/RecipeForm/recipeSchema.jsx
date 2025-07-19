@@ -5,7 +5,7 @@ const RecipeSchema = yup.object().shape({
 
   description: yup
     .string()
-    .max(200, "Description must be at most 200 characters")
+    .max(999, "Description must be at most 999 characters")
     .required("Description is required"),
 
   category: yup.string().required("Category is required"),
@@ -13,7 +13,7 @@ const RecipeSchema = yup.object().shape({
 
   preparation: yup
     .string()
-    .max(200, "Instructions must be at most 200 characters")
+    .max(999, "Instructions must be at most 999 characters")
     .required("Instructions are required"),
 
   cookingTime: yup
@@ -26,7 +26,7 @@ const RecipeSchema = yup.object().shape({
     .required("Image is required")
     .test(
       "fileFormat",
-      "Unsupported image format. Only JPG, PNG, and WEBP are allowed.",
+      "Unsupported image format. Only JPG and PNG are allowed.",
       (value) => {
         if (!value) return false;
         const supportedFormats = ["image/jpeg", "image/png", "image/jpg"];
@@ -42,7 +42,7 @@ const RecipeSchema = yup.object().shape({
       then: (schema) =>
         schema
           .required("Quantity is required")
-          .max(10, "Quantity must be at most 10 characters")
+          .max(20, "Quantity must be at most 20 characters")
           .matches(/\d/, "Quantity must contain at least one number"),
     }),
 
@@ -59,7 +59,7 @@ const RecipeSchema = yup.object().shape({
         quantity: yup
           .string()
           .required("Quantity is required")
-          .max(10, "Quantity must be at most 10 characters")
+          .max(20, "Quantity must be at most 20 characters")
           .matches(/\d/, "Quantity must contain at least one number"),
       })
     )

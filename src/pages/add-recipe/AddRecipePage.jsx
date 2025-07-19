@@ -15,11 +15,11 @@ function AddRecipePage() {
               level={1}
               size="xl"
               weight="bold2"
-              className="recipePageTitle"
+              className={styles.recipePageTitle}
             >
               ADD RECIPE
             </Heading>
-            <Text size="md" weight="medium" className="recipeText">
+            <Text size="md" weight="medium" className={styles.recipeText}>
               Reveal your culinary art, share your favorite recipe and create
               gastronomic masterpieces with us.
             </Text>

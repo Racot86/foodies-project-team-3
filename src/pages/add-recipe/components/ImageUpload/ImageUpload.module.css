@@ -1,7 +1,6 @@
 .loadWrapBox {
   position: relative;
-  width: 100%;
-  max-width: 551px;
+  width: 343px;
   height: 318px;
   border: 1px dashed var(--color-secondary);
   border-radius: 30px;
@@ -17,6 +16,7 @@
 .loaded {
   border: none;
   position: relative;
+  width: 343px;
 }
 
 .loaded p {
@@ -67,6 +67,11 @@
 
 .placeholder {
   text-decoration: underline;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+  text-decoration-skip-ink: none;
 }
 
 .hiddenInput {
@@ -97,24 +102,20 @@
   stroke-width: 1px;
 }
 
-/* Медиа-запросы */
-
-@media screen and (min-width: 375px) {
-  .loadWrapBox {
-    max-width: 343px;
-    height: 318px;
-  }
-}
-
 @media screen and (min-width: 768px) {
+  .loaded {
+    width: 704px;
+  }
+
   .loadWrapBox {
-    max-width: 704px;
+    width: 704px;
     height: 400px;
     margin-bottom: 80px;
   }
 
   .uploadWrap {
     gap: 20px;
+    align-items: flex-start;
   }
   .imgWrapPrev {
     margin-bottom: 20px;
@@ -133,13 +134,21 @@
   .errorText.errorText {
     margin-bottom: 80px;
   }
+  .placeholder {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
 }
 
 @media screen and (min-width: 1440px) {
   .loadWrapBox {
-    max-width: 551px;
-    height: 440px;
+    width: 551px;
+    height: 400px;
     margin-bottom: 0;
+  }
+  .loaded {
+    width: 551px;
   }
   .loaded p {
     margin-bottom: unset;
