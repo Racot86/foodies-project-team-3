@@ -25,15 +25,15 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  padding: 10px 20px;
+  padding: 10px 16px;
   box-sizing: border-box;
 }
 
 /* Close button styles */
 .closeButton {
   position: absolute;
-  top: 29px;
-  right: 20px;
+  top: 20px;
+  right: 12px;
   width: 28px;
   height: 28px;
   cursor: pointer;
@@ -60,7 +60,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 8px 16px 8px;
+  padding: 14px 0 16px 0;
 }
 
 .navLinks {

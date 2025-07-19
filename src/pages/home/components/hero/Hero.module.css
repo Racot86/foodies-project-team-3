@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 133px;
 }
 
 .hero * {
@@ -41,16 +42,28 @@
   font-weight: var(--font-bold2);
 }
 
-.amazingRecipes {
+.heroButton.heroButton {
+  padding-top: 11px;
+  padding-bottom: 11px;
+  transition: color 0.4s ease, background-color 0.4s ease;
+}
+
+.heroContent .heroButton.heroButton:hover {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  transform: none;
+}
+
+.amazingRecipes.amazingRecipes {
   color: var(--color-white);
   text-align: center;
-  font-size: var(--font-md);
+  font-size: var(--font-sm);
   line-height: var(--line-height-normal);
   letter-spacing: -0.02em;
   font-weight: var(--font-medium);
-  width: 362px;
+  width: 326px;
   max-width: 100%;
-  margin: 0 auto var(--spacing-md);
+  margin: 0 auto 20px;
 }
 
 .imagePanacota {
@@ -60,6 +73,9 @@
   opacity: 1;
   transform: rotate(11deg);
   position: absolute;
+  bottom: 134px;
+  left: 35px;
+  z-index: 2;
 }
 
 .imageRulet {
@@ -68,6 +84,8 @@
   transform: rotate(-12deg);
   border-radius: 30px;
   position: absolute;
+  bottom: 114px;
+  right: 40px;
 }
 
 @media screen and (min-width: 768px) {
@@ -106,6 +124,10 @@
     height: 273px;
     bottom: 110px;
     right: 146px;
+  }
+  .heroButton.heroButton {
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 }
 

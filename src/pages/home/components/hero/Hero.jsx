@@ -35,7 +35,6 @@ export const Hero = () => {
           </Button>
         </PrivateContentArea>
       </div>
-      {/* <div className={styles.imagesContainer}> */}
       <img
         className={styles.imagePanacota}
         srcSet="/images/hero/panacota.webp 1x, /images/hero/panacota@2x.webp 2x, /images/hero/panacota@3x.webp 3x"
@@ -50,7 +49,6 @@ export const Hero = () => {
         alt="Rulet"
         loading="lazy"
       />
-      {/* </div> */}
     </section>
   );
 };
