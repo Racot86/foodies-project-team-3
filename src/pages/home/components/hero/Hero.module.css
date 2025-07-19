@@ -1,223 +1,137 @@
 .hero {
-    background: var(--color-primary);
-    border-radius: 0 0 var(--radius-xxl) var(--radius-xxl);
-    flex-shrink: 0;
-    height: 884px;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 82px;
+  background: var(--color-primary);
+  border-radius: 0 0 var(--radius-xxl) var(--radius-xxl);
+  flex-shrink: 0;
+  height: 744px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .heroContent {
-    position: relative;
-    width: 100%;
-    height: 530px; /* 60% of 884px */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: var(--spacing-2xl); /* Using spacing variable instead of fixed 48px */
-    z-index: 2;
-}
-
-.imagesContainer {
-    position: relative;
-    width: 100%;
-    height: 354px; /* 40% of 884px */
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: var(--spacing-xl); /* Adding gap between images to prevent overlapping */
-}
-
-.mobileHero .imagesContainer {
-    justify-content: space-around;
-    padding-bottom: var(--spacing-lg); /* Using spacing variable instead of fixed 20px */
-    gap: var(--spacing-md); /* Smaller gap for mobile to fit the smaller screen */
-}
-
-/* Images are displayed inline without special positioning */
-
-.mobileHero .heroContent {
-    padding-top: var(--spacing-xl); /* Using spacing variable instead of fixed 40px */
-}
-
-.mobileHero .improveYourCulinaryTalents,
-.mobileHero .amazingRecipes {
-    margin-bottom: var(--spacing-lg); /* Using spacing variable instead of fixed 20px */
+  position: relative;
+  width: 100%;
+  height: 225px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 130px;
+  z-index: 2;
 }
 
 .improveYourCulinaryTalents {
-    color: var(--color-white);
-    text-align: center;
-    font-size: clamp(var(--font-4xl), 5vw, 90px); /* Using clamp with font variable */
-    line-height: 1; /* Using relative line height */
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    width: min(875px, 90%); /* Using min function */
-    max-width: 100%;
-    margin: 0 auto var(--spacing-2xl); /* Using spacing variable instead of fixed 48px */
+  color: var(--color-white);
+  text-align: center;
+  font-size: var(--font-4xl);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  width: 327px;
+  max-width: 100%;
+  margin: 0 auto 20px;
+  font-weight: var(--font-bold2);
 }
 
 .amazingRecipes {
-    color: var(--color-white);
-    text-align: center;
-    font-family: var(--font-family-body), sans-serif;
-    font-size: var(--font-md);
-    line-height: var(--line-height-body);
-    letter-spacing: -0.02em;
-    font-weight: var(--font-medium);
-    width: 577px;
-    max-width: 100%;
-    margin: 0 auto var(--spacing-2xl);
+  color: var(--color-white);
+  text-align: center;
+  font-size: var(--font-md);
+  line-height: var(--line-height-normal);
+  letter-spacing: -0.02em;
+  font-weight: var(--font-medium);
+  width: 362px;
+  max-width: 100%;
+  margin: 0 auto var(--spacing-md);
 }
 
 .imagePanacota {
-    border-radius: var(--radius-xl);
-    transform: rotate(-11deg);
-    width: 128px;
-    height: 116px;
+  width: 77px;
+  height: 70px;
+  border-radius: var(--radius-xl);
+  opacity: 1;
+  transform: rotate(11deg);
+  position: absolute;
 }
 
 .imageRulet {
-    border-radius: var(--radius-xxl);
-    transform: rotate(12deg);
+  width: 190px;
+  height: 172px;
+  transform: rotate(-12deg);
+  border-radius: 30px;
+  position: absolute;
+}
+
+@media screen and (min-width: 768px) {
+  .hero {
+    height: 902px;
+  }
+
+  .heroContent {
+    height: 440px;
+    padding-top: 127px;
+  }
+
+  .improveYourCulinaryTalents {
+    font-size: 70px;
+    margin-bottom: 40px;
+    line-height: 1;
+    width: 678px;
+  }
+
+  .amazingRecipes.amazingRecipes {
+    width: 577px;
+    margin-bottom: 40px;
+    font-size: var(--font-md);
+    line-height: var(--line-height-body);
+  }
+
+  .imagePanacota {
+    width: 128px;
+    height: 116px;
+    bottom: 154px;
+    left: 117px;
+  }
+
+  .imageRulet {
     width: 302px;
     height: 273px;
-    object-fit: cover;
+    bottom: 110px;
+    right: 146px;
+  }
 }
 
-.heroButton {
-    margin-top: var(--spacing-lg); /* Using spacing variable instead of fixed 20px */
-    z-index: 2;
-}
+@media screen and (min-width: 1440px) {
+  .hero {
+    height: 880px;
+    width: 1400px;
+  }
 
-/* Tablet styles */
-@media (max-width: calc(var(--container-desktop) - 1px)) {
-    .hero {
-        height: 800px;
-    }
+  .heroContent {
+    height: 530px;
+    padding-top: 68px;
+  }
 
-    .heroContent {
-        height: 440px; /* 55% of 800px */
-    }
+  .improveYourCulinaryTalents {
+    font-size: 90px;
+    width: 875px;
+  }
 
-    .imagesContainer {
-        height: 360px; /* 45% of 800px */
-        gap: var(--spacing-lg); /* Medium gap for tablet view */
-    }
+  .imagePanacota {
+    bottom: 134px;
+    left: 448px;
+  }
 
-    .improveYourCulinaryTalents {
-        font-size: clamp(var(--font-4xl), 4vw, 70px);
-        line-height: var(--line-height-tight);
-        width: 700px;
-        margin-bottom: var(--spacing-xl); /* Using spacing variable instead of fixed 30px */
-    }
-
-    .amazingRecipes {
-        width: 500px;
-        margin-bottom: var(--spacing-xl); /* Using spacing variable instead of fixed 30px */
-    }
-}
-
-/* Mobile styles */
-@media (max-width: calc(var(--container-tablet) - 1px)) {
-    .hero {
-        height: 600px;
-    }
-
-    .heroContent {
-        height: 300px;
-        padding-top: var(--spacing-lg);
-    }
-
-    .imagesContainer {
-        height: 300px;
-        gap: var(--spacing-md); /* Consistent with mobile hero gap */
-    }
-
-    .improveYourCulinaryTalents {
-        font-size: var(--font-4xl);
-        line-height: var(--line-height-tight);
-        width: 320px;
-        margin-bottom: var(--spacing-lg);
-    }
-
-    .amazingRecipes {
-        font-size: var(--font-sm);
-        line-height: var(--line-height-normal);
-        width: 300px;
-        margin-bottom: var(--spacing-lg);
-    }
-
-    .imagePanacota {
-        width: 77px;
-        height: 70px;
-        border-radius: var(--radius-xl);
-        opacity: 1;
-        transform: rotate(-11deg);
-    }
-
-    .imageRulet {
-        width: 190px;
-        height: 172px;
-        transform: rotate(12deg);
-    }
-
-
-}
-
-/* Mobile small styles */
-@media (max-width: calc(var(--container-mobile) - 1px)) {
-    .hero {
-        height: 500px;
-    }
-
-    .heroContent {
-        height: 225px;
-        padding-top: var(--spacing-sm);
-    }
-
-    .imagesContainer {
-        height: 275px;
-        gap: var(--spacing-sm); /* Smaller gap for very small screens */
-    }
-
-    .improveYourCulinaryTalents {
-        font-size: var(--font-4xl);
-        line-height: var(--line-height-tight);
-        width: 280px;
-        margin-bottom: var(--spacing-md);
-    }
-
-    .amazingRecipes {
-        font-size: var(--font-sm);
-        line-height: var(--line-height-normal);
-        width: 260px;
-        margin-bottom: var(--spacing-md);
-    }
-
-    .imagePanacota {
-        width: 77px;
-        height: 70px;
-        opacity: 1;
-        transform: rotate(-11deg);
-    }
-
-    .imageRulet {
-        width: 190px;
-        height: 172px;
-        transform: rotate(12deg);
-    }
-
-    /* Images are displayed inline */
+  .imageRulet {
+    bottom: 104px;
+    right: 448px;
+  }
 }
