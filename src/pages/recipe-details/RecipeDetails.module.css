@@ -5,9 +5,16 @@
     padding-right: var(--spacing-md);
 }
 
-.recipeImageContainer {
-    margin-bottom: var(--spacing-xl);
+.recipeContent{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 32px;
 }
+
+/* .recipeImageContainer {
+    margin-bottom: var(--spacing-xl);
+} */
 
 .image {
     width: 100%;
@@ -21,6 +28,8 @@
     font-size: var(--font-lg);
     text-transform: uppercase;
     margin-bottom: 20px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
 }
 
 .recipeCategoryTime {
@@ -51,7 +60,7 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
-    margin-bottom: 41px;
+    margin-bottom: 32px;
 }
 
 .authorAvatar {
@@ -80,10 +89,10 @@
 
 .ingredients {
     font-weight: var(--font-bold2);
-    font-size: var(--font-xl);
+    font-size: var(--font-lg);
     text-transform: uppercase;
     color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 20px;
 }
 
 .ingredientsGrid {
@@ -91,7 +100,8 @@
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-xl);
-    margin-right: 15px;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
 .ingredientCard {
@@ -140,12 +150,17 @@
     color: var(--color-text-muted);
 }
 
+
 .instructions {
     line-height: var(--line-height-body);
     font-weight: var(--font-medium);
     font-size: var(--font-sm);
     margin-bottom: 20px;
     color: var(--color-text-muted);
+}
+
+.recipeInfo{
+    margin-bottom: 32px;
 }
 
 .favButton {
@@ -158,163 +173,93 @@
     cursor: pointer;
     transition: background-color var(--transition-fast);
     padding: 14px 20px;
-    margin-top: 12px;
 }
 
-@media (min-width: 376px) and (max-width: 767px) {
-        .recipeImageContainer {
-            margin-bottom: 40px;
-        }
-
-        .image {
-            height: 400px;
-        }
-
-
-        .recipeName {
-            font-weight: var(--font-bold2);
-            font-size: var(--font-2xl);
-        }
-
-         .category,
-        .prepTime {
-            padding: 10px;
-
-        }
-
-        .description {
-            font-size: var(--font-md);
-            color: var(--color-text-primary)
-            }
-
-        .authorAvatar {
-            width: 50px;
-            height: 50px;}
-
-        .authorContainer {
-            margin-bottom: 40px;
-        }
-
-        .authorName {
-            color: var(--color-text-primary);
-        }
-
-        .ingredients {
-            margin-bottom: 20px;
-        }
-
-        .ingredientsGrid {
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .imageWrapper {
-            min-width: 90px;
-            height: 90px;
-            padding: 15px;
-            margin-right: 14px;
-        }
-
-        .ingredientImage {
-            width: 60px;
-            height: 60px;
-
-        }
-
-        .nameMeasure {
-            gap: var(--spacing-xs);
-        }
-
-        .ingredientName {
-            font-weight: var(--font-medium);
-            font-size: var(--font-md);
-            }
-
-        .ingredientMeasure {
-            font-size: var(--font-md);
-        }
-
-        .instructions {
-            font-size: var(--font-md);
-            color: var(--color-text-primary);
-        }
-
-        .favButton {
-            font-size: var(--font-md);
-            padding: 16px 32px;
-            margin-top: 20px;
-        }
+.favButton:hover{
+    background-color:  var(--color-primary);
+}
+@media (min-width: 768px) {
+ .recipeDetail {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
 }
 
-@media (min-width: 768px) and (max-width: 1439px) {
-    .recipeDetail {
-            padding-left: 80px;
-            padding-right: 80px;
-        }
+.recipeContent{
+    gap: 40px;
+    margin-bottom: 32px;
+}
 
-        .recipeContent {
-            display: flex;
-            flex-direction: row;
-            gap: 80px;
-        }
-
-        .recipeImageContainer {
-            flex: 0 0 40%;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .image {
-            width: 551px;
-            height: 400px;
-            object-fit: cover;
-            border-radius: var(--radius-xxl);
-            display: block;
-        }
-
-        .allButImage {
-            flex: 1;
-        }
-
-        .description {
-            color: var(--color-text-primary);
-        }
-
-        .authorName {
-            color: var(--color-text-primary);
-                }
-
-        .imageWrapper {
-            margin-right: 19px;
-        }
-
-        .nameMeasure {
-            gap: 4px;
-        }
-
-        .instructions {
-            font-size: var(--font-md);
-            margin-bottom: 40px;
-            color: var(--color-text-primary)
-        }
-
-        .favButton {
-            font-size: var(--font-md);
-            padding: 16px 32px;
-            margin-top: 20px;
-            color: var(--color-text-primary)
-        }
+.recipeName {
+    font-size: var(--font-2xl);
+    margin-bottom: 20px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+}
+.description {
+    font-size: var(--font-md);
+    font-weight: var(--font-medium);
+    margin-bottom: 20px;
+    color: var(--color-main);
+    line-height: var(--line-height-body);
+}
+.authorName {
+    color: var(--color-main);
+}
+.authorContainer {
+    margin-bottom: 40px;
+}
+.ingredients {
+    font-size: var(--font-xl);
+   
+}
+.ingredientsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+  max-height: none;
+  overflow-y: visible;
+}
+.ingredientName {
+    font-size: var(--font-md);
+}
+.ingredientMeasure {
+    font-size: var(--font-md);
+}
+.imageWrapper {
+    min-width: 90px;
+    height: 90px;
+  
+}
+.ingredientImage {
+    width: 60px;
+    height: 60px;
+    
+}
+.ingredients {
+    font-size: var(--font-xl);
+  
+}
+.instructions {
+    font-size: var(--font-md);
+    margin-bottom: 20px;
+    color: var(--color-main);
+}
+.recipeInfo{
+    margin-bottom: 40px;
+}
 }
 
 @media (min-width: 1440px) {
     .recipeDetail {
-        padding-left: 100px;
-        padding-right: 100px;
+        padding-left: 80px;
+        padding-right: 80px;
     }
 
     .recipeContent {
         display: flex;
         flex-direction: row;
-        gap: 100px;
+        gap: 80px;
     }
 
     .recipeImageContainer {
