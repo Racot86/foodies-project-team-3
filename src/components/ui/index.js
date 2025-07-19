@@ -8,4 +8,5 @@ export { SocialLink } from "./SocialLink";
 export { Pagination } from "./Pagination";
 export { SignToggle } from "./SignToggle/SignToggle";
 export { BreadCrumbs } from "./BreadCrumbs/BreadCrumbs";
+export { default as Loader } from "./Loader/Loader";
 export { default as Tabs } from "./Tabs/Tabs";
