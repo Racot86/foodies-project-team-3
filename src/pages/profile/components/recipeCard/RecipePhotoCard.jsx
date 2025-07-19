@@ -5,7 +5,7 @@ const SmallRecipePhoto = ({ imgUrl, title }) => {
     <div className={styles.recipeCard}>
       <img
         className={styles.recipeImg}
-        src={imgUrl !== "[object FileList]" ? imgUrl : "/images/no_image.jpg"}
+        src={imgUrl !== "[object FileList]" ? imgUrl : "/images/no_image.webp"}
         alt={title}
       />
     </div>

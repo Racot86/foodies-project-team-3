@@ -3,21 +3,21 @@ import CategoryCard from "./CategoryCard.jsx";
 import styles from "./CategoryList.module.css";
 
 const categoryImages = {
-  Beef: "/images/Images_categories/Beef.png",
-  Breakfast: "/images/Images_categories/Breakfast.png",
-  Dessert: "/images/Images_categories/Desserts.png",
-  Lamb: "/images/Images_categories/Lamb.png",
-  Goat: "/images/Images_categories/Goat.png",
-  Miscellaneous: "/images/Images_categories/Miscellaneous.png",
-  Pasta: "/images/Images_categories/Pasta.png",
-  Pork: "/images/Images_categories/Pork.png",
-  Seafood: "/images/Images_categories/Seafood.png",
-  Side: "/images/Images_categories/Side.png",
-  Starter: "/images/Images_categories/Starter.png",
-  Vegetarian: "/images/Images_categories/Vegetarian.png",
-  Vegan: "/images/Images_categories/Vegan.png",
-  Chicken: "/images/Images_categories/Chicken.jpg",
-  Soup: "/images/Images_categories/Soup.jpg",
+  Beef: "/images/Images_categories/Beef.webp",
+  Breakfast: "/images/Images_categories/Breakfast.webp",
+  Dessert: "/images/Images_categories/Desserts.webp",
+  Lamb: "/images/Images_categories/Lamb.webp",
+  Goat: "/images/Images_categories/Goat.webp",
+  Miscellaneous: "/images/Images_categories/Miscellaneous.webp",
+  Pasta: "/images/Images_categories/Pasta.webp",
+  Pork: "/images/Images_categories/Pork.webp",
+  Seafood: "/images/Images_categories/Seafood.webp",
+  Side: "/images/Images_categories/Side.webp",
+  Starter: "/images/Images_categories/Starter.webp",
+  Vegetarian: "/images/Images_categories/Vegetarian.webp",
+  Vegan: "/images/Images_categories/Vegan.webp",
+  Chicken: "/images/Images_categories/Chicken.webp",
+  Soup: "/images/Images_categories/Soup.webp",
 };
 
 function useWindowWidth() {
@@ -73,7 +73,7 @@ const CategoryList = () => {
         <li key={cat.id} className={styles.item}>
           <CategoryCard
             category={cat.name}
-            image={categoryImages[cat.name] || "/images/default.png"}
+            image={categoryImages[cat.name] || "/images/no_image.webp"}
           />
         </li>
       ))}
