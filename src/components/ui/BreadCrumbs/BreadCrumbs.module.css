@@ -29,7 +29,12 @@
   text-decoration: none;
 }
 
-.link:hover {
+.homeLink {
+  color: var(--color-secondary);
+  text-decoration: none;
+}
+
+.link:hover, .homeLink:hover {
   text-decoration: underline;
 }
 

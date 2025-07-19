@@ -8,6 +8,13 @@ import categoriesReducer from "./slices/categoriesSlice";
 import ingredientsReducer from "./slices/ingredientsSlice";
 import recipesReducer from "./slices/addRecipeSlice";
 import userReducer from "./slices/userSlice";
+import recipeDetailsReducer from "./slices/recipeDetailsSlice";
+
+import followersReducer from "./slices/followerSlice";
+import myRecipeReducer from "./slices/myRecipeSlice";
+import favoritesReducer from "@/redux/slices/favoriteRecipeSlice";
+import userRecipesReducer from "./slices/userRecipesSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +26,13 @@ export const store = configureStore({
     ingredients: ingredientsReducer,
     recipes: recipesReducer,
     users: userReducer,
+    recipeDetails: recipeDetailsReducer,
+
+    followers: followersReducer,
+
+    myrecipe: myRecipeReducer,
+    favorites: favoritesReducer,
+    userRecipes: userRecipesReducer,
   },
 });
 

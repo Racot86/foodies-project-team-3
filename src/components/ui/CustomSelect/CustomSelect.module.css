@@ -1,0 +1,116 @@
+.customSelect {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  font-family: var(--font-family-body), sans-serif;
+  margin-bottom: 16px;
+}
+
+.selectWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-xxl);
+  transition: all 0.2s ease;
+}
+
+.selectWrapper:hover {
+  /* No box-shadow to match FieldSelect */
+}
+
+.selectedValue {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background: transparent;
+  font-size: var(--font-md);
+  color: var(--color-text);
+  cursor: pointer;
+  outline: none;
+  height: 48px;
+}
+
+.placeholder {
+  color: var(--color-secondary);
+  opacity: 0.7;
+}
+
+.selectIcon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.clearIcon {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+.optionsList {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-secondary);
+  border-radius: 15px;
+  /* Removed box-shadow to match FieldSelect */
+  z-index: 10;
+  padding: 16px 18px;
+  margin: 0;
+  list-style: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  font-size: var(--font-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.optionsList::-webkit-scrollbar {
+  display: none;
+}
+
+.option {
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--color-text);
+}
+
+.option:hover,
+.option[aria-selected="true"] {
+  background-color: rgba(139, 170, 54, 0.1);
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Responsive styles */
+@media screen and (min-width: 768px) {
+  .selectedValue {
+    padding: 14px;
+    font-size: var(--font-md);
+  }
+
+  .optionsList {
+    font-size: var(--font-md);
+  }
+
+  /* Removed option padding to match FieldSelect */
+}

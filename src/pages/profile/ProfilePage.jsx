@@ -6,6 +6,7 @@ import Page from "@components/page/Page";
 import { Tabs, Heading, Text, ButtonIcon, Button } from "@components/ui";
 import Modal from "@components/modal/Modal";
 import LogOutModal from "@components/logOutModal/LogOutModal";
+import { DEFAULT_AVATAR } from "../../services/api";
 
 import { FiPlus } from "react-icons/fi";
 import { toast, ToastContainer } from "react-toastify";
@@ -19,6 +20,10 @@ import {
   followUser,
   selectError,
 } from "../../redux/slices/userSlice";
+import {
+  unfollowUser,
+  checkFollowStatus
+} from "../../redux/slices/followerSlice";
 
 function ProfilePage() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -27,6 +32,7 @@ function ProfilePage() {
   const loggedUser = useSelector(selectUser);
   const requestedUserDetails = useSelector(selectUserDetails);
   const error = useSelector(selectError);
+  const { isFollowing, isFollowActionLoading } = useSelector((state) => state.followers);
 
   // get current user
   useEffect(() => {
@@ -36,6 +42,13 @@ function ProfilePage() {
   const { userId } = useParams();
   const isMe = !userId || userId === loggedUser?.id;
   const idOfUserToRender = isMe ? loggedUser?.id : userId;
+
+  // Check if the current user is following the viewed user
+  useEffect(() => {
+    if (!isMe && userId) {
+      dispatch(checkFollowStatus(userId));
+    }
+  }, [dispatch, userId, isMe]);
 
   // get specific user details
   useEffect(() => {
@@ -63,9 +76,19 @@ function ProfilePage() {
     setIsLogoutModalOpen(false);
   };
 
-  const followUserHandler = () => {
+  const followUserHandler = async () => {
     if (!isMe) {
-      dispatch(followUser(userId));
+      if (isFollowing) {
+        // If already following, unfollow the user
+        await dispatch(unfollowUser(userId));
+        // After unfollowing, check the follow status again
+        dispatch(checkFollowStatus(userId));
+      } else {
+        // If not following, follow the user
+        await dispatch(followUser(userId));
+        // After following, check the follow status again
+        dispatch(checkFollowStatus(userId));
+      }
     }
   };
 
@@ -102,12 +125,10 @@ function ProfilePage() {
               <div className={styles.profileInfo}>
                 <div className={styles.profileImageContainer}>
                   <div className={styles.imagePlaceholder}>
-                    {requestedUserDetails?.avatar && (
-                      <img
-                        src={requestedUserDetails.avatar}
-                        alt="User Avatar"
-                      />
-                    )}
+                    <img
+                      src={requestedUserDetails?.avatar || DEFAULT_AVATAR}
+                      alt="User Avatar"
+                    />
                   </div>
                   {isMe && (
                     <ButtonIcon
@@ -199,9 +220,9 @@ function ProfilePage() {
                   href={null}
                   to={null}
                   className={styles.actionButton}
-                  isLoading={false}
+                  isLoading={isFollowActionLoading}
                 >
-                  Follow
+                  {isFollowing ? "Unfollow" : "Follow"}
                 </Button>
               )}
             </div>
@@ -209,7 +230,7 @@ function ProfilePage() {
         </div>
 
         <div className={styles.tabsSection}>
-          <Tabs />
+          <Tabs visibleTabs={isMe ? {} : { favorites: false, following: false }} />
           <div className={styles.tabContent}>
             <Outlet />
           </div>

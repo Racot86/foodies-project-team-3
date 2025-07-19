@@ -83,7 +83,8 @@
 }
 
 .fullWidthWrapper,
-.unlimitedMaxWidth {
+.unlimitedMaxWidth,
+.customSelect {
     width: 100% !important;
 }
 
@@ -148,8 +149,9 @@
     }
 
     .fullWidthWrapper,
-    .unlimitedMaxWidth {
-        width: 330px;
+    .unlimitedMaxWidth,
+    .customSelect {
+        width: 330px !important;
     }
 
     .fullWidthInner {

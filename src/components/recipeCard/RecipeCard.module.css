@@ -124,6 +124,7 @@
     justify-content: center;
 }
 
+
 /* Loading state */
 .loading {
     min-height: 300px;
@@ -146,12 +147,12 @@
     justify-content: center;
     padding: 20px;
     text-align: center;
-    color: var(--color-text-error);
+    color: var(--color-error);
 }
 
 @media (min-width: 768px) {
     .card {
-        min-width: 290px;
+        /* Removed min-width to allow card to adapt to container width */
     }
 
     .imageContainer {

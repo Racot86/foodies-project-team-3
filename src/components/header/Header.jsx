@@ -18,7 +18,10 @@ export const Header = () => {
   const { isAuthenticated } = useAuthRedux();
 
   const isWhiteHeader =
-    location.pathname === '/add-recipe' || location.pathname === '/profile' || location.pathname.includes('profile');
+    location.pathname === '/add-recipe' ||
+    location.pathname === '/profile' ||
+    location.pathname.includes('profile') ||
+    location.pathname.includes('recipe-details');
 
   return (
     <header className={`${styles.header} ${isWhiteHeader ? styles.whiteTheme : ''}`}>
@@ -36,7 +39,7 @@ export const Header = () => {
                   `${styles.link} ${isActive ? styles.active : ''} ${isWhiteHeader ? styles.white : ''}`
                 }
               >
-                Home
+                HOME
               </NavLink>
             </li>
             <li>
@@ -47,7 +50,7 @@ export const Header = () => {
                     `${styles.link} ${isActive ? styles.active : ''} ${isWhiteHeader ? styles.white : ''}`
                   }
                 >
-                  Add Recipe
+                  ADD RECIPE
                 </NavLink>
               </PrivateContentArea>
             </li>

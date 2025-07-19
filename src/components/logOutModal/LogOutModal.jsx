@@ -1,29 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Modal from "@/components/modal/Modal";
 import { Button, Text } from "@/components/ui";
 import { Heading } from "@/components/ui/Heading/Heading";
 import { useAuthRedux } from "@/hooks/useAuthRedux";
-import { getDeviceType } from "@/utils/deviceUtils";
+import { useDeviceType } from "@/hooks/useDeviceType";
 import styles from "./LogOutModal.module.css";
 
 const LogOutModal = ({ onClose }) => {
   const navigate = useNavigate();
   const { logout, isSignOutLoading } = useAuthRedux();
 
-  const [deviceType, setDeviceType] = useState(() => getDeviceType());
-
-  useEffect(() => {
-    const handleResize = () => {
-      setDeviceType(getDeviceType());
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const deviceType = useDeviceType();
 
   const titleText = deviceType.isMobile ? "Log out" : "Are you logging out?";
 
