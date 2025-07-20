@@ -7,8 +7,9 @@ import { useDeviceType } from "@/hooks/useDeviceType";
 import icons from "@/assets/icons/icons.svg";
 import styles from "./UserCard.module.css";
 import { DEFAULT_AVATAR } from "@/services/api";
+import { FiLoader } from "react-icons/fi";
 
-const UserCard = ({ user, onButtonClick, tabType }) => {
+const UserCard = ({ user, onButtonClick, tabType, isLoading = false }) => {
   const navigate = useNavigate();
   const firstName = user.name ? user.name.split(" ")[0] : "";
 
@@ -47,7 +48,7 @@ const UserCard = ({ user, onButtonClick, tabType }) => {
     if (tabType === "followers") {
       return "Follow";
     } else if (tabType === "following") {
-      return "Following";
+      return "Unfollow";
     }
     return "Follow";
   };
@@ -74,17 +75,65 @@ const UserCard = ({ user, onButtonClick, tabType }) => {
           <Text size="sm" color="muted" className={styles.recipeCount}>
             Own recipes: {user.recipesCount || 0}
           </Text>
-          <Button
-            variant={Button.variants.SECONDARY}
-            onClick={handleButtonClick}
-            className={styles.actionButton}
-            href={null}
-            to={null}
-            isLoading={false}
-            type="button"
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (!isLoading) {
+                handleButtonClick();
+              }
+            }}
+            className={`${styles.actionButton}`}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              textTransform: 'uppercase',
+              borderRadius: '30px',
+              border: '1px solid var(--btn-primary-border)',
+              backgroundColor: 'var(--btn-primary-bg)',
+              color: 'var(--btn-primary-text)',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              transition: 'all var(--transition-fast)',
+              position: 'relative',
+              opacity: isLoading ? '0.6' : '1'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = 'white';
+              e.currentTarget.style.color = 'var(--color-primary)';
+              e.currentTarget.style.borderColor = 'var(--color-primary)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--btn-primary-bg)';
+              e.currentTarget.style.color = 'var(--btn-primary-text)';
+              e.currentTarget.style.borderColor = 'var(--btn-primary-border)';
+              e.currentTarget.style.transform = 'none';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+            }}
           >
-            {getButtonText()}
-          </Button>
+            {isLoading ? (
+              <FiLoader
+                style={{
+                  animation: 'rotate var(--transition-slow) infinite',
+                  width: '16px',
+                  height: '16px'
+                }}
+              />
+            ) : (
+              getButtonText()
+            )}
+          </a>
         </div>
       </div>
 
