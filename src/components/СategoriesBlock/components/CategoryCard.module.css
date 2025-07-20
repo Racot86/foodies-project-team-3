@@ -8,7 +8,11 @@
   flex-direction: column;
   justify-content: flex-end;
   background: #f5f5f5;
+  /* Removed transition to ensure immediate scaling with scroll */
 }
+
+
+/* Hover effect is now handled in JavaScript to add 0.2 to the current scale value */
 
 .image {
   width: 100%;
@@ -16,16 +20,14 @@
   object-fit: cover;
   border-radius: 32px;
   display: block;
+  transition: transform 0.3s ease;
 }
 
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(5, 5, 5, 0.2);
-  pointer-events: none;
-  z-index: 1;
+.card:hover .image {
+  transform: scale(1.08);
 }
+
+/* Removed .card::after - now using a real DOM element for the overlay */
 
 .captionRow {
   position: absolute;
