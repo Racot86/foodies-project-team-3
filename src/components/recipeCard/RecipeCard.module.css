@@ -1,6 +1,6 @@
 .card {
     width: 100%;
-    /* max-width: 343px; */
+    max-width: 342px; /* Max width for tablet and mobile to match skeleton */
     overflow: hidden;
     background-color: var(--color-background);
     display: flex;
@@ -125,7 +125,7 @@
 }
 
 
-/* Loading state */
+/* Loading state - kept for reference but no longer used in RecipeCard */
 .loading {
     min-height: 300px;
     display: flex;
@@ -138,6 +138,7 @@
         transform: rotate(360deg);
     }
 }
+
 
 /* Error state */
 .error {
@@ -152,7 +153,7 @@
 
 @media (min-width: 768px) {
     .card {
-        /* Removed min-width to allow card to adapt to container width */
+        max-width: 290px; /* Max width for desktop to match skeleton */
     }
 
     .imageContainer {

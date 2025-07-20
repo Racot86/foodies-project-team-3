@@ -59,8 +59,8 @@
   --font-bold2: 800;
 
   /* === FONT FAMILIES === */
-  --font-family-heading: 'Mulish', sans-serif;
-  --font-family-body: 'Mulish', sans-serif;
+  --font-family-heading: "Mulish", sans-serif;
+  --font-family-body: "Mulish", sans-serif;
 
   /* === LINE HEIGHTS === */
   --line-height-tight: 1.25;

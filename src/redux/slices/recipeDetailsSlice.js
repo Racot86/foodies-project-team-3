@@ -38,7 +38,7 @@ export const fetchIngredients = createAsyncThunk(
   "recipeDetails/fetchIngredients",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await ingredientsService();
+      const response = await ingredientsService({ filter: false });
       return response;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to fetch ingredients");

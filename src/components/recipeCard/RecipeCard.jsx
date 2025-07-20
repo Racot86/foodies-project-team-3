@@ -5,26 +5,41 @@ import { FiHeart, FiArrowUpRight } from 'react-icons/fi';
 import { ButtonIcon } from '@components/ui/ButtonIcon/ButtonIcon';
 import { Loader } from '@components/ui';
 import Heading from '@components/ui/Heading/Heading';
-import { getRecipeById, addToFavorites, removeFromFavorites, isRecipeInFavorites } from '../../services/recipeService';
-import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '../../services/api';
+import { getRecipeById } from '../../services/recipeService';
+import { addToFavorites, removeFromFavorites, isRecipeInFavorites } from '../../services/favoritesService';
+import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '@/services/api.js';
 import styles from './RecipeCard.module.css';
-import { useBreakpoint } from '../../hooks/useBreakpoint';
+import { useBreakpoint } from '@/hooks/useBreakpoint.js';
 import { useAuthRedux } from '@/hooks';
-import SignInModal from '@/components/signInModal/SignInModal';
 import PrivateContentArea from "@components/privateContentArea/PrivateContentArea.jsx";
 import { toast } from 'react-toastify';
+import RecipeCardSkeleton from '@/components/recipeCardSkeleton/RecipeCardSkeleton';
 
 const FALLBACK_IMAGE = DEFAULT_RECIPE_IMAGE;
-const FALLBACK_AVATAR = DEFAULT_AVATAR;
 
-const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
+
+const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [recipe, setRecipe] = useState(initialRecipe || null);
-  const [loading, setLoading] = useState(!initialRecipe);
+  const [internalLoading, setInternalLoading] = useState(!initialRecipe);
   const [error, setError] = useState(null);
+  // Initialize image loading states to true if there's no recipe (to avoid showing loader when not needed)
+  const [recipeImageLoaded, setRecipeImageLoaded] = useState(!recipe);
+  const [avatarImageLoaded, setAvatarImageLoaded] = useState(!recipe);
+
+  // Use external loading state if provided, otherwise use internal loading state
+  const dataLoading = externalLoading !== undefined ? externalLoading : internalLoading;
+
+  // Only check image loading states if we have a recipe and data is not loading
+  // This prevents the loader from showing indefinitely if images fail to trigger onLoad
+  const imageLoading = recipe && !dataLoading ? (!recipeImageLoaded || !avatarImageLoaded) : false;
+
+  // Final loading state
+  const loading = dataLoading || imageLoading;
+
   const [imageError, setImageError] = useState(false);
   const [avatarError, setAvatarError] = useState(false);
-  const [showSignInModal, setShowSignInModal] = useState(false);
+
 
   // Use breakpoint to determine heading level
   const { breakpoint } = useBreakpoint();
@@ -35,17 +50,17 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
   const navigate = useNavigate();
 
   const fetchRecipe = async (id) => {
-    setLoading(true);
+    setInternalLoading(true);
     setError(null);
 
     try {
       const data = await getRecipeById(id);
       setRecipe(data);
-      setLoading(false);
+      setInternalLoading(false);
     } catch (err) {
       console.error('Error fetching recipe:', err);
       setError('Failed to load recipe');
-      setLoading(false);
+      setInternalLoading(false);
     }
   };
 
@@ -54,6 +69,25 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
       fetchRecipe(recipeId);
     }
   }, [recipeId, initialRecipe]);
+
+  // Reset image loading states when recipe changes
+  useEffect(() => {
+    if (recipe) {
+      // Reset image loading states when a new recipe is loaded
+      setRecipeImageLoaded(false);
+      setAvatarImageLoaded(false);
+
+      // Safety timeout: if images don't load within 5 seconds, consider them loaded anyway
+      // This prevents infinite loading if onLoad events don't fire
+      const timeoutId = setTimeout(() => {
+        setRecipeImageLoaded(true);
+        setAvatarImageLoaded(true);
+      }, 5000);
+
+      // Clean up timeout if component unmounts or recipe changes
+      return () => clearTimeout(timeoutId);
+    }
+  }, [recipe?.id]);
 
   // Check if recipe is in favorites when recipe data is loaded
   useEffect(() => {
@@ -73,11 +107,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
   }, [recipe, isAuthenticated]);
 
   const handleFavoriteClick = async () => {
-    if (!isAuthenticated) {
-      // Show sign in modal if user is not authenticated
-      setShowSignInModal(true);
-      return;
-    }
+
 
     try {
       if (isFavorite) {
@@ -96,26 +126,13 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
   };
 
   const handleAuthorClick = () => {
-    if (!isAuthenticated) {
-      // Show sign in modal if user is not authenticated
-      setShowSignInModal(true);
-    } else {
-      // Navigate to author's profile page
       navigate(`/profile/${recipe.owner.id}`);
-    }
   };
 
-  const handleCloseModal = () => {
-    setShowSignInModal(false);
-  };
 
   // Show loading state
   if (loading) {
-    return (
-      <div className={`${styles.card} ${styles.loading}`}> 
-        <Loader size={40} />
-      </div>
-    );
+    return <RecipeCardSkeleton />;
   }
 
   // Show error state
@@ -142,7 +159,11 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
             src={imageError ? FALLBACK_IMAGE : image}
             alt={title}
             className={styles.image}
-            onError={() => setImageError(true)}
+            onLoad={() => setRecipeImageLoaded(true)}
+            onError={() => {
+              setImageError(true);
+              setRecipeImageLoaded(true); // Consider error as "loaded" to avoid infinite loading
+            }}
           />
         </div>
 
@@ -161,6 +182,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
 
           <div className={styles.footer}>
             {/* Author section as a button */}
+            <PrivateContentArea>
             <button
               type="button"
               className={styles.author}
@@ -170,11 +192,15 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
                 src={avatarError || !owner.avatar ? DEFAULT_AVATAR : owner.avatar}
                 alt={owner.name}
                 className={styles.avatar}
-                onError={() => setAvatarError(true)}
+                onLoad={() => setAvatarImageLoaded(true)}
+                onError={() => {
+                  setAvatarError(true);
+                  setAvatarImageLoaded(true); // Consider error as "loaded" to avoid infinite loading
+                }}
               />
               <span className={styles.authorName}>{owner.name}</span>
             </button>
-
+            </PrivateContentArea>
             <div className={styles.actions}>
               <PrivateContentArea>
               {/* Favorite button */}
@@ -197,22 +223,14 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe }) => {
         </div>
       </div>
 
-      {/* Sign In Modal */}
-      {showSignInModal && (
-        <SignInModal
-          onClose={handleCloseModal}
-          onOpenSignUp={() => {
-            handleCloseModal();
-            // Here you could open SignUp modal if needed
-          }}
-        />
-      )}
+
     </>
   );
 };
 
 RecipeCard.propTypes = {
   recipeId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  loading: PropTypes.bool,
   recipe: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,
@@ -250,7 +268,8 @@ RecipeCard.propTypes = {
 
 RecipeCard.defaultProps = {
   recipeId: null,
-  recipe: null
+  recipe: null,
+  loading: undefined
 };
 
 export default RecipeCard;

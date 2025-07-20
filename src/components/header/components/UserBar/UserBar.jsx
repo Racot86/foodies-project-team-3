@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import css from "./UserBar.module.css";
 import defaultAvatar from "@assets/react.svg"; // додати зображення на дефолтний аватар
-import  Modal  from "../../../modal/Modal.jsx"
 import clsx from "clsx";
-import UserDropDown from "@components/ui/UserDropDown/UserDropDown.jsx"
+import UserDropDown from "@components/ui/UserDropDown/UserDropDown.jsx";
 import { GoChevronDown } from "react-icons/go";
 import LogOutModal from "@components/logOutModal/LogOutModal.jsx";
 import { useAuthRedux } from "@/hooks/useAuthRedux";
-
-
 
 const UserBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -48,28 +45,34 @@ const UserBar = () => {
 
   return (
     <div className={css.wrapper} ref={dropdownRef}>
-      <button className={css.button} onClick={toggleDropdown}>
+      <button
+        className={clsx(css.button, isDropdownOpen && css.buttonOpen)}
+        onClick={toggleDropdown}
+      >
         <img
           src={user.avatar || defaultAvatar}
           alt="User Avatar"
           className={css.avatar}
         />
         <span className={css.username}>{user.name}</span>
-        <GoChevronDown className={clsx(css.icon, isDropdownOpen && css.iconOpen)}/>
+        <GoChevronDown
+          className={clsx(css.icon, isDropdownOpen && css.iconOpen)}
+        />
       </button>
 
-      <div className={clsx(css.dropdownContainer, isDropdownOpen && css.dropdownVisible)}>
+      <div
+        className={clsx(
+          css.dropdownContainer,
+          isDropdownOpen && css.dropdownVisible
+        )}
+      >
         <UserDropDown
           onProfileClick={() => setIsDropdownOpen(false)}
           onLogoutClick={openLogoutModal}
         />
       </div>
 
-      {isModalOpen && (
-        <Modal onClose={closeLogoutModal}>
-          <LogOutModal onClose={closeLogoutModal} />
-        </Modal>
-      )}
+      {isModalOpen && <LogOutModal onClose={closeLogoutModal} />}
     </div>
   );
 };
