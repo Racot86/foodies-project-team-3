@@ -7,9 +7,9 @@
 }
 
 .profilePage {
-  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 8px;
 }
 
 .profileHeading {
@@ -102,11 +102,9 @@
 }
 
 .tabContent {
-  margin-top: 1rem;
-  padding: 1.5rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  background-color: red;
 }
 
 @media (min-width: 768px) {
