@@ -1,3 +1,7 @@
+.recipePage {
+  margin-bottom: 64px;
+}
+
 .wrap {
   margin-bottom: 32px;
   width: 343px;
@@ -19,6 +23,10 @@
 }
 
 @media screen and (min-width: 768px) {
+  .recipePage {
+    margin-bottom: 100px;
+  }
+
   .wrap {
     margin-bottom: 40px;
     width: 704px;
@@ -38,6 +46,10 @@
 }
 
 @media screen and (min-width: 1440px) {
+  .recipePage {
+    margin-bottom: 120px;
+  }
+
   .wrap {
     width: 1280px;
   }

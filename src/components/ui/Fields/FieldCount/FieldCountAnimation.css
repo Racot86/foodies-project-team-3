@@ -1,0 +1,47 @@
+.animated-digits-container {
+  display: inline-flex;
+  overflow: hidden;
+}
+
+.animated-digit {
+  display: inline-block;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Animation for digit increasing */
+.digit-animate-up {
+  animation: slideDigitUp 0.3s ease-in-out both;
+}
+
+/* Animation for digit decreasing */
+.digit-animate-down {
+  animation: slideDigitDown 0.3s ease-in-out both;
+}
+
+@keyframes slideDigitUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDigitDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Style for the unit text to keep it aligned */
+.unit-text {
+  display: inline-block;
+}

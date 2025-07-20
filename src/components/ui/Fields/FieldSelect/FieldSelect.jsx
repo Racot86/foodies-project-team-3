@@ -169,12 +169,17 @@ export const FieldSelect = ({
         )}
       </div>
 
-      {isOpen && !disabled && (
-        <ul
-          className={clsx(css.optionsList, optionsListClassName, listHeightClass)}
+      <ul
+          className={clsx(
+            css.optionsList,
+            optionsListClassName,
+            listHeightClass,
+            (!isOpen || disabled) && css.optionsListHidden
+          )}
           role="listbox"
           id={`${fieldId}-listbox`}
           tabIndex={-1}
+          aria-hidden={!isOpen || disabled}
         >
           {filteredOptions.length > 0 ? (
             filteredOptions.map(
@@ -186,7 +191,7 @@ export const FieldSelect = ({
                   aria-selected={optionValue === value}
                   className={css.option}
                   onClick={() => handleOptionClick(optionValue, optionLabel)}
-                  tabIndex={0}
+                  tabIndex={isOpen && !disabled ? 0 : -1}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -204,7 +209,6 @@ export const FieldSelect = ({
             </li>
           )}
         </ul>
-      )}
 
       {helperText && !error && <p className={css.helperText}>{helperText}</p>}
       {error && <ErrorField id={`${fieldId}-error`}>{error}</ErrorField>}

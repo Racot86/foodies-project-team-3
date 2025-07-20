@@ -9,6 +9,7 @@ import { getRecipes } from '@/services/recipeService';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { fetchIngredients } from '@/redux/slices/ingredientsSlice';
 import { fetchAreas } from '@/redux/slices/areasSlice';
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 const BrowseCategory = () => {
   const { categoryName } = useParams();
@@ -38,7 +39,7 @@ const BrowseCategory = () => {
 
 
   useEffect(() => {
-    
+
     dispatch(fetchIngredients({
       category: selectedCategory || undefined,
       area: selectedArea || undefined,
@@ -46,7 +47,7 @@ const BrowseCategory = () => {
       filter: true
     }));
 
-   
+
     dispatch(fetchAreas({
       category: selectedCategory || undefined,
       ingredient: selectedIngredient || undefined,
@@ -55,14 +56,14 @@ const BrowseCategory = () => {
     }));
   }, [dispatch, selectedCategory, selectedArea, selectedIngredient]);
 
- 
+
   useEffect(() => {
     if (categoryName !== undefined) {
       setSelectedCategory(categoryName);
     }
   }, [categoryName]);
 
-  
+
   const fetchRecipesWithFilters = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -83,15 +84,15 @@ const BrowseCategory = () => {
     }
   }, [selectedCategory, selectedIngredient, selectedArea, currentPage]);
 
-  
+
   useEffect(() => {
     fetchRecipesWithFilters();
   }, [fetchRecipesWithFilters]);
 
-  
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-   
+
     if (categoryPageRef.current) {
       categoryPageRef.current.scrollIntoView({
         behavior: 'smooth'
@@ -99,7 +100,7 @@ const BrowseCategory = () => {
     }
   };
 
-  
+
   useEffect(() => {
     console.log('Current filters:', {
       category: selectedCategory,
@@ -111,51 +112,52 @@ const BrowseCategory = () => {
 
   const handleFilterChange = (setter, value) => {
     setter(value);
-    setCurrentPage(1); 
-    
+    setCurrentPage(1);
+
     setRecipesData(prevData => ({
       ...prevData,
       totalPages: 0
     }));
   };
 
- 
+
   const ingredientOptions = ingredients.map(item => ({
     value: item.name,
     label: item.name
   }));
 
- 
+
   const areaOptions = areas.map(item => ({
     value: item.name,
     label: item.name
   }));
 
-  
+
   useEffect(() => {
-    
+
     if (selectedIngredient && !ingredients.some(item => item.name === selectedIngredient)) {
       setSelectedIngredient("");
     }
   }, [ingredients, selectedIngredient]);
 
   useEffect(() => {
-    
+
     if (selectedArea && !areas.some(item => item.name === selectedArea)) {
       setSelectedArea("");
     }
   }, [areas, selectedArea]);
 
-  
+
   const recipes = recipesData?.recipes || [];
 
-  
+
   const categoryInfo = recipesData?.category || {
     name: selectedCategory || "All Recipes",
     description: selectedCategory ? `Recipes from the ${selectedCategory} category.` : "Browse all recipes."
   };
 
   return (
+      <PageTransitionWrapper>
     <div className={styles.categoryPage} ref={categoryPageRef}>
       <div className={styles.header}>
           <div className={styles.backLinkContainer}>
@@ -219,6 +221,7 @@ const BrowseCategory = () => {
           </div>
       </div>
     </div>
+      </PageTransitionWrapper>
   );
 };
 

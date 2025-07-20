@@ -4,9 +4,11 @@ import CategoryList from "./CategoryList";
 import styles from "./CategoriesBlock.module.css";
 import { ResponsiveContainer } from "../../container/ResponsiveContainer";
 import { Text } from "@/components/ui";
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 const CategoriesBlock = () => (
-  <div className={styles.section}>
+  <PageTransitionWrapper>
+    <div className={styles.section}>
     <div className={styles.titlesubtitle}>
       <Heading level={1} size="xl" weight="" align="left" className="">
         Categories
@@ -19,6 +21,7 @@ const CategoriesBlock = () => (
     </div>
     <CategoryList />
   </div>
+  </PageTransitionWrapper>
 );
 
 export default CategoriesBlock;

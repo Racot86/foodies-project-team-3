@@ -25,7 +25,7 @@ const CategoryCard = ({
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (isAll) return; // Don't apply scaling effect to "All Categories" card
+    //if (isAll) return; // Don't apply scaling effect to "All Categories" card
 
     const card = cardRef.current;
     if (!card) return;
@@ -44,7 +44,7 @@ const CategoryCard = ({
       const proximity = 1 - Math.min(distance, 1); // 1 when at center, 0 when far
 
       // Scale between 0.96 (far) and 1.0 (center)
-      const minScale = 0.96;
+      const minScale = 0.95;
       const maxScale = 1.0;
       const newScale = minScale + ((maxScale - minScale) * proximity);
 
@@ -92,8 +92,13 @@ const CategoryCard = ({
   }, [isAll]);
 
   if (isAll) {
+    // Calculate final scale and opacity for "All Categories" button - add 0.03 when hovering
+    const finalScale = isHovered ? scale + 0.03 : scale;
+    const finalOpacity = isHovered ? opacity + 0.03 : opacity;
+
     return (
       <div
+        ref={cardRef}
         className={`${styles.card} ${styles.allCategoriesCard} ${
           isActive ? styles.active : ""
         }`}
@@ -101,6 +106,12 @@ const CategoryCard = ({
         tabIndex={0}
         role="button"
         aria-pressed={isActive}
+        style={{
+          transform: `scale(${finalScale})`,
+          transition: 'transform 0.05s ease-out'
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div className={styles.allCategoriesContent}>
           {isActive ? "HIDE EXTRA" : "ALL CATEGORIES"}
@@ -121,7 +132,7 @@ const CategoryCard = ({
         data-wide={wide ? "true" : undefined}
         style={{
           transform: `scale(${finalScale})`,
-          transition: 'transform 0.1s ease-out'
+          transition: 'transform 0.05s ease-out'
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -141,7 +152,7 @@ const CategoryCard = ({
             opacity: 1 - finalOpacity, // Invert the opacity for more visible effect
             pointerEvents: 'none',
             zIndex: 1,
-            transition: 'opacity 0.2s ease-out'
+            transition: 'opacity 0.05s ease-out'
           }}
         />
         <div className={styles.captionRow}>

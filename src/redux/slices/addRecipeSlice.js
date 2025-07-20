@@ -5,11 +5,7 @@ export const postRecipe = createAsyncThunk(
   "recipes/postRecipe",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await addRecipeService(formData);
-      return {
-        data: response.data,
-        status: response.status,
-      };
+      return  await addRecipeService(formData);
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -34,8 +30,8 @@ const recipesSlice = createSlice({
       })
       .addCase(postRecipe.fulfilled, (state, action) => {
         state.loading = false;
-        state.recipe = action.payload.data;
-        state.status = action.payload.status;
+        state.recipe = action.payload;
+        state.status = 200; // Assuming successful response has status 200
       })
       .addCase(postRecipe.rejected, (state, action) => {
         state.loading = false;

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiHeart, FiArrowUpRight } from 'react-icons/fi';
 import { ButtonIcon } from '@components/ui/ButtonIcon/ButtonIcon';
-import { Loader } from '@components/ui';
 import Heading from '@components/ui/Heading/Heading';
-import { getRecipeById } from '../../services/recipeService';
+import { getRecipeById } from '@/services/index.js';
 import { addToFavorites, removeFromFavorites, isRecipeInFavorites } from '../../services/favoritesService';
 import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '@/services/api.js';
 import styles from './RecipeCard.module.css';
@@ -228,48 +226,5 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
   );
 };
 
-RecipeCard.propTypes = {
-  recipeId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  loading: PropTypes.bool,
-  recipe: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    title: PropTypes.string.isRequired,
-    instructions: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    image: PropTypes.string.isRequired,
-    time: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    owner: PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string,
-      email: PropTypes.string
-    }).isRequired,
-    category: PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      name: PropTypes.string
-    }),
-    ingredients: PropTypes.arrayOf(
-      PropTypes.shape({
-        ingredient: PropTypes.shape({
-          id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          name: PropTypes.string,
-          description: PropTypes.string,
-          image: PropTypes.string
-        }),
-        measure: PropTypes.string
-      })
-    ),
-    area: PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      name: PropTypes.string
-    })
-  })
-};
-
-RecipeCard.defaultProps = {
-  recipeId: null,
-  recipe: null,
-  loading: undefined
-};
 
 export default RecipeCard;
