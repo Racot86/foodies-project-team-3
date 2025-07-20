@@ -10,7 +10,7 @@ import {
   OPEN_SIGNIN,
   OPEN_SIGNUP,
   CLOSE,
-} from "@/reducers/singInSignUpModalReducer";
+} from "@/hooks/singInSignUpModal.js";
 
 const SignToggle = () => {
   const [state, dispatch] = useReducer(modalReducer, initialState);

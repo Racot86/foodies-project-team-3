@@ -8,7 +8,7 @@ import {
   OPEN_SIGNIN,
   OPEN_SIGNUP,
   CLOSE,
-} from "@/reducers/singInSignUpModalReducer";
+} from "@/hooks/singInSignUpModal.js";
 
 const PrivateContentArea = ({ children }) => {
   const { isAuthenticated } = useAuthRedux();

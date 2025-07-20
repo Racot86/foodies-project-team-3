@@ -121,7 +121,7 @@ const CategoryCard = ({
         data-wide={wide ? "true" : undefined}
         style={{
           transform: `scale(${finalScale})`,
-          transition: 'transform 0.1s ease-out'
+          transition: 'transform 0.05s ease-out'
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
