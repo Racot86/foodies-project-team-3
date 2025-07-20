@@ -19,7 +19,6 @@
   padding: 0;
 }
 
-/* wide-картки на мобілці */
 .item:nth-child(3),
 .item:nth-child(4),
 .item:nth-child(8),
@@ -29,7 +28,6 @@
   max-width: 100%;
 }
 
-/* >=768px — планшети */
 @media (min-width: 768px) {
   .list {
     row-gap: 20px;
@@ -58,7 +56,6 @@
   }
 }
 
-/* >=1440px — десктопи */
 @media (min-width: 1440px) {
   .item {
     flex: 1 0 25.35%;
