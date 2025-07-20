@@ -69,6 +69,61 @@
   margin-bottom: 30px;
 }
 
+/* Skeleton styles */
+.skeleton {
+  position: relative;
+}
+
+.skeletonPulse {
+  background: linear-gradient(
+    90deg,
+    rgba(227, 227, 227, 0.2) 0%,
+    rgba(227, 227, 227, 0.5) 50%,
+    rgba(227, 227, 227, 0.2) 100%
+  );
+  background-size: 200% 100%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.skeletonTitle {
+  height: 20px;
+  width: 80%;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeletonText {
+  height: 16px;
+  width: 90%;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeletonText:last-child {
+  width: 70%;
+}
+
+.skeletonButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -200% 0%;
+  }
+}
+
 .navLink {
   width: 36px;
   height: 36px;

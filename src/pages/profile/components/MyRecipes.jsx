@@ -6,9 +6,10 @@ import { fetchUserRecipes, setPage } from "@/redux/slices/userRecipesSlice.js";
 import { userDetails } from "@/redux/slices/userSlice";
 import RecipeList from "./recipeCard/RecipeList";
 import EmptyState from "./recipeCard/EmptyState";
+import RecipesCardSkeleton from "./recipeCard/RecipesCardSkeleton";
 import css from "./RecipesList.module.css";
+import styles from "./recipeCard/RecipeCard.module.css";
 import { toast } from "react-toastify";
-import { Loader } from "@/components/ui";
 
 const MyRecipes = () => {
   const dispatch = useDispatch();
@@ -96,9 +97,11 @@ const MyRecipes = () => {
 
   return (
     <div className={css.recipeWrap}>
-      {isLoading && <Loader />}
-
-      {!isLoading && recipes.length > 0 ? (
+      {isLoading ? (
+        <ul className={styles.recipeCardList}>
+          <RecipesCardSkeleton />
+        </ul>
+      ) : recipes.length > 0 ? (
         <>
           <RecipeList
             recipes={recipes}
@@ -114,9 +117,9 @@ const MyRecipes = () => {
             </div>
           )}
         </>
-      ) : !isLoading ? (
+      ) : (
         <EmptyState text="Nothing has been added to your recipes list yet. Please browse our recipes and add your favorites for easy access in the future." />
-      ) : null}
+      )}
     </div>
   );
 };
