@@ -5,9 +5,9 @@ import { FiHeart, FiArrowUpRight } from 'react-icons/fi';
 import { ButtonIcon } from '@components/ui/ButtonIcon/ButtonIcon';
 import Heading from '@components/ui/Heading/Heading';
 import { getRecipeById, addToFavorites, removeFromFavorites, isRecipeInFavorites } from '../../services/recipeService';
-import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '../../services/api';
+import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '@/services/api.js';
 import styles from './RecipeCard.module.css';
-import { useBreakpoint } from '../../hooks/useBreakpoint';
+import { useBreakpoint } from '@/hooks/useBreakpoint.js';
 import { useAuthRedux } from '@/hooks';
 import SignInModal from '@/components/signInModal/SignInModal';
 import PrivateContentArea from "@components/privateContentArea/PrivateContentArea.jsx";
@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 import RecipeCardSkeleton from '@/components/recipeCardSkeleton/RecipeCardSkeleton';
 
 const FALLBACK_IMAGE = DEFAULT_RECIPE_IMAGE;
-const FALLBACK_AVATAR = DEFAULT_AVATAR;
+
 
 const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading }) => {
   const [isFavorite, setIsFavorite] = useState(false);
