@@ -4,6 +4,22 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import styles from "../Fields.module.css";
 import { ButtonIcon } from "../../ButtonIcon/ButtonIcon";
 import { ErrorField } from "../ErrorField/ErrorField";
+import "./FieldCountAnimation.css";
+
+// Component to animate a single digit
+const AnimatedDigit = ({ digit, animationDirection = null, animationKey }) => {
+  const animationClass = animationDirection
+    ? animationDirection === 'up'
+      ? 'digit-animate-up'
+      : 'digit-animate-down'
+    : '';
+
+  return (
+    <span key={animationKey} className={`animated-digit ${animationClass}`}>
+      {digit}
+    </span>
+  );
+};
 
 export const FieldCount = ({
   value = 0,
@@ -15,10 +31,12 @@ export const FieldCount = ({
   className = "",
   isInitial = false,
 }) => {
-  // State to track the displayed value during animation
+  // State to track the displayed value
   const [displayValue, setDisplayValue] = useState(value);
-  // Ref to track animation frame
-  const animationRef = useRef(null);
+  // State to track animation direction for each digit
+  const [digitAnimations, setDigitAnimations] = useState({});
+  // Previous value for comparison
+  const prevValueRef = useRef(value);
 
   // Handle changes from buttons
   const handleChange = (delta) => {
@@ -28,47 +46,61 @@ export const FieldCount = ({
     }
   };
 
-  // Animate value changes
+  // Update display value and set animation directions
   useEffect(() => {
-    // Clear any existing animation
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-    }
-
     // If values are already equal, no need to animate
     if (displayValue === value) return;
 
-    const animateValue = () => {
-      setDisplayValue(prevValue => {
-        // Determine direction and step size
-        const isIncreasing = value > prevValue;
-        const animationStep = isIncreasing ? 1 : -1;
+    // Determine animation direction for each digit position
+    const prevValueStr = String(prevValueRef.current);
+    const newValueStr = String(value);
+    const animations = {};
 
-        // Calculate new value
-        const newValue = prevValue + animationStep;
+    // Get the maximum length to ensure we animate all digits
+    const maxLength = Math.max(prevValueStr.length, newValueStr.length);
 
-        // Check if animation should continue
-        if ((isIncreasing && newValue <= value) || (!isIncreasing && newValue >= value)) {
-          // Continue animation at browser refresh rate (typically 60fps)
-          animationRef.current = requestAnimationFrame(animateValue);
-          return newValue;
-        } else {
-          // End animation, ensure exact target value
-          return value;
-        }
-      });
-    };
+    // Pad strings with leading zeros to ensure equal length
+    const paddedPrev = prevValueStr.padStart(maxLength, '0');
+    const paddedNew = newValueStr.padStart(maxLength, '0');
 
-    // Start animation immediately
-    animationRef.current = requestAnimationFrame(animateValue);
+    // Determine animation direction for each digit
+    for (let i = 0; i < maxLength; i++) {
+      const prevDigit = parseInt(paddedPrev[i], 10);
+      const newDigit = parseInt(paddedNew[i], 10);
 
-    // Cleanup animation on unmount or value change
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (prevDigit !== newDigit) {
+        // If new digit is greater, animate up, otherwise animate down
+        animations[maxLength - i - 1] = newDigit > prevDigit ? 'up' : 'down';
       }
-    };
+    }
+
+    setDigitAnimations(animations);
+    setDisplayValue(value);
+    prevValueRef.current = value;
   }, [value]);
+
+  // Render each digit with appropriate animation
+  const renderDigits = () => {
+    const digits = String(displayValue).split('');
+
+    return digits.map((digit, index) => {
+      const position = digits.length - index - 1;
+      const animationDirection = digitAnimations[position];
+
+      // Create a unique key that changes when the value changes
+      // Include value in the key to force remount and replay animation
+      const animationKey = `digit-${position}-${value}-${Date.now()}`;
+
+      return (
+        <AnimatedDigit
+          key={animationKey}
+          digit={digit}
+          animationDirection={animationDirection}
+          animationKey={animationKey}
+        />
+      );
+    });
+  };
 
   return (
     <div
@@ -97,7 +129,10 @@ export const FieldCount = ({
             isInitial && displayValue === 10 && styles.stepInitial
           )}
         >
-          {displayValue} min
+          <div className="animated-digits-container">
+            {renderDigits()}
+          </div>
+          <span className="unit-text"> min</span>
         </div>
 
         <ButtonIcon
