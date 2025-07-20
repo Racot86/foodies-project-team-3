@@ -1,4 +1,8 @@
 
+.popular-recipes {
+    margin-bottom: 64px;
+  }
+
   .section-title {
     font-size:  var(--font-lg);
     font-weight: var(--font-bold2);
@@ -14,32 +18,39 @@
   }
 
   @media (min-width: 768px) {
-    .section-title {
+  .popular-recipes {
+    margin-bottom: 100px;
+  }
+
+  .section-title {
     font-size:  var(--font-2xl);
     font-weight: var(--font-bold2);
     margin-bottom: 40px;
-    
+
   }
 
   .recipes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 20px;    
-    row-gap: 40px; 
-    width: 100%; 
+    column-gap: 20px;
+    row-gap: 40px;
+    width: 100%;
   }
   .recipe-card{
     width: 100%;
- 
+
   }
 
   }
 
   @media (min-width: 1440px) {
-    .recipes-grid {
+  .popular-recipes {
+    margin-bottom: 120px;
+  }
+
+  .recipes-grid {
     display: grid;
     grid-auto-flow: column;
-    column-gap: 20px; 
+    column-gap: 20px;
   }
   }
-  
