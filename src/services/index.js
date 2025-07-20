@@ -5,7 +5,8 @@ export { areasService } from "./areasService";
 export { categoriesService } from "./categoriesService";
 export { ingredientsService } from "./ingredientsService";
 export { addRecipeService } from "./addRecipeService";
-export { getRecipeById, addToFavorites, removeFromFavorites } from "./recipeService";
+export { getRecipeById } from "./recipeService";
+export { favoritesService, addToFavorites, removeFromFavorites, getFavorites, isRecipeInFavorites } from "./favoritesService";
 
 export { followerService } from "./followerService";
 

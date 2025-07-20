@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getFavorites, removeFromFavorites } from "@/services/recipeService";
+import { getFavorites, removeFromFavorites } from "@/services/favoritesService";
 
 export const fetchFavorites = createAsyncThunk(
   "favorites/fetch",
