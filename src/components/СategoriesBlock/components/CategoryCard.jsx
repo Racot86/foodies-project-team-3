@@ -20,10 +20,11 @@ const CategoryCard = ({
   wide = false,
 }) => {
   if (isAll) {
-    // Картка ALL CATEGORIES
     return (
       <div
-        className={`${styles.card} ${styles.allCategoriesCard} ${isActive ? styles.active : ""}`}
+        className={`${styles.card} ${styles.allCategoriesCard} ${
+          isActive ? styles.active : ""
+        }`}
         onClick={onClick}
         tabIndex={0}
         role="button"
@@ -38,10 +39,16 @@ const CategoryCard = ({
 
   return (
     <Link to={`/category/${category}`} className={styles.cardLink}>
-      <div className={`${styles.card} ${wide ? styles.cardWide : ""}`}
+      <div
+        className={`${styles.card} ${wide ? styles.cardWide : ""}`}
         data-wide={wide ? "true" : undefined}
       >
-        <img src={image} alt={category} className={styles.image} loading="lazy" />
+        <img
+          src={image}
+          alt={category}
+          className={styles.image}
+          loading="lazy"
+        />
         <div className={styles.captionRow}>
           <span className={styles.caption}>{category}</span>
           <span className={styles.iconButton} aria-hidden="true">
