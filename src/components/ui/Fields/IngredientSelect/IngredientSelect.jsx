@@ -9,7 +9,7 @@ export const IngredientSelect = ({ onChange, value, wrapperClassName, selectWrap
 
   useEffect(() => {
     if (ingredients.length === 0) {
-      dispatch(fetchIngredients());
+      dispatch(fetchIngredients({ filter: false }));
     }
   }, [dispatch, ingredients.length]);
 

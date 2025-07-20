@@ -41,14 +41,16 @@ const BrowseCategory = () => {
     dispatch(fetchIngredients({
       category: selectedCategory || undefined,
       area: selectedArea || undefined,
-      assignedToRecipes: true
+      assignedToRecipes: true,
+      filter: true
     }));
 
     // Fetch areas filtered by category and ingredient
     dispatch(fetchAreas({
       category: selectedCategory || undefined,
       ingredient: selectedIngredient || undefined,
-      assignedToRecipes: true
+      assignedToRecipes: true,
+      filter: true
     }));
   }, [dispatch, selectedCategory, selectedArea, selectedIngredient]);
 

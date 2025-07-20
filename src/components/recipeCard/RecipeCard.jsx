@@ -38,7 +38,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
 
   const [imageError, setImageError] = useState(false);
   const [avatarError, setAvatarError] = useState(false);
-  const [showSignInModal, setShowSignInModal] = useState(false);
+
 
   // Use breakpoint to determine heading level
   const { breakpoint } = useBreakpoint();
@@ -106,11 +106,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
   }, [recipe, isAuthenticated]);
 
   const handleFavoriteClick = async () => {
-    if (!isAuthenticated) {
-      // Show sign in modal if user is not authenticated
-      setShowSignInModal(true);
-      return;
-    }
+
 
     try {
       if (isFavorite) {
@@ -129,18 +125,9 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
   };
 
   const handleAuthorClick = () => {
-    if (!isAuthenticated) {
-      // Show sign in modal if user is not authenticated
-      setShowSignInModal(true);
-    } else {
-      // Navigate to author's profile page
       navigate(`/profile/${recipe.owner.id}`);
-    }
   };
 
-  const handleCloseModal = () => {
-    setShowSignInModal(false);
-  };
 
   // Show loading state
   if (loading) {
@@ -194,6 +181,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
 
           <div className={styles.footer}>
             {/* Author section as a button */}
+            <PrivateContentArea>
             <button
               type="button"
               className={styles.author}
@@ -211,7 +199,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
               />
               <span className={styles.authorName}>{owner.name}</span>
             </button>
-
+            </PrivateContentArea>
             <div className={styles.actions}>
               <PrivateContentArea>
               {/* Favorite button */}
@@ -234,16 +222,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
         </div>
       </div>
 
-      {/* Sign In Modal */}
-      {showSignInModal && (
-        <SignInModal
-          onClose={handleCloseModal}
-          onOpenSignUp={() => {
-            handleCloseModal();
-            // Here you could open SignUp modal if needed
-          }}
-        />
-      )}
+
     </>
   );
 };
