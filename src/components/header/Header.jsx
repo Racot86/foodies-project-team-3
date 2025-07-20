@@ -9,22 +9,23 @@ import { SignToggle } from "../ui";
 import PrivateContentArea from "../privateContentArea/PrivateContentArea";
 import { useAuthRedux } from "@/hooks";
 
-
 export const Header = () => {
   const location = useLocation();
   const { breakpoint } = useBreakpoint();
-  const isMobile = breakpoint === 'mobile' || breakpoint === 'mobile-small';
+  const isMobile = breakpoint === "mobile" || breakpoint === "mobile-small";
 
   const { isAuthenticated } = useAuthRedux();
 
   const isWhiteHeader =
-    location.pathname === '/add-recipe' ||
-    location.pathname === '/profile' ||
-    location.pathname.includes('profile') ||
-    location.pathname.includes('recipe-details');
+    location.pathname === "/add-recipe" ||
+    location.pathname === "/profile" ||
+    location.pathname.includes("profile") ||
+    location.pathname.includes("recipe-details");
 
   return (
-    <header className={`${styles.header} ${isWhiteHeader ? styles.whiteTheme : ''}`}>
+    <header
+      className={`${styles.header} ${isWhiteHeader ? styles.whiteTheme : ""}`}
+    >
       <div className={styles.logoWrapper}>
         <Logo />
       </div>
@@ -32,22 +33,26 @@ export const Header = () => {
       {!isMobile && (
         <nav className={styles.nav}>
           <ul>
-            <li>
+            <li className={styles.itemLink}>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `${styles.link} ${isActive ? styles.active : ''} ${isWhiteHeader ? styles.white : ''}`
+                  `${styles.link} ${isActive ? styles.active : ""} ${
+                    isWhiteHeader ? styles.white : ""
+                  }`
                 }
               >
                 HOME
               </NavLink>
             </li>
-            <li>
+            <li className={styles.itemLink}>
               <PrivateContentArea>
                 <NavLink
                   to="/add-recipe"
                   className={({ isActive }) =>
-                    `${styles.link} ${isActive ? styles.active : ''} ${isWhiteHeader ? styles.white : ''}`
+                    `${styles.link} ${isActive ? styles.active : ""} ${
+                      isWhiteHeader ? styles.white : ""
+                    }`
                   }
                 >
                   ADD RECIPE
