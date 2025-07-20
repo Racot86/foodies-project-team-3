@@ -2,15 +2,21 @@ import React, { useEffect, useState } from "react";
 import styles from "./Modal.module.css";
 import icons from "../../assets/icons/icons.svg";
 import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
+import { useAppDispatch } from "@/redux/store";
+import { blockScroll, unblockScroll } from "@/redux/slices/scrollControlSlice";
 
 const Modal = ({ onClose, children }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleEsc);
+
+    // Block scrolling when modal opens
+    dispatch(blockScroll('modal'));
 
     // Set a small delay before showing the modal to ensure the CSS transition works
     const timer = setTimeout(() => {
@@ -20,8 +26,11 @@ const Modal = ({ onClose, children }) => {
     return () => {
       document.removeEventListener("keydown", handleEsc);
       clearTimeout(timer);
+
+      // Unblock scrolling when modal closes
+      dispatch(unblockScroll());
     };
-  }, [onClose]);
+  }, [onClose, dispatch]);
 
   const handleBackdrop = (e) => {
     if (e.target === e.currentTarget) onClose();

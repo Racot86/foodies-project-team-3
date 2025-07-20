@@ -1,12 +1,24 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./BurgerMenu.module.css";
 import Logo from "@/components/ui/Logo/Logo";
 import { Link } from "react-router-dom";
 import PrivateContentArea from "@/components/privateContentArea/PrivateContentArea";
+import { useAppDispatch } from "@/redux/store";
+import { blockScroll, unblockScroll } from "@/redux/slices/scrollControlSlice";
 
 export const BurgerMenu = ({ isWhiteTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+  const dispatch = useAppDispatch();
+
+  // Control scroll blocking based on menu state
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(blockScroll('burgerMenu'));
+    } else {
+      dispatch(unblockScroll());
+    }
+  }, [isOpen, dispatch]);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
