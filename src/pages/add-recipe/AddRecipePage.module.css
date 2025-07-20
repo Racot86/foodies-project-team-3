@@ -1,6 +1,8 @@
 .wrap {
   margin-bottom: 32px;
   width: 343px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .recipePageTitle + .recipeText {
@@ -15,10 +17,11 @@
   line-height: 1.14;
   letter-spacing: -0.56px;
 }
+
 @media screen and (min-width: 768px) {
   .wrap {
     margin-bottom: 40px;
-    width: 443px;
+    width: 704px;
   }
   .recipePageTitle + .recipeText {
     color: var(--color-main);
@@ -31,5 +34,11 @@
   .recipePageTitle {
     line-height: 1.1;
     letter-spacing: -0.8px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .wrap {
+    width: 1280px;
   }
 }
