@@ -20,7 +20,7 @@ const Header = () => (
       weight="bold2"
       className={styles.testimonialHeading}
     >
-      TESTIMONIALS
+      Testimonials
     </Heading>
     <div className={styles.quoteIcon}>
       <QuoteIcon />
