@@ -35,7 +35,7 @@
 .item {
   display: flex;
   align-items: center;
-  font-size: 0.875rem;
+  font-size: var(--font-sm);
   color: #666;
 }
 
@@ -47,6 +47,7 @@
 .link {
   color: #22A45D;
   text-decoration: none;
+  font-weight: var(--font-bold);
 }
 
 .homeLink {
@@ -60,5 +61,5 @@
 
 .current {
   color: #333;
-  font-weight: 500;
+  font-weight: var(--font-bold);
 }
