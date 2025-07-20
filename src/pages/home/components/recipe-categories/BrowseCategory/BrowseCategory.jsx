@@ -189,32 +189,24 @@ const BrowseCategory = () => {
             />
           </div>
           <div className={styles.recipesContainer}>
-              {isLoading ? (
-                <div className={styles.loadingContainer}>
-                  <p>Loading recipes...</p>
-                </div>
+            <div className={styles.recipeList}>
+              {recipes.length > 0 ? (
+                recipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} loading={isLoading} />
+                ))
               ) : (
-                <>
-                  <div className={styles.recipeList}>
-                    {recipes.length > 0 ? (
-                      recipes.map((recipe) => (
-                        <RecipeCard key={recipe.id} recipe={recipe} />
-                      ))
-                    ) : (
-                      <p>No recipes found with the selected filters.</p>
-                    )}
-                  </div>
-                  {recipes.length > 0 && recipesData?.totalPages > 1 && (
-                    <div className={styles.paginationContainer}>
-                      <Pagination
-                        totalPages={recipesData.totalPages}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                      />
-                    </div>
-                  )}
-                </>
+                <p>No recipes found with the selected filters.</p>
               )}
+            </div>
+            {recipes.length > 0 && recipesData?.totalPages > 1 && (
+              <div className={styles.paginationContainer}>
+                <Pagination
+                  totalPages={recipesData.totalPages}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            )}
           </div>
       </div>
     </div>

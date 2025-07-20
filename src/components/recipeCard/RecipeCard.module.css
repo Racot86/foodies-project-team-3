@@ -1,6 +1,6 @@
 .card {
     width: 100%;
-    /* max-width: 343px; */
+    max-width: 342px; /* Max width for tablet and mobile to match skeleton */
     overflow: hidden;
     background-color: var(--color-background);
     display: flex;
@@ -125,7 +125,7 @@
 }
 
 
-/* Loading state */
+/* Loading state - kept for reference but no longer used in RecipeCard */
 .loading {
     min-height: 300px;
     display: flex;
@@ -148,6 +148,97 @@
     }
 }
 
+/* Skeleton styles */
+.skeleton {
+    background-color: var(--color-background);
+    border-radius: 30px 30px 0 0;
+    width: 100%;
+    max-width: 342px; /* Max width for tablet and mobile to match card */
+}
+
+.skeletonPulse {
+    background: linear-gradient(
+        90deg,
+        rgba(227, 227, 227, 0.2) 0%,
+        rgba(227, 227, 227, 0.5) 50%,
+        rgba(227, 227, 227, 0.2) 100%
+    );
+    background-size: 200% 100%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: -200% 0%;
+    }
+}
+
+.skeletonImage {
+    width: 100%;
+    height: 230px;
+    border-radius: 30px;
+}
+
+.skeletonTitle {
+    width: 80%;
+    height: 24px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.skeletonText {
+    width: 100%;
+    height: 16px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.skeletonTextShort {
+    width: 60%;
+}
+
+.skeletonAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.skeletonAuthorName {
+    width: 80px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.skeletonButton {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+    .skeleton {
+        max-width: 290px; /* Max width for desktop to match card */
+    }
+
+    .skeletonImage {
+        height: 275px;
+    }
+
+    .skeletonAvatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .skeletonButton {
+        width: 42px;
+        height: 42px;
+    }
+}
+
 /* Error state */
 .error {
     min-height: 200px;
@@ -161,7 +252,7 @@
 
 @media (min-width: 768px) {
     .card {
-        /* Removed min-width to allow card to adapt to container width */
+        max-width: 290px; /* Max width for desktop to match skeleton */
     }
 
     .imageContainer {
