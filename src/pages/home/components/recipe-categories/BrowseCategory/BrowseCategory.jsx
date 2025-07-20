@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Heading, Text, Pagination } from '@components/ui';
 import { CustomSelect } from "@/components/ui/CustomSelect";
@@ -14,6 +14,7 @@ const BrowseCategory = () => {
   const { categoryName } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const categoryPageRef = useRef(null);
 
   // Get ingredients and areas from Redux store
   const { data: ingredients, isLoading: ingredientsLoading } = useAppSelector((state) => state.ingredients);
@@ -90,6 +91,12 @@ const BrowseCategory = () => {
   // Handle page change
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+    // Scroll to top of category page when page changes
+    if (categoryPageRef.current) {
+      categoryPageRef.current.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
   };
 
   // Log current filter state for debugging - can be removed in production
@@ -149,7 +156,7 @@ const BrowseCategory = () => {
   };
 
   return (
-    <div className={styles.categoryPage}>
+    <div className={styles.categoryPage} ref={categoryPageRef}>
       <div className={styles.header}>
           <div className={styles.backLinkContainer}>
             <button
