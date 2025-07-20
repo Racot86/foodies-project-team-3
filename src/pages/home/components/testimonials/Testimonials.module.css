@@ -1,119 +1,72 @@
 .testimonials {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 64px;
-    padding-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 64px;
 }
 
+/* @media screen and (max-width: 767px) {
+  .testimonials {
+    margin-bottom: 80px;
+  }
+} */
+
 .testimonialsContainer {
-    max-width: 343px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    padding-top: 40px;
-    padding-bottom: 40px;
+  max-width: 343px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
 }
 
 .loadingContainer {
-    text-align: center;
-    padding: 40px;
-    font-size: var(--font-lg);
+  text-align: center;
+  padding: 40px;
+  font-size: var(--font-lg);
 }
 
 .noTestimonials {
-    font-size: var(--font-lg);
-    margin: 40px 0;
-}
-
-.quoteIcon {
-    width: 40px;
-    height: 32px;
-    margin-left: 40px;
-    color: var(--color-secondary);
-
-}
-
-.swiper {
-
-
+  font-size: var(--font-lg);
+  margin: 40px 0;
 }
 
 /* Make swiper slides adapt to their content height */
 .swiper :global(.swiper-slide) {
-    height: auto !important;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
+  height: auto !important;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
 }
 
 /* Make swiper wrapper adapt to slide heights */
 .swiper :global(.swiper-wrapper) {
-    height: auto !important;
-    display: flex;
-}
-
-/* Custom pagination styles */
-.customPagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.paginationBullet {
-    width: 16px;
-    height: 16px;
-    background-color: var(--color-secondary);
-    border-radius: 50%;
-    opacity: 1;
-    margin: 0 6px; /* 12px total space between bullets (6px on each side) */
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background-color 0.3s ease;
-}
-
-.paginationBulletActive {
-    background-color: var(--color-primary);
-}
-
-@media (min-width: 375px) {
-    .quoteIcon {
-        width: 59px;
-        height: 48px;
-        top: 140px;
-    }
+  height: auto !important;
+  display: flex;
 }
 
 @media (min-width: 768px) {
-    .testimonials {
-        padding-top: 100px;
-        padding-bottom: 100px;
-    }
+  .testimonials {
+    margin-top: 100px;
+  }
 
-    .testimonialsContainer {
-        max-width: 704px;
-        padding-top: 60px;
-    }
+  .testimonialsContainer {
+    max-width: 704px;
+  }
 
-    .swiper {
-        padding-bottom: 120px; /* Increased space for custom pagination bullets on tablet */
-    }
+  .swiper {
+    padding-bottom: 120px; /* Increased space for custom pagination bullets on tablet */
+  }
 }
 
 @media (min-width: 1440px) {
-    .testimonials {
-        padding-top: 120px;
-        padding-bottom: 120px;
-    }
+  .testimonials {
+    margin-top: 120px;
+  }
 
-    .testimonialsContainer {
-        max-width: 822px;
-        padding-top: 80px;
-    }
+  .testimonialsContainer {
+    max-width: 822px;
+  }
 
-    .swiper {
-        padding-bottom: 150px; /* Significantly increased space for custom pagination bullets on desktop */
-    }
+  .swiper {
+    padding-bottom: 150px; /* Significantly increased space for custom pagination bullets on desktop */
+  }
 }
