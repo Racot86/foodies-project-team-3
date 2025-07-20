@@ -10,11 +10,13 @@ const Tabs = ({ visibleTabs = {} }) => {
   // Build base path depending on whether we're viewing current user or another user
   const basePath = userId ? `/profile/${userId}` : "/profile";
 
-  // Change label based on whether it's current user or another user
-  const recipesLabel = userId ? "RECIPES" : "MY RECIPES";
-
+  // Define different tabs based on whether it's current user or another user
   const tabs = [
-    { label: recipesLabel, path: `${basePath}/my-recipes`, key: "myRecipes" },
+    // Show "MY RECIPES" tab only for current user, "RECIPES" tab only for other users
+    ...(userId
+      ? [{ label: "RECIPES", path: `${basePath}/my-recipes`, key: "recipes" }]
+      : [{ label: "MY RECIPES", path: `${basePath}/my-recipes`, key: "myRecipes" }]
+    ),
     { label: "MY FAVORITES", path: `${basePath}/favorites`, key: "favorites" },
     { label: "FOLLOWERS", path: `${basePath}/followers`, key: "followers" },
     { label: "FOLLOWING", path: `${basePath}/following`, key: "following" },
@@ -22,17 +24,19 @@ const Tabs = ({ visibleTabs = {} }) => {
 
   return (
     <div className="tabs-container">
-      {tabs.map((tab) =>
-        visibleTabs[tab.key] !== false ? (
-          <div
-            key={tab.key}
-            className={`tab ${location.pathname === tab.path ? "active" : ""}`}
-            onClick={() => navigate(tab.path)}
-          >
-            {tab.label}
-          </div>
-        ) : null
-      )}
+      <div className="tabs-wrapper">
+        {tabs.map((tab) =>
+          visibleTabs[tab.key] !== false ? (
+            <div
+              key={tab.key}
+              className={`tab ${location.pathname === tab.path ? "active" : ""}`}
+              onClick={() => navigate(tab.path)}
+            >
+              {tab.label}
+            </div>
+          ) : null
+        )}
+      </div>
     </div>
   );
 };

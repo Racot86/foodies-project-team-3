@@ -119,26 +119,7 @@ h6 {
   font-size: var(--font-md);
 }
 
-/* Responsive utilities */
-.container {
-  width: 100%;
-  max-width: var(--container-desktop);
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
 
-@media (max-width: 767px) {
-  .container {
-    max-width: var(--container-mobile);
-    padding: 0 var(--spacing-sm);
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1439px) {
-  .container {
-    max-width: var(--container-tablet);
-  }
-}
 
 /* Accessibility */
 .visually-hidden {

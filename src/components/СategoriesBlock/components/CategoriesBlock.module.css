@@ -1,54 +1,70 @@
 .section {
-    display: flex;
-    flex-direction: column;
-   
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 343px;
+  padding-top: 64px;
 }
 
 .titlesubtitle {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 40px;
-    width: 531px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  width: 100%;
+  font-weight: 500;
+  max-width: 343px;
 }
 
-.titleBox {
-    font-weight: 800;
+.titlesubtitle h1 {
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #050505;
+}
+
+.titlesubtitle p {
+  font-size: 14px;
+  line-height: 1.42857;
+  letter-spacing: -0.02em;
+  color: #bfbebe;
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    width: 704px;
+    padding-top: 100px;
+    max-width: unset;
+  }
+
+  .titlesubtitle h1 {
     font-size: 40px;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    color: #050505;
-}
+  }
 
-.subtitleBox {
-    font-weight: 500;
+  .titlesubtitle p {
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: -0.02em;
     color: #1a1a1a;
-   
-   
+  }
+
+  .titlesubtitle {
+    gap: 20px;
+    width: 531px;
+    margin-bottom: 40px;
+    max-width: unset;
+  }
 }
 
-@media (max-width: 767px) {
-    .titleBox {
-        font-size: 28px;
-    }
 
-    .subtitleBox {
-        font-size: 14px;
-        line-height: 1.42857;
-        letter-spacing: -0.02em;
-        color: #bfbebe;
-    }
-
-    .titlesubtitle {
-        gap: 16px;
-        width: 343px;
-        margin-bottom: 32px;
-        
-    }
+@media (min-width: 1440px) {
+  .section {
+    width: 1280px;
+    padding-top: 120px;
+  }
 }

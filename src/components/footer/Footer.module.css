@@ -1,76 +1,74 @@
 .footer {
-    display: flex;
-    flex-direction: column;
-    margin-top: var(--spacing-3xl);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
 }
 
 .upperblock {
-    margin-left: var(--spacing-md);
-    margin-right: var(--spacing-md);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: var(--spacing-xl);
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  align-items: center;
 }
 
 .content {
-    filter: brightness(0) saturate(100%);
-    height: 24px;
-    width: 69px;
+  filter: brightness(0) saturate(100%);
+  height: 24px;
+  width: 69px;
 }
 
 .socials {
-    display: flex;
-    gap: var(--spacing-md);
+  display: flex;
+  gap: 16px;
 }
 
 .divider {
-    width: 100%;
-    height: 1px;
-    background-color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xl);
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-text-muted);
+  margin-bottom: 40px;
 }
 
 .copyright {
-    font-size: var(--font-sm);
-    font-weight: var(--font-medium);
-    text-align: center;
-    color: var(--color-text-primary);
-    margin-bottom: var(--spacing-md);
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
 }
 
-@media (min-width: 376px) and (max-width: 767px) {
-    .footer {
-        margin-top: var(--spacing-4xl);
-    }
+/* ≥ 376px */
+@media (min-width: 768px) {
+  .footer {
+    padding-bottom: 16px;
+  }
+  .upperblock {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 
-    .upperblock {
-        margin-left: var(--spacing-xl);
-        margin-right: var(--spacing-xl);
-    }
-
-    .content {
-        height: 28px;
-        width: 83px;
-    }
-
-    .copyright {
-        font-size: var(--font-md);
-        margin-bottom: var(--spacing-xl);
-    }
+  .content {
+    height: 28px;
+    width: 83px;
+  }
+  .copyright {
+    font-size: 16px;
+    line-height: 1.5;
+  }
 }
 
-@media (min-width: 768px) and (max-width: 1439px) {
-    .footer {
-        margin-top: 120px;
-    }
+/* ≥ 1434px */
+@media (min-width: 1440px) {
+  .footer {
+    padding-bottom: 52px;
+  }
 
-    .upperblock {
-        margin-left: var(--spacing-3xl);
-        margin-right: var(--spacing-3xl);
-    }
-
-    .copyright {
-        margin-bottom: var(--spacing-3xl);
-    }
+  .upperblock {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
 }

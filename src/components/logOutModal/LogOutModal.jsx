@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Modal from "@/components/modal/Modal";
 import { Button, Text } from "@/components/ui";
 import { Heading } from "@/components/ui/Heading/Heading";

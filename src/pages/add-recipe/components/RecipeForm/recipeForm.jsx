@@ -104,7 +104,6 @@ const RecipeForm = () => {
 
       await dispatch(postRecipe(formData)).unwrap();
 
-      toast.dismiss();
       toast.success(
         "Recipe submitted successfully! Redirecting to your profile..."
       );
@@ -114,7 +113,6 @@ const RecipeForm = () => {
         navigate("/profile");
       }, 2500);
     } catch (error) {
-      toast.dismiss();
       toast.error(`Failed to submit recipe: ${error.message || error}`);
     }
   };
@@ -180,7 +178,9 @@ const RecipeForm = () => {
                   placeholder="THE NAME OF THE RECIPE"
                   error={errors.name?.message}
                   className={
-                    errors.name ? "nameRecipeError" : "nameRecipeInput"
+                    errors.name
+                      ? styles.nameRecipeError
+                      : styles.nameRecipeInput
                   }
                 />
               )}
@@ -193,7 +193,7 @@ const RecipeForm = () => {
                 render={({ field }) => (
                   <FieldTextarea
                     {...field}
-                    className="recipeDescrInput"
+                    className={styles.recipeDescrInput}
                     placeholder="Enter a description of the dish"
                     maxLength={200}
                     expandAt={60}
@@ -208,8 +208,8 @@ const RecipeForm = () => {
                 render={({ field }) => (
                   <FieldSelect
                     {...field}
-                    label="Area"
-                    className="recipeWrapLabel"
+                    label={<span className={styles.sectionLabel}>Area</span>}
+                    className={styles.recipeWrapLabel}
                     placeholder="Select an area"
                     options={areas.map((area) => ({
                       value: area.name,
@@ -227,8 +227,10 @@ const RecipeForm = () => {
                   render={({ field }) => (
                     <FieldSelect
                       {...field}
-                      label="Category"
-                      className="recipeWrapLabel"
+                      label={
+                        <span className={styles.sectionLabel}>Category</span>
+                      }
+                      className={styles.recipeWrapLabel}
                       placeholder="Select a category"
                       options={categories.map((cat) => ({
                         value: cat.name,
@@ -245,11 +247,15 @@ const RecipeForm = () => {
                   render={({ field }) => (
                     <FieldCount
                       {...field}
-                      label="Cooking Time"
+                      label={
+                        <span className={styles.sectionLabel}>
+                          Cooking Time
+                        </span>
+                      }
                       strong
                       step={10}
                       error={errors.cookingTime?.message}
-                      className="recipeWrapLabel"
+                      className={styles.recipeWrapLabel}
                       isInitial={!touchedCookingTime && field.value === 10}
                       onChange={(val) => {
                         field.onChange(val);
@@ -273,9 +279,13 @@ const RecipeForm = () => {
                     render={({ field }) => (
                       <FieldSelect
                         {...field}
-                        label="Ingredients"
+                        label={
+                          <span className={styles.sectionLabel}>
+                            Ingredients
+                          </span>
+                        }
                         placeholder="Add the ingredient"
-                        className="recipeWrapLabel"
+                        className={styles.recipeWrapLabel}
                         error={errors.ingredients?.message}
                         options={ingredientsList.map((ing) => ({
                           value: ing.id,
@@ -293,7 +303,7 @@ const RecipeForm = () => {
                         ? errors.quantity.message
                         : undefined
                     }
-                    className="quantityField"
+                    className={styles.quantityField}
                   />
                 </div>
 
@@ -302,7 +312,7 @@ const RecipeForm = () => {
                   onClick={addIngredient}
                   type="button"
                   disabled={isAddButtonDisabled}
-                  className="addIngredientBtn"
+                  className={styles.addIngredientBtn}
                 >
                   ADD INGREDIENT
                   <FiPlus />
@@ -330,9 +340,9 @@ const RecipeForm = () => {
                 <FieldTextarea
                   {...field}
                   label="Recipe Preparation"
-                  className="recipeDescrInput preparationWrap"
+                  className={`${styles.recipeDescrInput} ${styles.preparationWrap}`}
                   placeholder="Enter recipe"
-                  maxLength={200}
+                  maxLength={999}
                   expandAt={60}
                   error={errors.preparation?.message}
                 />
@@ -341,7 +351,7 @@ const RecipeForm = () => {
 
             <div className={styles.buttonsRow}>
               <ButtonIcon
-                className="recipeTrash"
+                className={styles.recipeTrash}
                 variant={Button.variants.SECONDARY}
                 onClick={() => {
                   reset();
@@ -354,7 +364,7 @@ const RecipeForm = () => {
               </ButtonIcon>
 
               <Button
-                className="publishBtn"
+                className={styles.publishBtn}
                 variant={Button.variants.PRIMARY}
                 type="submit"
               >
@@ -364,7 +374,7 @@ const RecipeForm = () => {
           </div>
         </div>
       </form>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-center" closeButton={true} />
     </>
   );
 };
