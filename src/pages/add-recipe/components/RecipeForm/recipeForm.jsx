@@ -30,6 +30,7 @@ const RecipeForm = () => {
   const [image, setImage] = useState(null);
   const [touchedCookingTime, setTouchedCookingTime] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const {
     control,
@@ -78,6 +79,7 @@ const RecipeForm = () => {
   }, []);
 
   const onSubmit = async (data) => {
+    setIsSubmitting(true);
     try {
       const formData = new FormData();
 
@@ -114,6 +116,8 @@ const RecipeForm = () => {
       }, 2500);
     } catch (error) {
       toast.error(`Failed to submit recipe: ${error.message || error}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -367,6 +371,7 @@ const RecipeForm = () => {
                 className={styles.publishBtn}
                 variant={Button.variants.PRIMARY}
                 type="submit"
+                isLoading={isSubmitting}
               >
                 PUBLISH
               </Button>
