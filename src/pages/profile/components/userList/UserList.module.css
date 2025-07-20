@@ -35,8 +35,7 @@
   line-height: 20px;
   letter-spacing: -0.28px;
   width: 100%;
-  height: 300px;
-  padding: 20px 0;
+  margin-top: 48px;
 }
 
 /* Following button special styling */
@@ -57,5 +56,7 @@
   .empty,
   .error {
     font-size: 16px;
+    color: var(--color-text-main);
+    padding: 0 47px;
   }
 }

@@ -94,6 +94,16 @@
   stroke: var(--color-white);
 }
 
+:global(.myrecipeTrash) {
+  width: 36px;
+  height: 36px;
+}
+
+:global(.myrecipeTrash svg) {
+  width: 16px;
+  height: 16px;
+}
+
 .emptyWrap {
   padding: 80px 0 100px;
 }
@@ -159,6 +169,16 @@
   .recipeCardList {
     gap: 40px;
     margin-bottom: 60px;
+  }
+
+  :global(.myrecipeTrash) {
+    width: 42px;
+    height: 42px;
+  }
+
+  :global(.myrecipeTrash svg) {
+    width: 18px;
+    height: 18px;
   }
 }
 
