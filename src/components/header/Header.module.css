@@ -59,6 +59,8 @@
 
 .whiteTheme {
   background-color: var(--color-white);
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .whiteTheme .logoWrapper img {
@@ -93,6 +95,10 @@
     border-radius: var(--radius-xxl) var(--radius-xxl) 0 0;
   }
 
+  .whiteTheme {
+    padding: 20px 8px;
+  }
+
   .itemLink a {
     font-weight: var(--font-bold);
     font-size: var(--font-xs);
@@ -105,5 +111,9 @@
   .header {
     padding: 20px 60px;
     width: 1400px;
+  }
+
+  .whiteTheme {
+    padding: 20px 60px;
   }
 }
