@@ -1,5 +1,5 @@
 .container {
-  width: 343px;
+  width: 100%;
 }
 
 .userList {
@@ -50,10 +50,6 @@
 }
 
 @media (min-width: 768px) {
-  .container {
-    width: 704px;
-  }
-
   .loading,
   .empty,
   .error {
@@ -67,10 +63,6 @@
 }
 
 @media (min-width: 1440px) {
-  .container {
-    width: 846px;
-  }
-
   .loading,
   .empty,
   .error {
