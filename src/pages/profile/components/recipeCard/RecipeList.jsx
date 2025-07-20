@@ -3,7 +3,7 @@ import RecipeCard from "./RecipesCard.jsx";
 import styles from "./RecipeCard.module.css";
 import { Pagination } from "@/components/ui";
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 9;
 
 const RecipeList = ({
   recipes,
@@ -11,7 +11,7 @@ const RecipeList = ({
   currentPage: propCurrentPage,
   totalPages: propTotalPages,
   onPageChange: propOnPageChange,
-  useServerPagination = false
+  useServerPagination = false,
 }) => {
   const [localCurrentPage, setLocalCurrentPage] = useState(1);
 

@@ -6,7 +6,7 @@ const RecipePreviewList = ({ recipesPreview = [], maxPreviews = 4 }) => {
   const previewImages = recipesPreview.slice(0, maxPreviews);
 
   return (
-    <div className={styles.recipePreview} data-preview-count={maxPreviews}>
+    <ul className={styles.recipePreview} data-preview-count={maxPreviews}>
       {previewImages.map((imageUrl, index) => (
         <RecipePreviewCard
           key={index}
@@ -27,7 +27,7 @@ const RecipePreviewList = ({ recipesPreview = [], maxPreviews = 4 }) => {
           />
         )
       )}
-    </div>
+    </ul>
   );
 };
 

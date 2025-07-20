@@ -21,7 +21,7 @@ import {
 } from "../../redux/slices/userSlice";
 import {
   unfollowUser,
-  checkFollowStatus
+  checkFollowStatus,
 } from "../../redux/slices/followerSlice";
 
 function ProfilePage() {
@@ -33,7 +33,9 @@ function ProfilePage() {
   const loggedUser = useSelector(selectUser);
   const requestedUserDetails = useSelector(selectUserDetails);
   const error = useSelector(selectError);
-  const { isFollowing, isFollowActionLoading } = useSelector((state) => state.followers);
+  const { isFollowing, isFollowActionLoading } = useSelector(
+    (state) => state.followers
+  );
 
   // get current user
   useEffect(() => {
@@ -68,16 +70,19 @@ function ProfilePage() {
       // Show "MY RECIPES" tab only for current user, "RECIPES" tab only for other users
       ...(userId
         ? [{ path: `${basePath}/my-recipes`, key: "recipes" }]
-        : [{ path: `${basePath}/my-recipes`, key: "myRecipes" }]
-      ),
+        : [{ path: `${basePath}/my-recipes`, key: "myRecipes" }]),
       { path: `${basePath}/favorites`, key: "favorites" },
       { path: `${basePath}/followers`, key: "followers" },
       { path: `${basePath}/following`, key: "following" },
     ];
 
     // Filter tabs based on visibleTabs prop
-    const visibleTabsObj = isMe ? { recipes: false } : { favorites: false, following: false, myRecipes: false };
-    const filteredTabs = tabs.filter(tab => visibleTabsObj[tab.key] !== false);
+    const visibleTabsObj = isMe
+      ? { recipes: false }
+      : { favorites: false, following: false, myRecipes: false };
+    const filteredTabs = tabs.filter(
+      (tab) => visibleTabsObj[tab.key] !== false
+    );
 
     // If we're at the base profile path, navigate to the first visible tab
     if (location.pathname === basePath && filteredTabs.length > 0) {
@@ -136,16 +141,14 @@ function ProfilePage() {
       >
         PROFILE
       </Heading>
-      <div>
-        <Text
-          color="primary"
-          weight="semibold"
-          className={styles.profileDescription}
-        >
-          Reveal your culinary art, share your favorite recipe and create
-          gastronomic masterpieces with us.
-        </Text>
-      </div>
+      <Text
+        color="primary"
+        weight="semibold"
+        className={styles.profileDescription}
+      >
+        Reveal your culinary art, share your favorite recipe and create
+        gastronomic masterpieces with us.
+      </Text>
       <div className={styles.profileContainer}>
         <div className={styles.controlPanelContainer}>
           <div className={styles.controlPanel}>
@@ -179,45 +182,45 @@ function ProfilePage() {
                 <div className={styles.userInfo}>
                   <ul>
                     <li>
-                      <Text variant="body" size="sm" color="muted">
+                      <Text variant="body" size="sm">
                         Email:
                       </Text>
-                      <Text variant="body" size="md">
+                      <Text variant="body" size="md" weight="bold">
                         {requestedUserDetails.email}
                       </Text>
                     </li>
                     <li>
-                      <Text variant="body" size="sm" color="muted">
+                      <Text variant="body" size="sm">
                         Added recipes:
                       </Text>
-                      <Text variant="body" size="md">
+                      <Text variant="body" size="md" weight="bold">
                         {requestedUserDetails.recipes}
                       </Text>
                     </li>
                     {isMe && (
                       <li>
-                        <Text variant="body" size="sm" color="muted">
+                        <Text variant="body" size="sm">
                           Favorites:
                         </Text>
-                        <Text variant="body" size="md">
+                        <Text variant="body" size="md" weight="bold">
                           {requestedUserDetails.favorites}
                         </Text>
                       </li>
                     )}
                     <li>
-                      <Text variant="body" size="sm" color="muted">
+                      <Text variant="body" size="sm">
                         Followers:
                       </Text>
-                      <Text variant="body" size="md">
+                      <Text variant="body" size="md" weight="bold">
                         {requestedUserDetails.followers}
                       </Text>
                     </li>
                     {isMe && (
                       <li>
-                        <Text variant="body" size="sm" color="muted">
+                        <Text variant="body" size="sm">
                           Following:
                         </Text>
-                        <Text variant="body" size="md">
+                        <Text variant="body" size="md" weight="bold">
                           {requestedUserDetails.following}
                         </Text>
                       </li>
@@ -258,7 +261,13 @@ function ProfilePage() {
         </div>
 
         <div className={styles.tabsSection}>
-          <Tabs visibleTabs={isMe ? { recipes: false } : { favorites: false, following: false, myRecipes: false }} />
+          <Tabs
+            visibleTabs={
+              isMe
+                ? { recipes: false }
+                : { favorites: false, following: false, myRecipes: false }
+            }
+          />
           <div className={styles.tabContent}>
             <Outlet />
           </div>

@@ -4,7 +4,7 @@
 }
 
 .tabs-container::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 1px;
   left: 0;
@@ -19,8 +19,6 @@
   gap: 30px;
   overflow-x: auto;
   scrollbar-width: none;
-  margin-right: -20px;
-  padding-right: 20px;
 }
 
 /* Ховає скролбар для Chrome, Safari, and Opera */
@@ -45,7 +43,7 @@
 }
 
 .tab::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: -1px;
@@ -60,11 +58,23 @@
   color: var(--color-primary);
 }
 
-.tab:hover::after, 
+.tab:hover::after,
 .tab.active::after {
   opacity: 1;
 }
 
 .tab.active {
   color: var(--color-primary);
+}
+@media screen and (min-width: 768px) {
+  .tabs-wrapper {
+    gap: 40px;
+  }
+  .tab {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  .tabs-container {
+    margin-bottom: 40px;
+  }
 }

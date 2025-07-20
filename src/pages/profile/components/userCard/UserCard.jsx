@@ -12,8 +12,7 @@ const UserCard = ({ user, onButtonClick, tabType }) => {
   const navigate = useNavigate();
   const firstName = user.name ? user.name.split(" ")[0] : "";
 
-  const avatarUrl =
-    user.avatar || DEFAULT_AVATAR;
+  const avatarUrl = user.avatar || DEFAULT_AVATAR;
 
   const { isMobile, isTablet, isDesktop } = useDeviceType();
 

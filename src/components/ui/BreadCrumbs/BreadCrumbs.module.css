@@ -45,7 +45,7 @@
 }
 
 .link {
-  color: #22A45D;
+  color: #22a45d;
   text-decoration: none;
   font-weight: var(--font-bold);
 }
@@ -55,7 +55,8 @@
   text-decoration: none;
 }
 
-.link:hover, .homeLink:hover {
+.link:hover,
+.homeLink:hover {
   text-decoration: underline;
 }
 

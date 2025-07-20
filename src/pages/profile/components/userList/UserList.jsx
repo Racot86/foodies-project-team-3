@@ -1,32 +1,22 @@
 import React from "react";
-import { Text } from "@/components/ui";
+import { Loader, Text } from "@/components/ui";
 import UserCard from "../userCard/UserCard";
 import styles from "./UserList.module.css";
+import EmptyState from "../recipeCard/EmptyState";
 
 const UserList = ({
   users = [],
   onButtonClick,
-  tabType = "followers", // "followers" or "following"
+  tabType = "followers",
   isLoading = false,
   error = null,
 }) => {
-  // Determine empty message based on tab type
   const getEmptyMessage = () => {
     return tabType === "followers"
       ? "There are currently no followers on your account. Please engage our visitors with interesting content and draw their attention to your profile."
       : "Your account currently has no subscriptions to other users. Learn more about our users and select those whose content interests you.";
   };
 
-  // Show loading state
-  if (isLoading) {
-    return (
-      <div className={styles.container}>
-        <Text className={styles.loading}>Loading users...</Text>
-      </div>
-    );
-  }
-
-  // Show error state
   if (error) {
     return (
       <div className={styles.container}>
@@ -37,13 +27,16 @@ const UserList = ({
     );
   }
 
-  // Show empty state
   if (users.length === 0) {
-    return (
-      <div className={styles.container}>
-        <Text className={styles.empty}>{getEmptyMessage()}</Text>
-      </div>
-    );
+    if (isLoading) {
+      return (
+        <div className={styles.loaderCentered}>
+          <Loader />
+        </div>
+      );
+    }
+
+    return <EmptyState text={getEmptyMessage()} />;
   }
 
   return (

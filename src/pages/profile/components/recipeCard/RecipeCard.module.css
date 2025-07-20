@@ -95,7 +95,7 @@
 }
 
 .emptyWrap {
-  padding: 80px 0 100px;
+  padding: 48px 0 100px;
 }
 
 .emptyWrap p {
@@ -114,10 +114,14 @@
   }
 
   .emptyWrap {
-    padding: 100px 47px 200px;
+    padding: 60px 47px 100px;
     font-size: var(--font-md);
     line-height: 1.5;
     color: var(--color-main);
+  }
+  .emptyWrap p {
+    color: var(--color-text-primary);
+    font-size: 16px;
   }
 
   .flexPhotoWrapper {
@@ -164,6 +168,6 @@
 
 @media screen and (min-width: 1440px) {
   .emptyWrap {
-    padding: 178px 118px 379px;
+    padding: 108px 118px 259px;
   }
 }

@@ -7,22 +7,20 @@ import RecipeList from "./recipeCard/RecipeList";
 import EmptyState from "./recipeCard/EmptyState";
 import css from "./RecipesList.module.css";
 import { toast } from "react-toastify";
-// import Loader from "@/components/Loader";
+import { Loader } from "@/components/ui";
 
 const MyRecipes = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
 
-  // Select data from the appropriate slice based on whether we're viewing our own profile or another user's
   const myRecipeState = useSelector((state) => state.myrecipe);
   const userRecipesState = useSelector((state) => state.userRecipes);
 
-  // Determine which state to use based on whether userId is present
   const isViewingOtherUser = !!userId;
   const {
     data: myData,
     isLoading: myIsLoading,
-    error: myError
+    error: myError,
   } = myRecipeState;
 
   const {
@@ -32,31 +30,31 @@ const MyRecipes = () => {
     page: userRecipesPage,
     totalPages: userRecipesTotalPages,
     total: userRecipesTotal,
-    limit: userRecipesLimit
+    limit: userRecipesLimit,
   } = userRecipesState;
 
-  // Use the appropriate data based on whether we're viewing our own profile or another user's
   const data = isViewingOtherUser ? userRecipesData : myData;
   const isLoading = isViewingOtherUser ? userRecipesIsLoading : myIsLoading;
   const error = isViewingOtherUser ? userRecipesError : myError;
 
-  // Pagination data (only used for other users' profiles)
   const currentPage = isViewingOtherUser ? userRecipesPage : 1;
   const totalPages = isViewingOtherUser ? userRecipesTotalPages : 1;
-  const totalRecipes = isViewingOtherUser ? userRecipesTotal : (data?.length || 0);
+  const totalRecipes = isViewingOtherUser
+    ? userRecipesTotal
+    : data?.length || 0;
 
   const recipes = data?.recipes || data || [];
 
   useEffect(() => {
     if (isViewingOtherUser) {
-      // Fetch recipes for the specified user with pagination
-      dispatch(fetchUserRecipes({
-        userId,
-        page: currentPage,
-        limit: userRecipesLimit
-      }));
+      dispatch(
+        fetchUserRecipes({
+          userId,
+          page: currentPage,
+          limit: userRecipesLimit,
+        })
+      );
     } else {
-      // Fetch current user's recipes
       dispatch(fetchMyRecipe());
     }
   }, [dispatch, userId, isViewingOtherUser, currentPage, userRecipesLimit]);
@@ -68,7 +66,6 @@ const MyRecipes = () => {
   };
 
   const deleteRecipe = async (id) => {
-    // Only allow deleting recipes on our own profile
     if (isViewingOtherUser) {
       return;
     }
@@ -91,8 +88,7 @@ const MyRecipes = () => {
 
   return (
     <div className={css.recipeWrap}>
-      {/* {isLoading && <Loader />}
-      {isDeleting && <Loader >} */}
+      {isLoading && <Loader />}
 
       {!isLoading && recipes.length > 0 ? (
         <>

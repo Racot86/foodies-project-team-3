@@ -9,14 +9,12 @@ import css from "./RecipesList.module.css";
 import RecipeList from "./recipeCard/RecipeList";
 import EmptyState from "./recipeCard/EmptyState";
 import { toast } from "react-toastify";
-// import Loader from "@/components/Loader";
+import { Loader } from "@/components/ui";
 
 const Favorites = () => {
   const dispatch = useDispatch();
 
-  const { data, isLoading, isDeleting, error } = useSelector(
-    (state) => state.favorites
-  );
+  const { data, isLoading, error } = useSelector((state) => state.favorites);
 
   useEffect(() => {
     dispatch(fetchFavorites());
@@ -36,7 +34,7 @@ const Favorites = () => {
 
   return (
     <div className={css.recipeWrap}>
-      {/* {isLoading || isDeleting ? <Loader /> : null} */}
+      {isLoading && <Loader />}
 
       {!isLoading && recipes.length > 0 ? (
         <RecipeList recipes={recipes} onDelete={handleDelete} />

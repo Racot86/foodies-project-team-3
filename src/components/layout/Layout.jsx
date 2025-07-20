@@ -3,18 +3,18 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "../header/Header";
 import { Footer } from "../footer/Footer";
 import { ResponsiveContainer } from "../container/ResponsiveContainer";
-import { useBreakpoint } from "@/hooks/useBreakpoint.js";
+// import { useBreakpoint } from "@/hooks/useBreakpoint.js";
 import styles from "./Layout.module.css";
 import { Button, BreadCrumbs } from "@components/ui/index.js";
 import ScrollLock from "@/components/scrollLock/ScrollLock";
 import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 export const Layout = () => {
-  const { breakpoint, windowWidth } = useBreakpoint();
+  // const { breakpoint, windowWidth } = useBreakpoint();
   const location = useLocation();
 
   // You can use breakpoint information for conditional rendering if needed
-  console.log(`Current breakpoint: ${breakpoint}, Width: ${windowWidth}px`);
+  // console.log(`Current breakpoint: ${breakpoint}, Width: ${windowWidth}px`);
 
   // Determine if breadcrumbs should be shown based on the current path
   const shouldShowBreadcrumbs = () => {
