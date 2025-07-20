@@ -41,7 +41,7 @@
   overflow: hidden; /* Changed from auto to hidden for smooth auto-resize */
   resize: none; /* Disabled resize since we're handling it with JS */
   box-sizing: border-box; /* Ensure padding is included in height calculations */
-  transition: height 0.1s ease; /* Smooth height transitions */
+  transition: height 0.1s ease, border-color 0.3s ease; /* Smooth height and border-color transitions */
 }
 
 .field.strong input {
@@ -136,7 +136,7 @@
 .field input:hover,
 .field textarea:focus,
 .field textarea:hover {
-  border-color: 1px solid var(--color-secondary);
+  border-color: var(--color-primary);
 }
 
 .field input::placeholder,
