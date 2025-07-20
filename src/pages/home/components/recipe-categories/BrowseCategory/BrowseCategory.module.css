@@ -1,7 +1,16 @@
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 600px;
+}
+
 .categoryPage {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    padding: 0 8px;
 }
 
 .header {
@@ -71,6 +80,7 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    width: 100%;
 }
 
 .recipeList {
@@ -85,13 +95,15 @@
     width: 100% !important;
 }
 
-.fullWidthInner {
-    width: 100% !important;
+.fullWidthInner.fullWidthInner {
+    top: 70px;
+    width: 100%;
 }
 
 @media (min-width: 768px) {
     .categoryPage {
         gap: 40px;
+        padding: 0 16px;
     }
 
     .header {
@@ -137,6 +149,10 @@
 }
 
 @media (min-width: 1440px) {
+    .categoryPage {
+        padding: 0 60px;
+    }
+
     .filtersContainer {
         flex-direction: row;
     }
