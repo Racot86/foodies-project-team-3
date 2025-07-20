@@ -3,7 +3,6 @@ import icons from "../../../../assets/icons/icons.svg";
 import { NavLink, useParams } from "react-router-dom";
 import SmallRecipePhoto from "./RecipePhotoCard.jsx";
 import { Button, ButtonIcon } from "@/components/ui";
-import { FiArrowUpRight } from "react-icons/fi";
 
 const RecipeCard = ({ data, onDelete }) => {
   const { userId } = useParams();
@@ -20,7 +19,9 @@ const RecipeCard = ({ data, onDelete }) => {
       </div>
       <div className={styles.buttonWrapper}>
         <NavLink to={`/recipe-details/${data.id}`} className={styles.navLink}>
-          <FiArrowUpRight width="16" height="16" />
+          <svg width="16" height="16">
+            <use href={`${icons}#icon-arrow-up-right`} />
+          </svg>
         </NavLink>
         {!isViewingOtherUser && (
           <ButtonIcon

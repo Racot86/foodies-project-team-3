@@ -17,6 +17,7 @@ export const RecipeDetails = () => {
   const token = useSelector((state) => state?.auth?.token);
   const dispatch = useAppDispatch();
 
+  // Get recipe details from Redux store
   const {
     isLoading,
     error,
@@ -81,9 +82,7 @@ export const RecipeDetails = () => {
   };
 
   // Handle loading state
-  {
-    isLoading && <Loader />;
-  }
+  if (isLoading) return <Loader />;
 
   // Handle error state
   if (error) return <div className={styles.notFound}>Error: {error}</div>;

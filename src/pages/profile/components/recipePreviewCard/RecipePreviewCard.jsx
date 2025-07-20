@@ -7,13 +7,13 @@ const RecipePreviewCard = ({ imageUrl, index, isEmpty = false }) => {
   }
 
   return (
-    <div className={styles.recipeImage}>
+    <li className={styles.recipeImage}>
       <img
         src={imageUrl}
         alt={`Recipe ${index + 1}`}
         className={styles.recipeImg}
       />
-    </div>
+    </li>
   );
 };
 

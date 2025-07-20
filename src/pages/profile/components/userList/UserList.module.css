@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  padding-bottom: 30px;
 }
 
 .userList {
@@ -69,6 +70,10 @@
 
   .loaderCentered {
     margin-top: 108px;
+  }
+
+  .container {
+    padding-bottom: 60px;
   }
 }
 
