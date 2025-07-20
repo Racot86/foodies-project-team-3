@@ -9,7 +9,6 @@ import { DEFAULT_AVATAR, DEFAULT_RECIPE_IMAGE } from '@/services/api.js';
 import styles from './RecipeCard.module.css';
 import { useBreakpoint } from '@/hooks/useBreakpoint.js';
 import { useAuthRedux } from '@/hooks';
-import SignInModal from '@/components/signInModal/SignInModal';
 import PrivateContentArea from "@components/privateContentArea/PrivateContentArea.jsx";
 import { toast } from 'react-toastify';
 import RecipeCardSkeleton from '@/components/recipeCardSkeleton/RecipeCardSkeleton';

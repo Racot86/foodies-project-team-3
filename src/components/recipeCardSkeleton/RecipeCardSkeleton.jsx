@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../recipeCard/RecipeCard.module.css';
+import styles from './RecipeCardSkeleton.module.css';
 
 /**
  * RecipeCardSkeleton component
