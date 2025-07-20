@@ -85,6 +85,7 @@
 }
 
 .profileContent li {
+  white-space: nowrap;
   padding: 4px 0;
   display: flex;
   justify-content: start;
