@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchMyRecipe, deleteMyRecipe } from "@/redux/slices/myRecipeSlice.js";
 import { fetchUserRecipes, setPage } from "@/redux/slices/userRecipesSlice.js";
+import { userDetails } from "@/redux/slices/userSlice";
 import RecipeList from "./recipeCard/RecipeList";
 import EmptyState from "./recipeCard/EmptyState";
 import css from "./RecipesList.module.css";
@@ -15,6 +16,8 @@ const MyRecipes = () => {
 
   const myRecipeState = useSelector((state) => state.myrecipe);
   const userRecipesState = useSelector((state) => state.userRecipes);
+  const { user } = useSelector((state) => state.auth);
+  const currentUserId = user?.id;
 
   const isViewingOtherUser = !!userId;
   const {
@@ -73,6 +76,11 @@ const MyRecipes = () => {
     const result = await dispatch(deleteMyRecipe(id));
     if (deleteMyRecipe.fulfilled.match(result)) {
       dispatch(fetchMyRecipe());
+
+      // Update user details to refresh the recipe count in the side card
+      if (currentUserId) {
+        dispatch(userDetails(currentUserId));
+      }
     } else {
       toast.error(
         `Failed to delete the recipe: ${result.payload || "Unknown error"}`

@@ -5,6 +5,7 @@ import {
   unfollowUser,
   setFollowingPage,
 } from "@/redux/slices/followerSlice";
+import { userDetails } from "@/redux/slices/userSlice";
 import UserList from "../components/userList/UserList";
 import { Pagination } from "@/components/ui/Pagination";
 import styles from "./Following.module.css";
@@ -34,8 +35,13 @@ const Following = () => {
     }
   }, [dispatch, currentUserId, followingPage, followingLimit]);
 
-  const handleUnfollowUser = (userId) => {
-    dispatch(unfollowUser(userId));
+  const handleUnfollowUser = async (userId) => {
+    await dispatch(unfollowUser(userId));
+
+    // Update user details to refresh the following count in the side card
+    if (currentUserId) {
+      dispatch(userDetails(currentUserId));
+    }
   };
 
   const handlePageChange = (page) => {

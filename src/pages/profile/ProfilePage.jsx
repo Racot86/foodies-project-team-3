@@ -60,6 +60,13 @@ function ProfilePage() {
     }
   }, [idOfUserToRender, dispatch]);
 
+  // Update user details when location changes (tab switching)
+  useEffect(() => {
+    if (idOfUserToRender && location.pathname.includes('/profile')) {
+      dispatch(userDetails(idOfUserToRender));
+    }
+  }, [location.pathname, idOfUserToRender, dispatch]);
+
   // Make the first tab active by default
   useEffect(() => {
     // Build base path depending on whether we're viewing current user or another user
@@ -116,11 +123,15 @@ function ProfilePage() {
         await dispatch(unfollowUser(userId));
         // After unfollowing, check the follow status again
         dispatch(checkFollowStatus(userId));
+        // Update user details to refresh the follower count in the side card
+        dispatch(userDetails(userId));
       } else {
         // If not following, follow the user
         await dispatch(followUser(userId));
         // After following, check the follow status again
         dispatch(checkFollowStatus(userId));
+        // Update user details to refresh the follower count in the side card
+        dispatch(userDetails(userId));
       }
     }
   };

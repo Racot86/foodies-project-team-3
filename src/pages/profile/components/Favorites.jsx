@@ -4,6 +4,7 @@ import {
   fetchFavorites,
   deleteFavorite,
 } from "@/redux/slices/favoriteRecipeSlice";
+import { userDetails } from "@/redux/slices/userSlice";
 
 import css from "./RecipesList.module.css";
 import RecipeList from "./recipeCard/RecipeList";
@@ -15,6 +16,8 @@ const Favorites = () => {
   const dispatch = useDispatch();
 
   const { data, isLoading, error } = useSelector((state) => state.favorites);
+  const { user } = useSelector((state) => state.auth);
+  const currentUserId = user?.id;
 
   useEffect(() => {
     dispatch(fetchFavorites());
@@ -28,8 +31,13 @@ const Favorites = () => {
 
   const recipes = data || [];
 
-  const handleDelete = (recipeId) => {
-    dispatch(deleteFavorite(recipeId));
+  const handleDelete = async (recipeId) => {
+    await dispatch(deleteFavorite(recipeId));
+
+    // Update user details to refresh the favorites count in the side card
+    if (currentUserId) {
+      dispatch(userDetails(currentUserId));
+    }
   };
 
   return (

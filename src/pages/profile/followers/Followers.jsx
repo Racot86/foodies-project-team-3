@@ -7,6 +7,7 @@ import {
   followUser,
   setFollowersPage,
 } from "@/redux/slices/followerSlice";
+import { userDetails } from "@/redux/slices/userSlice";
 import UserList from "../components/userList/UserList";
 import { Pagination } from "@/components/ui/Pagination";
 import styles from "./Followers.module.css";
@@ -48,6 +49,11 @@ const Followers = () => {
         : "Added to followers";
 
       toast.success(message, { position: "top-center", autoClose: 3000 });
+
+      // Update user details to refresh the follower count in the side card
+      if (targetUserId) {
+        dispatch(userDetails(targetUserId));
+      }
     } catch {
       toast.error("Failed to follow user", {
         position: "top-center",
