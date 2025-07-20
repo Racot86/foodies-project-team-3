@@ -229,7 +229,7 @@ function ProfilePage() {
         </div>
 
         <div className={styles.tabsSection}>
-          <Tabs visibleTabs={isMe ? {} : { favorites: false, following: false }} />
+          <Tabs visibleTabs={isMe ? { recipes: false } : { myRecipes: false, favorites: false, following: false }} />
           <div className={styles.tabContent}>
             <Outlet />
           </div>

@@ -10,11 +10,13 @@ const Tabs = ({ visibleTabs = {} }) => {
   // Build base path depending on whether we're viewing current user or another user
   const basePath = userId ? `/profile/${userId}` : "/profile";
 
-  // Change label based on whether it's current user or another user
-  const recipesLabel = userId ? "RECIPES" : "MY RECIPES";
+  // Change label and key based on whether it's current user or another user
+  const isViewingOtherUser = !!userId;
+  const recipesLabel = isViewingOtherUser ? "RECIPES" : "MY RECIPES";
+  const recipesKey = isViewingOtherUser ? "recipes" : "myRecipes";
 
   const tabs = [
-    { label: recipesLabel, path: `${basePath}/my-recipes`, key: "myRecipes" },
+    { label: recipesLabel, path: `${basePath}/my-recipes`, key: recipesKey },
     { label: "MY FAVORITES", path: `${basePath}/favorites`, key: "favorites" },
     { label: "FOLLOWERS", path: `${basePath}/followers`, key: "followers" },
     { label: "FOLLOWING", path: `${basePath}/following`, key: "following" },

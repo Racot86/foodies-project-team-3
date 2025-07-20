@@ -42,6 +42,7 @@ export const getRecipes = async (options = {}) => {
     ingredient,
     area,
     title,
+    ownerId,
     page = 1,
     limit = 10
   } = options;
@@ -54,6 +55,7 @@ export const getRecipes = async (options = {}) => {
   if (ingredient) params.append('ingridient', ingredient);
   if (area) params.append('area', area);
   if (title) params.append('title', title);
+  if (ownerId) params.append('ownerId', ownerId);
   if (page) params.append('page', page);
   if (limit) params.append('limit', limit);
 
