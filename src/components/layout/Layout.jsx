@@ -6,6 +6,7 @@ import { ResponsiveContainer } from "../container/ResponsiveContainer";
 import { useBreakpoint } from "@/hooks/useBreakpoint.js";
 import styles from "./Layout.module.css";
 import { Button, BreadCrumbs } from "@components/ui/index.js";
+import ScrollLock from "@/components/scrollLock/ScrollLock";
 
 export const Layout = () => {
   const { breakpoint, windowWidth } = useBreakpoint();
@@ -28,6 +29,7 @@ export const Layout = () => {
 
   return (
     <div id="layout" className={styles.layout}>
+      <ScrollLock />
       <ResponsiveContainer>
         <Header />
         {shouldShowBreadcrumbs() && (
