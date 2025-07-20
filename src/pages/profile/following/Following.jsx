@@ -20,13 +20,11 @@ const Following = () => {
     followingTotal,
   } = useSelector((state) => state.followers);
 
-  // Get current user ID from auth state
   const { user } = useSelector((state) => state.auth);
   const currentUserId = user?.id;
 
   useEffect(() => {
     if (currentUserId) {
-      // Fetch following for current user
       dispatch(
         getFollowing({
           page: followingPage,
@@ -44,7 +42,6 @@ const Following = () => {
     dispatch(setFollowingPage(page));
   };
 
-  // Calculate total pages
   const totalPages = Math.ceil(followingTotal / followingLimit);
 
   return (

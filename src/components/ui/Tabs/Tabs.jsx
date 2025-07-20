@@ -22,19 +22,21 @@ const Tabs = ({ visibleTabs = {} }) => {
 
   return (
     <div className="tabs-container">
-      <div className="tabs-wrapper">
+      <ul className="tabs-wrapper">
         {tabs.map((tab) =>
           visibleTabs[tab.key] !== false ? (
-            <div
+            <li
               key={tab.key}
-              className={`tab ${location.pathname === tab.path ? "active" : ""}`}
+              className={`tab ${
+                location.pathname === tab.path ? "active" : ""
+              }`}
               onClick={() => navigate(tab.path)}
             >
               {tab.label}
-            </div>
+            </li>
           ) : null
         )}
-      </div>
+      </ul>
     </div>
   );
 };

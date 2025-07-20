@@ -21,7 +21,7 @@ import {
 } from "../../redux/slices/userSlice";
 import {
   unfollowUser,
-  checkFollowStatus
+  checkFollowStatus,
 } from "../../redux/slices/followerSlice";
 
 function ProfilePage() {
@@ -31,7 +31,9 @@ function ProfilePage() {
   const loggedUser = useSelector(selectUser);
   const requestedUserDetails = useSelector(selectUserDetails);
   const error = useSelector(selectError);
-  const { isFollowing, isFollowActionLoading } = useSelector((state) => state.followers);
+  const { isFollowing, isFollowActionLoading } = useSelector(
+    (state) => state.followers
+  );
 
   // get current user
   useEffect(() => {
@@ -107,16 +109,14 @@ function ProfilePage() {
       >
         PROFILE
       </Heading>
-      <div>
-        <Text
-          color="primary"
-          weight="semibold"
-          className={styles.profileDescription}
-        >
-          Reveal your culinary art, share your favorite recipe and create
-          gastronomic masterpieces with us.
-        </Text>
-      </div>
+      <Text
+        color="primary"
+        weight="semibold"
+        className={styles.profileDescription}
+      >
+        Reveal your culinary art, share your favorite recipe and create
+        gastronomic masterpieces with us.
+      </Text>
       <div className={styles.profileContainer}>
         <div className={styles.controlPanelContainer}>
           <div className={styles.controlPanel}>
@@ -229,7 +229,9 @@ function ProfilePage() {
         </div>
 
         <div className={styles.tabsSection}>
-          <Tabs visibleTabs={isMe ? {} : { favorites: false, following: false }} />
+          <Tabs
+            visibleTabs={isMe ? {} : { favorites: false, following: false }}
+          />
           <div className={styles.tabContent}>
             <Outlet />
           </div>

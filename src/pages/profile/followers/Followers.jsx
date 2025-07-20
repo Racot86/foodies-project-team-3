@@ -22,17 +22,14 @@ const Followers = () => {
     followersTotal,
   } = useSelector((state) => state.followers);
 
-  // Get current user ID from auth state
   const { user } = useSelector((state) => state.auth);
   const currentUserId = user?.id;
 
-  // Get userId from URL params, or use current user's ID if not provided
   const { userId } = useParams();
   const targetUserId = userId || currentUserId;
 
   useEffect(() => {
     if (targetUserId) {
-      // Fetch followers for the target user (either current user or specified user)
       dispatch(
         getFollowers({
           userId: targetUserId,
@@ -45,8 +42,6 @@ const Followers = () => {
   const handleFollowUser = async (userId) => {
     try {
       const result = await dispatch(followUser(userId));
-
-      console.log("Follow result:", result); // Debug log
 
       const message = result.payload?.alreadyFollowing
         ? "Already following this user"
@@ -65,7 +60,6 @@ const Followers = () => {
     dispatch(setFollowersPage(page));
   };
 
-  // Calculate total pages
   const totalPages = Math.ceil(followersTotal / followersLimit);
 
   return (

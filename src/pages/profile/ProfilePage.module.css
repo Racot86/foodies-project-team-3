@@ -7,9 +7,9 @@
 }
 
 .profilePage {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
-  padding: 0 8px;
+  /* padding: 0 8px; */
 }
 
 .profileHeading {
@@ -30,7 +30,8 @@
   margin-bottom: 20px;
 }
 
-.profileDescription {
+.profileDescription.profileDescription {
+  margin-top: 0;
   margin-bottom: 32px;
   color: var(--color-secondary);
 }
@@ -56,6 +57,7 @@
   align-items: center;
   flex-direction: column;
   gap: 20px;
+  justify-content: center;
   padding: 30px 70px;
 }
 
@@ -82,11 +84,13 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .profileContent li {
   white-space: nowrap;
-  padding: 4px 0;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -109,14 +113,14 @@
 
 @media (min-width: 768px) {
   .profilePage {
-    padding: 0 16px;
+    /* padding: 0 16px; */
   }
 
   .profileHeading {
     margin-bottom: 20px;
   }
 
-  .profileDescription {
+  .profileDescription.profileDescription {
     max-width: 443px;
     margin-bottom: 40px;
     color: var(--color-primary);
@@ -140,11 +144,11 @@
   .profileContent {
     flex-direction: column;
     border: 1px solid var(--color-primary);
+    width: 394px;
   }
 
   .profileInfo {
     flex: 2;
-    gap: 16px;
     flex-direction: column;
     padding: 40px 80px;
   }
@@ -152,11 +156,25 @@
   .profileContainer {
     gap: 80px;
   }
+
+  .profileContent ul {
+    width: 234px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* .controlPanel {
+    width: 394px;
+  } */
 }
 
 @media (min-width: 1440px) {
+  .tabsSection {
+    width: 846px;
+  }
   .profilePage {
-    padding: 0 60px;
+    padding-bottom: 120px;
+    width: 1280px;
   }
 
   .profileContent {

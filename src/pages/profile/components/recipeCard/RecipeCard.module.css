@@ -119,6 +119,9 @@
     line-height: 1.5;
     color: var(--color-main);
   }
+  .emptyWrap p {
+    color: var(--color-text-primary);
+  }
 
   .flexPhotoWrapper {
     gap: 16px;
@@ -164,6 +167,6 @@
 
 @media screen and (min-width: 1440px) {
   .emptyWrap {
-    padding: 178px 118px 379px;
+    padding: 108px 118px 259px;
   }
 }
