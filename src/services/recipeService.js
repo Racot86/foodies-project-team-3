@@ -7,6 +7,8 @@ import api from "./api.js";
  * @param {string} [options.ingredient] - Filter by ingredient name
  * @param {string} [options.area] - Filter by area name
  * @param {string} [options.title] - Filter by recipe title
+ * @param {string} [options.ownerId] - Filter by owner ID (preferred)
+ * @param {string} [options.owner] - Filter by owner ID (legacy, use ownerId instead)
  * @param {number} [options.page=1] - Page number for pagination
  * @param {number} [options.limit=10] - Number of recipes per page
  * @returns {Promise<{
@@ -42,6 +44,8 @@ export const getRecipes = async (options = {}) => {
     ingredient,
     area,
     title,
+    owner,
+    ownerId,
     page = 1,
     limit = 10
   } = options;
@@ -54,6 +58,8 @@ export const getRecipes = async (options = {}) => {
   if (ingredient) params.append('ingridient', ingredient);
   if (area) params.append('area', area);
   if (title) params.append('title', title);
+  if (ownerId) params.append('ownerId', ownerId);
+  else if (owner) params.append('ownerId', owner);
   if (page) params.append('page', page);
   if (limit) params.append('limit', limit);
 
