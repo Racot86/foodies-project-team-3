@@ -22,17 +22,19 @@ const Tabs = ({ visibleTabs = {} }) => {
 
   return (
     <div className="tabs-container">
-      {tabs.map((tab) =>
-        visibleTabs[tab.key] !== false ? (
-          <div
-            key={tab.key}
-            className={`tab ${location.pathname === tab.path ? "active" : ""}`}
-            onClick={() => navigate(tab.path)}
-          >
-            {tab.label}
-          </div>
-        ) : null
-      )}
+      <div className="tabs-wrapper">
+        {tabs.map((tab) =>
+          visibleTabs[tab.key] !== false ? (
+            <div
+              key={tab.key}
+              className={`tab ${location.pathname === tab.path ? "active" : ""}`}
+              onClick={() => navigate(tab.path)}
+            >
+              {tab.label}
+            </div>
+          ) : null
+        )}
+      </div>
     </div>
   );
 };
