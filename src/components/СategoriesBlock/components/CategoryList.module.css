@@ -1,70 +1,44 @@
 .list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  row-gap: 16px;
+  column-gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* Окрема картка */
-.item {
-  flex: 1 0 25.35%;
-  max-width: 25.35%;
+
+.item,
+.item.allCategoriesCard,
+.list::after {
+  flex: 1 0 100%;
+  max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-/* Wide-картки: 3-тя, 1-ша (з 2го ряду), 2-га (з 3го ряду), 1-ша (з 4го) — патерн*/
+
+/* wide-картки на мобілці */
 .item:nth-child(3),
 .item:nth-child(4),
 .item:nth-child(8),
 .item:nth-child(10),
-.item:nth-child(14),
-.item:nth-child(14n + 3) {
-  flex: 1 0 46.1%;
-  max-width: 46.1%;
+.item:nth-child(14) {
+  flex: 1 0 100%;
+  max-width: 100%;
 }
 
-.item.allCategoriesCard {
-  flex: 1 0 25.4%;
-  max-width: 25.4%;
-}
-
-.list::after {
-  content: "";
-  flex: 1 0 25.4%;
-  max-width: 25.4%;
-}
-
-@media (max-width: 1023px) {
+/* >=768px — планшети */
+@media (min-width: 768px) {
   .list {
-    gap: 20px;
+    row-gap: 20px;
+    column-gap: 20px;
   }
-}
 
-@media (max-width: 767px) {
   .item,
   .item.allCategoriesCard,
   .list::after {
-    flex: 1 0 100%;
-    max-width: 100%;
-  }
-  .item:nth-child(3),
-  .item:nth-child(4),
-  .item:nth-child(8),
-  .item:nth-child(10),
-  .item:nth-child(14) {
-    flex: 1 0 100%;
-    max-width: 100%;
-  }
-  .list {
-    gap: 16px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1439px) {
-  .item {
     flex: 1 0 48.5%;
     max-width: 48.5%;
   }
@@ -76,20 +50,44 @@
     flex: 1 0 100%;
     max-width: 100%;
   }
+
   .item:nth-child(4),
   .item:nth-child(10) {
     flex: 1 0 48.5%;
     max-width: 48.5%;
   }
+}
+
+/* >=1440px — десктопи */
+@media (min-width: 1440px) {
+  .item {
+    flex: 1 0 25.35%;
+    max-width: 25.35%;
+  }
+
+  .item:nth-child(3),
+  .item:nth-child(4),
+  .item:nth-child(8),
+  .item:nth-child(10),
+  .item:nth-child(14),
+  .item:nth-child(14n + 3) {
+    flex: 1 0 46.1%;
+    max-width: 46.1%;
+  }
 
   .item.allCategoriesCard {
-    flex: 1 0 48.5%;
-    max-width: 48.5%;
+    flex: 1 0 25.4%;
+    max-width: 25.4%;
   }
 
   .list::after {
     content: "";
-    flex: 1 0 48.5%;
-    max-width: 48.5%;
+    flex: 1 0 25.4%;
+    max-width: 25.4%;
+  }
+
+  .item:nth-child(11) {
+    flex: 1 0 25.35%;
+    max-width: 25.35%;
   }
 }
