@@ -104,16 +104,16 @@ const RecipeForm = () => {
         }
       });
 
-      await dispatch(postRecipe(formData)).unwrap();
+      const response = await dispatch(postRecipe(formData)).unwrap();
 
       toast.success(
-        "Recipe submitted successfully! Redirecting to your profile..."
+        "Recipe submitted successfully!"
       );
       reset();
       setImage(null);
       setTimeout(() => {
-        navigate("/profile");
-      }, 2500);
+        navigate("/recipe-details/" + response.id);
+      }, 2000);
     } catch (error) {
       toast.error(`Failed to submit recipe: ${error.message || error}`);
     } finally {
