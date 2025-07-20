@@ -41,19 +41,25 @@
   gap: 8px;
 }
 
+.userInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .userName {
-  font-size: 16px;
   font-weight: 800;
-  line-height: 1.5;
-  letter-spacing: -0.2em;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
 .userInfo .recipeCount {
-  font-size: 12px;
-  letter-spacing: -0.2em;
-  line-height: 1.5;
   font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.02em;
   margin-top: 0 !important;
   color: var(--color-text-secondary);
 }
@@ -63,12 +69,16 @@
   height: 16px;
 }
 
-.actionButton {
+.userInfo .actionButton {
+  height: 44px;
   color: var(--color-text-secondary);
+  font-weight: 700;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 700;
-  letter-spacing: -0.2em;
+  letter-spacing: -0.02em;
+  padding: 8px 16px;
+  margin-bottom: 0 !important;
+  border: 1px solid var(--color-text-muted);
 }
 
 .previewContainer {
@@ -78,22 +88,6 @@
   gap: 8px;
   flex-shrink: 0;
 }
-
-/* .iconButton {
-  width: 36px;
-  height: 36px;
-  color: #4a4a4a;
-  transition: color 0.2s ease;
-  color: #050505;
-  fill: #050505;
-  stroke: #050505;
-}
-
-.iconButton:hover {
-  color: white;
-  fill: white;
-  stroke: white;
-} */
 
 .navLink {
   width: 36px;
@@ -134,14 +128,14 @@
 
   .userName {
     font-size: 20px;
-    line-height: 1.2;
-    letter-spacing: -0.4px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
   }
 
-  .recipeCount {
-    font-size: 14px;
-    letter-spacing: -0.28px;
-    line-height: 1.43;
+  .userInfo .actionButton {
+    font-size: 16px;
+    line-height: 24px;
+    padding: 10px 24px;
   }
 
   .navLink {

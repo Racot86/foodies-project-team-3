@@ -61,17 +61,19 @@ const UserCard = ({ user, onButtonClick, tabType }) => {
           />
         </div>
         <div className={styles.userInfo}>
-          <Heading
-            level={3}
-            size="sm"
-            weight="bold"
-            className={styles.userName}
-          >
-            {firstName}
-          </Heading>
-          <Text size="sm" color="muted" className={styles.recipeCount}>
-            Own recipes: {user.recipesCount || 0}
-          </Text>
+          <div className={styles.userInfoWrapper}>
+            <Heading
+              level={3}
+              size="sm"
+              weight="bold"
+              className={styles.userName}
+            >
+              {firstName}
+            </Heading>
+            <Text size="sm" color="muted" className={styles.recipeCount}>
+              Own recipes: {user.recipesCount || 0}
+            </Text>
+          </div>
           <Button
             variant={Button.variants.SECONDARY}
             onClick={handleButtonClick}
