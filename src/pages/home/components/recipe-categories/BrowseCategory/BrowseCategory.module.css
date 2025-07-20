@@ -64,7 +64,6 @@
     top: 16px;
     z-index: 10;
     background-color: var(--color-background, #fff);
-    padding: 12px 0;
 }
 
 .recipesContainer {
@@ -83,6 +82,9 @@
 .unlimitedMaxWidth,
 .customSelect {
     width: 100% !important;
+}
+.customSelect{
+    margin-bottom: 0;
 }
 
 .fullWidthInner {
@@ -116,13 +118,12 @@
     .filters {
         display: flex;
         flex-direction: row;
-        gap: 20px;
         /* Maintain sticky behavior for tablet */
         position: sticky;
         top: 16px;
         z-index: 10;
         background-color: var(--color-background, #fff);
-        padding: 12px 0;
+        
     }
 
     .recipesContainer {

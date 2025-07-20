@@ -1,6 +1,6 @@
 .card {
     width: 100%;
-    max-width: 342px; /* Max width for tablet and mobile to match skeleton */
+    /* max-width: 342px; Max width for tablet and mobile to match skeleton */
     overflow: hidden;
     background-color: var(--color-background);
     display: flex;
@@ -161,10 +161,7 @@
 }
 
 @media (min-width: 768px) {
-    .card {
-        max-width: 290px; /* Max width for desktop to match skeleton */
-    }
-
+    
     .imageContainer {
         height: 275px;
     }
