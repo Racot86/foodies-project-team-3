@@ -8,11 +8,13 @@
   flex-direction: column;
 }
 
-.breadcrumbs {
+.breadcrumbs.breadcrumbs {
   margin: 0 auto;
   padding: 0;
-  padding-bottom: 40px;
-  padding-top: 80px;
+  padding-bottom: 32px;
+  padding-top: 64px;
+  width: 100%;
+  max-width: 343px;
 }
 .breadcrumbs ol li span,
 .breadcrumbs ol li a {
@@ -26,6 +28,8 @@
   .breadcrumbs.breadcrumbs {
     width: 704px;
     padding-top: 64px;
+    padding-bottom: 40px;
+    max-width: unset;
   }
 }
 

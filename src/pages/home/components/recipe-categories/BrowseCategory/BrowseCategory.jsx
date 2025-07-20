@@ -16,11 +16,11 @@ const BrowseCategory = () => {
   const dispatch = useAppDispatch();
   const categoryPageRef = useRef(null);
 
-  // Get ingredients and areas from Redux store
+
   const { data: ingredients, isLoading: ingredientsLoading } = useAppSelector((state) => state.ingredients);
   const { data: areas, isLoading: areasLoading } = useAppSelector((state) => state.areas);
 
-  // State for filters and pagination
+
   const [selectedCategory, setSelectedCategory] = useState(categoryName || "");
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [selectedArea, setSelectedArea] = useState("");
@@ -33,12 +33,12 @@ const BrowseCategory = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fixed limit for recipes per page
+
   const RECIPES_PER_PAGE = 12;
 
-  // Fetch ingredients and areas from API with filters
+
   useEffect(() => {
-    // Fetch ingredients filtered by category and area
+    
     dispatch(fetchIngredients({
       category: selectedCategory || undefined,
       area: selectedArea || undefined,
@@ -46,7 +46,7 @@ const BrowseCategory = () => {
       filter: true
     }));
 
-    // Fetch areas filtered by category and ingredient
+   
     dispatch(fetchAreas({
       category: selectedCategory || undefined,
       ingredient: selectedIngredient || undefined,
@@ -55,14 +55,14 @@ const BrowseCategory = () => {
     }));
   }, [dispatch, selectedCategory, selectedArea, selectedIngredient]);
 
-  // Update selectedCategory when categoryName changes
+ 
   useEffect(() => {
     if (categoryName !== undefined) {
       setSelectedCategory(categoryName);
     }
   }, [categoryName]);
 
-  // Function to fetch recipes with current filters and pagination
+  
   const fetchRecipesWithFilters = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -83,15 +83,15 @@ const BrowseCategory = () => {
     }
   }, [selectedCategory, selectedIngredient, selectedArea, currentPage]);
 
-  // Fetch recipes when filters or pagination change
+  
   useEffect(() => {
     fetchRecipesWithFilters();
   }, [fetchRecipesWithFilters]);
 
-  // Handle page change
+  
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    // Scroll to top of category page when page changes
+   
     if (categoryPageRef.current) {
       categoryPageRef.current.scrollIntoView({
         behavior: 'smooth'
@@ -99,7 +99,7 @@ const BrowseCategory = () => {
     }
   };
 
-  // Log current filter state for debugging - can be removed in production
+  
   useEffect(() => {
     console.log('Current filters:', {
       category: selectedCategory,
@@ -108,48 +108,48 @@ const BrowseCategory = () => {
     });
   }, [selectedCategory, selectedIngredient, selectedArea]);
 
-  // Helper function to handle filter changes
+
   const handleFilterChange = (setter, value) => {
     setter(value);
-    setCurrentPage(1); // Reset to first page when filter changes
-    // Reset totalPages to avoid showing stale pagination
+    setCurrentPage(1); 
+    
     setRecipesData(prevData => ({
       ...prevData,
       totalPages: 0
     }));
   };
 
-  // Format ingredients data for select options
+ 
   const ingredientOptions = ingredients.map(item => ({
     value: item.name,
     label: item.name
   }));
 
-  // Format areas data for select options
+ 
   const areaOptions = areas.map(item => ({
     value: item.name,
     label: item.name
   }));
 
-  // Reset selected values when options change
+  
   useEffect(() => {
-    // If the selected ingredient is not in the filtered list, reset it
+    
     if (selectedIngredient && !ingredients.some(item => item.name === selectedIngredient)) {
       setSelectedIngredient("");
     }
   }, [ingredients, selectedIngredient]);
 
   useEffect(() => {
-    // If the selected area is not in the filtered list, reset it
+    
     if (selectedArea && !areas.some(item => item.name === selectedArea)) {
       setSelectedArea("");
     }
   }, [areas, selectedArea]);
 
-  // Ensure recipesData and its properties are always defined
+  
   const recipes = recipesData?.recipes || [];
 
-  // Get category information
+  
   const categoryInfo = recipesData?.category || {
     name: selectedCategory || "All Recipes",
     description: selectedCategory ? `Recipes from the ${selectedCategory} category.` : "Browse all recipes."

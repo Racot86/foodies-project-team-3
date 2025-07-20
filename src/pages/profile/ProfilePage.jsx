@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import styles from "./ProfilePage.module.css";
 import Page from "@components/page/Page";
@@ -28,6 +28,8 @@ function ProfilePage() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const loggedUser = useSelector(selectUser);
   const requestedUserDetails = useSelector(selectUserDetails);
   const error = useSelector(selectError);
@@ -57,6 +59,36 @@ function ProfilePage() {
       dispatch(userDetails(idOfUserToRender));
     }
   }, [idOfUserToRender, dispatch]);
+
+  // Make the first tab active by default
+  useEffect(() => {
+    // Build base path depending on whether we're viewing current user or another user
+    const basePath = userId ? `/profile/${userId}` : "/profile";
+
+    // Define tabs based on whether it's current user or another user
+    const tabs = [
+      // Show "MY RECIPES" tab only for current user, "RECIPES" tab only for other users
+      ...(userId
+        ? [{ path: `${basePath}/my-recipes`, key: "recipes" }]
+        : [{ path: `${basePath}/my-recipes`, key: "myRecipes" }]),
+      { path: `${basePath}/favorites`, key: "favorites" },
+      { path: `${basePath}/followers`, key: "followers" },
+      { path: `${basePath}/following`, key: "following" },
+    ];
+
+    // Filter tabs based on visibleTabs prop
+    const visibleTabsObj = isMe
+      ? { recipes: false }
+      : { favorites: false, following: false, myRecipes: false };
+    const filteredTabs = tabs.filter(
+      (tab) => visibleTabsObj[tab.key] !== false
+    );
+
+    // If we're at the base profile path, navigate to the first visible tab
+    if (location.pathname === basePath && filteredTabs.length > 0) {
+      navigate(filteredTabs[0].path);
+    }
+  }, [location.pathname, userId, isMe, navigate]);
 
   const input = document.createElement("input");
   input.type = "file";
@@ -230,7 +262,11 @@ function ProfilePage() {
 
         <div className={styles.tabsSection}>
           <Tabs
-            visibleTabs={isMe ? {} : { favorites: false, following: false }}
+            visibleTabs={
+              isMe
+                ? { recipes: false }
+                : { favorites: false, following: false, myRecipes: false }
+            }
           />
           <div className={styles.tabContent}>
             <Outlet />

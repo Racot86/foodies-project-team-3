@@ -7,8 +7,10 @@
   }
 
   .recipes-grid {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+    width: 100%;
   }
 
   @media (min-width: 768px) {
@@ -20,9 +22,15 @@
   }
 
   .recipes-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 20px;    
-    row-gap: 40px;  
+    row-gap: 40px; 
+    width: 100%; 
+  }
+  .recipe-card{
+    width: 100%;
+ 
   }
 
   }

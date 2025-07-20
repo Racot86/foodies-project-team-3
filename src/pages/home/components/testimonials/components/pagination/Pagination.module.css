@@ -5,8 +5,8 @@
 }
 
 .paginationBullet {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   background-color: var(--color-secondary);
   border-radius: 50%;
   opacity: 1;
@@ -19,4 +19,11 @@
 
 .paginationBulletActive {
   background-color: var(--color-primary);
+}
+
+@media (min-width: 768px) {
+  .paginationBullet {
+    width: 16px;
+    height: 16px;
+  }
 }
