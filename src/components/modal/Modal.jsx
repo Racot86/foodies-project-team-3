@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "./Modal.module.css";
 import icons from "../../assets/icons/icons.svg";
 import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
@@ -9,9 +9,19 @@ const Modal = ({ onClose, children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const dispatch = useAppDispatch();
 
+  const handleClose = useCallback(() => {
+    // First set isVisible to false to trigger the CSS transition
+    setIsVisible(false);
+
+    // Delay actual closing to allow the transition to complete
+    setTimeout(() => {
+      onClose();
+    }, 500); // Match the CSS transition duration
+  }, [onClose]);
+
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     document.addEventListener("keydown", handleEsc);
 
@@ -30,10 +40,10 @@ const Modal = ({ onClose, children }) => {
       // Unblock scrolling when modal closes
       dispatch(unblockScroll());
     };
-  }, [onClose, dispatch]);
+  }, [handleClose, dispatch]);
 
   const handleBackdrop = (e) => {
-    if (e.target === e.currentTarget) onClose();
+    if (e.target === e.currentTarget) handleClose();
   };
 
   return (
@@ -47,7 +57,7 @@ const Modal = ({ onClose, children }) => {
       >
         <button
           className={styles.closeBtn}
-          onClick={onClose}
+          onClick={handleClose}
           aria-label="Close modal"
           type="button"
         >
