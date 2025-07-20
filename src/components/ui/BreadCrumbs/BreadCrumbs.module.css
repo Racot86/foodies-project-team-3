@@ -25,7 +25,7 @@
 }
 
 .link {
-  color: #22A45D;
+  color: #22a45d;
   text-decoration: none;
 }
 
@@ -34,7 +34,8 @@
   text-decoration: none;
 }
 
-.link:hover, .homeLink:hover {
+.link:hover,
+.homeLink:hover {
   text-decoration: underline;
 }
 

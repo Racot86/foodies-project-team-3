@@ -2,9 +2,17 @@
   width: 100%;
   position: relative;
 }
+
+.recipesInfo {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
 .recipeWrap span {
   position: absolute;
-  top: 108px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -25,15 +33,10 @@
   .recipeWrap {
     width: 846px;
   }
-}
-
-.recipeWrap {
-  width: 100%;
-}
-
-.recipesInfo {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 14px;
-  color: #666;
+  .recipeWrap span {
+    position: absolute;
+    top: 108px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
