@@ -36,7 +36,7 @@ const VISIBLE_COUNT_TABLET = 12;
 const VISIBLE_COUNT_MOBILE = 8;
 
 const CategoryList = () => {
-   const width = useWindowWidth(); 
+   const width = useWindowWidth();
   const [categories, setCategories] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -57,6 +57,19 @@ const CategoryList = () => {
     visibleCount = VISIBLE_COUNT_MOBILE;
   }
 
+  // Track if categories have been expanded to apply animations only to newly visible cards
+  const [prevVisibleCount, setPrevVisibleCount] = useState(0);
+
+  useEffect(() => {
+    // Only update prevVisibleCount when:
+    // 1. Categories are initially loaded (categories.length changes)
+    // 2. When hiding extra categories (going from showAll=true to showAll=false)
+    // Don't update when expanding to show all categories to avoid re-animating already visible cards
+    if (!showAll || categories.length === 0) {
+      setPrevVisibleCount(visibleCount);
+    }
+  }, [showAll, categories.length, visibleCount]);
+
   const visibleCategories = showAll
     ? categories
     : categories.slice(0, visibleCount);
@@ -69,16 +82,48 @@ const CategoryList = () => {
 
   return (
     <ul className={styles.list}>
-      {visibleCategories.map((cat) => (
-        <li key={cat.id} className={styles.item}>
-          <CategoryCard
-            category={cat.name}
-            image={categoryImages[cat.name] || "/images/default.png"}
-          />
-        </li>
-      ))}
+      {visibleCategories.map((cat, index) => {
+        // Determine if this card is newly visible after expanding categories
+        const isNewlyVisible = index >= prevVisibleCount;
+        // Apply animation only to newly visible cards or on initial load
+        const shouldAnimate = categories.length > 0 && (prevVisibleCount === 0 || isNewlyVisible);
+        // Calculate delay - for newly visible cards after expansion, start from 0
+        const delay = shouldAnimate
+          ? `${isNewlyVisible && prevVisibleCount > 0 
+              ? (index - prevVisibleCount) * 0.1 
+              : index * 0.1}s`
+          : '0s';
+
+        return (
+          <li key={cat.id} className={styles.item}>
+            <div
+              style={{
+                animationDelay: delay,
+                animationFillMode: 'forwards',
+                // Skip animation for cards that were already visible
+                opacity: shouldAnimate ? 0 : 1,
+                transform: shouldAnimate ? 'scale(0.8)' : 'scale(1)'
+              }}
+              className={shouldAnimate ? styles.animatedCard : ''}
+            >
+              <CategoryCard
+                category={cat.name}
+                image={categoryImages[cat.name] || "/images/default.png"}
+              />
+            </div>
+          </li>
+        );
+      })}
       <li className={`${styles.item} ${styles.allCategoriesCard}`}>
-        <CategoryCard {...allCategoriesCardProps} />
+        <div
+          style={{
+            animationDelay: `${Math.max(0, visibleCategories.length - prevVisibleCount) * 0.1}s`,
+            animationFillMode: 'forwards'
+          }}
+          className={categories.length > 0 ? styles.animatedCard : ''}
+        >
+          <CategoryCard {...allCategoriesCardProps} />
+        </div>
       </li>
     </ul>
   );

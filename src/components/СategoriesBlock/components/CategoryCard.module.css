@@ -11,6 +11,7 @@
   /* Removed transition to ensure immediate scaling with scroll */
 }
 
+
 /* Hover effect is now handled in JavaScript to add 0.2 to the current scale value */
 
 .image {
