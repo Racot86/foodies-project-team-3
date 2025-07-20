@@ -3,8 +3,6 @@ import clsx from "clsx";
 import { useId, useState, useEffect, useCallback, useRef } from "react";
 import css from "../Fields.module.css";
 import { ErrorField } from "../ErrorField/ErrorField";
-import { useFormikContext } from "formik";
-import { useBreakpoint } from "../../../../hooks/useBreakpoint";
 
 export const FieldTextarea = ({
   name,
@@ -15,52 +13,37 @@ export const FieldTextarea = ({
   onChange,
   error,
   strong,
-  value,
+  value = "",
   style = "default",
   className = "",
   helperText,
   disabled = false,
   minRows = 1,
   maxRows = 10,
-  expandAt = 60,
+  onBlur,
 }) => {
   const fieldId = useId();
   const textareaRef = useRef(null);
   const defaultMaxLength = maxLength && parseInt(maxLength, 10);
-  const { isMobile, isTablet } = useBreakpoint();
 
-  // Отримуємо Formik context
-  const formikContext = useFormikContext();
+  const calcRows = useCallback(() => {
+    // For all devices, use a more flexible approach that allows for multiline input
+    // Start with minRows and let the textarea expand naturally based on content
+    return minRows;
+  }, [minRows]);
 
-  // Визначаємо значення та методи з Formik
-  const formikValue = formikContext?.values?.[name];
-  const formikSetFieldValue = formikContext?.setFieldValue;
-  const formikSetFieldTouched = formikContext?.setFieldTouched;
-  const formikTouched = formikContext?.touched?.[name];
-  const formikError = formikContext?.errors?.[name];
-
-  // Визначаємо фінальне значення
-  const inputValue = value !== undefined ? value : formikValue || "";
-
-  const calcRows = useCallback(
-    (len) => {
-      // For all devices, use a more flexible approach that allows for multiline input
-      // Start with minRows and let the textarea expand naturally based on content
-      return minRows;
-    },
-    [minRows]
-  );
-  const [counter, setCounter] = useState(inputValue.length);
-  const [rows, setRows] = useState(calcRows(inputValue.length));
+  const [inputValue, setInputValue] = useState(value);
+  const [counter, setCounter] = useState(value.length);
+  const [rows, setRows] = useState(calcRows());
   const [limitReached, setLimitReached] = useState(false);
 
-  // Визначаємо фінальну помилку
-  const inputError = error || (formikTouched && formikError);
+  // Use only the direct error prop
+  const inputError = error;
 
-  function chunkify(str) {
-    // Always preserve user-entered line breaks
-    return str;
-  }
+  // Update internal state when prop value changes
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   // Function to adjust textarea height based on content
   const adjustHeight = useCallback(() => {
@@ -84,7 +67,7 @@ export const FieldTextarea = ({
   useEffect(() => {
     const plainLen = inputValue.replace(/\n/g, "").length;
     setCounter(plainLen);
-    setRows(calcRows(plainLen));
+    setRows(calcRows());
 
     // Adjust height when content changes
     adjustHeight();
@@ -123,15 +106,12 @@ export const FieldTextarea = ({
       setLimitReached(false);
     }
 
+    // Update internal state
+    setInputValue(formatted);
     setCounter(plainLen);
-    setRows(calcRows(plainLen));
+    setRows(calcRows());
 
-    // Оновлюємо Formik значення
-    if (name && formikSetFieldValue) {
-      formikSetFieldValue(name, formatted);
-    }
-
-    // Викликаємо кастомний onChange якщо є
+    // Call the provided onChange handler
     if (onChange) {
       onChange(formatted);
     }
@@ -141,15 +121,16 @@ export const FieldTextarea = ({
   };
 
   const handleOnBlur = () => {
-    // Позначаємо поле як touched в Formik
-    if (name && formikSetFieldTouched) {
-      formikSetFieldTouched(name, true);
+    // Call the provided onBlur handler
+    if (onBlur) {
+      onBlur();
     }
   };
 
   const renderTextarea = () => {
     const defaultProps = {
       id: fieldId,
+      name, // Pass the name prop to the textarea element
       placeholder,
       disabled,
       value: inputValue,
@@ -160,13 +141,8 @@ export const FieldTextarea = ({
       rows: rows,
       ref: textareaRef,
       style: { overflow: "hidden" }, // Hide scrollbar during auto-resize
+      required,
     };
-
-    // Якщо є Formik context і name, додаємо required з валідації
-    if (formikContext && name) {
-      const fieldMeta = formikContext.getFieldMeta?.(name);
-      defaultProps.required = required || fieldMeta?.required;
-    }
 
     return <textarea {...defaultProps} />;
   };
