@@ -7,6 +7,7 @@ import { useBreakpoint } from "@/hooks/useBreakpoint.js";
 import styles from "./Layout.module.css";
 import { Button, BreadCrumbs } from "@components/ui/index.js";
 import ScrollLock from "@/components/scrollLock/ScrollLock";
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 export const Layout = () => {
   const { breakpoint, windowWidth } = useBreakpoint();
@@ -31,14 +32,19 @@ export const Layout = () => {
     <div id="layout" className={styles.layout}>
       <ScrollLock />
       <ResponsiveContainer>
+        <PageTransitionWrapper>
         <Header />
+
         {shouldShowBreadcrumbs() && (
           <BreadCrumbs className={styles.breadcrumbs} />
         )}
         <main className={styles.main}>
+
           <Outlet />
+
         </main>
         <Footer />
+        </PageTransitionWrapper>
       </ResponsiveContainer>
     </div>
   );
