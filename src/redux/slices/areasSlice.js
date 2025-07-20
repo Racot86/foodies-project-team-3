@@ -3,9 +3,9 @@ import { areasService } from "@/services";
 
 export const fetchAreas = createAsyncThunk(
   "areas/fetch",
-  async (_, { rejectWithValue }) => {
+  async (filters = {}, { rejectWithValue }) => {
     try {
-      const response = await areasService();
+      const response = await areasService(filters);
       return response;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to fetch areas");

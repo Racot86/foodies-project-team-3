@@ -9,7 +9,7 @@ export const AreaSelect = ({ onChange, value, wrapperClassName, selectWrapperCla
 
   useEffect(() => {
     if (areas.length === 0) {
-      dispatch(fetchAreas());
+      dispatch(fetchAreas({ filter: false }));
     }
   }, [dispatch, areas.length]);
 

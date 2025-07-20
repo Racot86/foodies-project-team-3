@@ -3,9 +3,9 @@ import { ingredientsService } from "@/services";
 
 export const fetchIngredients = createAsyncThunk(
   "ingredients/fetch",
-  async (_, { rejectWithValue }) => {
+  async (filters = {}, { rejectWithValue }) => {
     try {
-      const response = await ingredientsService();
+      const response = await ingredientsService(filters);
       return response;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to fetch ingredients");

@@ -35,15 +35,24 @@ const BrowseCategory = () => {
   // Fixed limit for recipes per page
   const RECIPES_PER_PAGE = 12;
 
-  // Fetch ingredients and areas from API when component mounts
+  // Fetch ingredients and areas from API with filters
   useEffect(() => {
-    if (ingredients.length === 0) {
-      dispatch(fetchIngredients());
-    }
-    if (areas.length === 0) {
-      dispatch(fetchAreas());
-    }
-  }, [dispatch, ingredients.length, areas.length]);
+    // Fetch ingredients filtered by category and area
+    dispatch(fetchIngredients({
+      category: selectedCategory || undefined,
+      area: selectedArea || undefined,
+      assignedToRecipes: true,
+      filter: true
+    }));
+
+    // Fetch areas filtered by category and ingredient
+    dispatch(fetchAreas({
+      category: selectedCategory || undefined,
+      ingredient: selectedIngredient || undefined,
+      assignedToRecipes: true,
+      filter: true
+    }));
+  }, [dispatch, selectedCategory, selectedArea, selectedIngredient]);
 
   // Update selectedCategory when categoryName changes
   useEffect(() => {
@@ -83,6 +92,15 @@ const BrowseCategory = () => {
     setCurrentPage(newPage);
   };
 
+  // Log current filter state for debugging - can be removed in production
+  useEffect(() => {
+    console.log('Current filters:', {
+      category: selectedCategory,
+      ingredient: selectedIngredient,
+      area: selectedArea
+    });
+  }, [selectedCategory, selectedIngredient, selectedArea]);
+
   // Helper function to handle filter changes
   const handleFilterChange = (setter, value) => {
     setter(value);
@@ -105,6 +123,21 @@ const BrowseCategory = () => {
     value: item.name,
     label: item.name
   }));
+
+  // Reset selected values when options change
+  useEffect(() => {
+    // If the selected ingredient is not in the filtered list, reset it
+    if (selectedIngredient && !ingredients.some(item => item.name === selectedIngredient)) {
+      setSelectedIngredient("");
+    }
+  }, [ingredients, selectedIngredient]);
+
+  useEffect(() => {
+    // If the selected area is not in the filtered list, reset it
+    if (selectedArea && !areas.some(item => item.name === selectedArea)) {
+      setSelectedArea("");
+    }
+  }, [areas, selectedArea]);
 
   // Ensure recipesData and its properties are always defined
   const recipes = recipesData?.recipes || [];
@@ -143,6 +176,8 @@ const BrowseCategory = () => {
               isDisabled={ingredientsLoading || isLoading}
               onChange={(option) => handleFilterChange(setSelectedIngredient, option ? option.value : "")}
               value={selectedIngredient}
+              isClearable={true}
+              isLoading={ingredientsLoading}
             />
             <CustomSelect
               options={areaOptions}
@@ -151,35 +186,29 @@ const BrowseCategory = () => {
               isDisabled={areasLoading || isLoading}
               onChange={(option) => handleFilterChange(setSelectedArea, option ? option.value : "")}
               value={selectedArea}
+              isClearable={true}
+              isLoading={areasLoading}
             />
           </div>
           <div className={styles.recipesContainer}>
-              {isLoading ? (
-                <div className={styles.loadingContainer}>
-                  <p>Loading recipes...</p>
-                </div>
+            <div className={styles.recipeList}>
+              {recipes.length > 0 ? (
+                recipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} loading={isLoading} />
+                ))
               ) : (
-                <>
-                  <div className={styles.recipeList}>
-                    {recipes.length > 0 ? (
-                      recipes.map((recipe) => (
-                        <RecipeCard key={recipe.id} recipe={recipe} />
-                      ))
-                    ) : (
-                      <p>No recipes found with the selected filters.</p>
-                    )}
-                  </div>
-                  {recipes.length > 0 && recipesData?.totalPages > 0 && (
-                    <div className={styles.paginationContainer}>
-                      <Pagination
-                        totalPages={recipesData.totalPages}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                      />
-                    </div>
-                  )}
-                </>
+                <p>No recipes found with the selected filters.</p>
               )}
+            </div>
+            {recipes.length > 0 && recipesData?.totalPages > 1 && (
+              <div className={styles.paginationContainer}>
+                <Pagination
+                  totalPages={recipesData.totalPages}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            )}
           </div>
       </div>
     </div>
