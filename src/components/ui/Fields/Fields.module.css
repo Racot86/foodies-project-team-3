@@ -98,11 +98,11 @@
 .inputWrapper.withExtra .extra {
   right: var(--spacing-md);
   font-size: var(--font-xl);
-  top: 50%;
-  transform: translateY(-50%);
+  top: var(--spacing-md);
+  transform: none;
   display: flex;
-  align-items: center;
-  height: 100%;
+  align-items: flex-start;
+  height: auto;
 }
 
 .textAreaWrapper.withExtra textarea {
@@ -266,20 +266,6 @@
   transform: translateY(-50%);
   cursor: pointer;
   color: var(--color-secondary);
-}
-
-@media screen and (min-width: 375px) and (max-width: 768px) {
-  .fieldTextarea .extra {
-    position: unset;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 8px;
-  }
-  .fieldTextarea .textAreaWrapper.withExtra textarea {
-    padding-right: var(--spacing-lg);
-    padding-bottom: var(--spacing-md);
-  }
-  /* Removed overflow: visible to maintain consistent auto-resize behavior across devices */
 }
 
 /* tablet */
