@@ -52,7 +52,7 @@
 .loaderCentered {
   display: flex;
   justify-content: center;
-  margin-top: 108px;
+  margin-top: 50px;
 }
 
 @media (min-width: 768px) {
@@ -65,6 +65,10 @@
     line-height: 1.5;
     letter-spacing: -0.32px;
     margin-top: 100px;
+  }
+
+  .loaderCentered {
+    margin-top: 108px;
   }
 }
 

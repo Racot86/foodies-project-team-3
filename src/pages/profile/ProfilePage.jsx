@@ -182,45 +182,45 @@ function ProfilePage() {
                 <div className={styles.userInfo}>
                   <ul>
                     <li>
-                      <Text variant="body" size="sm" color="muted">
+                      <Text variant="body" size="sm">
                         Email:
                       </Text>
-                      <Text variant="body" size="md">
+                      <Text variant="body" size="md" weight="bold">
                         {requestedUserDetails.email}
                       </Text>
                     </li>
                     <li>
-                      <Text variant="body" size="sm" color="muted">
+                      <Text variant="body" size="sm">
                         Added recipes:
                       </Text>
-                      <Text variant="body" size="md">
+                      <Text variant="body" size="md" weight="bold">
                         {requestedUserDetails.recipes}
                       </Text>
                     </li>
                     {isMe && (
                       <li>
-                        <Text variant="body" size="sm" color="muted">
+                        <Text variant="body" size="sm">
                           Favorites:
                         </Text>
-                        <Text variant="body" size="md">
+                        <Text variant="body" size="md" weight="bold">
                           {requestedUserDetails.favorites}
                         </Text>
                       </li>
                     )}
                     <li>
-                      <Text variant="body" size="sm" color="muted">
+                      <Text variant="body" size="sm">
                         Followers:
                       </Text>
-                      <Text variant="body" size="md">
+                      <Text variant="body" size="md" weight="bold">
                         {requestedUserDetails.followers}
                       </Text>
                     </li>
                     {isMe && (
                       <li>
-                        <Text variant="body" size="sm" color="muted">
+                        <Text variant="body" size="sm">
                           Following:
                         </Text>
-                        <Text variant="body" size="md">
+                        <Text variant="body" size="md" weight="bold">
                           {requestedUserDetails.following}
                         </Text>
                       </li>

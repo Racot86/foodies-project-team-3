@@ -7,9 +7,9 @@
 }
 
 .profilePage {
-  /* max-width: 1200px; */
   margin: 0 auto;
-  /* padding: 0 8px; */
+  max-width: 343px;
+  width: 100%;
 }
 
 .profileHeading {
@@ -28,6 +28,8 @@
   border: 1px solid var(--color-secondary);
   border-radius: 30px;
   margin-bottom: 20px;
+  max-width: 343px;
+  width: 100%;
 }
 
 .profileDescription.profileDescription {
@@ -35,8 +37,9 @@
   margin-bottom: 32px;
   color: var(--color-secondary);
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.43;
   letter-spacing: -0.02em;
+  font-size: 14px;
 }
 
 .userName {
@@ -59,9 +62,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   justify-content: center;
-  padding: 30px 70px;
+  padding: 30px 69px;
 }
 
 .profileImageContainer {
@@ -114,10 +117,22 @@
   flex-direction: column;
 }
 
+.userInfo ul li p {
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.02em;
+  color: var(--color-secondary);
+}
+
+.tabsSection {
+  min-height: 279px;
+}
+
 @media (min-width: 768px) {
   .profilePage {
     padding-bottom: 100px;
     width: 704px;
+    max-width: unset;
   }
 
   .profileHeading {
@@ -128,6 +143,8 @@
     max-width: 443px;
     margin-bottom: 40px;
     color: var(--color-primary);
+    line-height: 1.5;
+    font-size: 16px;
   }
 
   .imagePlaceholder {
@@ -149,12 +166,14 @@
     flex-direction: column;
     border: 1px solid var(--color-primary);
     width: 394px;
+    max-width: unset;
   }
 
   .profileInfo {
     flex: 2;
     flex-direction: column;
     padding: 40px 80px;
+    gap: 20px;
   }
 
   .profileContainer {
@@ -168,7 +187,13 @@
     white-space: nowrap;
   }
   .tabsSection {
-    min-height: 316px;
+    min-height: 285px;
+  }
+
+  .userInfo ul li p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-primary);
   }
 }
 
