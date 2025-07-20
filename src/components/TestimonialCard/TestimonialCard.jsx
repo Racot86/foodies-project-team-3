@@ -1,5 +1,5 @@
-import styles from './TestimonialCard.module.css';
-import {Heading, Text} from "@components/ui/index.js";
+import styles from "./TestimonialCard.module.css";
+import { Heading, Text } from "@components/ui/index.js";
 
 const TestimonialCard = ({ testimonial }) => {
   if (!testimonial) {
@@ -12,10 +12,12 @@ const TestimonialCard = ({ testimonial }) => {
 
   return (
     <div className={styles.testimonialWrapper}>
-      <Text size="2xl" className={styles.testimonialTextMargin}>
+      <Text size="l" className={styles.testimonialText}>
         {testimonial.testimonial}
       </Text>
-      <Heading size="md" weight="bold" align="center" className={styles.author}>{testimonial.username.toUpperCase()}</Heading>
+      <Heading size="md" weight="bold" align="center" className={styles.author}>
+        {testimonial.username}
+      </Heading>
     </div>
   );
 };
