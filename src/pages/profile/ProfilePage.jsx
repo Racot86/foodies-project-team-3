@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 import styles from "./ProfilePage.module.css";
 import Page from "@components/page/Page";
 import { Tabs, Heading, Text, ButtonIcon, Button } from "@components/ui";
-import Modal from "@components/modal/Modal";
 import LogOutModal from "@components/logOutModal/LogOutModal";
 import { DEFAULT_AVATAR } from "../../services/api";
 
@@ -237,11 +236,7 @@ function ProfilePage() {
         </div>
       </div>
 
-      {isLogoutModalOpen && (
-        <Modal onClose={closeLogoutModal}>
-          <LogOutModal onClose={closeLogoutModal} />
-        </Modal>
-      )}
+      {isLogoutModalOpen && <LogOutModal onClose={closeLogoutModal} />}
 
       <ToastContainer position="top-right" autoClose={3000} />
     </Page>
