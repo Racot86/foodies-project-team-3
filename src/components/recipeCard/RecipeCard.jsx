@@ -12,6 +12,7 @@ import {useAuthRedux} from '@/hooks';
 import PrivateContentArea from "@components/privateContentArea/PrivateContentArea.jsx";
 import {toast} from 'react-toastify';
 import RecipeCardSkeleton from '@/components/recipeCardSkeleton/RecipeCardSkeleton';
+import Loader from '@/components/ui/Loader/Loader';
 
 const FALLBACK_IMAGE = DEFAULT_RECIPE_IMAGE;
 
@@ -211,9 +212,15 @@ const RecipeCard = ({recipeId, recipe: initialRecipe, loading: externalLoading})
                                     onClick={handleFavoriteClick}
                                     variant={isFavorite ? ButtonIcon.variants.PRIMARY : ButtonIcon.variants.DEFAULT}
                                     className={styles.favoriteButton}
-                                    loading={isFavoriteLoading}
+                                    disabled={isFavoriteLoading}
                                 >
-                                    <FiHeart/>
+                                    {isFavoriteLoading ? (
+                                        <span className={styles.loaderContainer}>
+                                            <Loader size={16}/>
+                                        </span>
+                                    ) : (
+                                        <FiHeart/>
+                                    )}
                                 </ButtonIcon>
                             </PrivateContentArea>
                             {/* Recipe details link */}

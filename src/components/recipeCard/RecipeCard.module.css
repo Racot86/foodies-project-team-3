@@ -122,6 +122,13 @@
     justify-content: center;
 }
 
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 16px;
+}
+
 .loading {
     min-height: 300px;
     display: flex;
