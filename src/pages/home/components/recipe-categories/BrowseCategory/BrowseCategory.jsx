@@ -77,8 +77,8 @@ const BrowseCategory = () => {
 
       const data = await getRecipes(options);
       setRecipesData(data);
-    } catch (error) {
-      console.error("Error fetching recipes:", error);
+    } catch {
+      // Error handling without console.error
     } finally {
       setIsLoading(false);
     }
@@ -101,13 +101,6 @@ const BrowseCategory = () => {
   };
 
 
-  useEffect(() => {
-    console.log('Current filters:', {
-      category: selectedCategory,
-      ingredient: selectedIngredient,
-      area: selectedArea
-    });
-  }, [selectedCategory, selectedIngredient, selectedArea]);
 
 
   const handleFilterChange = (setter, value) => {

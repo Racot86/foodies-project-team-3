@@ -7,13 +7,11 @@ import MyRecipes from "@pages/profile/components/MyRecipes";
 import Favorites from "@pages/profile/components/Favorites";
 import Followers from "@/pages/profile/followers/Followers";
 import Following from "@/pages/profile/following/Following";
-import DesignSystemPreview from "@pages/design-system/DesignSystemPreview";
 import NotFoundPage from "@pages/not-found/NotFoundPage";
 import {Layout} from "@components/layout/Layout";
 import RecipeCategories from "@pages/home/components/recipe-categories/RecepieCategories/RecipeCategories.jsx";
 import BrowseCategory from "@pages/home/components/recipe-categories/BrowseCategory/BrowseCategory.jsx";
 import RecipeDetails from "@pages/recipe-details/RecipeDetails";
-import {TestAuth} from "@components/testAuth";
 import PrivateRoute from "@components/PrivateRoute";
 
 export const AppRoutes = () => {
@@ -38,9 +36,7 @@ export const AppRoutes = () => {
                         <Route path="following" element={<Following/>}/>
                     </Route>
                 </Route>
-                <Route path="/design-system" element={<DesignSystemPreview/>}/>
             </Route>
-            <Route path="/test-auth" element={<TestAuth/>}/>
             <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
     );

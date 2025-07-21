@@ -14,7 +14,6 @@ export const Layout = () => {
   const location = useLocation();
 
   // You can use breakpoint information for conditional rendering if needed
-  // console.log(`Current breakpoint: ${breakpoint}, Width: ${windowWidth}px`);
 
   // Determine if breadcrumbs should be shown based on the current path
   const shouldShowBreadcrumbs = () => {

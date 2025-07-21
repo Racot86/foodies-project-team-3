@@ -37,7 +37,7 @@ const SignInForm = () => {
       email: Yup.string().email().required(),
       password: Yup.string().min(6).required(),
     }),
-    onSubmit: (values) => console.log(values),
+    onSubmit: () => {},
   });
 
   return (
@@ -96,19 +96,15 @@ const AddRecipeForm = () => {
         .max(200)
         .required("Recipe preparation is required"),
     }),
-    onSubmit: (values) => {
-      console.log("Recipe submitted:", values);
+    onSubmit: () => {
+      // Recipe submission logic would go here
     },
     validateOnBlur: true,
     validateOnChange: true,
   });
 
   const addIngredient = () => {
-    console.log(
-      "Add ingredient:",
-      formik.values.ingredient,
-      formik.values.quantity
-    );
+    // Logic to add ingredient would go here
   };
 
   // Custom submit handler to mark all fields as touched
@@ -220,7 +216,7 @@ const AddRecipeForm = () => {
               justifyContent: "flex-start",
             }}
           >
-            <ButtonIcon onClick={() => console.log("Delete recipe")}>
+            <ButtonIcon onClick={() => {}}>
               <FiTrash />
             </ButtonIcon>
             <Button variant={Button.variants.PRIMARY} type="submit">
@@ -235,7 +231,7 @@ const AddRecipeForm = () => {
 
 const DesignSystemPreview = () => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const handleClick = () => console.log("Button clicked!");
+  const handleClick = () => {};
 
   const handleOpenLogoutModal = () => {
     setIsLogoutModalOpen(true);
@@ -398,7 +394,7 @@ const DesignSystemPreview = () => {
         <Pagination
           currentPage={1}
           totalPages={10}
-          onPageChange={(page) => console.log("Go to page:", page)}
+          onPageChange={() => {}}
         />
       </div>
 
