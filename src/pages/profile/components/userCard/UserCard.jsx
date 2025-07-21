@@ -1,5 +1,5 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {Heading, Text} from "@/components/ui";
 import {ButtonIcon} from "@/components/ui/ButtonIcon";
 import RecipePreviewList from "../recipePreviewList/RecipePreviewList";
@@ -10,7 +10,6 @@ import {DEFAULT_AVATAR} from "@/services/api";
 import {FiLoader} from "react-icons/fi";
 
 const UserCard = ({user, onButtonClick, tabType, isLoading = false}) => {
-    const navigate = useNavigate();
     const firstName = user.name ? user.name.split(" ")[0] : "";
 
     const avatarUrl = user.avatar || DEFAULT_AVATAR;
@@ -26,10 +25,6 @@ const UserCard = ({user, onButtonClick, tabType, isLoading = false}) => {
 
     const previewCount = getPreviewCount();
     const shouldShowPreview = previewCount > 0;
-
-    const handleNavigateToProfile = () => {
-        navigate(`/profile/${user.id}`);
-    };
 
     const handleButtonClick = () => {
         onButtonClick(user.id);
@@ -146,16 +141,11 @@ const UserCard = ({user, onButtonClick, tabType, isLoading = false}) => {
                 </div>
             )}
 
-            <div className={styles.button}>
-                <ButtonIcon
-                    onClick={handleNavigateToProfile}
-                    className={styles.iconButton}
-                >
-                    <svg className={styles.icon} width="16" height="16">
-                        <use href={`${icons}#icon-arrow-up-right`}/>
-                    </svg>
-                </ButtonIcon>
-            </div>
+            <NavLink to={`/profile/${user.id}`} className={styles.navLink}>
+                <svg className={styles.icon} width="16" height="16">
+                    <use href={`${icons}#icon-arrow-up-right`} />
+                </svg>
+            </NavLink>
         </div>
     );
 };

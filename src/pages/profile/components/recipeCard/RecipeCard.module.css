@@ -150,6 +150,16 @@
     stroke: var(--color-white);
 }
 
+:global(.myrecipeTrash) {
+    width: 36px;
+    height: 36px;
+}
+
+:global(.myrecipeTrash svg) {
+    width: 16px;
+    height: 16px;
+}
+
 .emptyWrap {
     padding: 48px 0 100px;
 }
@@ -167,6 +177,16 @@
     .recipeTitle {
         font-size: var(--font-xl);
         margin-bottom: 10px;
+    }
+
+    :global(.myrecipeTrash) {
+        width: 42px;
+        height: 42px;
+    }
+
+    :global(.myrecipeTrash svg) {
+        width: 18px;
+        height: 18px;
     }
 
     .emptyWrap {

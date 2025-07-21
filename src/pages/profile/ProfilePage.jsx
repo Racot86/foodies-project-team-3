@@ -84,7 +84,7 @@ function ProfilePage() {
 
         // If we're at the base profile path, navigate to the first visible tab
         if (location.pathname === basePath && filteredTabs.length > 0) {
-            navigate(filteredTabs[0].path);
+            navigate(filteredTabs[0].path, { replace: true });
         }
     }, [location.pathname, userId, isMe, navigate]);
 
