@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./RecipeDetails.module.css";
 import { useSelector } from "react-redux";
@@ -11,11 +11,13 @@ import {
 } from "@/redux/slices/recipeDetailsSlice";
 import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
 import { Loader } from "@/components/ui";
+import { toast } from 'react-toastify';
 
 export const RecipeDetails = () => {
   const { recipeId } = useParams();
   const token = useSelector((state) => state?.auth?.token);
   const dispatch = useAppDispatch();
+  const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
 
   // Get recipe details from Redux store
   const {
@@ -53,25 +55,42 @@ export const RecipeDetails = () => {
     }
   }, [recipe, token, dispatch]);
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = async () => {
     if (!recipe || !token) {
-      alert("Please sign in to manage favorites.");
+      toast.warning("Please sign in to manage favorites.");
       return;
     }
 
     const recipeID = recipe._id || recipe.id;
     if (!recipeID) {
       console.error("Recipe ID missing!");
+      toast.error("Recipe ID missing!");
       return;
     }
 
-    dispatch(
-      toggleFavoriteStatus({
-        recipeId: recipeID,
-        isFavorite,
-        token,
-      })
-    );
+    try {
+      setIsFavoriteLoading(true);
+
+      await dispatch(
+        toggleFavoriteStatus({
+          recipeId: recipeID,
+          isFavorite,
+          token,
+        })
+      ).unwrap();
+
+      // Show success toast
+      if (isFavorite) {
+        toast.success(`"${recipe.title}" removed from favorites`);
+      } else {
+        toast.success(`"${recipe.title}" added to favorites`);
+      }
+    } catch (err) {
+      console.error('Error updating favorites:', err);
+      toast.error(`Failed to update favorites: ${err.message || 'Unknown error'}`);
+    } finally {
+      setIsFavoriteLoading(false);
+    }
   };
 
   const getFullImageUrl = (imgPath) => {
@@ -176,8 +195,15 @@ export const RecipeDetails = () => {
                 isFavorite ? styles.active : ""
               }`}
               onClick={handleToggleFavorite}
+              disabled={isFavoriteLoading}
             >
-              {isFavorite ? "Remove from favorites" : "Add to favorites"}
+              {isFavoriteLoading ? (
+                <span className={styles.loaderContainer}>
+                  <Loader size="small" />
+                </span>
+              ) : (
+                isFavorite ? "Remove from favorites" : "Add to favorites"
+              )}
             </button>
           </div>
         </div>

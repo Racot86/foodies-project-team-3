@@ -10,8 +10,10 @@ export const App = () => {
     <BrowserRouter>
       <AppRoutes />
       <ToastContainer
-        position="top-center"
-        autoClose={3000}
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={true}
+        closeButton={true}
         toastClassName="toastify__custom"
       />
     </BrowserRouter>

@@ -1,7 +1,7 @@
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RecipeSchema from "./recipeSchema.jsx";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { postRecipe } from "@redux/slices/addRecipeSlice.js";
 import { useNavigate } from "react-router-dom";
@@ -379,7 +379,6 @@ const RecipeForm = () => {
           </div>
         </div>
       </form>
-      <ToastContainer position="top-center" closeButton={true} />
     </>
   );
 };

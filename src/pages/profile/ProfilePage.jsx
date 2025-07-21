@@ -8,7 +8,7 @@ import LogOutModal from "@components/logOutModal/LogOutModal";
 import { DEFAULT_AVATAR } from "../../services/api";
 
 import { FiPlus } from "react-icons/fi";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, selectUser } from "../../redux/slices/authSlice";
@@ -288,8 +288,6 @@ function ProfilePage() {
       </div>
 
       {isLogoutModalOpen && <LogOutModal onClose={closeLogoutModal} />}
-
-      <ToastContainer position="top-right" autoClose={3000} />
     </Page>
       </PageTransitionWrapper>
   );

@@ -62,7 +62,9 @@ export const checkFavoriteStatus = createAsyncThunk(
       }
 
       const favData = await response.json();
-      return (favData?.favorites || []).some(
+      // The response structure is { recipes: [...] }
+      const favorites = favData?.recipes || [];
+      return favorites.some(
         (fav) => fav._id === recipeId || fav.id === recipeId
       );
     } catch (error) {

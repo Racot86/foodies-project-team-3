@@ -21,6 +21,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
   const [recipe, setRecipe] = useState(initialRecipe || null);
   const [internalLoading, setInternalLoading] = useState(!initialRecipe);
   const [error, setError] = useState(null);
+  const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
   // Initialize image loading states to true if there's no recipe (to avoid showing loader when not needed)
   const [recipeImageLoaded, setRecipeImageLoaded] = useState(!recipe);
   const [avatarImageLoaded, setAvatarImageLoaded] = useState(!recipe);
@@ -105,21 +106,25 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
   }, [recipe, isAuthenticated]);
 
   const handleFavoriteClick = async () => {
-
+    if (!recipe) return;
 
     try {
+      setIsFavoriteLoading(true);
+
       if (isFavorite) {
         await removeFromFavorites(recipe.id);
-        toast.success(`"${title}" removed from favorites`, { position: "top-center", autoClose: 3000 });
+        toast.success(`"${recipe.title}" removed from favorites`);
       } else {
         await addToFavorites(recipe.id);
-        toast.success(`"${title}" added to favorites`, { position: "top-center", autoClose: 3000 });
+        toast.success(`"${recipe.title}" added to favorites`);
       }
       // Toggle favorite state
       setIsFavorite(!isFavorite);
     } catch (err) {
       console.error('Error updating favorites:', err);
-      toast.error(`Failed to update favorites: ${err.message || 'Unknown error'}`, { position: "top-center", autoClose: 3000 });
+      toast.error(`Failed to update favorites: ${err.message || 'Unknown error'}`);
+    } finally {
+      setIsFavoriteLoading(false);
     }
   };
 
@@ -206,6 +211,7 @@ const RecipeCard = ({ recipeId, recipe: initialRecipe, loading: externalLoading 
                 onClick={handleFavoriteClick}
                 variant={isFavorite ? ButtonIcon.variants.PRIMARY : ButtonIcon.variants.DEFAULT}
                 className={styles.favoriteButton}
+                loading={isFavoriteLoading}
               >
                 <FiHeart />
               </ButtonIcon>

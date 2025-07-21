@@ -49,17 +49,14 @@ const Followers = () => {
         ? "Already following this user"
         : "Added to followers";
 
-      toast.success(message, { position: "top-center", autoClose: 3000 });
+      toast.success(message);
 
       // Update user details to refresh the follower count in the side card
       if (targetUserId) {
         dispatch(userDetails(targetUserId));
       }
     } catch {
-      toast.error("Failed to follow user", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      toast.error("Failed to follow user");
     }
   };
 
