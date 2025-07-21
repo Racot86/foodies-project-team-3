@@ -1,35 +1,38 @@
 .button {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  color: #050505;
-  border: 1px solid #bfbebe;
-  font-size: 20px;
-  transition: color 0.4s, background-color 0.4s;
-  cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #050505;
+    border: 1px solid #bfbebe;
+    font-size: 20px;
+    transition: color 0.4s, background-color 0.4s;
+    cursor: pointer;
 }
 
 .button svg {
-  width: 20px;
-  height: 20px;
-  display: block;
-  fill: currentColor;
-  stroke: currentColor;
-  color: var(--color-primary);
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: currentColor;
+    stroke: currentColor;
+    color: var(--color-primary);
 }
+
 .button:hover {
-  background-color: var(--color-primary);
+    background-color: var(--color-primary);
 }
+
 .button:hover svg {
-  color: var(--color-white);
+    color: var(--color-white);
 }
+
 @media (min-width: 768px) {
-  .button {
-    width: 40px;
-    height: 40px;
-  }
+    .button {
+        width: 40px;
+        height: 40px;
+    }
 }

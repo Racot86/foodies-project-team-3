@@ -1,14 +1,16 @@
 // Export all services from this file for easier imports
-export { default as api } from "./api";
-export { authService } from "./authService";
-export { areasService } from "./areasService";
-export { categoriesService } from "./categoriesService";
-export { ingredientsService } from "./ingredientsService";
-export { addRecipeService } from "./addRecipeService";
-export { getRecipeById } from "./recipeService";
-export { favoritesService, addToFavorites, removeFromFavorites, getFavorites, isRecipeInFavorites } from "./favoritesService";
+export {default as api} from "./api";
+export {authService} from "./authService";
+export {areasService} from "./areasService";
+export {categoriesService} from "./categoriesService";
+export {ingredientsService} from "./ingredientsService";
+export {addRecipeService} from "./addRecipeService";
+export {getRecipeById} from "./recipeService";
+export {
+    favoritesService, addToFavorites, removeFromFavorites, getFavorites, isRecipeInFavorites
+} from "./favoritesService";
 
-export { followerService } from "./followerService";
+export {followerService} from "./followerService";
 
-export { getMyRecipe, deleteRecipeById } from "./myRecipeService";
+export {getMyRecipe, deleteRecipeById} from "./myRecipeService";
 

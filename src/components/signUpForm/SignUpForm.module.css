@@ -1,22 +1,23 @@
 .input {
-  padding: 16px 18px;
+    padding: 16px 18px;
 }
 
 .form {
-  margin-top: 40px;
-  width: 400px;
+    margin-top: 40px;
+    width: 400px;
 }
 
 .fullWidth {
-  width: 100%;
-  margin-top: 40px;
+    width: 100%;
+    margin-top: 40px;
 }
 
 @media screen and (max-width: 767px) {
-  .fullWidth {
-    margin-top: 32px;
-  }
-  .form {
-    width: 283px;
-  }
+    .fullWidth {
+        margin-top: 32px;
+    }
+
+    .form {
+        width: 283px;
+    }
 }

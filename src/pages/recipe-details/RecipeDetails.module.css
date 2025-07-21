@@ -5,7 +5,7 @@
     padding-right: var(--spacing-md);
 }
 
-.recipeContent{
+.recipeContent {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -156,7 +156,7 @@
     color: var(--color-text-muted);
 }
 
-.recipeInfo{
+.recipeInfo {
     margin-bottom: 32px;
 }
 
@@ -170,82 +170,116 @@
     cursor: pointer;
     transition: background-color var(--transition-fast);
     padding: 14px 20px;
+    min-width: 180px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .favButton:hover {
-    background-color:  var(--color-primary);
+    background-color: var(--color-primary);
+}
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 24px;
+}
+
+.favButton.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+.favButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 @media (min-width: 768px) {
- .recipeDetail {
-    padding-left: var(--spacing-xl);
-    padding-right: var(--spacing-xl);
-}
+    .recipeDetail {
+        padding-left: var(--spacing-xl);
+        padding-right: var(--spacing-xl);
+    }
 
-.recipeContent{
-    gap: 40px;
-    margin-bottom: 32px;
-}
+    .recipeContent {
+        gap: 40px;
+        margin-bottom: 32px;
+    }
 
-.recipeName {
-    font-size: var(--font-2xl);
-    margin-bottom: 20px;
-    line-height: 28px;
-    letter-spacing: -0.02em;
-}
-.description {
-    font-size: var(--font-md);
-    font-weight: var(--font-medium);
-    margin-bottom: 20px;
-    color: var(--color-main);
-    line-height: var(--line-height-body);
-}
-.authorName {
-    color: var(--color-main);
-}
-.authorContainer {
-    margin-bottom: 40px;
-}
-.ingredients {
-    font-size: var(--font-xl);
-   
-}
-.ingredientsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-xl);
-  max-height: none;
-  overflow-y: visible;
-}
-.ingredientName {
-    font-size: var(--font-md);
-}
-.ingredientMeasure {
-    font-size: var(--font-md);
-}
-.imageWrapper {
-    min-width: 90px;
-    height: 90px;
-  
-}
-.ingredientImage {
-    width: 60px;
-    height: 60px;
-    
-}
-.ingredients {
-    font-size: var(--font-xl);
-  
-}
-.instructions {
-    font-size: var(--font-md);
-    margin-bottom: 20px;
-    color: var(--color-main);
-}
-.recipeInfo{
-    margin-bottom: 40px;
-}
+    .recipeName {
+        font-size: var(--font-2xl);
+        margin-bottom: 20px;
+        line-height: 28px;
+        letter-spacing: -0.02em;
+    }
+
+    .description {
+        font-size: var(--font-md);
+        font-weight: var(--font-medium);
+        margin-bottom: 20px;
+        color: var(--color-main);
+        line-height: var(--line-height-body);
+    }
+
+    .authorName {
+        color: var(--color-main);
+    }
+
+    .authorContainer {
+        margin-bottom: 40px;
+    }
+
+    .ingredients {
+        font-size: var(--font-xl);
+
+    }
+
+    .ingredientsGrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    .ingredientName {
+        font-size: var(--font-md);
+    }
+
+    .ingredientMeasure {
+        font-size: var(--font-md);
+    }
+
+    .imageWrapper {
+        min-width: 90px;
+        height: 90px;
+
+    }
+
+    .ingredientImage {
+        width: 60px;
+        height: 60px;
+
+    }
+
+    .ingredients {
+        font-size: var(--font-xl);
+
+    }
+
+    .instructions {
+        font-size: var(--font-md);
+        margin-bottom: 20px;
+        color: var(--color-main);
+    }
+
+    .recipeInfo {
+        margin-bottom: 40px;
+    }
 }
 
 @media (min-width: 1440px) {
@@ -263,7 +297,7 @@
 
     .recipeImageContainer {
         flex: 0 0 45%;
-        
+
     }
 
     .image {
@@ -309,7 +343,7 @@
 
     .authorName {
         font-size: var(--font-md);
-        color: var( --color-main);
+        color: var(--color-main);
     }
 
     .ingredients {
@@ -351,5 +385,5 @@
         padding: 16px 32px;
         color: var(--color-text-primary);
     }
-    
+
 }

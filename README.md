@@ -1,16 +1,21 @@
 # Foodies Project - Team 3
 
 ## Deployment
-The application is deployed and accessible at: [https://foodies-project-team-3.vercel.app](https://foodies-project-team-3.vercel.app)
+
+The application is deployed and accessible
+at: [https://foodies-project-team-3.vercel.app](https://foodies-project-team-3.vercel.app)
 
 ## Tech Stack
 
 ### Front-end
 
-- **React** (v19.1.0) & **React DOM** (v19.1.0) - JavaScript library for building user interfaces with component-based architecture
-- **Vite** (v7.0.0) - Next-generation frontend build tool and development server offering fast HMR (Hot Module Replacement)
+- **React** (v19.1.0) & **React DOM** (v19.1.0) - JavaScript library for building user interfaces with component-based
+  architecture
+- **Vite** (v7.0.0) - Next-generation frontend build tool and development server offering fast HMR (Hot Module
+  Replacement)
 - **Formik** (v2.4.6) & **Yup** (v1.6.1) - Form handling library with schema-based validation
-- **Redux** (v5.0.1), **Redux Toolkit** (v2.8.2) & **React-Redux** (v9.2.0) - State management solution for predictable state containers
+- **Redux** (v5.0.1), **Redux Toolkit** (v2.8.2) & **React-Redux** (v9.2.0) - State management solution for predictable
+  state containers
 - **Axios** (v1.10.0) - Promise-based HTTP client for making API requests
 - **React Router DOM** (v7.6.3) - Declarative routing library for React applications
 - **React Icons** (v5.5.0) - Library providing popular icon sets as React components

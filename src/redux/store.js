@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from 'react-redux';
+import {configureStore} from "@reduxjs/toolkit";
+import {useDispatch, useSelector} from 'react-redux';
 import breadcrumbsReducer from "./slices/breadcrumbsSlice";
 import authReducer from "./slices/authSlice";
 import testimonialsReducer from "./slices/testimonialsSlice";
@@ -18,24 +18,24 @@ import userRecipesReducer from "./slices/userRecipesSlice";
 
 
 export const store = configureStore({
-  reducer: {
-    breadcrumbs: breadcrumbsReducer,
-    auth: authReducer,
-    testimonials: testimonialsReducer,
-    areas: areasReducer,
-    categories: categoriesReducer,
-    ingredients: ingredientsReducer,
-    recipes: recipesReducer,
-    users: userReducer,
-    recipeDetails: recipeDetailsReducer,
-    scrollControl: scrollControlReducer,
+    reducer: {
+        breadcrumbs: breadcrumbsReducer,
+        auth: authReducer,
+        testimonials: testimonialsReducer,
+        areas: areasReducer,
+        categories: categoriesReducer,
+        ingredients: ingredientsReducer,
+        recipes: recipesReducer,
+        users: userReducer,
+        recipeDetails: recipeDetailsReducer,
+        scrollControl: scrollControlReducer,
 
-    followers: followersReducer,
+        followers: followersReducer,
 
-    myrecipe: myRecipeReducer,
-    favorites: favoritesReducer,
-    userRecipes: userRecipesReducer,
-  },
+        myrecipe: myRecipeReducer,
+        favorites: favoritesReducer,
+        userRecipes: userRecipesReducer,
+    },
 });
 
 /**

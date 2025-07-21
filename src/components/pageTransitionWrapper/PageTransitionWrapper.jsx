@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './PageTransitionWrapper.module.css';
 
 /**
@@ -8,31 +8,31 @@ import styles from './PageTransitionWrapper.module.css';
  * @param {number} [animationSpeed=0.5] - The speed of the transition animation in seconds
  * @returns {JSX.Element} - The wrapped content with transition effect
  */
-const PageTransitionWrapper = ({ children, animationSpeed = 0.5 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+const PageTransitionWrapper = ({children, animationSpeed = 0.5}) => {
+    const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    // Set a small delay before showing the content to ensure the CSS transition works
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 50);
+    useEffect(() => {
+        // Set a small delay before showing the content to ensure the CSS transition works
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, 50);
 
-    return () => clearTimeout(timer);
-  }, []);
+        return () => clearTimeout(timer);
+    }, []);
 
-  // Apply custom transition speed using inline style
-  const transitionStyle = {
-    transition: `opacity ${animationSpeed}s ease-in-out`
-  };
+    // Apply custom transition speed using inline style
+    const transitionStyle = {
+        transition: `opacity ${animationSpeed}s ease-in-out`
+    };
 
-  return (
-    <div
-      className={`${styles.wrapper} ${isVisible ? styles.visible : ''}`}
-      style={transitionStyle}
-    >
-      {children}
-    </div>
-  );
+    return (
+        <div
+            className={`${styles.wrapper} ${isVisible ? styles.visible : ''}`}
+            style={transitionStyle}
+        >
+            {children}
+        </div>
+    );
 };
 
 export default PageTransitionWrapper;

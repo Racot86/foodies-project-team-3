@@ -1,170 +1,260 @@
 .userCard {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Skeleton styles */
+.skeleton {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.skeletonPulse {
+    background: linear-gradient(
+            90deg,
+            rgba(227, 227, 227, 0.2) 0%,
+            rgba(227, 227, 227, 0.5) 50%,
+            rgba(227, 227, 227, 0.2) 100%
+    );
+    background-size: 200% 100%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeletonAvatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.skeletonUserName {
+    height: 20px;
+    width: 80%;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.skeletonRecipeCount {
+    height: 16px;
+    width: 60%;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.skeletonActionButton {
+    height: 36px;
+    width: 92px;
+    border-radius: 30px;
+}
+
+.skeletonIconButton {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.skeletonDivider {
+    width: 100%;
+    height: 1px;
+    margin: 24px 0;
+}
+
+@media (min-width: 768px) {
+    .skeletonActionButton {
+        height: 44px;
+        width: 116px;
+    }
+
+    .skeletonIconButton {
+        width: 42px;
+        height: 42px;
+    }
 }
 
 .followerUserCard,
 .followingUserCard {
-  composes: userCard;
+    composes: userCard;
 }
 
 .userDetails {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
 }
 
 .avatar {
-  flex-shrink: 0;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: var(--color-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--color-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .avatarImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .userInfo {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .userName {
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 1.5;
-  text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.5;
+    text-transform: uppercase;
 }
 
 .userInfo .recipeCount {
-  font-size: 12px;
-  line-height: 1.5;
-  font-weight: 500;
-  margin-top: 0 !important;
-  color: var(--color-text-secondary);
-  margin-bottom: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-top: 0 !important;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
 }
 
 .actionButton.actionButton {
-  max-width: 116px;
-  min-width: 92px;
-  height: 36px;
-  font-size: 14px;
-  line-height: 1.43;
-  font-weight: 700;
-  padding: 0;
-  color: var(--color-secondary);
-  min-width: unset;
+    max-width: 116px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 1.43;
+    font-weight: 700;
+    padding: 0;
+    color: var(--color-secondary);
+    min-width: unset;
 }
 
 .previewContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.button {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .iconButton {
-  width: 36px;
-  height: 36px;
-  color: #4a4a4a;
-  transition: color 0.2s ease;
-  color: #050505;
-  fill: #050505;
-  stroke: #050505;
-  transition: all var(--transition-fast);
+    width: 36px;
+    height: 36px;
+    color: #050505;
+    fill: #050505;
+    stroke: #050505;
+    transition: all var(--transition-fast);
 }
 
 .iconButton:hover {
-  color: white;
-  fill: white;
-  stroke: white;
-  background-color: var(--color-text);
-  border-color: var(--color-text);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+    color: white;
+    fill: white;
+    stroke: white;
+    background-color: var(--color-text);
+    border-color: var(--color-text);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 @media (min-width: 768px) {
-  .iconButton {
-    width: 42px;
-    height: 42px;
-  }
-  .userInfo .recipeCount {
-    font-size: 14px;
-    line-height: 1.43;
-  }
+    .iconButton {
+        width: 42px;
+        height: 42px;
+    }
 
-  .avatar {
-    width: 85px;
-    height: 85px;
-  }
-  .userInfo {
-    min-width: 116px;
-  }
-  .userCard {
-    display: flex;
-    width: 704px;
-    align-items: flex-start;
-  }
-  .followingUserCard {
-    gap: 46px;
-  }
+    .userInfo .recipeCount {
+        font-size: 14px;
+        line-height: 1.43;
+    }
 
-  .userName {
-    font-size: 20px;
-    line-height: 1.2;
-    letter-spacing: -0.4px;
-  }
+    .avatar {
+        width: 85px;
+        height: 85px;
+    }
 
-  .recipeCount {
-    font-size: 14px;
-    letter-spacing: -0.28px;
-    line-height: 1.43;
-  }
-  .actionButton.actionButton {
-    font-size: 16px;
-    width: 116px !important;
-    height: 44px;
-    max-width: unset;
-    min-width: unset;
-  }
-  .icon {
-    width: 18px;
-    height: 18px;
-  }
+    .userInfo {
+        min-width: 116px;
+    }
+
+    .userCard {
+        display: flex;
+        width: 704px;
+        align-items: flex-start;
+    }
+
+    .followingUserCard,
+    .followerUserCard {
+        gap: 46px;
+    }
+
+    .userName {
+        font-size: 20px;
+        line-height: 1.2;
+        letter-spacing: -0.4px;
+    }
+
+    .recipeCount {
+        font-size: 14px;
+        letter-spacing: -0.28px;
+        line-height: 1.43;
+    }
+
+    .actionButton.actionButton {
+        font-size: 16px;
+        width: 116px !important;
+        height: 44px;
+        max-width: unset;
+        min-width: unset;
+    }
+
+    .icon {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 @media (min-width: 1440px) {
-  .userCard {
-    display: flex;
-    width: 846px;
-    align-items: flex-start;
-  }
+    .userCard {
+        display: flex;
+        width: 846px;
+        align-items: flex-start;
+    }
 
-  .followingUserCard {
-    gap: 60px;
-  }
+    .followingUserCard,
+    .followerUserCard {
+        gap: 60px;
+    }
 
-  .actionButton.actionButton {
-    color: var(--color-primary);
-  }
+    .actionButton.actionButton {
+        color: var(--color-primary);
+    }
 }

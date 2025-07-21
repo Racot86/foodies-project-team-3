@@ -1,170 +1,173 @@
 .hero {
-  background: var(--color-primary);
-  border-radius: 0 0 var(--radius-xxl) var(--radius-xxl);
-  flex-shrink: 0;
-  height: 744px;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 133px;
-  margin: 0 auto;
+    background: var(--color-primary);
+    border-radius: 0 0 var(--radius-xxl) var(--radius-xxl);
+    flex-shrink: 0;
+    height: 744px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 133px;
+    margin: 0 auto;
 }
 
 .hero * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .heroContent {
-  position: relative;
-  width: 100%;
-  height: 225px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 130px;
-  z-index: 2;
+    position: relative;
+    width: 100%;
+    height: 225px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 130px;
+    z-index: 2;
 }
 
 .improveYourCulinaryTalents {
-  color: var(--color-white);
-  text-align: center;
-  font-size: var(--font-4xl);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  max-width: 300px;
-  width: 100%;
-  margin: 0 auto 20px;
-  font-weight: var(--font-bold2);
+    color: var(--color-white);
+    text-align: center;
+    font-size: var(--font-4xl);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto 20px;
+    font-weight: var(--font-bold2);
 }
 
 .heroButton.heroButton {
-  padding-top: 11px;
-  padding-bottom: 11px;
-  transition: color 0.4s ease, background-color 0.4s ease;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    transition: color 0.4s ease, background-color 0.4s ease;
 }
 
 .heroContent .heroButton.heroButton:hover {
-  background-color: var(--color-white);
-  color: var(--color-primary);
-  transform: none;
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    transform: none;
 }
 
 .amazingRecipes.amazingRecipes {
-  color: var(--color-white);
-  text-align: center;
-  font-size: var(--font-sm);
-  line-height: var(--line-height-normal);
-  letter-spacing: -0.02em;
-  font-weight: var(--font-medium);
-  max-width: 290px;
-  width: 100%;
-  margin: 0 auto 20px;
+    color: var(--color-white);
+    text-align: center;
+    font-size: var(--font-sm);
+    line-height: var(--line-height-normal);
+    letter-spacing: -0.02em;
+    font-weight: var(--font-medium);
+    max-width: 290px;
+    width: 100%;
+    margin: 0 auto 20px;
 }
 
 .imagePanacota {
-  width: 77px;
-  height: 70px;
-  border-radius: var(--radius-xl);
-  opacity: 1;
-  transform: rotate(11deg);
-  position: absolute;
-  bottom: 134px;
-  left: 35px;
-  z-index: 2;
+    width: 77px;
+    height: 70px;
+    border-radius: var(--radius-xl);
+    opacity: 1;
+    transform: rotate(11deg);
+    position: absolute;
+    bottom: 134px;
+    left: 35px;
+    z-index: 2;
 }
 
 .imageRulet {
-  width: 190px;
-  height: 172px;
-  transform: rotate(-12deg);
-  border-radius: 30px;
-  position: absolute;
-  bottom: 114px;
-  right: 40px;
+    width: 190px;
+    height: 172px;
+    transform: rotate(-12deg);
+    border-radius: 30px;
+    position: absolute;
+    bottom: 114px;
+    right: 40px;
 }
+
 @media screen and (min-width: 375px) {
-  .improveYourCulinaryTalents {
-    max-width: 327px;
-  }
-  .amazingRecipes.amazingRecipes {
-    width: 326px;
-    max-width: unset;
-  }
+    .improveYourCulinaryTalents {
+        max-width: 327px;
+    }
+
+    .amazingRecipes.amazingRecipes {
+        width: 326px;
+        max-width: unset;
+    }
 }
 
 @media screen and (min-width: 768px) {
-  .hero {
-    height: 902px;
-  }
+    .hero {
+        height: 902px;
+    }
 
-  .heroContent {
-    height: 440px;
-    padding-top: 127px;
-  }
+    .heroContent {
+        height: 440px;
+        padding-top: 127px;
+    }
 
-  .improveYourCulinaryTalents {
-    font-size: 70px;
-    margin-bottom: 40px;
-    line-height: 1;
-    width: 678px;
-    max-width: unset;
-  }
+    .improveYourCulinaryTalents {
+        font-size: 70px;
+        margin-bottom: 40px;
+        line-height: 1;
+        width: 678px;
+        max-width: unset;
+    }
 
-  .amazingRecipes.amazingRecipes {
-    width: 577px;
-    margin-bottom: 40px;
-    font-size: var(--font-md);
-    line-height: var(--line-height-body);
-  }
+    .amazingRecipes.amazingRecipes {
+        width: 577px;
+        margin-bottom: 40px;
+        font-size: var(--font-md);
+        line-height: var(--line-height-body);
+    }
 
-  .imagePanacota {
-    width: 128px;
-    height: 116px;
-    bottom: 154px;
-    left: 117px;
-  }
+    .imagePanacota {
+        width: 128px;
+        height: 116px;
+        bottom: 154px;
+        left: 117px;
+    }
 
-  .imageRulet {
-    width: 302px;
-    height: 273px;
-    bottom: 110px;
-    right: 146px;
-  }
-  .heroButton.heroButton {
-    padding-top: 15px;
-    padding-bottom: 15px;
-  }
+    .imageRulet {
+        width: 302px;
+        height: 273px;
+        bottom: 110px;
+        right: 146px;
+    }
+
+    .heroButton.heroButton {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
 }
 
 @media screen and (min-width: 1440px) {
-  .hero {
-    height: 880px;
-    width: 1400px;
-  }
+    .hero {
+        height: 880px;
+        width: 1400px;
+    }
 
-  .heroContent {
-    height: 530px;
-    padding-top: 68px;
-  }
+    .heroContent {
+        height: 530px;
+        padding-top: 68px;
+    }
 
-  .improveYourCulinaryTalents {
-    font-size: 90px;
-    width: 875px;
-  }
+    .improveYourCulinaryTalents {
+        font-size: 90px;
+        width: 875px;
+    }
 
-  .imagePanacota {
-    bottom: 134px;
-    left: 448px;
-  }
+    .imagePanacota {
+        bottom: 134px;
+        left: 448px;
+    }
 
-  .imageRulet {
-    bottom: 104px;
-    right: 448px;
-  }
+    .imageRulet {
+        bottom: 104px;
+        right: 448px;
+    }
 }

@@ -1,87 +1,89 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import {
-  getFollowers,
-  followUser,
-  setFollowersPage,
-} from "@/redux/slices/followerSlice";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {toast} from "react-toastify";
+import {followUser, getFollowers, setFollowersPage,} from "@/redux/slices/followerSlice";
+import {userDetails} from "@/redux/slices/userSlice";
 import UserList from "../components/userList/UserList";
-import { Pagination } from "@/components/ui/Pagination";
+import {Pagination} from "@/components/ui/Pagination";
 import styles from "./Followers.module.css";
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 const Followers = () => {
-  const dispatch = useDispatch();
-  const {
-    followers,
-    isFollowersLoading,
-    fetchingError,
-    followersPage,
-    followersLimit,
-    followersTotal,
-  } = useSelector((state) => state.followers);
+    const dispatch = useDispatch();
+    const {
+        followers,
+        isFollowersLoading,
+        fetchingError,
+        followersPage,
+        followersLimit,
+        followersTotal,
+    } = useSelector((state) => state.followers);
 
-  const { user } = useSelector((state) => state.auth);
-  const currentUserId = user?.id;
+    const {user} = useSelector((state) => state.auth);
+    const currentUserId = user?.id;
 
-  const { userId } = useParams();
-  const targetUserId = userId || currentUserId;
+    const {userId} = useParams();
+    const targetUserId = userId || currentUserId;
 
-  useEffect(() => {
-    if (targetUserId) {
-      dispatch(
-        getFollowers({
-          userId: targetUserId,
-          page: followersPage,
-          limit: followersLimit,
-        })
-      );
-    }
-  }, [dispatch, targetUserId, followersPage, followersLimit]);
-  const handleFollowUser = async (userId) => {
-    try {
-      const result = await dispatch(followUser(userId));
+    useEffect(() => {
+        if (targetUserId) {
+            dispatch(
+                getFollowers({
+                    userId: targetUserId,
+                    page: followersPage,
+                    limit: followersLimit,
+                })
+            );
+        }
+    }, [dispatch, targetUserId, followersPage, followersLimit]);
+    const handleFollowUser = async (userId) => {
+        try {
+            const result = await dispatch(followUser(userId));
 
-      const message = result.payload?.alreadyFollowing
-        ? "Already following this user"
-        : "Added to followers";
+            const message = result.payload?.alreadyFollowing
+                ? "Already following this user"
+                : "Added to followers";
 
-      toast.success(message, { position: "top-center", autoClose: 3000 });
-    } catch {
-      toast.error("Failed to follow user", {
-        position: "top-center",
-        autoClose: 3000,
-      });
-    }
-  };
+            toast.success(message);
 
-  const handlePageChange = (page) => {
-    dispatch(setFollowersPage(page));
-  };
+            // Update user details to refresh the follower count in the side card
+            if (targetUserId) {
+                dispatch(userDetails(targetUserId));
+            }
+        } catch {
+            toast.error("Failed to follow user");
+        }
+    };
 
-  const totalPages = Math.ceil(followersTotal / followersLimit);
+    const handlePageChange = (page) => {
+        dispatch(setFollowersPage(page));
+    };
 
-  return (
-    <div>
-      <UserList
-        users={followers}
-        onButtonClick={handleFollowUser}
-        tabType="followers"
-        isLoading={isFollowersLoading}
-        error={fetchingError}
-      />
-      {totalPages > 1 && (
-        <div className={styles.paginationContainer}>
-          <Pagination
-            currentPage={followersPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
-      )}
-    </div>
-  );
+    const totalPages = Math.ceil(followersTotal / followersLimit);
+
+    return (
+        <PageTransitionWrapper>
+            <div>
+                <UserList
+                    users={followers}
+                    onButtonClick={handleFollowUser}
+                    tabType="followers"
+                    isLoading={isFollowersLoading}
+                    error={fetchingError}
+                />
+                {totalPages > 1 && (
+                    <div className={styles.paginationContainer}>
+                        <Pagination
+                            currentPage={followersPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                        />
+                    </div>
+                )}
+            </div>
+        </PageTransitionWrapper>
+    );
 };
 
 export default Followers;
