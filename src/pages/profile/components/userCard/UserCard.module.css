@@ -210,7 +210,8 @@
     width: 704px;
     align-items: flex-start;
   }
-  .followingUserCard {
+  .followingUserCard,
+  .followerUserCard {
     gap: 46px;
   }
 
@@ -245,7 +246,8 @@
     align-items: flex-start;
   }
 
-  .followingUserCard {
+  .followingUserCard,
+  .followerUserCard {
     gap: 60px;
   }
 
