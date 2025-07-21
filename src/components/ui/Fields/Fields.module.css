@@ -98,10 +98,10 @@
 .inputWrapper.withExtra .extra {
   right: var(--spacing-md);
   font-size: var(--font-xl);
-  top: var(--spacing-md);
-  transform: none;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   height: auto;
 }
 
