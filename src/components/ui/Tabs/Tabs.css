@@ -1,84 +1,87 @@
 .tabs-container {
-  position: relative;
-  margin-bottom: 32px;
+    position: relative;
+    margin-bottom: 32px;
 }
 
 .tabs-container::after {
-  content: "";
-  position: absolute;
-  bottom: 1px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: var(--color-secondary);
-  z-index: 1;
+    content: "";
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--color-secondary);
+    z-index: 1;
 }
 
 .tabs-wrapper {
-  display: flex;
-  gap: 30px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  position: relative;
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: relative;
 }
 
 /* Hides scrollbar for Chrome, Safari, and Opera */
 .tabs-wrapper::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .tab {
-  position: relative;
-  z-index: 2;
-  display: inline-block;
-  color: var(--color-text-secondary);
-  font-size: var(--font-lg);
-  font-weight: var(--font-bold2);
-  line-height: 24px;
-  letter-spacing: -0.02em;
-  padding-bottom: 14px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  white-space: nowrap;
-  flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    color: var(--color-text-secondary);
+    font-size: var(--font-lg);
+    font-weight: var(--font-bold2);
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    padding-bottom: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 /* Remove the individual tab underlines */
 .tab::after {
-  display: none;
+    display: none;
 }
 
 .tab:hover {
-  color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 .tab.active {
-  color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 /* New tab indicator for smooth animation */
 .tab-indicator {
-  position: absolute;
-  bottom: -1px;
-  height: 3px;
-  background-color: var(--color-primary);
-  z-index: 2;
-  transition: left 0.3s ease, width 0.3s ease, opacity 0.3s ease;
-  opacity: 0;
-  /* Ensure smooth rendering in all browsers */
-  transform: translateZ(0);
-  will-change: left, width;
+    position: absolute;
+    bottom: -1px;
+    height: 3px;
+    background-color: var(--color-primary);
+    z-index: 2;
+    transition: left 0.3s ease, width 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    /* Ensure smooth rendering in all browsers */
+    transform: translateZ(0);
+    will-change: left, width;
 }
+
 @media screen and (min-width: 768px) {
-  .tabs-wrapper {
-    gap: 40px;
-    overflow-x: visible;
-  }
-  .tab {
-    font-size: 20px;
-    line-height: 1.2;
-  }
-  .tabs-container {
-    margin-bottom: 40px;
-  }
+    .tabs-wrapper {
+        gap: 40px;
+        overflow-x: visible;
+    }
+
+    .tab {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+
+    .tabs-container {
+        margin-bottom: 40px;
+    }
 }

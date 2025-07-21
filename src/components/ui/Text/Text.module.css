@@ -1,177 +1,177 @@
 /* Text Component Styles */
 
 .text {
-  margin: 0;
-  line-height: var(--line-height-body);
-  font-family: var(--font-family-body);
-  color: var(--color-text-primary); /* За замовчуванням - існуюча змінна */
-  word-wrap: break-word;
-  word-break: break-word;
+    margin: 0;
+    line-height: var(--line-height-body);
+    font-family: var(--font-family-body), serif;
+    color: var(--color-text-primary); /* За замовчуванням - існуюча змінна */
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 /* Variants */
 .body {
-  font-family: var(--font-family-body);
-  line-height: var(--line-height-body);
+    font-family: var(--font-family-body), serif;
+    line-height: var(--line-height-body);
 }
 
 .caption {
-  font-family: var(--font-family-body);
-  line-height: var(--line-height-tight);
+    font-family: var(--font-family-body), serif;
+    line-height: var(--line-height-tight);
 }
 
 .label {
-  font-family: var(--font-family-body);
-  line-height: var(--line-height-tight);
-  letter-spacing: 0.025em;
+    font-family: var(--font-family-body), serif;
+    line-height: var(--line-height-tight);
+    letter-spacing: 0.025em;
 }
 
 /* Sizes */
 .size-xs {
-  font-size: var(--font-xs);
+    font-size: var(--font-xs);
 }
 
 .size-sm {
-  font-size: var(--font-sm);
+    font-size: var(--font-sm);
 }
 
 .size-md {
-  font-size: var(--font-md);
+    font-size: var(--font-md);
 }
 
 .size-lg {
-  font-size: var(--font-lg);
+    font-size: var(--font-lg);
 }
 
 .size-xl {
-  font-size: var(--font-xl);
+    font-size: var(--font-xl);
 }
 
 .size-2xl {
-  font-size: var(--font-2xl);
+    font-size: var(--font-2xl);
 }
 
 .size-3xl {
-  font-size: var(--font-3xl);
+    font-size: var(--font-3xl);
 }
 
 .size-4xl {
-  font-size: var(--font-4xl);
+    font-size: var(--font-4xl);
 }
 
 /* Colors */
 .color-default {
-  color: var(--color-text-primary); /* За замовчуванням - чорний #050505 */
+    color: var(--color-text-primary); /* За замовчуванням - чорний #050505 */
 }
 
 .color-muted {
-  color: var(--color-text-muted); /* Темно-сірий #1a1a1a */
+    color: var(--color-text-muted); /* Темно-сірий #1a1a1a */
 }
 
 .color-primary {
-  color: var(--color-primary); /* Чорний для акцентів #050505 */
+    color: var(--color-primary); /* Чорний для акцентів #050505 */
 }
 
 .color-success {
-  color: var(--color-success);
+    color: var(--color-success);
 }
 
 .color-warning {
-  color: var(--color-warning);
+    color: var(--color-warning);
 }
 
 .color-error {
-  color: var(--color-error);
+    color: var(--color-error);
 }
 
 .color-white {
-  color: var(--color-white);
+    color: var(--color-white);
 }
 
 /* Font weights */
 .weight-normal {
-  font-weight: var(--font-normal);
+    font-weight: var(--font-normal);
 }
 
 .weight-medium {
-  font-weight: var(--font-medium);
+    font-weight: var(--font-medium);
 }
 
 .weight-semibold {
-  font-weight: var(--font-semibold);
+    font-weight: var(--font-semibold);
 }
 
 .weight-bold {
-  font-weight: var(--font-bold);
+    font-weight: var(--font-bold);
 }
 
 /* Text alignment */
 .align-left {
-  text-align: left;
+    text-align: left;
 }
 
 .align-center {
-  text-align: center;
+    text-align: center;
 }
 
 .align-right {
-  text-align: right;
+    text-align: right;
 }
 
 /* Responsive typography */
 @media (max-width: 767px) {
-  .size-xs {
-    font-size: calc(var(--font-xs) * 0.9);
-  }
+    .size-xs {
+        font-size: calc(var(--font-xs) * 0.9);
+    }
 
-  .size-sm {
-    font-size: calc(var(--font-sm) * 0.9);
-  }
+    .size-sm {
+        font-size: calc(var(--font-sm) * 0.9);
+    }
 
-  .size-md {
-    font-size: calc(var(--font-md) * 0.95);
-  }
+    .size-md {
+        font-size: calc(var(--font-md) * 0.95);
+    }
 
-  .size-lg {
-    font-size: calc(var(--font-lg) * 0.95);
-  }
+    .size-lg {
+        font-size: calc(var(--font-lg) * 0.95);
+    }
 
-  .size-xl {
-    font-size: calc(var(--font-xl) * 0.95);
-  }
+    .size-xl {
+        font-size: calc(var(--font-xl) * 0.95);
+    }
 
-  .size-2xl {
-    font-size: calc(var(--font-2xl) * 0.95);
-  }
+    .size-2xl {
+        font-size: calc(var(--font-2xl) * 0.95);
+    }
 
-  .size-3xl {
-    font-size: calc(var(--font-3xl) * 0.95);
-  }
+    .size-3xl {
+        font-size: calc(var(--font-3xl) * 0.95);
+    }
 
-  .size-4xl {
-    font-size: calc(var(--font-4xl) * 0.95);
-  }
+    .size-4xl {
+        font-size: calc(var(--font-4xl) * 0.95);
+    }
 }
 
 /* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
-  .text {
-    transition: none;
-  }
+    .text {
+        transition: none;
+    }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .color-muted {
-    color: var(
-      --color-text-primar
-    ); /* В high contrast режимі показуємо як звичайний текст */
-  }
+    .color-muted {
+        color: var(
+                --color-text-primar
+        ); /* В high contrast режимі показуємо як звичайний текст */
+    }
 }
 
 /* Dark mode considerations */
 @media (prefers-color-scheme: dark) {
-  .color-default {
-    color: var(--color-text-primary);
-  }
+    .color-default {
+        color: var(--color-text-primary);
+    }
 }

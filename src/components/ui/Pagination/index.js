@@ -1,1 +1,1 @@
-export { Pagination } from "./Pagination.jsx"
+export {Pagination} from "./Pagination.jsx"

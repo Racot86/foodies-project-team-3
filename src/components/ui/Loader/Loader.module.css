@@ -1,16 +1,16 @@
 .loader {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  animation: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    animation: none;
 }
 
 .icon {
-  animation: loader-spin 1s linear infinite;
+    animation: loader-spin 1s linear infinite;
 }
 
 @keyframes loader-spin {
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 }

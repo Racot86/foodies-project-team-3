@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { FiLoader } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import {FiLoader} from "react-icons/fi";
+import {Link} from "react-router-dom";
 import css from "./Button.module.css";
 
 /**
@@ -42,64 +42,64 @@ import css from "./Button.module.css";
  */
 
 const VARIANTS = {
-  PRIMARY: "primary",
-  SECONDARY: "secondary",
-  SECONDARY_REVERSED: "secondary-reversed",
+    PRIMARY: "primary",
+    SECONDARY: "secondary",
+    SECONDARY_REVERSED: "secondary-reversed",
 };
 
 const Button = ({
-  onClick,
-  children,
-  href,
-  to,
-  variant,
-  className,
-  isLoading,
-  type = "button",
-  disabled = false,
-}) => {
-  const clickHandler = (event) => {
-    if (onClick) {
-      if (type !== "submit" && type !== "reset") {
-        event.preventDefault();
-      }
-      onClick(event);
+                    onClick,
+                    children,
+                    href,
+                    to,
+                    variant,
+                    className,
+                    isLoading,
+                    type = "button",
+                    disabled = false,
+                }) => {
+    const clickHandler = (event) => {
+        if (onClick) {
+            if (type !== "submit" && type !== "reset") {
+                event.preventDefault();
+            }
+            onClick(event);
+        }
+    };
+
+    const classNames = clsx(css.button, variant && css[variant], className);
+
+    if (href) {
+        return (
+            <a
+                href={href}
+                className={classNames}
+                rel="nofollow noopener"
+                target="_blank"
+            >
+                {children}
+            </a>
+        );
+    } else if (to) {
+        return (
+            <Link to={to} className={classNames} onClick={clickHandler}>
+                {children}
+            </Link>
+        );
     }
-  };
 
-  const classNames = clsx(css.button, variant && css[variant], className);
-
-  if (href) {
     return (
-      <a
-        href={href}
-        className={classNames}
-        rel="nofollow noopener"
-        target="_blank"
-      >
-        {children}
-      </a>
+        <button
+            className={classNames}
+            type={type}
+            onClick={clickHandler}
+            disabled={disabled || isLoading}
+        >
+            {isLoading ? <FiLoader className={css.iconLoading}/> : children}
+        </button>
     );
-  } else if (to) {
-    return (
-      <Link to={to} className={classNames} onClick={clickHandler}>
-        {children}
-      </Link>
-    );
-  }
-
-  return (
-    <button
-      className={classNames}
-      type={type}
-      onClick={clickHandler}
-      disabled={disabled || isLoading}
-    >
-      {isLoading ? <FiLoader className={css.iconLoading} /> : children}
-    </button>
-  );
 };
 
 Button.variants = Object.assign({}, VARIANTS);
 
-export { Button };
+export {Button};

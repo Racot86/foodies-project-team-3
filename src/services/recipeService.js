@@ -39,34 +39,34 @@ import api from "./api.js";
  * }>} Response with pagination info and recipes array
  */
 export const getRecipes = async (options = {}) => {
-  const {
-    category,
-    ingredient,
-    area,
-    title,
-    owner,
-    ownerId,
-    page = 1,
-    limit = 10
-  } = options;
+    const {
+        category,
+        ingredient,
+        area,
+        title,
+        owner,
+        ownerId,
+        page = 1,
+        limit = 10
+    } = options;
 
-  // Build query parameters
-  const params = new URLSearchParams();
-  if (category) params.append('category', category);
-  // Use 'ingridient' (with typo) as the parameter name to match the backend API
-  // The backend expects 'ingridient' not 'ingredient'
-  if (ingredient) params.append('ingridient', ingredient);
-  if (area) params.append('area', area);
-  if (title) params.append('title', title);
-  if (ownerId) params.append('ownerId', ownerId);
-  else if (owner) params.append('ownerId', owner);
-  if (page) params.append('page', page);
-  if (limit) params.append('limit', limit);
+    // Build query parameters
+    const params = new URLSearchParams();
+    if (category) params.append('category', category);
+    // Use 'ingridient' (with typo) as the parameter name to match the backend API
+    // The backend expects 'ingridient' not 'ingredient'
+    if (ingredient) params.append('ingridient', ingredient);
+    if (area) params.append('area', area);
+    if (title) params.append('title', title);
+    if (ownerId) params.append('ownerId', ownerId);
+    else if (owner) params.append('ownerId', owner);
+    if (page) params.append('page', page);
+    if (limit) params.append('limit', limit);
 
-  const queryString = params.toString();
-  const url = queryString ? `/recipes?${queryString}` : '/recipes';
+    const queryString = params.toString();
+    const url = queryString ? `/recipes?${queryString}` : '/recipes';
 
-  return api.get(url);
+    return api.get(url);
 };
 
 /**
@@ -94,5 +94,5 @@ export const getRecipes = async (options = {}) => {
  * }>} Recipe object
  */
 export const getRecipeById = async (id) => {
-  return api.get(`/recipes/${id}`);
+    return api.get(`/recipes/${id}`);
 };

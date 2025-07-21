@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const getMyRecipe = async () => {
-  return api.get("/recipes/myrecipes");
+    return api.get("/recipes/myrecipes");
 };
 
 /**
@@ -10,13 +10,13 @@ export const getMyRecipe = async () => {
  * @returns {Promise} Server response
  */
 export const deleteRecipeById = async (recipeId) => {
-  try {
-    const response = await api.delete(`/recipes/${recipeId}`);
-    return response.data;
-  } catch (error) {
-    console.error("Failed to delete recipe:", error);
-    throw new Error(
-      error.response?.data?.message || "Failed to delete the recipe"
-    );
-  }
+    try {
+        const response = await api.delete(`/recipes/${recipeId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to delete recipe:", error);
+        throw new Error(
+            error.response?.data?.message || "Failed to delete the recipe"
+        );
+    }
 };

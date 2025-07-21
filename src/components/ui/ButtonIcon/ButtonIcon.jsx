@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { FiLoader } from "react-icons/fi";
+import {FiLoader} from "react-icons/fi";
 import css from "./ButtonIcon.module.css";
 
 /**
@@ -27,40 +27,40 @@ import css from "./ButtonIcon.module.css";
  */
 
 const VARIANTS = {
-  DEFAULT: "default",
-  PRIMARY: "primary",
+    DEFAULT: "default",
+    PRIMARY: "primary",
 };
 
 const ButtonIcon = ({
-  onClick,
-  children,
-  className,
-  disabled = false,
-  loading = false,
-  variant = VARIANTS.DEFAULT,
-}) => {
-  const clickHandler = (event) => {
-    if (onClick && !disabled && !loading) {
-      event.preventDefault();
-      onClick(event);
-    }
-  };
+                        onClick,
+                        children,
+                        className,
+                        disabled = false,
+                        loading = false,
+                        variant = VARIANTS.DEFAULT,
+                    }) => {
+    const clickHandler = (event) => {
+        if (onClick && !disabled && !loading) {
+            event.preventDefault();
+            onClick(event);
+        }
+    };
 
-  const classNames = clsx(css.button, css[variant], className);
+    const classNames = clsx(css.button, css[variant], className);
 
-  return (
-    <button
-      className={classNames}
-      type="button"
-      onClick={clickHandler}
-      disabled={disabled || loading}
-    >
-      {loading ? <FiLoader className={css.iconLoading} /> : children}
-    </button>
-  );
+    return (
+        <button
+            className={classNames}
+            type="button"
+            onClick={clickHandler}
+            disabled={disabled || loading}
+        >
+            {loading ? <FiLoader className={css.iconLoading}/> : children}
+        </button>
+    );
 };
 
 // Attach constants to component
 ButtonIcon.variants = Object.assign({}, VARIANTS);
 
-export { ButtonIcon };
+export {ButtonIcon};

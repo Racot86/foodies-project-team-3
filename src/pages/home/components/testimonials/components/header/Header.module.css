@@ -1,50 +1,50 @@
 .testimonialIntroText {
-  font-size: 14px;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
-  margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.43;
+    letter-spacing: -0.28px;
+    margin-bottom: 16px;
 }
 
 .testimonialHeading {
-  line-height: 1.14;
-  letter-spacing: -0.56px;
-  margin-bottom: 64px;
-  text-transform: uppercase;
+    line-height: 1.14;
+    letter-spacing: -0.56px;
+    margin-bottom: 64px;
+    text-transform: uppercase;
 }
 
 .quoteIcon {
-  width: 40px;
-  height: 32px;
-  position: absolute;
-  top: 80px;
-  left: 8px;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: 80px;
+    left: 8px;
 }
 
 @media (min-width: 768px) {
-  .testimonialIntroText {
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: -0.32px;
-  }
+    .testimonialIntroText {
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: -0.32px;
+    }
 
-  .testimonialHeading {
-    line-height: 1.1;
-    letter-spacing: -0.8px;
-    margin-bottom: 80px;
-  }
+    .testimonialHeading {
+        line-height: 1.1;
+        letter-spacing: -0.8px;
+        margin-bottom: 80px;
+    }
 
-  .quoteIcon {
-    width: 59px;
-    height: 48px;
-    position: absolute;
-    top: 76px;
-    left: 40px;
-  }
+    .quoteIcon {
+        width: 59px;
+        height: 48px;
+        position: absolute;
+        top: 76px;
+        left: 40px;
+    }
 }
 
 @media (min-width: 1440px) {
-  .testimonialIntroText {
-    font-size: 24px;
-    letter-spacing: -0.48px;
-  }
+    .testimonialIntroText {
+        font-size: 24px;
+        letter-spacing: -0.48px;
+    }
 }

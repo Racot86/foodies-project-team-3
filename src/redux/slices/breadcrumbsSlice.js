@@ -1,23 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  recipeName: '',
+    recipeName: '',
 };
 
 export const breadcrumbsSlice = createSlice({
-  name: 'breadcrumbs',
-  initialState,
-  reducers: {
-    setRecipeName: (state, action) => {
-      state.recipeName = action.payload;
+    name: 'breadcrumbs',
+    initialState,
+    reducers: {
+        setRecipeName: (state, action) => {
+            state.recipeName = action.payload;
+        },
+        clearRecipeName: (state) => {
+            state.recipeName = '';
+        },
     },
-    clearRecipeName: (state) => {
-      state.recipeName = '';
-    },
-  },
 });
 
-export const { setRecipeName, clearRecipeName } = breadcrumbsSlice.actions;
+export const {setRecipeName, clearRecipeName} = breadcrumbsSlice.actions;
 
 export const selectRecipeName = (state) => state.breadcrumbs.recipeName;
 

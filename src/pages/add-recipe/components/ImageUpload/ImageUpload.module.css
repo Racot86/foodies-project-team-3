@@ -1,161 +1,167 @@
 .loadWrapBox {
-  position: relative;
-  width: 343px;
-  height: 318px;
-  border: 1px dashed var(--color-secondary);
-  border-radius: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 32px;
-  box-sizing: border-box;
-  cursor: pointer;
+    position: relative;
+    width: 343px;
+    height: 318px;
+    border: 1px dashed var(--color-secondary);
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 
 .loaded {
-  border: none;
-  position: relative;
-  width: 343px;
+    border: none;
+    position: relative;
+    width: 343px;
 }
 
 .loaded p {
-  text-align: center;
-  margin-bottom: 32px;
+    text-align: center;
+    margin-bottom: 32px;
 }
 
 .placeholderError.placeholderError {
-  margin-bottom: 8px;
-  text-decoration: underline;
+    margin-bottom: 8px;
+    text-decoration: underline;
 }
 
 .errorText.errorText {
-  margin-bottom: 32px;
+    margin-bottom: 32px;
 }
+
 .imgWrapPrev {
-  border-radius: 30px;
-  overflow: hidden;
-  width: 343px;
-  height: 318px;
-  margin-bottom: 16px;
+    border-radius: 30px;
+    overflow: hidden;
+    width: 343px;
+    height: 318px;
+    margin-bottom: 16px;
 }
 
 .previewImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  box-sizing: border-box;
-  border-radius: 30px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    box-sizing: border-box;
+    border-radius: 30px;
 }
 
 .uploadWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .loadWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .placeholder {
-  text-decoration: underline;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
-  text-decoration-skip-ink: none;
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: -0.28px;
+    text-decoration-skip-ink: none;
 }
 
 .hiddenInput {
-  display: none;
+    display: none;
 }
 
 .imgWrap {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 16px;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
 }
 
 .camera {
-  color: var(--color-secondary);
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    color: var(--color-secondary);
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .cameraFrame {
-  color: var(--color-secondary);
-  width: 64px;
-  height: 64px;
-  stroke-width: 1px;
+    color: var(--color-secondary);
+    width: 64px;
+    height: 64px;
+    stroke-width: 1px;
 }
 
 @media screen and (min-width: 768px) {
-  .loaded {
-    width: 704px;
-  }
+    .loaded {
+        width: 704px;
+    }
 
-  .loadWrapBox {
-    width: 704px;
-    height: 400px;
-    margin-bottom: 80px;
-  }
+    .loadWrapBox {
+        width: 704px;
+        height: 400px;
+        margin-bottom: 80px;
+    }
 
-  .uploadWrap {
-    gap: 20px;
-    align-items: flex-start;
-  }
-  .imgWrapPrev {
-    margin-bottom: 20px;
-    width: 704px;
-    height: 400px;
-  }
-  .loaded p {
-    text-align: center;
-    margin-bottom: 80px;
-  }
+    .uploadWrap {
+        gap: 20px;
+        align-items: flex-start;
+    }
 
-  .placeholderError.placeholderError {
-    margin-bottom: 16px;
-  }
+    .imgWrapPrev {
+        margin-bottom: 20px;
+        width: 704px;
+        height: 400px;
+    }
 
-  .errorText.errorText {
-    margin-bottom: 80px;
-  }
-  .placeholder {
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: -0.32px;
-  }
+    .loaded p {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
+    .placeholderError.placeholderError {
+        margin-bottom: 16px;
+    }
+
+    .errorText.errorText {
+        margin-bottom: 80px;
+    }
+
+    .placeholder {
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: -0.32px;
+    }
 }
 
 @media screen and (min-width: 1440px) {
-  .loadWrapBox {
-    width: 551px;
-    height: 400px;
-    margin-bottom: 0;
-  }
-  .loaded {
-    width: 551px;
-  }
-  .loaded p {
-    margin-bottom: unset;
-  }
+    .loadWrapBox {
+        width: 551px;
+        height: 400px;
+        margin-bottom: 0;
+    }
 
-  .imgWrapPrev {
-    width: 551px;
-    height: 400px;
-  }
+    .loaded {
+        width: 551px;
+    }
+
+    .loaded p {
+        margin-bottom: unset;
+    }
+
+    .imgWrapPrev {
+        width: 551px;
+        height: 400px;
+    }
 }

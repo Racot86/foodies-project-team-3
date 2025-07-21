@@ -1,231 +1,254 @@
 .recipeText.recipeText {
-  margin-bottom: 40px;
-  margin-top: 0;
-  letter-spacing: -0.02em;
-  max-width: 343px;
-  font-size: 14px;
-  line-height: 1.43;
-  letter-spacing: -0.02em;
-  color: var(--color-secondary);
+    margin-bottom: 40px;
+    margin-top: 0;
+    letter-spacing: -0.02em;
+    max-width: 343px;
+    font-size: 14px;
+    line-height: 1.43;
+    color: var(--color-secondary);
 }
+
 .recipePageTitle.recipePageTitle {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .nameRecipeInput.nameRecipeInput input {
-  font-weight: var(--font-bold2);
-  padding: 0;
-  border: none;
-  min-height: unset;
-  font-size: 18px;
-  margin-bottom: 32px;
-  line-height: 1.33;
+    font-weight: var(--font-bold2);
+    padding: 0;
+    border: none;
+    min-height: unset;
+    font-size: 18px;
+    margin-bottom: 32px;
+    line-height: 1.33;
 }
 
 .nameRecipeInput.nameRecipeInput {
-  max-width: 343px;
-  width: 100%;
+    max-width: 343px;
+    width: 100%;
 }
 
 .nameRecipeError.nameRecipeError {
-  gap: 8px;
-  margin-bottom: 32px;
+    gap: 8px;
+    margin-bottom: 32px;
 }
+
 .nameRecipeError div input {
-  border-bottom: none;
-  padding: 0;
-  min-height: unset;
+    border-bottom: none;
+    padding: 0;
+    min-height: unset;
 }
 
 .recipeDescrInput.recipeDescrInput {
-  margin-bottom: 32px;
-  max-width: 343px;
-  width: 100%;
+    margin-bottom: 32px;
+    max-width: 343px;
+    width: 100%;
 }
 
 .recipeDescrInput.recipeDescrInput div textarea {
-  padding: 0;
-  height: 36px;
-  min-height: unset;
-  font-size: 14px;
-  line-height: 1.43;
-  letter-spacing: -0.02em;
-  max-width: 343px;
+    padding: 0;
+    height: 36px;
+    min-height: unset;
+    font-size: 14px;
+    line-height: 1.43;
+    letter-spacing: -0.02em;
+    max-width: 343px;
 }
 
 .recipeDescrInput + .extra span {
-  position: absolute;
-  right: 0;
-  top: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .recipeCount.recipeCount {
-  width: 48px;
-  height: 48px;
+    width: 48px;
+    height: 48px;
 }
+
 .recipeWrapLabel.recipeWrapLabel {
-  gap: 8px;
-  margin-bottom: 20px;
-  max-width: 343px;
-  width: 100%;
+    gap: 8px;
+    margin-bottom: 20px;
+    max-width: 343px;
+    width: 100%;
 }
 
 .recipeWrapLabel div input {
-  font-size: 14px;
-  line-height: 1.43;
-  letter-spacing: -0.02em;
+    font-size: 14px;
+    line-height: 1.43;
+    letter-spacing: -0.02em;
 }
+
 .preparationWrap label {
-  margin-bottom: 32px;
-  gap: 0;
+    margin-bottom: 32px;
+    gap: 0;
 }
 
 .preparationWrap {
-  margin-bottom: 80px;
-  gap: 0;
+    margin-bottom: 80px;
+    gap: 0;
 }
 
 .recipeTrash.recipeTrash {
-  width: 48px;
-  height: 48px;
-  background-color: var(--color-white);
-  border-color: var(--color-secondary);
-  color: var(--color-primary);
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-white);
+    border-color: var(--color-secondary);
+    color: var(--color-primary);
 }
 
 .recipeTrash svg {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .publishBtn.publishBtn {
-  min-width: unset;
-  width: 124px;
-  font-weight: var(--font-bold);
-  padding: 16px 39px;
+    min-width: unset;
+    width: 124px;
+    font-weight: var(--font-bold);
+    padding: 16px 39px;
 }
+
 .addIngredientBtn {
-  width: 229px;
-  background-color: transparent;
-  color: var(--btn-secondary-text);
-  border-color: var(--btn-secondary-border);
-  transition: all var(--transition-fast);
+    width: 229px;
+    background-color: transparent;
+    color: var(--btn-secondary-text);
+    border-color: var(--btn-secondary-border);
+    transition: all var(--transition-fast);
 }
 
 .addIngredientBtn:hover:not(:disabled),
 .addIngredientBtn:focus-visible {
-  background-color: var(--btn-secondary-hover-bg);
-  color: var(--btn-secondary-hover-text);
-  border-color: var(--btn-secondary-hover-bg);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+    background-color: var(--btn-secondary-hover-bg);
+    color: var(--btn-secondary-hover-text);
+    border-color: var(--btn-secondary-hover-bg);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
 }
 
 .addIngredientBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background-color: transparent;
-  border-color: var(--color-secondary);
-  color: var(--color-secondary);
-  box-shadow: none;
-  transform: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: transparent;
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+    box-shadow: none;
+    transform: none;
 }
+
 .quantityField div input {
-  padding: 0;
-  min-height: 46px;
-  height: 36px;
-  font-size: 14px;
-  line-height: 1.43;
-  max-width: 343px;
+    padding: 0;
+    min-height: 46px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 1.43;
+    max-width: 343px;
 }
+
 .quantityField.quantityField {
-  gap: 8px;
+    gap: 8px;
 }
+
 .myrecipeTrash.myrecipeTrash {
-  width: 36px;
-  height: 36px;
+    width: 36px;
+    height: 36px;
 }
+
 .menu-open {
-  background-color: var(--color-primary);
+    background-color: var(--color-primary);
 }
+
 @media screen and (min-width: 768px) {
-  .nameRecipeInput.nameRecipeInput input {
-    font-size: 24px;
-    margin-bottom: 40px;
-    line-height: 1.17;
-  }
-  .recipeDescrInput.recipeDescrInput div textarea {
-    font-size: 16px;
-    line-height: 1.5;
-    height: 40px;
-    max-width: unset;
-  }
-  .recipeWrapLabel.recipeWrapLabel {
-    gap: 16px;
-    margin-bottom: unset;
-    max-width: unset;
-  }
+    .nameRecipeInput.nameRecipeInput input {
+        font-size: 24px;
+        margin-bottom: 40px;
+        line-height: 1.17;
+    }
 
-  .recipeDescrInput.recipeDescrInput {
-    margin-bottom: unset;
-    max-width: unset;
-  }
+    .recipeDescrInput.recipeDescrInput div textarea {
+        font-size: 16px;
+        line-height: 1.5;
+        height: 40px;
+        max-width: unset;
+    }
 
-  .recipeCount.recipeCount {
-    width: 56px;
-    height: 56px;
-  }
-  .quantityField div input {
-    height: 40px;
-    line-height: 1.5;
-    font-style: 16px;
-  }
-  .myrecipeTrash.myrecipeTrash {
-    width: 42px;
-    height: 42px;
-  }
-  .recipeWrapLabel div input {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  .preparationWrap label {
-    margin-bottom: 40px;
-  }
-  .recipeTrash.recipeTrash {
-    width: 56px;
-    height: 56px;
-  }
-  .publishBtn.publishBtn {
-    width: 146px;
-  }
-  .recipeText.recipeText {
-    max-width: unset;
-    width: 443px;
-    color: var(--color-primary);
-    line-height: var(--line-height-normal);
-    font-size: 16px;
-  }
-  .preparationWrap.preparationWrap {
-    margin-bottom: 80px;
-  }
-  .nameRecipeInput.nameRecipeInput {
-    max-width: unset;
-  }
-  .nameRecipeError.nameRecipeError {
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-  .quantityField.quantityField {
-    gap: 16px;
-  }
-  .quantityField div {
-    height: 102px;
-    display: flex;
-    align-items: flex-end;
-  }
+    .recipeWrapLabel.recipeWrapLabel {
+        gap: 16px;
+        margin-bottom: unset;
+        max-width: unset;
+    }
+
+    .recipeDescrInput.recipeDescrInput {
+        margin-bottom: unset;
+        max-width: unset;
+    }
+
+    .recipeCount.recipeCount {
+        width: 56px;
+        height: 56px;
+    }
+
+    .quantityField div input {
+        height: 40px;
+        line-height: 1.5;
+    }
+
+    .myrecipeTrash.myrecipeTrash {
+        width: 42px;
+        height: 42px;
+    }
+
+    .recipeWrapLabel div input {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .preparationWrap label {
+        margin-bottom: 40px;
+    }
+
+    .recipeTrash.recipeTrash {
+        width: 56px;
+        height: 56px;
+    }
+
+    .publishBtn.publishBtn {
+        width: 146px;
+    }
+
+    .recipeText.recipeText {
+        max-width: unset;
+        width: 443px;
+        color: var(--color-primary);
+        line-height: var(--line-height-normal);
+        font-size: 16px;
+    }
+
+    .preparationWrap.preparationWrap {
+        margin-bottom: 80px;
+    }
+
+    .nameRecipeInput.nameRecipeInput {
+        max-width: unset;
+    }
+
+    .nameRecipeError.nameRecipeError {
+        gap: 16px;
+        margin-bottom: 40px;
+    }
+
+    .quantityField.quantityField {
+        gap: 16px;
+    }
+
+    .quantityField div {
+        height: 102px;
+        display: flex;
+        align-items: flex-end;
+    }
 }
+
 @media screen and (min-width: 1440px) {
-  .addIngredientBtn {
-    width: 100%;
-  }
+    .addIngredientBtn {
+        width: 100%;
+    }
 }
