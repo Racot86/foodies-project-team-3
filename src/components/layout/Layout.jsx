@@ -15,7 +15,20 @@ export const Layout = () => {
     // const { breakpoint, windowWidth } = useBreakpoint();
     const location = useLocation();
 
-    // You can use breakpoint information for conditional rendering if needed
+    // Get the current page title based on the path
+    const getPageTitle = () => {
+        const path = location.pathname;
+
+        if (path === "/") return "Home";
+        if (path.includes("/recipe/")) return "Recipe Details";
+        if (path.includes("/add-recipe")) return "Add Recipe";
+        if (path.includes("/profile")) return "User Profile";
+        if (path.includes("/category/")) return "Recipe Category";
+        if (path.includes("/search")) return "Search Results";
+
+        // Default title for other pages
+        return "Foodies - Your Culinary Community";
+    };
 
     // Determine if breadcrumbs should be shown based on the current path
     const shouldShowBreadcrumbs = () => {
@@ -29,10 +42,22 @@ export const Layout = () => {
         return !location.pathname.includes("/category/");
     };
 
+    // Create SEO props with current page information
+    const seoProps = {
+        ...defaultSEO,
+        title: getPageTitle(),
+        canonicalUrl: `https://foodies-project-team-3.vercel.app${location.pathname}`,
+    };
+
     return (
         <div id="layout" className={styles.layout}>
-            {/* Apply default SEO settings */}
-            <SEO {...defaultSEO} />
+            {/* Apply SEO settings with current page information */}
+            <SEO {...seoProps} />
+
+            {/* Invisible H1 tag for SEO - visually hidden but accessible to screen readers */}
+            <h1 className={styles.visuallyHidden}>
+                {getPageTitle()} | Foodies - Your Culinary Community
+            </h1>
 
             <ScrollLock/>
             <ResponsiveContainer>
@@ -43,9 +68,7 @@ export const Layout = () => {
                         <BreadCrumbs className={styles.breadcrumbs}/>
                     )}
                     <main className={styles.main}>
-
                         <Outlet/>
-
                     </main>
                     <Footer/>
                 </PageTransitionWrapper>

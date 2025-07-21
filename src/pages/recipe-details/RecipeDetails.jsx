@@ -246,7 +246,7 @@ export const RecipeDetails = () => {
                         >
                             {isFavoriteLoading ? (
                                 <span className={styles.loaderContainer}>
-                  <Loader size="small"/>
+                  <Loader size={18}/>
                 </span>
                             ) : (
                                 isFavorite ? "Remove from favorites" : "Add to favorites"
