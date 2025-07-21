@@ -129,7 +129,7 @@ export const processRecipeData = createAsyncThunk(
       // Set author
       const author = {
         name: recipeData.owner?.name || 'Unknown Author',
-        avatar: processAvatarUrl(recipeData.owner?.avatar) || 'https://i.pravatar.cc/150?img=13',
+        avatar: processAvatarUrl(recipeData.owner?.avatar) || '/default-avatar.jpg',
       };
 
       // Helper function to process avatar URL
