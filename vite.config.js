@@ -19,6 +19,27 @@ export default defineConfig({
             "@assets": path.resolve(__dirname, "./src/assets"),
             "@services": path.resolve(__dirname, "./src/services"),
             "@redux": path.resolve(__dirname, "./src/redux"),
+            "@utils": path.resolve(__dirname, "./src/utils"),
         },
+    },
+    build: {
+        // Improve build performance and optimization
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+            },
+        },
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['react', 'react-dom', 'react-router-dom'],
+                    ui: ['@components/ui'],
+                },
+            },
+        },
+        // Optimize images during build
+        assetsInlineLimit: 4096, // 4kb - smaller assets will be inlined
     },
 });
