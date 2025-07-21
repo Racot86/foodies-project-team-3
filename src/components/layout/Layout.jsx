@@ -8,6 +8,8 @@ import styles from "./Layout.module.css";
 import {BreadCrumbs} from "@components/ui/index.js";
 import ScrollLock from "@/components/scrollLock/ScrollLock";
 import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
+import SEO from "@/components/SEO";
+import defaultSEO from "@/components/SEO/defaultSEO";
 
 export const Layout = () => {
     // const { breakpoint, windowWidth } = useBreakpoint();
@@ -29,6 +31,9 @@ export const Layout = () => {
 
     return (
         <div id="layout" className={styles.layout}>
+            {/* Apply default SEO settings */}
+            <SEO {...defaultSEO} />
+
             <ScrollLock/>
             <ResponsiveContainer>
                 <PageTransitionWrapper>
