@@ -96,7 +96,13 @@ function ProfilePage() {
     input.onchange = async (event) => {
         const file = event.target.files[0];
         if (file) {
-            dispatch(userAvatar(file));
+            try {
+                await dispatch(userAvatar(file)).unwrap();
+                // After successful avatar update, fetch current user to update authSlice
+                await dispatch(getCurrentUser());
+            } catch (error) {
+                console.error('Error updating avatar:', error);
+            }
         }
     };
 
