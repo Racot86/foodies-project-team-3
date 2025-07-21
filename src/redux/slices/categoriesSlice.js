@@ -5,7 +5,7 @@ export const fetchCategories = createAsyncThunk(
     "categories/fetch",
     async (_, {rejectWithValue}) => {
         try {
-          return await categoriesService();
+            return await categoriesService();
         } catch (error) {
             return rejectWithValue(error.message || "Failed to fetch categories");
         }
