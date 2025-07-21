@@ -1,18 +1,19 @@
-import React, {useEffect, useState, useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useParams} from "react-router-dom";
 import styles from "./RecipeDetails.module.css";
 import {useSelector} from "react-redux";
 import {useAppDispatch, useAppSelector} from "@/redux/store";
 import {
-  checkFavoriteStatus,
-  fetchRecipeById,
-  processRecipeData,
-  toggleFavoriteStatus,
+    checkFavoriteStatus,
+    fetchRecipeById,
+    processRecipeData,
+    toggleFavoriteStatus,
 } from "@/redux/slices/recipeDetailsSlice";
 import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
 import {Loader} from "@/components/ui";
 import {toast} from 'react-toastify';
 import SEO from "@/components/SEO";
+import PrivateContentArea from "@components/privateContentArea/PrivateContentArea.jsx";
 
 export const RecipeDetails = () => {
     const {recipeId} = useParams();
@@ -237,21 +238,23 @@ export const RecipeDetails = () => {
                     </div>
 
                     <div className={styles.favoriteSection}>
-                        <button
-                            className={`${styles.favButton} ${
-                                isFavorite ? styles.active : ""
-                            }`}
-                            onClick={handleToggleFavorite}
-                            disabled={isFavoriteLoading}
-                        >
-                            {isFavoriteLoading ? (
-                                <span className={styles.loaderContainer}>
+                        <PrivateContentArea>
+                            <button
+                                className={`${styles.favButton} ${
+                                    isFavorite ? styles.active : ""
+                                }`}
+                                onClick={handleToggleFavorite}
+                                disabled={isFavoriteLoading}
+                            >
+                                {isFavoriteLoading ? (
+                                    <span className={styles.loaderContainer}>
                   <Loader size={18}/>
                 </span>
-                            ) : (
-                                isFavorite ? "Remove from favorites" : "Add to favorites"
-                            )}
-                        </button>
+                                ) : (
+                                    isFavorite ? "Remove from favorites" : "Add to favorites"
+                                )}
+                            </button>
+                        </PrivateContentArea>
                     </div>
                 </div>
             </div>
