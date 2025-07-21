@@ -12,6 +12,7 @@ import RecipeList from "./recipeCard/RecipeList";
 import EmptyState from "./recipeCard/EmptyState";
 import RecipesCardSkeleton from "./recipeCard/RecipesCardSkeleton";
 import { toast } from "react-toastify";
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 const Favorites = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const Favorites = () => {
   };
 
   return (
+      <PageTransitionWrapper>
     <div className={css.recipeWrap}>
       {isLoading ? (
         <ul className={styles.recipeCardList}>
@@ -53,6 +55,7 @@ const Favorites = () => {
         <EmptyState text="Nothing has been added to your favorite recipes list yet. Please browse our recipes and add your favorites for easy access in the future." />
       )}
     </div>
+        </PageTransitionWrapper>
   );
 };
 

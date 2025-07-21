@@ -10,6 +10,7 @@ import RecipesCardSkeleton from "./recipeCard/RecipesCardSkeleton";
 import css from "./RecipesList.module.css";
 import styles from "./recipeCard/RecipeCard.module.css";
 import { toast } from "react-toastify";
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 const MyRecipes = () => {
   const dispatch = useDispatch();
@@ -96,6 +97,7 @@ const MyRecipes = () => {
   }, [error]);
 
   return (
+      <PageTransitionWrapper>
     <div className={css.recipeWrap}>
       {isLoading ? (
         <ul className={styles.recipeCardList}>
@@ -121,6 +123,7 @@ const MyRecipes = () => {
         <EmptyState text="Nothing has been added to your recipes list yet. Please browse our recipes and add your favorites for easy access in the future." />
       )}
     </div>
+        </PageTransitionWrapper>
   );
 };
 

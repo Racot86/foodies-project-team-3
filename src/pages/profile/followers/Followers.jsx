@@ -11,6 +11,7 @@ import { userDetails } from "@/redux/slices/userSlice";
 import UserList from "../components/userList/UserList";
 import { Pagination } from "@/components/ui/Pagination";
 import styles from "./Followers.module.css";
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 const Followers = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const Followers = () => {
   const totalPages = Math.ceil(followersTotal / followersLimit);
 
   return (
+      <PageTransitionWrapper>
     <div>
       <UserList
         users={followers}
@@ -87,6 +89,7 @@ const Followers = () => {
         </div>
       )}
     </div>
+      </PageTransitionWrapper>
   );
 };
 

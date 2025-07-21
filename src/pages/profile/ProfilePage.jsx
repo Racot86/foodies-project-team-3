@@ -23,6 +23,7 @@ import {
   unfollowUser,
   checkFollowStatus,
 } from "../../redux/slices/followerSlice";
+import PageTransitionWrapper from "@components/pageTransitionWrapper/PageTransitionWrapper.jsx";
 
 function ProfilePage() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -143,6 +144,7 @@ function ProfilePage() {
   }, [error]);
 
   return (
+      <PageTransitionWrapper>
     <Page className={styles.profilePage}>
       <Heading
         level={1}
@@ -289,6 +291,7 @@ function ProfilePage() {
 
       <ToastContainer position="top-right" autoClose={3000} />
     </Page>
+      </PageTransitionWrapper>
   );
 }
 
