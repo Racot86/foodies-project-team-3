@@ -1,6 +1,7 @@
 import React from "react";
-import { Loader, Text } from "@/components/ui";
+import { Text } from "@/components/ui";
 import UserCard from "../userCard/UserCard";
+import UserCardSkeleton from "../userCard/UserCardSkeleton";
 import styles from "./UserList.module.css";
 import EmptyState from "../recipeCard/EmptyState";
 
@@ -27,15 +28,17 @@ const UserList = ({
     );
   }
 
-  if (users.length === 0) {
-    if (isLoading) {
-      return (
-        <div className={styles.loaderCentered}>
-          <Loader />
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.userList}>
+          <UserCardSkeleton />
         </div>
-      );
-    }
+      </div>
+    );
+  }
 
+  if (users.length === 0) {
     return <EmptyState text={getEmptyMessage()} />;
   }
 
