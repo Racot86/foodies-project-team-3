@@ -1,165 +1,216 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import styles from './RecipeDetails.module.css';
-import { useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import styles from "./RecipeDetails.module.css";
+import {useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "@/redux/store";
 import {
+  checkFavoriteStatus,
   fetchRecipeById,
   processRecipeData,
-  checkFavoriteStatus,
-  toggleFavoriteStatus
-} from '@/redux/slices/recipeDetailsSlice';
+  toggleFavoriteStatus,
+} from "@/redux/slices/recipeDetailsSlice";
 import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
+import {Loader} from "@/components/ui";
+import {toast} from 'react-toastify';
 
 export const RecipeDetails = () => {
-  const { recipeId } = useParams();
-  const token = useSelector((state) => state?.auth?.token);
-  const dispatch = useAppDispatch();
+    const {recipeId} = useParams();
+    const token = useSelector((state) => state?.auth?.token);
+    const dispatch = useAppDispatch();
+    const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
 
-  // Get recipe details from Redux store
-  const {
-    isLoading,
-    error,
-    processedData,
-    isFavorite,
-    data: recipeData
-  } = useAppSelector((state) => state.recipeDetails);
+    // Get recipe details from Redux store
+    const {
+        isLoading,
+        error,
+        processedData,
+        isFavorite,
+        data: recipeData,
+    } = useAppSelector((state) => state.recipeDetails);
 
-  const { recipe = null, categoryName = '', author = null } = processedData || {};
+    const {
+        recipe = null,
+        categoryName = "",
+        author = null,
+    } = processedData || {};
 
-  useEffect(() => {
-    // Fetch recipe details using Redux action
-    dispatch(fetchRecipeById(recipeId));
-  }, [recipeId, dispatch]);
+    useEffect(() => {
+        // Fetch recipe details using Redux action
+        dispatch(fetchRecipeById(recipeId));
+    }, [recipeId, dispatch]);
 
-  useEffect(() => {
-    // Process recipe data only after fetchRecipeById has completed successfully
-    if (recipeData) {
-      dispatch(processRecipeData());
-    }
-  }, [dispatch, recipeData]);
+    useEffect(() => {
+        // Process recipe data only after fetchRecipeById has completed successfully
+        if (recipeData) {
+            dispatch(processRecipeData());
+        }
+    }, [dispatch, recipeData]);
 
-  useEffect(() => {
-    // Check if recipe is in favorites
-    if (recipe && token) {
-      dispatch(checkFavoriteStatus({ recipeId: recipe._id || recipe.id, token }));
-    }
-  }, [recipe, token, dispatch]);
+    useEffect(() => {
+        // Check if recipe is in favorites
+        if (recipe && token) {
+            dispatch(
+                checkFavoriteStatus({recipeId: recipe._id || recipe.id, token})
+            );
+        }
+    }, [recipe, token, dispatch]);
 
-  const handleToggleFavorite = () => {
-    if (!recipe || !token) {
-      alert('Please sign in to manage favorites.');
-      return;
-    }
+    const handleToggleFavorite = async () => {
+        if (!recipe || !token) {
+            toast.warning("Please sign in to manage favorites.");
+            return;
+        }
 
-    const recipeID = recipe._id || recipe.id;
-    if (!recipeID) {
-      console.error('Recipe ID missing!');
-      return;
-    }
+        const recipeID = recipe._id || recipe.id;
+        if (!recipeID) {
+            console.error("Recipe ID missing!");
+            toast.error("Recipe ID missing!");
+            return;
+        }
 
-    dispatch(toggleFavoriteStatus({
-      recipeId: recipeID,
-      isFavorite,
-      token
-    }));
-  };
+        try {
+            setIsFavoriteLoading(true);
 
-  const getFullImageUrl = (imgPath) => {
-    if (!imgPath) return '';
-    return imgPath.startsWith('http')
-      ? imgPath
-      : `https://project-team-3-backend-2.onrender.com${imgPath}`;
-  };
+            await dispatch(
+                toggleFavoriteStatus({
+                    recipeId: recipeID,
+                    isFavorite,
+                    token,
+                })
+            ).unwrap();
 
-  // Handle loading state
-  if (isLoading) return <div className={styles.loading}>Loading recipe...</div>;
+            // Show success toast
+            if (isFavorite) {
+                toast.success(`"${recipe.title}" removed from favorites`);
+            } else {
+                toast.success(`"${recipe.title}" added to favorites`);
+            }
+        } catch (err) {
+            console.error('Error updating favorites:', err);
+            toast.error(`Failed to update favorites: ${err.message || 'Unknown error'}`);
+        } finally {
+            setIsFavoriteLoading(false);
+        }
+    };
 
-  // Handle error state
-  if (error) return <div className={styles.notFound}>Error: {error}</div>;
+    const getFullImageUrl = (imgPath) => {
+        if (!imgPath) return "";
+        return imgPath.startsWith("http")
+            ? imgPath
+            : `https://project-team-3-backend-2.onrender.com${imgPath}`;
+    };
 
-  // Handle no recipe data
-  if (!recipe && !isLoading) return <div className={styles.notFound}>Recipe not found</div>;
+    // Handle loading state
+    if (isLoading) return <Loader/>;
 
-  return (
-    <div className={styles.recipeDetail}>
-      <div className={styles.recipeContent}>
-        <div className={styles.recipeImageContainer}>
-          {recipe.image ? (
-            <img src={getFullImageUrl(recipe.image)} alt={recipe.title} className={styles.image} />
-          ) : (
-            <div className={styles.imagePlaceholder}>{recipe.title[0]}</div>
-          )}
-        </div>
+    // Handle error state
+    if (error) return <div className={styles.notFound}>Error: {error}</div>;
 
-        <div className={styles.allButImage}>
-          <h1 className={styles.recipeName}>{recipe.title}</h1>
+    // Handle no recipe data
+    if (!recipe && !isLoading)
+        return <div className={styles.notFound}>Recipe not found</div>;
 
-          <div className={styles.recipeCategoryTime}>
-            {categoryName && <p className={styles.category}>{categoryName}</p>}
-            <p className={styles.prepTime}>{recipe.time} min</p>
-          </div>
+    return (
+        <div className={styles.recipeDetail}>
+            <div className={styles.recipeContent}>
+                <div className={styles.recipeImageContainer}>
+                    {recipe.image ? (
+                        <img
+                            src={getFullImageUrl(recipe.image)}
+                            alt={recipe.title}
+                            className={styles.image}
+                        />
+                    ) : (
+                        <div className={styles.imagePlaceholder}>{recipe.title[0]}</div>
+                    )}
+                </div>
 
-          {recipe.description && <p className={styles.description}>{recipe.description}</p>}
+                <div className={styles.allButImage}>
+                    <h1 className={styles.recipeName}>{recipe.title}</h1>
 
-          {author && (
-            <div className={styles.authorContainer}>
-              <img src={author.avatar} alt={author.name} className={styles.authorAvatar} />
-              <div className={styles.authorInfo}>
-                <p className={styles.createdBy}>Created by:</p>
-                <p className={styles.authorName}>{author.name}</p>
-              </div>
-            </div>
-          )}
-
-          {recipe.ingredients?.length > 0 && (
-            <div className={styles.ingredientsSection}>
-              <h2 className={styles.ingredients}>Ingredients</h2>
-              <div className={styles.ingredientsGrid}>
-                {recipe.ingredients.map((ing, index) => (
-                  <div key={index} className={styles.ingredientCard}>
-                    <div className={styles.imageWrapper}>
-                      {ing.image ? (
-                        <img src={ing.image} alt={ing.name} className={styles.ingredientImage} />
-                      ) : (
-                        <div className={styles.ingredientPlaceholder}>{ing.name[0]}</div>
-                      )}
+                    <div className={styles.recipeCategoryTime}>
+                        {categoryName && <p className={styles.category}>{categoryName}</p>}
+                        <p className={styles.prepTime}>{recipe.time} min</p>
                     </div>
-                    <div className={styles.nameMeasure}>
-                      <p className={styles.ingredientName}>{ing.name}</p>
-                      <p className={styles.ingredientMeasure}>{ing.measure}</p>
+
+                    {recipe.description && (
+                        <p className={styles.description}>{recipe.description}</p>
+                    )}
+
+                    {author && (
+                        <div className={styles.authorContainer}>
+                            <img
+                                src={author.avatar}
+                                alt={author.name}
+                                className={styles.authorAvatar}
+                            />
+                            <div className={styles.authorInfo}>
+                                <p className={styles.createdBy}>Created by:</p>
+                                <p className={styles.authorName}>{author.name}</p>
+                            </div>
+                        </div>
+                    )}
+
+                    {recipe.ingredients?.length > 0 && (
+                        <div className={styles.ingredientsSection}>
+                            <h2 className={styles.ingredients}>Ingredients</h2>
+                            <div className={styles.ingredientsGrid}>
+                                {recipe.ingredients.map((ing, index) => (
+                                    <div key={index} className={styles.ingredientCard}>
+                                        <div className={styles.imageWrapper}>
+                                            {ing.image ? (
+                                                <img
+                                                    src={ing.image}
+                                                    alt={ing.name}
+                                                    className={styles.ingredientImage}
+                                                />
+                                            ) : (
+                                                <div className={styles.ingredientPlaceholder}>
+                                                    {ing.name[0]}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className={styles.nameMeasure}>
+                                            <p className={styles.ingredientName}>{ing.name}</p>
+                                            <p className={styles.ingredientMeasure}>{ing.measure}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className={styles.recipeInfo}>
+                        <h2 className={styles.ingredients}>RECIPE PREPARATION</h2>
+                        {recipe.instructions.split(/\r\n\r\n/).map((paragraph, index) => (
+                            <p key={index} className={styles.instructions}>
+                                {paragraph.trim()}
+                            </p>
+                        ))}
                     </div>
-                  </div>
-                ))}
-              </div>
+
+                    <div className={styles.favoriteSection}>
+                        <button
+                            className={`${styles.favButton} ${
+                                isFavorite ? styles.active : ""
+                            }`}
+                            onClick={handleToggleFavorite}
+                            disabled={isFavoriteLoading}
+                        >
+                            {isFavoriteLoading ? (
+                                <span className={styles.loaderContainer}>
+                  <Loader size="small"/>
+                </span>
+                            ) : (
+                                isFavorite ? "Remove from favorites" : "Add to favorites"
+                            )}
+                        </button>
+                    </div>
+                </div>
             </div>
-          )}
-
-          <div className={styles.recipeInfo}>
-            <h2 className={styles.ingredients}>RECIPE PREPARATION</h2>
-            {recipe.instructions
-            .split(/\r\n\r\n/)
-            .map((paragraph, index) => (
-    <p key={index} className={styles.instructions}>
-      {paragraph.trim()}
-    </p>
-))}
-
-          </div>
-
-          <div className={styles.favoriteSection}>
-            <button
-              className={`${styles.favButton} ${isFavorite ? styles.active : ''}`}
-              onClick={handleToggleFavorite}
-            >
-              {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-            </button>
-          </div>
+            <PopularRecipes/>
         </div>
-      </div>
-      <PopularRecipes />
-    </div>
-  );
+    );
 };
 
 export default RecipeDetails;

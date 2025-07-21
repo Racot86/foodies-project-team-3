@@ -1,1 +1,1 @@
-export { default } from './AuthTest.jsx';
+export {default} from './AuthTest.jsx';

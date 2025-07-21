@@ -1,29 +1,29 @@
 .customPagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .paginationBullet {
-  width: 14px;
-  height: 14px;
-  background-color: var(--color-secondary);
-  border-radius: 50%;
-  opacity: 1;
-  margin: 0 6px; /* 12px total space between bullets (6px on each side) */
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: background-color 0.3s ease;
+    width: 14px;
+    height: 14px;
+    background-color: var(--color-secondary);
+    border-radius: 50%;
+    opacity: 1;
+    margin: 0 6px; /* 12px total space between bullets (6px on each side) */
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s ease;
 }
 
 .paginationBulletActive {
-  background-color: var(--color-primary);
+    background-color: var(--color-primary);
 }
 
 @media (min-width: 768px) {
-  .paginationBullet {
-    width: 16px;
-    height: 16px;
-  }
+    .paginationBullet {
+        width: 16px;
+        height: 16px;
+    }
 }

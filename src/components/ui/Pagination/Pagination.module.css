@@ -2,35 +2,35 @@
     display: flex;
     justify-content: center;
     gap: 6px;
-    
-  }
-  
-  .pageBtn {
+
+}
+
+.pageBtn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background:  var(--color-white);
+    background: var(--color-white);
     cursor: pointer;
     transition: 0.3s ease;
     font-size: var(--font-sm);
-  }
-  
-  .pageBtn:hover:not(:disabled) {
-    background-color:var(--color-white);
+}
+
+.pageBtn:hover:not(:disabled) {
+    background-color: var(--color-white);
     border: 1px solid var(--color-secondary);
-  }
-  
-  .pageBtn:disabled{
+}
+
+.pageBtn:disabled {
     cursor: default;
     opacity: 0.5;
-  }
-  
-  .active {
+}
+
+.active {
     width: 40px;
     height: 40px;
     border: 1px solid var(--color-secondary, var(--color-primary));
     border-radius: 50%;
-    background: var(--color-white); 
+    background: var(--color-white);
     font-size: var(--font-sm);
-  
-  }
+
+}

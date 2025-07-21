@@ -1,189 +1,186 @@
 .loadingContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 600px;
 }
 
 .categoryPage {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  margin: 0 auto;
-  padding-top: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 0 auto;
+    padding-top: 64px;
 }
 
 .header {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .backLink {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--color-text);
-  font-size: 12px;
-  line-height: 1.33;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-text);
+    font-size: 12px;
+    line-height: 1.33;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
 }
 
 .backLink:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .backLinkContainer button svg {
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
 }
 
 .mainTitle {
-  font-size: 28px;
-  line-height: 1.14;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
+    font-size: 28px;
+    line-height: 1.14;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
 }
 
 .subtitle {
-  margin: 0 !important;
-  font-size: 14px;
-  line-height: 1.43;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--color-text-secondary);
+    margin: 0 !important;
+    font-size: 14px;
+    line-height: 1.43;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--color-text-secondary);
 }
 
 .filtersContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .filters {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  position: sticky;
-  top: 16px;
-  z-index: 10;
-  background-color: var(--color-background, #fff);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 10;
+    background-color: var(--color-background, #fff);
 }
 
 .recipesContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
 }
 
 .recipeList {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
 }
 
 .fullWidthWrapper,
 .unlimitedMaxWidth,
 .customSelect {
-  width: 100% !important;
-  margin-bottom: 0;
+    width: 100% !important;
+    margin-bottom: 0;
 }
 
 .fullWidthInner.fullWidthInner {
-  top: 70px;
-  width: 100%;
+    top: 70px;
+    width: 100%;
 }
 
 @media (min-width: 768px) {
-  .categoryPage {
-    gap: 40px;
-    padding-top: 100px;
-    width: 704px;
-  }
+    .categoryPage {
+        gap: 40px;
+        padding-top: 100px;
+        width: 704px;
+    }
 
-  .backLink {
-    font-size: 14px;
-    line-height: 1.29;
-  }
+    .backLink {
+        font-size: 14px;
+        line-height: 1.29;
+    }
 
-  .header {
-    gap: 20px;
-  }
+    .header {
+        gap: 20px;
+    }
 
-  .mainTitle {
-    font-size: 40px;
-    line-height: 1.1;
-  }
+    .mainTitle {
+        font-size: 40px;
+        line-height: 1.1;
+    }
 
-  .subtitle {
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--color-text-main);
-  }
+    .subtitle {
+        font-size: 16px;
+        line-height: 1.5;
+        color: var(--color-text-main);
+    }
 
-  .filtersContainer {
-    gap: 40px;
-  }
+    .filtersContainer {
+        gap: 40px;
+    }
 
-  .filters {
-    display: flex;
-    flex-direction: row;
-    gap: 14px;
-    position: sticky;
-    top: 16px;
-    z-index: 10;
-    background-color: var(--color-background, #fff);
-  }
+    .filters {
+        display: flex;
+        flex-direction: row;
+        gap: 14px;
+        z-index: 10;
+        background-color: var(--color-background, #fff);
+    }
 
-  .recipesContainer {
-    gap: 60px;
-  }
+    .recipesContainer {
+        gap: 60px;
+    }
 
-  .recipeList {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 20px;
-    row-gap: 40px;
-  }
+    .recipeList {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 20px;
+        row-gap: 40px;
+    }
 }
 
 @media (min-width: 1440px) {
-  .categoryPage {
-    width: 1280px;
-    padding-top: 120px;
-  }
-  .filtersContainer {
-    flex-direction: row;
-  }
+    .categoryPage {
+        width: 1280px;
+        padding-top: 120px;
+    }
 
-  .filters {
-    flex-direction: column;
-    position: sticky;
-    top: 16px;
-    align-self: flex-start;
-    width: 330px;
-    max-height: calc(100vh - 32px);
-  }
+    .filtersContainer {
+        flex-direction: row;
+    }
 
-  .fullWidthWrapper,
-  .unlimitedMaxWidth,
-  .customSelect {
-    width: 330px !important;
-  }
+    .filters {
+        flex-direction: column;
+        position: sticky;
+        top: 16px;
+        align-self: flex-start;
+        width: 330px;
+        max-height: calc(100vh - 32px);
+    }
 
-  .fullWidthInner {
-    width: 330px !important;
-  }
+    .fullWidthWrapper,
+    .unlimitedMaxWidth,
+    .customSelect {
+        width: 330px !important;
+    }
 
-  .recipeList {
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 20px;
-    row-gap: 40px;
-  }
+    .fullWidthInner {
+        width: 330px !important;
+    }
+
+    .recipeList {
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 20px;
+        row-gap: 40px;
+    }
 }

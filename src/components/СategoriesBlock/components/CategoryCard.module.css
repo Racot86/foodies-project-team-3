@@ -1,174 +1,175 @@
 .card {
-  position: relative;
-  border-radius: 30px;
-  overflow: hidden;
-  height: 369px;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: flex-end;
-  background: #f5f5f5;
-  /* Removed transition to ensure immediate scaling with scroll */
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    height: 369px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: #f5f5f5;
+    /* Removed transition to ensure immediate scaling with scroll */
+
 }
 
 
 /* Hover effect is now handled in JavaScript to add 0.2 to the current scale value */
 
 .image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 32px;
-  display: block;
-  transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 32px;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
 .card:hover .image {
-  transform: scale(1.08);
+    transform: scale(1.08);
 }
 
 /* Removed .card::after - now using a real DOM element for the overlay */
 
 .captionRow {
-  position: absolute;
-  left: 24px;
-  bottom: 24px;
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  z-index: 2;
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    z-index: 2;
 }
 
 .caption {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  gap: 10px;
-  height: 44px;
-  border-radius: 30px;
-  padding: 10px 14px;
-  font-family: "Mulish", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 10px;
+    height: 44px;
+    border-radius: 30px;
+    padding: 10px 14px;
+    font-family: "Mulish", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 .iconButton {
-  width: 44px;
-  height: 44px;
-  border-radius: 30px;
-  padding: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-  transition: background-color 0.4s ease;
+    width: 44px;
+    height: 44px;
+    border-radius: 30px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: background-color 0.4s ease;
 }
 
 .iconButton:hover,
 .iconButton:focus {
-  background-color: #050505;
+    background-color: #050505;
 }
 
 .icon {
-  color: #fff;
-  font-size: 32px;
+    color: #fff;
+    font-size: 32px;
 }
 
 .icon:hover,
 .icon:focus {
-  color: #fff;
+    color: #fff;
 }
 
 .cardLink {
-  display: block;
-  text-decoration: none;
-  color: inherit;
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
 .allCategoriesCard {
-  background: #050505;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 369px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  outline: none;
+    background: #050505;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 369px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    outline: none;
 }
 
 .allCategoriesCard:focus,
 .allCategoriesCard.active,
 .allCategoriesCard:hover {
-  color: #ffc700;
+    color: #ffc700;
 }
 
 .allCategoriesContent {
-  width: 100%;
-  text-align: center;
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: #fff;
+    width: 100%;
+    text-align: center;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #fff;
 }
 
 @media (max-width: 1439px) {
-  .caption {
-    border: 1px solid #fff;
-  }
+    .caption {
+        border: 1px solid #fff;
+    }
 }
 
 @media (max-width: 1023px) {
-  .card,
-  .cardWide {
-    width: 100%;
-    max-width: none;
-    flex: 1 0 48.5%;
-  }
+    .card,
+    .cardWide {
+        width: 100%;
+        max-width: none;
+        flex: 1 0 48.5%;
+    }
 }
 
 @media (max-width: 767px) {
-  .card,
-  .cardWide {
-    width: 100%;
-    max-width: none;
-    flex: 1 0 100%;
-    height: 250px;
-    border-radius: 20px;
-  }
+    .card,
+    .cardWide {
+        width: 100%;
+        max-width: none;
+        flex: 1 0 100%;
+        height: 250px;
+        border-radius: 20px;
+    }
 
-  .image {
-    border-radius: 20px;
-  }
+    .image {
+        border-radius: 20px;
+    }
 
-  .captionRow {
-    left: 16px;
-    bottom: 16px;
-  }
+    .captionRow {
+        left: 16px;
+        bottom: 16px;
+    }
 
-  .caption {
-    border: 1px solid #fff;
-    font-size: 16px;
-    padding: 8px 12px;
-    height: 40px;
-  }
+    .caption {
+        border: 1px solid #fff;
+        font-size: 16px;
+        padding: 8px 12px;
+        height: 40px;
+    }
 
-  .iconButton {
-    width: 40px;
-    height: 40px;
-    padding: 11px;
-  }
+    .iconButton {
+        width: 40px;
+        height: 40px;
+        padding: 11px;
+    }
 }

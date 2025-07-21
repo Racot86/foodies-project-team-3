@@ -1,71 +1,70 @@
 .title {
-  font-weight: 800;
-  letter-spacing: -0.64px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  text-align: center;
+    font-weight: 800;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .text {
-  margin-bottom: 40px;
-  color: var(--color-text-secondary);
-  text-align: center;
-  letter-spacing: -0.32px;
-  color: #1a1a1a;
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: -0.32px;
+    color: var(--color-text-main);
 }
 
 .buttonGroup {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-direction: column;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .cancelButton,
 .logoutButton {
-  width: 100%;
+    width: 100%;
 }
 
 .logoutButton {
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: -0.32px;
-  padding: 16px 24px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    padding: 16px 24px;
 }
 
 .cancelButton {
-  padding: 16px 24px;
-  border: 1px solid #1a1a1a;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: -0.32px;
+    padding: 16px 24px;
+    border: 1px solid #1a1a1a;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
 }
 
 @media screen and (max-width: 767px) {
-  .title {
-    font-size: 28px;
-    line-height: 1.14;
-    letter-spacing: -0.56px;
-    margin-bottom: 16px;
-  }
+    .title {
+        font-size: 28px;
+        line-height: 1.14;
+        letter-spacing: -0.56px;
+        margin-bottom: 16px;
+    }
 
-  .text {
-    margin-bottom: 32px;
-    text-align: center;
-    letter-spacing: -0.28px;
-    color: #bfbebe;
-    font-size: 14px;
-    line-height: 1.43;
-  }
+    .text {
+        margin-bottom: 32px;
+        text-align: center;
+        letter-spacing: -0.28px;
+        color: #bfbebe;
+        font-size: 14px;
+        line-height: 1.43;
+    }
 
-  .logoutButton,
-  .cancelButton {
-    line-height: 1.43;
-    letter-spacing: -0.28px;
-    padding: 14px;
-  }
+    .logoutButton,
+    .cancelButton {
+        line-height: 1.43;
+        letter-spacing: -0.28px;
+        padding: 14px;
+    }
 
-  .buttonGroup {
-    gap: 16px;
-  }
+    .buttonGroup {
+        gap: 16px;
+    }
 }

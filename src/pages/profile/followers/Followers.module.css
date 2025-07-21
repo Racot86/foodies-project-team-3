@@ -1,11 +1,4 @@
 .paginationContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-@media screen and (min-width: 768px) {
-  .paginationContainer {
-    margin-top: 60px;
-  }
+    display: flex;
+    justify-content: center;
 }

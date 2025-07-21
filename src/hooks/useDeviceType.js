@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import { getDeviceType } from "@/utils/deviceUtils";
+import {useEffect, useState} from "react";
+import {getDeviceType} from "@/utils/deviceUtils";
 
 export const useDeviceType = () => {
-  const [deviceType, setDeviceType] = useState(() => getDeviceType());
+    const [deviceType, setDeviceType] = useState(() => getDeviceType());
 
-  useEffect(() => {
-    const handleResize = () => {
-      const newDeviceType = getDeviceType();
-      setDeviceType(newDeviceType);
-    };
+    useEffect(() => {
+        const handleResize = () => {
+            const newDeviceType = getDeviceType();
+            setDeviceType(newDeviceType);
+        };
 
-    window.addEventListener("resize", handleResize);
+        window.addEventListener("resize", handleResize);
 
-    handleResize();
+        handleResize();
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
-  return deviceType;
+    return deviceType;
 };
