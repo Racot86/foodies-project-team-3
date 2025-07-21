@@ -2,12 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
+    <meta name="description" content="Discover, share, and save your favorite recipes with Foodies - your culinary community."/>
+    <meta name="keywords" content="recipes, food, cooking, culinary, foodies, meals, dishes"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="theme-color" content="#ffffff"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://foodies-project-team-3.vercel.app/"/>
+    <meta property="og:title" content="Foodies - Your Culinary Community"/>
+    <meta property="og:description" content="Discover, share, and save your favorite recipes with Foodies - your culinary community."/>
+    <meta property="og:image" content="https://foodies-project-team-3.vercel.app/og-image.jpg"/>
+    <meta property="og:site_name" content="Foodies"/>
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Foodies - Your Culinary Community"/>
+    <meta name="twitter:description" content="Discover, share, and save your favorite recipes with Foodies - your culinary community."/>
+    <meta name="twitter:image" content="https://foodies-project-team-3.vercel.app/og-image.jpg"/>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://foodies-project-team-3.vercel.app/"/>
+
+    <!-- Favicon -->
     <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Foodies</title>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+    <!-- Preconnect to critical domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Foodies",
+      "url": "https://foodies-project-team-3.vercel.app",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://foodies-project-team-3.vercel.app/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "description": "Discover, share, and save your favorite recipes with Foodies - your culinary community."
+    }
+    </script>
+
+    <title>Foodies - Your Culinary Community</title>
 </head>
 <body>
-<div id="root"></div>
-<script src="/src/main.jsx" type="module"></script>
+    <div id="root"></div>
+    <script src="/src/main.jsx" type="module"></script>
+
+    <!-- Preload critical JavaScript -->
+    <link rel="preload" href="/src/main.jsx" as="script" type="module"/>
 </body>
 </html>

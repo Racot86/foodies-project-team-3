@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useMemo} from "react";
 import {useParams} from "react-router-dom";
 import styles from "./RecipeDetails.module.css";
 import {useSelector} from "react-redux";
@@ -12,6 +12,7 @@ import {
 import PopularRecipes from "@pages/popular-recipes/PopularRecipes.jsx";
 import {Loader} from "@/components/ui";
 import {toast} from 'react-toastify';
+import SEO from "@/components/SEO";
 
 export const RecipeDetails = () => {
     const {recipeId} = useParams();
@@ -33,6 +34,50 @@ export const RecipeDetails = () => {
         categoryName = "",
         author = null,
     } = processedData || {};
+
+    // Generate SEO data based on recipe information
+    const recipeSEO = useMemo(() => {
+        if (!recipe) return null;
+
+        // Get the full image URL for Open Graph
+        const ogImage = recipe.image ?
+            (recipe.image.startsWith("http")
+                ? recipe.image
+                : `https://project-team-3-backend-2.onrender.com${recipe.image}`)
+            : '';
+
+        // Create structured data for recipe
+        const recipeJsonLd = {
+            '@context': 'https://schema.org',
+            '@type': 'Recipe',
+            name: recipe.title,
+            description: recipe.description || `${recipe.title} recipe`,
+            image: ogImage,
+            author: author ? {
+                '@type': 'Person',
+                name: author.name
+            } : undefined,
+            recipeCategory: categoryName || undefined,
+            recipeIngredient: recipe.ingredients?.map(ing => `${ing.measure} ${ing.name}`) || [],
+            recipeInstructions: recipe.instructions?.split(/\r\n\r\n/).map(step => ({
+                '@type': 'HowToStep',
+                text: step.trim()
+            })) || [],
+            cookTime: recipe.time ? `PT${recipe.time}M` : undefined,
+            keywords: `recipe, ${recipe.title}, ${categoryName || 'food'}, cooking`
+        };
+
+        return {
+            title: recipe.title,
+            description: recipe.description || `${recipe.title} recipe with detailed instructions and ingredients`,
+            keywords: `recipe, ${recipe.title}, ${categoryName || 'food'}, cooking, ingredients, instructions`,
+            ogTitle: `${recipe.title} Recipe | Foodies`,
+            ogDescription: recipe.description || `${recipe.title} recipe with detailed instructions and ingredients`,
+            ogImage: ogImage,
+            ogType: 'article',
+            jsonLd: recipeJsonLd
+        };
+    }, [recipe, author, categoryName]);
 
     useEffect(() => {
         // Fetch recipe details using Redux action
@@ -112,6 +157,8 @@ export const RecipeDetails = () => {
 
     return (
         <div className={styles.recipeDetail}>
+            {/* Apply recipe-specific SEO if recipe data is available */}
+            {recipeSEO && <SEO {...recipeSEO} />}
             <div className={styles.recipeContent}>
                 <div className={styles.recipeImageContainer}>
                     {recipe.image ? (
@@ -199,7 +246,7 @@ export const RecipeDetails = () => {
                         >
                             {isFavoriteLoading ? (
                                 <span className={styles.loaderContainer}>
-                  <Loader size="small"/>
+                  <Loader size={18}/>
                 </span>
                             ) : (
                                 isFavorite ? "Remove from favorites" : "Add to favorites"

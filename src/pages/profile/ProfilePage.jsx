@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useMemo} from "react";
 import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
 import styles from "./ProfilePage.module.css";
 import Page from "@components/page/Page";
 import {Button, ButtonIcon, Heading, Tabs, Text} from "@components/ui";
 import LogOutModal from "@components/logOutModal/LogOutModal";
 import {DEFAULT_AVATAR} from "@/services/api.js";
+import SEO from "@/components/SEO";
 
 import {FiPlus} from "react-icons/fi";
 import {toast} from "react-toastify";
@@ -95,7 +96,13 @@ function ProfilePage() {
     input.onchange = async (event) => {
         const file = event.target.files[0];
         if (file) {
-            dispatch(userAvatar(file));
+            try {
+                await dispatch(userAvatar(file)).unwrap();
+                // After successful avatar update, fetch current user to update authSlice
+                await dispatch(getCurrentUser());
+            } catch (error) {
+                console.error('Error updating avatar:', error);
+            }
         }
     };
 
@@ -133,9 +140,48 @@ function ProfilePage() {
         }
     }, [error]);
 
+    // Generate SEO data based on user profile information
+    const profileSEO = useMemo(() => {
+        if (!requestedUserDetails || !requestedUserDetails.name) return null;
+
+        const userName = requestedUserDetails.name;
+        const isCurrentUser = isMe;
+        const baseUrl = 'https://foodies-project-team-3.vercel.app';
+        const profileUrl = isCurrentUser
+            ? `${baseUrl}/profile`
+            : `${baseUrl}/profile/${idOfUserToRender}`;
+
+        // Create structured data for person
+        const personJsonLd = {
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: userName,
+            url: profileUrl,
+            image: requestedUserDetails.avatar || DEFAULT_AVATAR
+        };
+
+        return {
+            title: isCurrentUser ? 'My Profile' : `${userName}'s Profile`,
+            description: isCurrentUser
+                ? `Manage your recipes, favorites, followers, and following on Foodies.`
+                : `View ${userName}'s recipes, followers, and profile on Foodies.`,
+            keywords: `profile, ${userName}, recipes, foodies, cooking, culinary, ${isCurrentUser ? 'my profile' : 'user profile'}`,
+            ogTitle: isCurrentUser ? 'My Foodies Profile' : `${userName}'s Foodies Profile`,
+            ogDescription: isCurrentUser
+                ? `Check out my recipes and culinary creations on Foodies.`
+                : `Check out ${userName}'s recipes and culinary creations on Foodies.`,
+            ogImage: requestedUserDetails.avatar || DEFAULT_AVATAR,
+            ogUrl: profileUrl,
+            ogType: 'profile',
+            jsonLd: personJsonLd
+        };
+    }, [requestedUserDetails, isMe, idOfUserToRender]);
+
     return (
         <PageTransitionWrapper>
             <Page className={styles.profilePage}>
+                {/* Apply profile-specific SEO if user data is available */}
+                {profileSEO && <SEO {...profileSEO} />}
                 <Heading
                     level={1}
                     size="xl"
