@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {FieldSelect} from "@/components/ui/Fields/FieldSelect/FieldSelect";
+import {buildApiUrl} from "@/config/api";
 
 export const AreaSelect = (props) => {
     const [options, setOptions] = useState([]);
@@ -11,7 +12,7 @@ export const AreaSelect = (props) => {
         const fetchAreas = async () => {
             try {
                 const response = await axios.get(
-                    "https://project-team-3-backend-2.onrender.com/api/areas"
+                    buildApiUrl("/api/areas")
                 );
                 const formatted = response.data.map((item) => ({
                     value: item.id,

@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {addToFavorites, categoriesService, getRecipeById, ingredientsService, removeFromFavorites} from "@/services";
+import {buildApiUrl, withApiBase} from "@/config/api";
 
 // Fetch recipe by ID
 export const fetchRecipeById = createAsyncThunk(
@@ -44,7 +45,7 @@ export const checkFavoriteStatus = createAsyncThunk(
         try {
             if (!token) return false;
 
-            const response = await fetch('https://project-team-3-backend-2.onrender.com/api/recipes/myfavorites', {
+            const response = await fetch(buildApiUrl('/api/recipes/myfavorites'), {
                 headers: {Authorization: `Bearer ${token}`},
             });
 
@@ -99,13 +100,13 @@ export const processRecipeData = createAsyncThunk(
             }
 
             // Fetch categories
-            const catsRes = await fetch('https://project-team-3-backend-2.onrender.com/api/categories');
+            const catsRes = await fetch(buildApiUrl('/api/categories'));
             const cats = await catsRes.json();
             const foundCategory = cats.find((c) => c.name === recipeData.category?.name || c._id === recipeData.category?.id);
             const categoryName = foundCategory ? foundCategory.name : '';
 
             // Fetch ingredients
-            const ingRes = await fetch('https://project-team-3-backend-2.onrender.com/api/ingredients');
+            const ingRes = await fetch(buildApiUrl('/api/ingredients'));
             const allIngredients = await ingRes.json();
             const enrichedIngredients = recipeData.ingredients.map((item) => {
                 const idToMatch = item.id || item.ingredient?.id;
@@ -128,7 +129,7 @@ export const processRecipeData = createAsyncThunk(
                 if (!imgPath) return '';
                 return imgPath.startsWith('http')
                     ? imgPath
-                    : `https://project-team-3-backend-2.onrender.com${imgPath}`;
+                    : withApiBase(imgPath);
             }
 
             return {

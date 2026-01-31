@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './PopularRecipes.module.css';
 import {useSelector} from 'react-redux';
 import RecipeCard from '@components/recipeCard/RecipeCard';
+import {buildApiUrl} from "@/config/api";
 
 const PopularRecipes = () => {
     const [recipes, setRecipes] = useState([]);
@@ -13,7 +14,7 @@ const PopularRecipes = () => {
             const ids = [119, 120];
             const responses = await Promise.all(
                 ids.map(id =>
-                    fetch(`https://project-team-3-backend-2.onrender.com/api/recipes/${id}`)
+                    fetch(buildApiUrl(`/api/recipes/${id}`))
                         .then(res => res.ok ? res.json() : null)
                 )
             );
@@ -28,7 +29,7 @@ const PopularRecipes = () => {
         const fetchData = async () => {
             try {
                 const [recipesRes, extraRecipes] = await Promise.all([
-                    fetch('https://project-team-3-backend-2.onrender.com/api/recipes/popular'),
+                    fetch(buildApiUrl('/api/recipes/popular')),
                     fetchExtraRecipes(),
                 ]);
 
