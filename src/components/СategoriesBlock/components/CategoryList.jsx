@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import CategoryCard from "./CategoryCard.jsx";
 import styles from "./CategoryList.module.css";
+import {buildApiUrl} from "@/config/api";
 
 const categoryImages = {
     Beef: "/images/Images_categories/Beef.png",
@@ -46,7 +47,7 @@ const CategoryList = () => {
     const prevShowAllRef = useRef(showAll);
 
     useEffect(() => {
-        fetch("https://project-team-3-backend-2.onrender.com/api/categories")
+        fetch(buildApiUrl("/api/categories"))
             .then((res) => res.json())
             .then((data) => {
                 const sorted = data.sort((a, b) => a.name.localeCompare(b.name));

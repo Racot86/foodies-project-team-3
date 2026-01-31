@@ -14,6 +14,7 @@ import {Loader} from "@/components/ui";
 import {toast} from 'react-toastify';
 import SEO from "@/components/SEO";
 import PrivateContentArea from "@components/privateContentArea/PrivateContentArea.jsx";
+import {withApiBase} from "@/config/api";
 
 export const RecipeDetails = () => {
     const {recipeId} = useParams();
@@ -44,7 +45,7 @@ export const RecipeDetails = () => {
         const ogImage = recipe.image ?
             (recipe.image.startsWith("http")
                 ? recipe.image
-                : `https://project-team-3-backend-2.onrender.com${recipe.image}`)
+                : withApiBase(recipe.image))
             : '';
 
         // Create structured data for recipe
@@ -143,7 +144,7 @@ export const RecipeDetails = () => {
         if (!imgPath) return "";
         return imgPath.startsWith("http")
             ? imgPath
-            : `https://project-team-3-backend-2.onrender.com${imgPath}`;
+            : withApiBase(imgPath);
     };
 
     // Handle loading state

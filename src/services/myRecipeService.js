@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const getMyRecipe = async () => {
-    return api.get("/recipes/myrecipes");
+    return api.get("/api/recipes/myrecipes");
 };
 
 /**

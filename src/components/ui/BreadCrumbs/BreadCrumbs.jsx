@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 import styles from "./BreadCrumbs.module.css";
+import {buildApiUrl} from "@/config/api";
 
 /**
  * BreadCrumbs component for navigation
@@ -20,7 +21,7 @@ export const BreadCrumbs = ({items = [], className = ""}) => {
                 const recipeId = location.pathname.split("/recipe-details/")[1];
                 try {
                     const response = await fetch(
-                        `https://project-team-3-backend-2.onrender.com/api/recipes/${recipeId}`
+                        buildApiUrl(`/api/recipes/${recipeId}`)
                     );
                     if (response.ok) {
                         const data = await response.json();

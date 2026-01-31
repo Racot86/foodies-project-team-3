@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
-export const BASE_URL = "https://project-team-3-backend-2.onrender.com/api";
+export const BASE_URL = API_BASE_URL;
 export const DEFAULT_AVATAR = "/default-avatar.jpg";
 export const DEFAULT_RECIPE_IMAGE = "/default-recipe-image.jpg";
 
@@ -18,8 +19,7 @@ const api = axios.create({
  */
 export const getTestimonials = async () => {
     try {
-        const response = await axios.get(`${BASE_URL}/testimonials`);
-        return response.data;
+        return await api.get("/api/testimonials");
     } catch (error) {
         console.error("API Error:", error);
         throw new Error(

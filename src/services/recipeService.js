@@ -64,7 +64,7 @@ export const getRecipes = async (options = {}) => {
     if (limit) params.append('limit', limit);
 
     const queryString = params.toString();
-    const url = queryString ? `/recipes?${queryString}` : '/recipes';
+    const url = queryString ? `/api/recipes?${queryString}` : '/api/recipes';
 
     return api.get(url);
 };
@@ -94,5 +94,5 @@ export const getRecipes = async (options = {}) => {
  * }>} Recipe object
  */
 export const getRecipeById = async (id) => {
-    return api.get(`/recipes/${id}`);
+    return api.get(`/api/recipes/${id}`);
 };

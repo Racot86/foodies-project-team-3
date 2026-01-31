@@ -23,7 +23,7 @@ export const removeFromFavorites = async (id) => {
  * @returns {Promise<{recipes: Array}>} Object containing an array of favorite recipes
  */
 export const getFavorites = async () => {
-    return api.get("/recipes/myfavorites");
+    return api.get("/api/recipes/myfavorites");
 };
 
 /**
@@ -33,7 +33,7 @@ export const getFavorites = async () => {
  */
 export const isRecipeInFavorites = async (id) => {
     try {
-        const response = await api.get("/recipes/myfavorites");
+        const response = await api.get("/api/recipes/myfavorites");
         // The response structure is { recipes: [...] }
         const favorites = response.recipes || [];
         return favorites.some((favorite) => (favorite.id === id || favorite._id === id));
