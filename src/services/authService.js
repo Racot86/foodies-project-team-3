@@ -7,7 +7,7 @@ export const authService = {
      * @returns {Promise<Object>} - Response with token and user data
      */
     signUp: async (userData) => {
-        return api.post('/users/signup', userData);
+        return api.post('/api/users/signup', userData);
     },
 
     /**
@@ -16,7 +16,7 @@ export const authService = {
      * @returns {Promise<Object>} - Response with token and user data
      */
     signIn: async (credentials) => {
-        return api.post('/users/signin', credentials);
+        return api.post('/api/users/signin', credentials);
     },
 
     /**
@@ -24,7 +24,7 @@ export const authService = {
      * @returns {Promise<void>}
      */
     signOut: async () => {
-        return api.post('/users/logout');
+        return api.post('/api/users/logout');
     },
 
     /**
@@ -32,6 +32,6 @@ export const authService = {
      * @returns {Promise<Object>} - User data
      */
     getCurrentUser: async () => {
-        return api.get('/users/current');
+        return api.get('/api/users/current');
     }
 };
